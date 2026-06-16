@@ -288,20 +288,39 @@ footer{background:var(--bg);border-top:1px solid var(--bdr);padding:40px 5vw}
 </footer>
 
 <script>
-function handleSubscribe(e, form) {
+async function handleSubscribe(e, form) {
   e.preventDefault();
   const email = form.querySelector('input[type="email"]').value;
   const btn = form.querySelector('button');
-  btn.textContent = 'Subscribed ✓';
-  btn.style.background = '#1D9E75';
+  const input = form.querySelector('input');
+  const originalText = btn.textContent;
+
+  // 로딩 상태
+  btn.textContent = '...';
   btn.disabled = true;
-  form.querySelector('input').disabled = true;
-  /* 
-    TODO: Replace with beehiiv embed or API call
-    POST to: https://api.beehiiv.com/v2/publications/{PUBLICATION_ID}/subscriptions
-    Body: { email, reactivate_existing: false, send_welcome_email: true }
-    Header: Authorization: Bearer {BEEHIIV_API_KEY}
-  */
+  input.disabled = true;
+
+  try {
+    const res = await fetch('/api/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
+    });
+
+    if (res.ok) {
+      btn.textContent = 'Subscribed ✓';
+      btn.style.background = '#1D9E75';
+      btn.style.color = '#fff';
+    } else {
+      btn.textContent = 'Try again';
+      btn.disabled = false;
+      input.disabled = false;
+    }
+  } catch (err) {
+    btn.textContent = originalText;
+    btn.disabled = false;
+    input.disabled = false;
+  }
 }
 </script>
 
