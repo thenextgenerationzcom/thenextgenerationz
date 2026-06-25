@@ -114,12 +114,12 @@ section{padding:88px 5vw}
 
 /* FOUNDER */
 .founder{background:var(--bg)}
-.founder-inner{display:grid;grid-template-columns:240px 1fr;gap:44px;align-items:start;max-width:820px}
+.founder-name{font-family:var(--serif);font-size:28px;font-weight:700;margin-bottom:4px;color:var(--ink)}
+.founder-title{font-size:13px;color:var(--m);letter-spacing:0.04em;margin-bottom:32px}
+.founder-inner{display:grid;grid-template-columns:280px 1fr;gap:56px;align-items:start;max-width:860px}
 .founder-photo{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:50% 30%;border-radius:6px;border:1px solid var(--bdr);display:block}
-.founder-name{font-family:var(--serif);font-size:22px;font-weight:700;margin-bottom:8px;color:var(--ink)}
-.founder-title{font-size:13px;color:var(--m);letter-spacing:0.04em;margin-bottom:16px}
-.founder-bio{font-size:14px;color:var(--ink-soft);line-height:1.7;max-width:600px}
-.bio-lead{font-family:var(--serif);font-style:italic;color:var(--ink);font-size:16px;line-height:1.5}
+.founder-bio{font-size:15px;color:var(--ink-soft);line-height:1.75;max-width:480px}
+.bio-lead{font-family:var(--serif);font-style:italic;color:var(--ink);font-size:17px;line-height:1.5}
 
 /* SUBSCRIBE CTA — closing dark inversion */
 .subscribe{background:#0B1623;text-align:center}
@@ -151,7 +151,8 @@ section[id]{scroll-margin-top:72px}
   .hero-form{flex-direction:column}
   .sub-form{flex-direction:column}
   .founder-inner{grid-template-columns:1fr}
-  .founder-photo{max-width:200px;aspect-ratio:3/4}
+  .founder-photo{max-width:220px;aspect-ratio:3/4}
+  .founder-name{font-size:24px}
   .ip-card{padding:28px}
   .footer-inner{flex-direction:column;gap:8px}
 
@@ -309,11 +310,11 @@ section[id]{scroll-margin-top:72px}
 <section class="founder" id="about">
   <div class="inner">
     <span class="section-label">About</span>
+    <div class="founder-name">Heewon Kim</div>
+    <div class="founder-title">Founder · The Next GenerationZ</div>
     <div class="founder-inner">
       <img src="img/founder-photo.jpg" alt="Heewon Kim, Founder of The Next GenerationZ" class="founder-photo">
       <div>
-        <div class="founder-name">Heewon Kim</div>
-        <div class="founder-title">Founder · The Next GenerationZ</div>
         <p class="founder-bio"><em class="bio-lead">The idealist who builds the future from reality.</em> Heewon Kim is a Korean writer, strategist, and civic innovation practitioner working across politics, policy, publishing, public deliberation, and AI.</p>
         <p class="founder-bio" style="margin-top:14px">His work connects people, institutions, and public problems — from youth civic communities and local innovation projects to political publishing, deliberative forums, and civic platforms. The Next GenerationZ is the next chapter of that work.</p>
       </div>
