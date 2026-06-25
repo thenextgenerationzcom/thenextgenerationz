@@ -114,8 +114,8 @@ section{padding:88px 5vw}
 
 /* FOUNDER */
 .founder{background:var(--bg)}
-.founder-inner{display:grid;grid-template-columns:auto 1fr;gap:48px;align-items:start;max-width:820px}
-.founder-avatar{width:72px;height:72px;border-radius:50%;background:var(--bg2);border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:24px;color:var(--m);flex-shrink:0}
+.founder-inner{display:grid;grid-template-columns:240px 1fr;gap:44px;align-items:start;max-width:820px}
+.founder-photo{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:50% 30%;border-radius:6px;border:1px solid var(--bdr);display:block}
 .founder-name{font-family:var(--serif);font-size:22px;font-weight:700;margin-bottom:8px;color:var(--ink)}
 .founder-title{font-size:13px;color:var(--m);letter-spacing:0.04em;margin-bottom:16px}
 .founder-bio{font-size:14px;color:var(--ink-soft);line-height:1.7;max-width:600px}
@@ -151,6 +151,7 @@ section[id]{scroll-margin-top:72px}
   .hero-form{flex-direction:column}
   .sub-form{flex-direction:column}
   .founder-inner{grid-template-columns:1fr}
+  .founder-photo{max-width:200px;aspect-ratio:3/4}
   .ip-card{padding:28px}
   .footer-inner{flex-direction:column;gap:8px}
 
@@ -309,7 +310,7 @@ section[id]{scroll-margin-top:72px}
   <div class="inner">
     <span class="section-label">About</span>
     <div class="founder-inner">
-      <div class="founder-avatar">H</div>
+      <img src="img/founder-photo.jpg" alt="Heewon Kim, Founder of The Next GenerationZ" class="founder-photo">
       <div>
         <div class="founder-name">Heewon Kim</div>
         <div class="founder-title">Founder · The Next GenerationZ</div>
