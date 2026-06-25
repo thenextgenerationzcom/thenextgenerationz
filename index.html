@@ -30,7 +30,6 @@ nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.96);backdrop
 .nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;position:relative}
 .nav-logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
 .nav-icon{height:30px;width:auto;display:block}
-.nav-divider{width:1px;height:22px;background:var(--bdr);display:block}
 .nav-wordmark{height:27px;width:auto;display:block}
 .nav-logo span{color:var(--m)}
 .nav-links{display:flex;align-items:center;gap:32px}
@@ -141,7 +140,7 @@ section{padding:88px 5vw}
 /* FOOTER — continues dark block */
 footer{background:#0B1623;border-top:1px solid #2A3A48;padding:40px 5vw}
 .footer-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
-.footer-logo{display:flex;align-items:center}
+.footer-logo{display:flex;align-items:center;gap:10px}
 .footer-logo span{color:var(--m-bright)}
 .footer-tagline{font-size:13px;color:#AAB4BD}
 .footer-copy{font-size:12px;color:#AAB4BD;opacity:.6}
@@ -197,7 +196,6 @@ section[id]{scroll-margin-top:72px}
   <div class="nav-inner">
     <a href="#" class="nav-logo">
       <img src="img/nav-icon.png" alt="" class="nav-icon">
-      <span class="nav-divider"></span>
       <img src="img/wordmark-text.png" alt="The Next GenerationZ" class="nav-wordmark">
     </a>
     <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false" onclick="toggleNav()">
@@ -350,7 +348,6 @@ section[id]{scroll-margin-top:72px}
   <div class="footer-inner">
     <div class="footer-logo">
       <img src="img/nav-icon-bright.png" alt="" class="nav-icon">
-      <span class="nav-divider" style="background:#3A4654"></span>
       <img src="img/wordmark-text-bright.png" alt="The Next GenerationZ" class="nav-wordmark">
     </div>
     <div class="footer-tagline">Discover What's Next, through Korea.</div>
