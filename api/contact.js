@@ -67,7 +67,7 @@ export default async function handler(req, res) {
         Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        from: `TNG 문의 <${from}>`,
+        from: `"더넥스트제너레이션즈(The Next GenerationZ)" <${from}>`,
         to: [to],
         reply_to: email,
         subject: `[문의/${type}] ${org} · ${name}`,
