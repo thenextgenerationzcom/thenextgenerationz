@@ -79,12 +79,12 @@ nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.96);backdrop
 .nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 
 /* HERO */
-.hero{padding:104px 5vw 88px;border-bottom:1px solid var(--bdr)}
+.hero{padding:72px 5vw 64px;border-bottom:1px solid var(--bdr)}
 .hero-inner{max-width:1100px;margin:0 auto}
-.hero-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:0.18em;color:var(--m);margin-bottom:30px;display:block}
-.hero-headline{font-family:var(--sans);font-size:clamp(33px,5.6vw,62px);font-weight:700;line-height:1.3;letter-spacing:-0.04em;max-width:940px;margin-bottom:28px;color:var(--ink)}
+.hero-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:0.18em;color:var(--m);margin-bottom:22px;display:block}
+.hero-headline{font-family:var(--sans);font-size:clamp(33px,5.4vw,58px);font-weight:700;line-height:1.28;letter-spacing:-0.04em;max-width:900px;margin-bottom:24px;color:var(--ink)}
 .hero-headline .hl{color:var(--m)}
-.hero-sub{font-size:clamp(15px,1.7vw,17.5px);color:var(--ink-soft);max-width:640px;line-height:1.9;letter-spacing:-0.014em;margin-bottom:44px}
+.hero-sub{font-size:clamp(15px,1.7vw,17px);color:var(--ink-soft);max-width:680px;line-height:1.85;letter-spacing:-0.014em;margin-bottom:34px}
 .hero-actions{display:flex;gap:12px;flex-wrap:wrap}
 .btn-primary{display:inline-block;background:var(--m-bright);color:var(--ink);text-decoration:none;padding:15px 28px;border-radius:2px;font-size:15px;font-weight:600;letter-spacing:-0.005em;transition:opacity .2s}
 .btn-primary:hover{opacity:0.85}
@@ -158,7 +158,7 @@ section{padding:104px 5vw}
 .ip-link:hover{border-color:var(--m)}
 
 /* CONTACT — dark inversion */
-.contact{background:#0B1623}
+.contact{background:#0B1623;border-bottom:none}
 .contact .inner{max-width:760px}
 .contact .section-label{color:var(--m-bright)}
 .contact h2{font-family:var(--sans);font-size:clamp(26px,3.5vw,37px);font-weight:700;line-height:1.38;letter-spacing:-0.038em;color:#FFFFFF;margin-bottom:16px}
@@ -181,16 +181,16 @@ section{padding:104px 5vw}
 .contact-alt a{color:var(--m-bright);text-decoration:none}
 
 /* SUBSCRIBE */
-.subscribe{background:#0B1623;border-top:1px solid #2A3A48;text-align:center}
-.sub-headline{font-family:var(--sans);font-size:clamp(24px,3.4vw,34px);font-weight:700;margin-bottom:14px;line-height:1.4;letter-spacing:-0.035em;color:#FFFFFF}
-.sub-desc{font-size:14.8px;color:#AAB4BD;max-width:500px;margin:0 auto 34px;line-height:1.85;letter-spacing:-0.014em}
+.subscribe{background:var(--bg);border-top:none;text-align:center}
+.sub-headline{font-family:var(--sans);font-size:clamp(25px,3.5vw,36px);font-weight:700;margin-bottom:14px;line-height:1.35;letter-spacing:-0.035em;color:var(--ink)}
+.sub-desc{font-size:15px;color:var(--ink-soft);max-width:520px;margin:0 auto 34px;line-height:1.85;letter-spacing:-0.014em}
 .sub-form{display:flex;gap:10px;max-width:420px;margin:0 auto}
-.sub-form input{flex:1;background:#16222F;border:1px solid #2A3A48;color:#FFFFFF;padding:14px 16px;border-radius:2px;font-size:14px;font-family:var(--sans);letter-spacing:-0.014em;outline:none;transition:border-color .2s}
-.sub-form input::placeholder{color:#8C97A1}
-.sub-form input:focus{border-color:var(--m-bright)}
+.sub-form input{flex:1;background:var(--bg);border:1px solid var(--bdr);color:var(--ink);padding:14px 16px;border-radius:2px;font-size:14px;font-family:var(--sans);letter-spacing:-0.014em;outline:none;transition:border-color .2s}
+.sub-form input::placeholder{color:#9AA3AC}
+.sub-form input:focus{border-color:var(--m)}
 .sub-form button{background:var(--m-bright);color:var(--ink);border:none;padding:14px 24px;border-radius:2px;font-size:14.5px;font-weight:600;font-family:var(--sans);letter-spacing:-0.005em;cursor:pointer;white-space:nowrap;transition:opacity .2s}
 .sub-form button:hover{opacity:.88}
-.sub-note{font-size:12.5px;color:#AAB4BD;margin-top:14px;opacity:.85}
+.sub-note{font-size:12.5px;color:var(--ink-soft);margin-top:16px;opacity:.8}
 
 /* FOOTER */
 footer{background:#0B1623;border-top:1px solid #2A3A48;padding:40px 5vw}
