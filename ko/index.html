@@ -9,19 +9,19 @@
 <meta property="og:title" content="김희원 | 더넥스트제너레이션즈">
 <meta property="og:description" content="지방의원 워크숍 · 강연 · 정책 컨설팅. 한국을 통해 다음을 읽고, 실행 구조로 옮깁니다.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://thenextgenerationz.com/ko">
-<meta property="og:image" content="https://thenextgenerationz.com/img/og-image.jpg">
+<meta property="og:url" content="https://www.thenextgenerationz.com/ko">
+<meta property="og:image" content="https://www.thenextgenerationz.com/img/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:locale" content="ko_KR">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="김희원 | 더넥스트제너레이션즈">
 <meta name="twitter:description" content="지방의원 워크숍 · 강연 · 정책 컨설팅">
-<meta name="twitter:image" content="https://thenextgenerationz.com/img/og-image.jpg">
-<link rel="canonical" href="https://thenextgenerationz.com/ko">
-<link rel="alternate" hreflang="ko" href="https://thenextgenerationz.com/ko">
-<link rel="alternate" hreflang="en" href="https://thenextgenerationz.com/">
-<link rel="alternate" hreflang="x-default" href="https://thenextgenerationz.com/">
+<meta name="twitter:image" content="https://www.thenextgenerationz.com/img/og-image.jpg">
+<link rel="canonical" href="https://www.thenextgenerationz.com/ko">
+<link rel="alternate" hreflang="ko" href="https://www.thenextgenerationz.com/ko">
+<link rel="alternate" hreflang="en" href="https://www.thenextgenerationz.com/">
+<link rel="alternate" hreflang="x-default" href="https://www.thenextgenerationz.com/">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,18 +32,75 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "김희원",
-  "alternateName": "Heewon Kim",
-  "jobTitle": "대표",
-  "worksFor": {
-    "@type": "Organization",
-    "name": "더넥스트제너레이션즈",
-    "alternateName": "The Next GenerationZ",
-    "url": "https://thenextgenerationz.com"
-  },
-  "url": "https://thenextgenerationz.com/ko",
-  "knowsAbout": ["지방정치", "의정활동", "정책 연구", "시빅테크", "공공 리더십", "AI 활용 교육"]
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://www.thenextgenerationz.com/ko#person",
+      "name": "김희원",
+      "alternateName": "Heewon Kim",
+      "jobTitle": "대표",
+      "description": "지방의회·공공기관 대상 의정활동 워크숍과 AI 활용 교육, 정책 연구를 진행하며 시민 참여 플랫폼 InvestPolitics를 개발하고 있습니다.",
+      "worksFor": { "@id": "https://www.thenextgenerationz.com/#organization" },
+      "url": "https://www.thenextgenerationz.com/ko",
+      "knowsAbout": ["지방정치", "의정활동", "지방재정", "예산 심의", "정책 연구", "시빅테크", "공공 리더십", "AI 활용 교육"]
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://www.thenextgenerationz.com/#organization",
+      "name": "더넥스트제너레이션즈",
+      "alternateName": ["The Next GenerationZ", "TNG"],
+      "url": "https://www.thenextgenerationz.com",
+      "logo": "https://www.thenextgenerationz.com/img/nav-icon.png",
+      "email": "thenextgenerationz.com@gmail.com",
+      "founder": { "@id": "https://www.thenextgenerationz.com/ko#person" },
+      "areaServed": "KR",
+      "description": "미래세대가 마주한 구조적 문제를 실행 가능한 구조로 옮기는 플랫폼. 지방의회·공공기관 워크숍, 강연, 정책 연구, 시민 참여 플랫폼 개발.",
+      "knowsLanguage": ["ko", "en"]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.thenextgenerationz.com/#website",
+      "url": "https://www.thenextgenerationz.com",
+      "name": "더넥스트제너레이션즈",
+      "inLanguage": "ko",
+      "publisher": { "@id": "https://www.thenextgenerationz.com/#organization" }
+    },
+    {
+      "@type": "Service",
+      "name": "지방의원 의정활동 역량강화 워크숍 — 예산과 AI",
+      "provider": { "@id": "https://www.thenextgenerationz.com/#organization" },
+      "serviceType": "의정활동 교육",
+      "areaServed": "KR",
+      "audience": { "@type": "Audience", "audienceType": "지방의원, 의회사무국, 보좌 인력" },
+      "description": "공약을 예산에 반영하는 경로를 설계하는 1일 집중 과정. 예산 사이클 이해와 AI 실습을 결합해 공약사업 기획서를 완성합니다."
+    },
+    {
+      "@type": "Service",
+      "name": "넘버 원이 아닌 온리 원 — I'm Different",
+      "provider": { "@id": "https://www.thenextgenerationz.com/#organization" },
+      "serviceType": "정치인 역량강화 워크숍",
+      "areaServed": "KR",
+      "audience": { "@type": "Audience", "audienceType": "정치인, 예비후보, 보좌 인력" },
+      "description": "같은 지표로 경쟁하는 함정에서 벗어나 자기만의 자리를 정하고 정치 마스터플랜으로 옮기는 과정."
+    },
+    {
+      "@type": "Service",
+      "name": "미래세대는 어떻게 함께 일하는가",
+      "provider": { "@id": "https://www.thenextgenerationz.com/#organization" },
+      "serviceType": "조직문화 강연",
+      "areaServed": "KR",
+      "audience": { "@type": "Audience", "audienceType": "정치·공공 조직, 기업, 단체" },
+      "description": "수직적 조직에서 수평적 조직으로 넘어가기 위해 무엇이 어떻게 바뀌어야 하는지 다루는 강연."
+    },
+    {
+      "@type": "Service",
+      "name": "정책 연구 · 캠페인 전략 · AI 도입 자문",
+      "provider": { "@id": "https://www.thenextgenerationz.com/#organization" },
+      "serviceType": "연구 및 컨설팅",
+      "areaServed": "KR",
+      "description": "정책 연구용역, 정치 캠페인 전략 자문, 공공기관 AI 도입 자문, 의정연수·직무교육 프로그램 설계."
+    }
+  ]
 }
 </script>
 <style>
