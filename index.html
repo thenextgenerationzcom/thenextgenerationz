@@ -16,6 +16,10 @@
 <meta name="twitter:title" content="The Next GenerationZ">
 <meta name="twitter:description" content="Discover What's Next, through Korea.">
 <meta name="twitter:image" content="https://thenextgenerationz.com/img/og-image.jpg">
+<link rel="canonical" href="https://thenextgenerationz.com/">
+<link rel="alternate" hreflang="en" href="https://thenextgenerationz.com/">
+<link rel="alternate" hreflang="ko" href="https://thenextgenerationz.com/ko">
+<link rel="alternate" hreflang="x-default" href="https://thenextgenerationz.com/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png?v=3">
@@ -43,6 +47,8 @@ nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.96);backdrop
 .nav-links{display:flex;align-items:center;gap:32px}
 .nav-links a{font-size:13px;color:var(--ink-soft);text-decoration:none;letter-spacing:0.04em;transition:color .2s;white-space:nowrap}
 .nav-links a:hover{color:var(--ink)}
+.nav-lang{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12px;letter-spacing:0.06em;color:var(--ink-soft) !important;border:1px solid var(--bdr);padding:5px 10px;border-radius:3px;transition:border-color .2s,color .2s}
+.nav-lang:hover{border-color:var(--m);color:var(--m) !important}
 .nav-cta{background:var(--m-bright) !important;color:var(--ink) !important;padding:8px 18px;border-radius:4px;font-size:13px;font-weight:700 !important;text-decoration:none !important;transition:opacity .2s;letter-spacing:0.01em}
 .nav-cta:hover{opacity:0.82}
 .nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:6px;flex-direction:column;gap:5px;width:36px;height:36px;align-items:center;justify-content:center;flex-shrink:0}
@@ -184,7 +190,8 @@ section[id]{scroll-margin-top:72px}
   }
   .nav-links.open{max-height:300px}
   .nav-links a{width:100%;box-sizing:border-box;padding:14px 5vw;border-bottom:1px solid var(--bdr);color:var(--ink-soft)}
-  .nav-links a.nav-cta{margin:14px 5vw;width:auto;text-align:center;border-bottom:none;border-radius:4px;color:var(--ink) !important}
+  .nav-links a.nav-lang{margin:14px 5vw;width:auto;text-align:center;border:1px solid var(--bdr);border-radius:3px}
+  .nav-links a.nav-cta{margin:0 5vw 14px;width:auto;text-align:center;border-bottom:none;border-radius:4px;color:var(--ink) !important}
 
   .hero{min-height:auto;padding:64px 6vw 56px}
   .hero-headline,.hero-headline-2{font-size:clamp(34px,9vw,46px);line-height:1.15}
@@ -214,6 +221,7 @@ section[id]{scroll-margin-top:72px}
       <a href="#about">About</a>
       <a href="#latest">Archive</a>
       <a href="https://investpolitics.com">InvestPolitics</a>
+      <a href="/ko" class="nav-lang">KO</a>
       <a href="#subscribe" class="nav-cta">Subscribe</a>
     </div>
   </div>
