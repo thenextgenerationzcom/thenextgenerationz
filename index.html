@@ -222,7 +222,7 @@ section[id]{scroll-margin-top:72px}
       <a href="#about">About</a>
       <a href="#latest">Archive</a>
       <a href="https://investpolitics.com">InvestPolitics</a>
-      <a href="/ko" class="nav-lang">KO</a>
+      <a href="/ko" class="nav-lang" data-lang="ko">KO</a>
       <a href="#subscribe" class="nav-cta">Subscribe</a>
     </div>
   </div>
@@ -421,6 +421,13 @@ document.querySelectorAll('#navLinks a').forEach(function (a) {
     document.getElementById('navLinks').classList.remove('open');
     document.getElementById('navToggle').classList.remove('open');
     document.getElementById('navToggle').setAttribute('aria-expanded', 'false');
+  });
+});
+
+document.querySelectorAll('[data-lang]').forEach(function (el) {
+  el.addEventListener('click', function () {
+    document.cookie = 'tng_lang=' + el.getAttribute('data-lang') +
+      '; path=/; max-age=31536000; samesite=lax';
   });
 });
 </script>

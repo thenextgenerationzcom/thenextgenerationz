@@ -310,7 +310,7 @@ section[id]{scroll-margin-top:72px}
       <a href="#about">소개</a>
       <a href="#work">Work</a>
       <a href="https://investpolitics.com">InvestPolitics</a>
-      <a href="/" class="nav-lang">EN</a>
+      <a href="/" class="nav-lang" data-lang="en">EN</a>
       <a href="#contact" class="nav-cta">문의하기</a>
     </div>
   </div>
@@ -330,7 +330,7 @@ section[id]{scroll-margin-top:72px}
       그리고 시민 참여 플랫폼 개발까지 — 분석을 넘어 해결까지 제시하고 있습니다.
     </p>
     <div class="hero-actions">
-      <a href="/" class="btn-primary">The Next GenerationZ 글로벌 플랫폼 가기 →</a>
+      <a href="/" class="btn-primary" data-lang="en">The Next GenerationZ 글로벌 플랫폼 가기 →</a>
       <a href="#subscribe" class="btn-ghost">뉴스레터 소식받기 <span class="btn-sub">(영문 기반)</span></a>
     </div>
   </div>
@@ -769,6 +769,13 @@ document.querySelectorAll('#navLinks a').forEach(function (a) {
     document.getElementById('navLinks').classList.remove('open');
     document.getElementById('navToggle').classList.remove('open');
     document.getElementById('navToggle').setAttribute('aria-expanded', 'false');
+  });
+});
+
+document.querySelectorAll('[data-lang]').forEach(function (el) {
+  el.addEventListener('click', function () {
+    document.cookie = 'tng_lang=' + el.getAttribute('data-lang') +
+      '; path=/; max-age=31536000; samesite=lax';
   });
 });
 </script>

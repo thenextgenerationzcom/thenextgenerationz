@@ -1,0 +1,23 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "header",
+          "key": "x-vercel-ip-country",
+          "value": "KR"
+        }
+      ],
+      "missing": [
+        {
+          "type": "cookie",
+          "key": "tng_lang"
+        }
+      ],
+      "destination": "/ko",
+      "permanent": false
+    }
+  ]
+}
