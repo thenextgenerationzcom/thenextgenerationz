@@ -4,20 +4,17 @@
     {
       "source": "/",
       "has": [
-        {
-          "type": "header",
-          "key": "x-vercel-ip-country",
-          "value": "KR"
-        }
+        { "type": "header", "key": "x-vercel-ip-country", "value": "KR" }
       ],
       "missing": [
-        {
-          "type": "cookie",
-          "key": "tng_lang"
-        }
+        { "type": "cookie", "key": "tng_lang" }
       ],
       "destination": "/ko",
       "permanent": false
     }
+  ],
+  "rewrites": [
+    { "source": "/ko/briefings", "destination": "/ko/briefings.html" },
+    { "source": "/briefings", "destination": "/briefings.html" }
   ]
 }

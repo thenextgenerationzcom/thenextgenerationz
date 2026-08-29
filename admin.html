@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TNG 관리자</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0B1623;--panel:#16222F;--panel2:#1D2C3B;--bdr:#2A3A48;
+  --ink:#FFFFFF;--ink-soft:#AAB4BD;--ink-dim:#6E7A85;
+  --m:#F2398C;--m-deep:#B81C63;--ok:#1D9E75;
+  --sans:'Pretendard Variable',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  --mono:ui-monospace,'SF Mono',Menlo,monospace;
+}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6;letter-spacing:-0.012em;-webkit-font-smoothing:antialiased}
+a{color:var(--m)}
+button{font-family:var(--sans);cursor:pointer}
+
+/* 로그인 */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+.login-box{width:100%;max-width:360px;background:var(--panel);border:1px solid var(--bdr);border-radius:8px;padding:36px 32px}
+.login-box h1{font-size:20px;font-weight:700;letter-spacing:-0.03em;margin-bottom:6px}
+.login-box p{font-size:13px;color:var(--ink-soft);margin-bottom:24px}
+.login-box input{width:100%;background:var(--bg);border:1px solid var(--bdr);color:var(--ink);padding:12px 14px;border-radius:4px;font-size:14px;outline:none;margin-bottom:12px}
+.login-box input:focus{border-color:var(--m)}
+.login-box button{width:100%;background:var(--m);color:#fff;border:none;padding:12px;border-radius:4px;font-size:14px;font-weight:600}
+.login-err{color:var(--m);font-size:13px;margin-top:10px;min-height:18px}
+
+/* 앱 */
+.app{display:none;min-height:100vh}
+.topbar{position:sticky;top:0;z-index:10;background:rgba(11,22,35,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--bdr);padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:56px}
+.topbar .brand{font-weight:700;letter-spacing:-0.03em;font-size:15px}
+.topbar .brand span{color:var(--m)}
+.topbar .right{display:flex;gap:8px;align-items:center}
+.tabs{display:flex;gap:4px;padding:12px 20px 0;border-bottom:1px solid var(--bdr)}
+.tab{background:none;border:none;color:var(--ink-soft);padding:10px 16px;font-size:14px;font-weight:500;border-bottom:2px solid transparent;margin-bottom:-1px}
+.tab.active{color:var(--ink);border-bottom-color:var(--m)}
+.wrap{max-width:900px;margin:0 auto;padding:24px 20px 80px}
+.btn{background:var(--panel2);border:1px solid var(--bdr);color:var(--ink);padding:8px 14px;border-radius:4px;font-size:13px;font-weight:500;transition:border-color .15s}
+.btn:hover{border-color:var(--m)}
+.btn-primary{background:var(--m);border-color:var(--m);color:#fff;font-weight:600}
+.btn-danger{color:#ff6b8a}
+.btn-sm{padding:5px 10px;font-size:12px}
+.muted{color:var(--ink-dim);font-size:12px}
+
+/* 통계 */
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:24px}
+.stat-card{background:var(--panel);border:1px solid var(--bdr);border-radius:8px;padding:18px 20px}
+.stat-card .label{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-dim);margin-bottom:8px}
+.stat-card .value{font-size:28px;font-weight:700;letter-spacing:-0.03em}
+.panel{background:var(--panel);border:1px solid var(--bdr);border-radius:8px;padding:20px;margin-bottom:16px}
+.panel h3{font-size:14px;font-weight:600;margin-bottom:14px;letter-spacing:-0.02em}
+.trend{display:flex;align-items:flex-end;gap:3px;height:120px;margin-bottom:8px}
+.trend .bar{flex:1;background:var(--m-deep);border-radius:2px 2px 0 0;min-height:2px;position:relative}
+.trend .bar:hover{background:var(--m)}
+.trend-labels{display:flex;gap:3px}
+.trend-labels span{flex:1;text-align:center;font-size:9px;color:var(--ink-dim);overflow:hidden}
+.dim-list{display:flex;flex-direction:column;gap:6px}
+.dim-item{display:flex;align-items:center;gap:10px;font-size:13px}
+.dim-item .name{width:130px;flex-shrink:0;color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dim-item .track{flex:1;height:8px;background:var(--bg);border-radius:4px;overflow:hidden}
+.dim-item .fill{height:100%;background:var(--m-deep);border-radius:4px}
+.dim-item .cnt{width:40px;text-align:right;font-family:var(--mono);font-size:12px;color:var(--ink-soft)}
+.dim-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+/* 글 목록 */
+.post-item{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--panel);border:1px solid var(--bdr);border-radius:6px;margin-bottom:8px}
+.post-item .meta{flex:1;min-width:0}
+.post-item .t{font-size:14px;font-weight:600;letter-spacing:-0.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.post-item .sub{font-size:12px;color:var(--ink-dim);margin-top:3px}
+.badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.06em;padding:2px 7px;border-radius:3px;vertical-align:middle}
+.badge.ko{background:#1e3a5f;color:#8bc0ff}
+.badge.en{background:#3a2f1e;color:#ffcf8b}
+.badge.pub{background:#123328;color:#6ee0b0}
+.badge.hid{background:#3a1e2a;color:#ff9ab5}
+.badge.sched{background:#2a2340;color:#c0a8ff}
+
+/* 편집기 */
+.editor label{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-dim);margin:14px 0 6px}
+.editor input,.editor select,.editor textarea{width:100%;background:var(--bg);border:1px solid var(--bdr);color:var(--ink);padding:11px 13px;border-radius:4px;font-size:14px;font-family:var(--sans);outline:none}
+.editor textarea{min-height:340px;line-height:1.8;resize:vertical}
+.editor input:focus,.editor select:focus,.editor textarea:focus{border-color:var(--m)}
+.editor-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.editor-actions{display:flex;gap:8px;margin-top:18px;align-items:center;flex-wrap:wrap}
+.toolbar{display:flex;gap:6px;margin:6px 0 0;flex-wrap:wrap}
+.thumbs{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.thumb{position:relative;width:70px;height:70px;border-radius:4px;overflow:hidden;border:1px solid var(--bdr)}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.thumb button{position:absolute;top:2px;right:2px;width:18px;height:18px;border:none;border-radius:50%;background:rgba(0,0,0,.7);color:#fff;font-size:12px;line-height:1;padding:0}
+.hint{font-size:12px;color:var(--ink-dim);line-height:1.7;margin-top:8px}
+.hint code{background:var(--bg);padding:1px 5px;border-radius:3px;font-family:var(--mono);font-size:11px;color:var(--m)}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--panel2);border:1px solid var(--bdr);color:var(--ink);padding:12px 20px;border-radius:6px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:100}
+.toast.show{opacity:1}
+.empty{text-align:center;color:var(--ink-dim);padding:40px;font-size:14px}
+@media(max-width:640px){.editor-row{grid-template-columns:1fr}.dim-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- 로그인 -->
+<div class="login-wrap" id="loginWrap">
+  <div class="login-box">
+    <h1>The Next Generation<span>Z</span></h1>
+    <p>관리자 인증</p>
+    <input type="password" id="loginKey" placeholder="관리자 키" autocomplete="off">
+    <button onclick="doLogin()">로그인</button>
+    <div class="login-err" id="loginErr"></div>
+  </div>
+</div>
+
+<!-- 앱 -->
+<div class="app" id="app">
+  <div class="topbar">
+    <div class="brand">The Next Generation<span>Z</span> · 관리자</div>
+    <div class="right">
+      <button class="btn btn-sm" onclick="window.open('/ko','_blank')">사이트 보기</button>
+      <button class="btn btn-sm" onclick="logout()">로그아웃</button>
+    </div>
+  </div>
+  <div class="tabs">
+    <button class="tab active" data-tab="dash" onclick="switchTab('dash')">대시보드</button>
+    <button class="tab" data-tab="posts" onclick="switchTab('posts')">글</button>
+  </div>
+
+  <!-- 대시보드 -->
+  <div class="wrap" id="tab-dash">
+    <div class="stat-row" id="statRow"></div>
+    <div class="panel">
+      <h3>최근 14일 방문 추이</h3>
+      <div class="trend" id="trendBars"></div>
+      <div class="trend-labels" id="trendLabels"></div>
+      <div class="muted" style="margin-top:8px">막대: 페이지뷰(PV) · 회색 숫자는 순방문(UV)</div>
+    </div>
+    <div class="dim-grid">
+      <div class="panel"><h3>유입경로 (오늘)</h3><div class="dim-list" id="dimSrc"></div></div>
+      <div class="panel"><h3>인기 페이지 (오늘)</h3><div class="dim-list" id="dimPath"></div></div>
+      <div class="panel"><h3>지역 (오늘)</h3><div class="dim-list" id="dimRg"></div></div>
+      <div class="panel"><h3>기기 (오늘)</h3><div class="dim-list" id="dimDev"></div></div>
+    </div>
+  </div>
+
+  <!-- 글 -->
+  <div class="wrap" id="tab-posts" style="display:none">
+    <!-- 목록 뷰 -->
+    <div id="postsList">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+        <h3 style="font-size:16px;font-weight:700;letter-spacing:-0.02em">브리핑 글</h3>
+        <button class="btn btn-primary" onclick="newPost()">+ 새 글</button>
+      </div>
+      <div id="postItems"></div>
+    </div>
+
+    <!-- 편집 뷰 -->
+    <div id="postEditor" style="display:none">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+        <h3 style="font-size:16px;font-weight:700;letter-spacing:-0.02em" id="editorTitle">새 글</h3>
+        <button class="btn btn-sm" onclick="backToList()">← 목록</button>
+      </div>
+      <div class="editor">
+        <input type="hidden" id="postId">
+        <label>제목</label>
+        <input type="text" id="postTitle" placeholder="22개월의 시계">
+        <div class="editor-row">
+          <div><label>언어</label>
+            <select id="postLang"><option value="ko">한국어</option><option value="en">English</option></select>
+          </div>
+          <div><label>상태</label>
+            <select id="postStatus"><option value="published">공개</option><option value="hidden">비공개</option></select>
+          </div>
+          <div><label>발행 시각</label>
+            <input type="datetime-local" id="postPublish">
+          </div>
+        </div>
+        <label>본문</label>
+        <div class="toolbar">
+          <button class="btn btn-sm" onclick="insertImage()">🖼 이미지</button>
+          <button class="btn btn-sm" onclick="insertMarker('[video:]', 8)">▶ 영상</button>
+          <button class="btn btn-sm" onclick="insertMarker('[강조 문구]', 1)">강조</button>
+          <input type="file" id="imgInput" accept="image/*" style="display:none" onchange="handleImage(this)">
+        </div>
+        <textarea id="postBody" placeholder="빈 줄로 문단을 나눕니다.&#10;&#10;[대괄호로 감싼 줄은 강조 문구가 됩니다.]&#10;&#10;[img:...] 마커는 이미지, 유튜브 링크는 자동으로 영상이 됩니다."></textarea>
+        <div class="thumbs" id="imgThumbs"></div>
+        <div class="hint">
+          문단은 <code>빈 줄</code>로 구분 · 강조는 <code>[문구]</code> · 이미지는 <code>[img:URL]</code> · 영상은 유튜브 링크 붙여넣기<br>
+          발행 시각을 미래로 두면 그 시각에 자동 공개(예약 발행)됩니다.
+        </div>
+        <div class="editor-actions">
+          <button class="btn btn-primary" onclick="savePost()">저장</button>
+          <button class="btn" onclick="backToList()">취소</button>
+          <span class="muted" id="saveMsg"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var KEY = '';
+try { KEY = localStorage.getItem('tng_admin_key') || ''; } catch(e){}
+
+function api(action, opts){
+  opts = opts || {};
+  var url = '/api/admin?action=' + action + '&key=' + encodeURIComponent(KEY);
+  var init = { method: opts.method || 'GET', headers: {} };
+  if (opts.body){ init.headers['Content-Type']='application/json'; init.body=JSON.stringify(opts.body); }
+  return fetch(url, init).then(function(r){
+    if (r.status === 401){ logout(); throw new Error('unauthorized'); }
+    return r.json();
+  });
+}
+function toast(msg){
+  var t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 2200);
+}
+
+/* ---- 로그인 ---- */
+function doLogin(){
+  var k = document.getElementById('loginKey').value.trim();
+  if (!k){ document.getElementById('loginErr').textContent='키를 입력하세요'; return; }
+  KEY = k;
+  // overview 호출로 키 검증
+  api('overview&days=1').then(function(){
+    try { localStorage.setItem('tng_admin_key', KEY); } catch(e){}
+    showApp();
+  }).catch(function(){
+    document.getElementById('loginErr').textContent = '인증 실패';
+  });
+}
+function logout(){
+  try { localStorage.removeItem('tng_admin_key'); } catch(e){}
+  KEY=''; location.reload();
+}
+function showApp(){
+  document.getElementById('loginWrap').style.display='none';
+  document.getElementById('app').style.display='block';
+  loadDash();
+}
+document.getElementById('loginKey').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
+
+/* ---- 탭 ---- */
+var loadedPosts = false;
+function switchTab(name){
+  document.querySelectorAll('.tab').forEach(function(t){ t.classList.toggle('active', t.dataset.tab===name); });
+  document.getElementById('tab-dash').style.display = name==='dash'?'block':'none';
+  document.getElementById('tab-posts').style.display = name==='posts'?'block':'none';
+  if (name==='posts' && !loadedPosts){ loadPosts(); loadedPosts=true; }
+}
+
+/* ---- 대시보드 ---- */
+function loadDash(){
+  api('overview&days=14').then(function(d){
+    renderTrend(d.trend||[]);
+    var dims = d.todayDims || {};
+    var totalToday = (d.trend && d.trend.length) ? d.trend[d.trend.length-1] : {pv:0,uv:0};
+    document.getElementById('statRow').innerHTML =
+      statCard('오늘 페이지뷰', totalToday.pv) +
+      statCard('오늘 순방문', totalToday.uv) +
+      statCard('14일 총 PV', (d.trend||[]).reduce(function(s,x){return s+x.pv;},0));
+    renderDim('dimSrc', dims.src);
+    renderDim('dimPath', dims.path);
+    renderDim('dimRg', dims.rg);
+    renderDim('dimDev', dims.dev);
+  }).catch(function(){ toast('통계를 불러오지 못했습니다'); });
+}
+function statCard(label, val){
+  return '<div class="stat-card"><div class="label">'+label+'</div><div class="value">'+(val||0)+'</div></div>';
+}
+function renderTrend(trend){
+  var max = Math.max.apply(null, trend.map(function(t){return t.pv;}).concat([1]));
+  var bars='', labels='';
+  trend.forEach(function(t){
+    var h = Math.round((t.pv/max)*100);
+    bars += '<div class="bar" style="height:'+h+'%" title="'+t.date+' · PV '+t.pv+' · UV '+t.uv+'"></div>';
+    labels += '<span>'+t.date.slice(5)+'</span>';
+  });
+  document.getElementById('trendBars').innerHTML = bars;
+  document.getElementById('trendLabels').innerHTML = labels;
+}
+function renderDim(elId, obj){
+  var el = document.getElementById(elId);
+  if (!obj || !Object.keys(obj).length){ el.innerHTML='<div class="muted">데이터 없음</div>'; return; }
+  var arr = Object.keys(obj).map(function(k){return [k,obj[k]];}).sort(function(a,b){return b[1]-a[1];}).slice(0,8);
+  var max = arr[0][1] || 1;
+  el.innerHTML = arr.map(function(x){
+    var pct = Math.round((x[1]/max)*100);
+    return '<div class="dim-item"><span class="name" title="'+esc(x[0])+'">'+esc(x[0])+'</span>'+
+      '<span class="track"><span class="fill" style="width:'+pct+'%"></span></span>'+
+      '<span class="cnt">'+x[1]+'</span></div>';
+  }).join('');
+}
+
+/* ---- 글 목록 ---- */
+function loadPosts(){
+  api('all').then(function(d){
+    var posts = d.posts || [];
+    var el = document.getElementById('postItems');
+    if (!posts.length){ el.innerHTML='<div class="empty">아직 글이 없습니다. + 새 글로 시작하세요.</div>'; return; }
+    var now = Date.now();
+    el.innerHTML = posts.map(function(p){
+      var langB = '<span class="badge '+(p.lang==='en'?'en':'ko')+'">'+(p.lang==='en'?'EN':'KO')+'</span>';
+      var stB;
+      if (p.status==='hidden') stB='<span class="badge hid">비공개</span>';
+      else if (p.publishAt>now) stB='<span class="badge sched">예약</span>';
+      else stB='<span class="badge pub">공개</span>';
+      var dt = new Date(p.publishAt);
+      var dstr = dt.getFullYear()+'.'+(dt.getMonth()+1)+'.'+dt.getDate()+' '+String(dt.getHours()).padStart(2,'0')+':'+String(dt.getMinutes()).padStart(2,'0');
+      return '<div class="post-item"><div class="meta">'+
+        '<div class="t">'+langB+' '+stB+' '+esc(p.title||'(제목 없음)')+'</div>'+
+        '<div class="sub">'+dstr+'</div></div>'+
+        '<button class="btn btn-sm" onclick="editPost(\''+p.id+'\')">편집</button>'+
+        '<button class="btn btn-sm btn-danger" onclick="removePost(\''+p.id+'\')">삭제</button></div>';
+    }).join('');
+    window._posts = posts;
+  }).catch(function(){ toast('글을 불러오지 못했습니다'); });
+}
+
+/* ---- 편집 ---- */
+function showEditor(show){
+  document.getElementById('postsList').style.display = show?'none':'block';
+  document.getElementById('postEditor').style.display = show?'block':'none';
+}
+function backToList(){ showEditor(false); loadPosts(); }
+function toLocalInput(ms){
+  var d = new Date(ms - d0offset(ms));
+  return d.toISOString().slice(0,16);
+}
+function d0offset(ms){ return new Date(ms).getTimezoneOffset()*60000; }
+function newPost(){
+  document.getElementById('editorTitle').textContent='새 글';
+  document.getElementById('postId').value='';
+  document.getElementById('postTitle').value='';
+  document.getElementById('postLang').value='ko';
+  document.getElementById('postStatus').value='published';
+  document.getElementById('postPublish').value = toLocalInput(Date.now());
+  document.getElementById('postBody').value='';
+  document.getElementById('saveMsg').textContent='';
+  refreshThumbs();
+  showEditor(true);
+}
+function editPost(id){
+  var p = (window._posts||[]).find(function(x){return x.id===id;});
+  if (!p) return;
+  document.getElementById('editorTitle').textContent='글 편집';
+  document.getElementById('postId').value=p.id;
+  document.getElementById('postTitle').value=p.title||'';
+  document.getElementById('postLang').value=p.lang||'ko';
+  document.getElementById('postStatus').value=p.status||'published';
+  document.getElementById('postPublish').value = toLocalInput(p.publishAt||Date.now());
+  document.getElementById('postBody').value=p.body||'';
+  document.getElementById('saveMsg').textContent='';
+  refreshThumbs();
+  showEditor(true);
+}
+function savePost(){
+  var pubStr = document.getElementById('postPublish').value;
+  var publishAt = pubStr ? new Date(pubStr).getTime() : Date.now();
+  var body = {
+    id: document.getElementById('postId').value || undefined,
+    title: document.getElementById('postTitle').value,
+    body: document.getElementById('postBody').value,
+    lang: document.getElementById('postLang').value,
+    status: document.getElementById('postStatus').value,
+    publishAt: publishAt,
+  };
+  document.getElementById('saveMsg').textContent='저장 중...';
+  api('save', {method:'POST', body:body}).then(function(d){
+    if (d.ok){ toast('저장되었습니다'); backToList(); }
+    else { document.getElementById('saveMsg').textContent='저장 실패: '+(d.error||''); }
+  }).catch(function(){ document.getElementById('saveMsg').textContent='저장 실패'; });
+}
+function removePost(id){
+  if (!confirm('이 글을 삭제할까요?')) return;
+  api('remove', {method:'POST', body:{id:id}}).then(function(){ toast('삭제되었습니다'); loadPosts(); });
+}
+
+/* ---- 본문 마커/이미지 ---- */
+function insertAtCursor(text){
+  var ta = document.getElementById('postBody');
+  var s = ta.selectionStart, e = ta.selectionEnd;
+  ta.value = ta.value.slice(0,s) + text + ta.value.slice(e);
+  ta.focus();
+  ta.selectionStart = ta.selectionEnd = s + text.length;
+}
+function insertMarker(marker, back){
+  insertAtCursor('\n'+marker+'\n');
+}
+function insertImage(){ document.getElementById('imgInput').click(); }
+function handleImage(input){
+  var file = input.files && input.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(){
+    var img = new Image();
+    img.onload = function(){
+      var max = 1400;
+      var w = img.width, h = img.height;
+      if (w > max){ h = Math.round(h*max/w); w = max; }
+      var canvas = document.createElement('canvas');
+      canvas.width=w; canvas.height=h;
+      canvas.getContext('2d').drawImage(img,0,0,w,h);
+      var data = canvas.toDataURL('image/jpeg', 0.82);
+      toast('이미지 업로드 중...');
+      api('uploadimg', {method:'POST', body:{data:data}}).then(function(d){
+        if (d.ok && d.url){ insertAtCursor('\n[img:'+d.url+']\n'); refreshThumbs(); toast('이미지 삽입됨'); }
+        else toast('업로드 실패');
+      }).catch(function(){ toast('업로드 실패'); });
+    };
+    img.src = reader.result;
+  };
+  reader.readAsDataURL(file);
+  input.value='';
+}
+function refreshThumbs(){
+  var body = document.getElementById('postBody').value;
+  var urls = (body.match(/\[img:([^\]]+)\]/g)||[]).map(function(m){return m.slice(5,-1);});
+  var el = document.getElementById('imgThumbs');
+  el.innerHTML = urls.map(function(u){
+    return '<div class="thumb"><img src="'+esc(u)+'"><button onclick="removeImgMarker(\''+u.replace(/'/g,"\\'")+'\')">×</button></div>';
+  }).join('');
+}
+function removeImgMarker(u){
+  var ta = document.getElementById('postBody');
+  ta.value = ta.value.replace(new RegExp('\\n?\\[img:'+u.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\]\\n?','g'),'\n');
+  refreshThumbs();
+}
+document.getElementById('postBody').addEventListener('input', function(){ /* live thumbs optional */ });
+
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+
+/* ---- 시작 ---- */
+if (KEY){
+  api('overview&days=1').then(function(){ showApp(); }).catch(function(){ /* 키 만료 → 로그인 화면 유지 */ });
+}
+</script>
+</body>
+</html>

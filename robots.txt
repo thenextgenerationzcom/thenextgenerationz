@@ -8,5 +8,7 @@ User-agent: Daumoa
 Allow: /
 
 Disallow: /api/
+Disallow: /admin.html
+Disallow: /admin
 
 Sitemap: https://www.thenextgenerationz.com/sitemap.xml

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>브리핑 | 더넥스트제너레이션즈</title>
+<meta name="description" content="지방정치, 공공 리더십, AI가 일하는 방식의 변화에 대한 기록. 더넥스트제너레이션즈 브리핑.">
+<link rel="canonical" href="https://www.thenextgenerationz.com/ko/briefings">
+<link rel="alternate" hreflang="ko" href="https://www.thenextgenerationz.com/ko/briefings">
+<link rel="alternate" hreflang="en" href="https://www.thenextgenerationz.com/briefings">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="icon" type="image/png" sizes="32x32" href="../img/favicon-32.png?v=3">
+<link rel="apple-touch-icon" sizes="180x180" href="../img/favicon-180.png?v=3">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#FFFFFF;--bg2:#FAF7F1;--bdr:#E4E1D8;
+  --ink:#0B1623;--ink-soft:#4B5768;
+  --m:#B81C63;--m-bright:#F2398C;
+  --serif:'Gowun Batang',Georgia,serif;
+  --sans:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  --mono:'IBM Plex Mono','Pretendard Variable',monospace;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.8;letter-spacing:-0.012em;font-synthesis:none;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;word-break:keep-all;overflow-wrap:break-word}
+
+nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--bdr);padding:0 5vw}
+.nav-inner{max-width:820px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.nav-icon{height:30px;width:auto;display:block}
+.nav-wordmark{height:27px;width:auto;display:block}
+.nav-links{display:flex;align-items:center;gap:22px}
+.nav-links a{font-size:13.5px;color:var(--ink-soft);text-decoration:none}
+.nav-links a:hover{color:var(--ink)}
+.nav-lang{font-family:var(--mono);font-size:12px;letter-spacing:0.06em;border:1px solid var(--bdr);padding:5px 10px;border-radius:2px}
+
+.wrap{max-width:720px;margin:0 auto;padding:64px 5vw 100px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--m);margin-bottom:16px;display:block}
+.page-title{font-family:var(--sans);font-size:clamp(28px,4vw,42px);font-weight:700;letter-spacing:-0.04em;line-height:1.25;margin-bottom:14px}
+.page-lead{font-size:15.5px;color:var(--ink-soft);line-height:1.85;letter-spacing:-0.014em;margin-bottom:48px;max-width:600px}
+
+/* 목록 */
+.list{display:flex;flex-direction:column;gap:2px}
+.card{display:block;text-decoration:none;color:inherit;padding:28px 0;border-top:1px solid var(--bdr);transition:opacity .15s}
+.card:hover{opacity:0.65}
+.card:last-child{border-bottom:1px solid var(--bdr)}
+.card .date{font-family:var(--mono);font-size:11.5px;letter-spacing:0.06em;color:var(--m);margin-bottom:10px;display:block}
+.card h2{font-family:var(--sans);font-size:22px;font-weight:700;letter-spacing:-0.03em;line-height:1.4;margin-bottom:10px}
+.card p{font-size:14.5px;color:var(--ink-soft);line-height:1.75;letter-spacing:-0.014em}
+
+/* 개별 글 */
+.article-date{font-family:var(--mono);font-size:12px;letter-spacing:0.06em;color:var(--m);margin-bottom:14px;display:block}
+.article-title{font-family:var(--sans);font-size:clamp(28px,4.4vw,44px);font-weight:700;letter-spacing:-0.04em;line-height:1.25;margin-bottom:40px}
+.article-body{font-size:16.5px;line-height:1.95;letter-spacing:-0.011em;color:#1a2531}
+.article-body p{margin-bottom:24px}
+.article-body .tagline{font-family:var(--serif);font-size:21px;font-weight:700;letter-spacing:-0.02em;line-height:1.6;color:var(--ink);margin:36px 0;padding-left:20px;border-left:3px solid var(--m)}
+.article-body figure{margin:36px 0}
+.article-body figure img{width:100%;border-radius:6px;display:block;border:1px solid var(--bdr)}
+.article-body .video{position:relative;padding-top:56.25%;margin:36px 0;border-radius:6px;overflow:hidden;background:#000}
+.article-body .video iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
+.article-body a{color:var(--m);text-decoration:none;border-bottom:1px solid rgba(184,28,99,.3)}
+.back{display:inline-block;margin-bottom:40px;font-size:14px;color:var(--m);text-decoration:none}
+.foot-cta{margin-top:64px;padding-top:32px;border-top:1px solid var(--bdr);font-size:14px;color:var(--ink-soft);line-height:1.8}
+.foot-cta a{color:var(--m);text-decoration:none}
+
+.state{text-align:center;color:var(--ink-soft);padding:80px 20px;font-size:15px}
+@media(max-width:640px){.wrap{padding:48px 6vw 80px}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/ko" class="nav-logo">
+      <img src="../img/nav-icon.png" alt="" class="nav-icon">
+      <img src="../img/wordmark-text.png" alt="더넥스트제너레이션즈" class="nav-wordmark">
+    </a>
+    <div class="nav-links">
+      <a href="/ko#work">Work</a>
+      <a href="/ko#about">소개</a>
+      <a href="/" class="nav-lang">EN</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <!-- 목록 뷰 -->
+  <div id="listView">
+    <span class="eyebrow">Briefing</span>
+    <h1 class="page-title">브리핑</h1>
+    <p class="page-lead">지방정치, 공공 리더십, 그리고 AI가 일하는 방식을 바꾸는 지점에 대한 기록입니다.</p>
+    <div class="list" id="postList"></div>
+    <div class="state" id="listState" style="display:none">아직 발행된 글이 없습니다.</div>
+  </div>
+
+  <!-- 개별 글 뷰 -->
+  <div id="articleView" style="display:none">
+    <a href="/ko/briefings" class="back" onclick="return goList(event)">← 브리핑 목록</a>
+    <span class="article-date" id="artDate"></span>
+    <h1 class="article-title" id="artTitle"></h1>
+    <div class="article-body" id="artBody"></div>
+    <div class="foot-cta">
+      더넥스트제너레이션즈는 지방의회·공공기관을 대상으로 예산 사이클과 AI 활용을 결합한 의정활동 워크숍을 진행합니다.<br>
+      <a href="/ko#contact">워크숍·강연 문의 →</a>
+    </div>
+  </div>
+</div>
+
+<script>
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+
+function ytId(s){
+  var m = s.match(/(?:youtu\.be\/|watch\?v=|\/embed\/|\/shorts\/|\/live\/)([\w-]{11})/) || s.match(/^([\w-]{11})$/);
+  return m ? m[1] : '';
+}
+function linkify(text){
+  return text.replace(/(https?:\/\/[^\s<]+)/g, function(u){
+    return '<a href="'+esc(u)+'" target="_blank" rel="noopener">'+esc(u)+'</a>';
+  });
+}
+function renderBody(raw){
+  var blocks = String(raw||'').split(/\n\s*\n/);
+  var html = '';
+  blocks.forEach(function(b){
+    b = b.trim();
+    if (!b) return;
+    // 이미지
+    var im = b.match(/^\[img:([^\]]+)\]$/);
+    if (im){ html += '<figure><img loading="lazy" src="'+esc(im[1])+'" alt=""></figure>'; return; }
+    // 영상 마커
+    var vm = b.match(/^\[video:([\w-]{11})\]$/);
+    if (vm){ html += videoEmbed(vm[1]); return; }
+    // 유튜브 링크 단독
+    var yid = ytId(b);
+    if (yid && b.length < 80){ html += videoEmbed(yid); return; }
+    // 강조 문구
+    if (/^\[.*\]$/.test(b)){ html += '<p class="tagline">'+esc(b.slice(1,-1))+'</p>'; return; }
+    // 일반 문단 (줄바꿈은 <br>로)
+    var lines = b.split('\n').map(function(l){ return linkify(esc(l)); }).join('<br>');
+    html += '<p>'+lines+'</p>';
+  });
+  return html;
+}
+function videoEmbed(id){
+  return '<div class="video"><iframe src="https://www.youtube.com/embed/'+id+'" allowfullscreen loading="lazy"></iframe></div>';
+}
+function fmtDate(ms){
+  var d = new Date(ms);
+  return d.getFullYear()+'. '+(d.getMonth()+1)+'. '+d.getDate()+'.';
+}
+function excerpt(body){
+  var t = String(body||'').replace(/\[img:[^\]]+\]/g,'').replace(/\[video:[^\]]+\]/g,'')
+    .replace(/https?:\/\/[^\s]+/g,'').replace(/[\[\]]/g,'').replace(/\s+/g,' ').trim();
+  return t.slice(0,90) + (t.length>90?'…':'');
+}
+
+function showList(posts){
+  document.getElementById('articleView').style.display='none';
+  document.getElementById('listView').style.display='block';
+  var el = document.getElementById('postList');
+  if (!posts.length){ document.getElementById('listState').style.display='block'; return; }
+  el.innerHTML = posts.map(function(p){
+    return '<a class="card" href="/ko/briefings?id='+encodeURIComponent(p.id)+'" onclick="return openPost(event,\''+p.id+'\')">'+
+      '<span class="date">'+fmtDate(p.publishAt)+'</span>'+
+      '<h2>'+esc(p.title||'(제목 없음)')+'</h2>'+
+      '<p>'+esc(excerpt(p.body))+'</p></a>';
+  }).join('');
+}
+function showArticle(p){
+  document.getElementById('listView').style.display='none';
+  document.getElementById('articleView').style.display='block';
+  document.getElementById('artDate').textContent = fmtDate(p.publishAt);
+  document.getElementById('artTitle').textContent = p.title||'';
+  document.getElementById('artBody').innerHTML = renderBody(p.body);
+  document.title = (p.title||'브리핑') + ' | 더넥스트제너레이션즈';
+  window.scrollTo(0,0);
+}
+
+var _cache = {};
+function openPost(e, id){
+  if (e) e.preventDefault();
+  history.pushState({id:id}, '', '/ko/briefings?id='+encodeURIComponent(id));
+  loadPost(id);
+  return false;
+}
+function goList(e){
+  if (e) e.preventDefault();
+  history.pushState({}, '', '/ko/briefings');
+  loadList();
+  return false;
+}
+function loadPost(id){
+  if (_cache[id]){ showArticle(_cache[id]); return; }
+  fetch('/api/admin?action=get&id='+encodeURIComponent(id)).then(function(r){return r.json();}).then(function(d){
+    if (d.post){ _cache[id]=d.post; showArticle(d.post); }
+    else goList();
+  }).catch(goList);
+}
+function loadList(){
+  fetch('/api/admin?action=list&lang=ko').then(function(r){return r.json();}).then(function(d){
+    showList(d.posts||[]);
+  }).catch(function(){ document.getElementById('listState').style.display='block'; });
+}
+
+window.addEventListener('popstate', function(){ route(); });
+function route(){
+  var qs = new URLSearchParams(location.search);
+  var id = qs.get('id');
+  if (id) loadPost(id); else loadList();
+}
+route();
+</script>
+<script src="/a.js" defer></script>
+</body>
+</html>
