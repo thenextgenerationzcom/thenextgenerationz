@@ -95,6 +95,9 @@ export default async function handler(req, res) {
     cmds.push(['PFADD', 'a:uv:' + date, visitorHash]);
     // 차원별 집계
     cmds.push(['HINCRBY', 'a:h:' + date, 'path:' + path, 1]);
+    // 언어판 구분 (경로가 /ko 로 시작하면 한국어판, 아니면 영문판)
+    var lang = /^\/ko(\/|$)/.test(path) ? '한국어판' : '영문판';
+    cmds.push(['HINCRBY', 'a:h:' + date, 'lang:' + lang, 1]);
     cmds.push(['HINCRBY', 'a:h:' + date, 'hr:' + hour, 1]);
     cmds.push(['HINCRBY', 'a:h:' + date, 'dev:' + dev, 1]);
     if (country) cmds.push(['HINCRBY', 'a:h:' + date, 'rg:' + country, 1]);

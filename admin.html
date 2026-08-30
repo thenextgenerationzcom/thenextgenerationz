@@ -10,13 +10,13 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#0B1623;--panel:#16222F;--panel2:#1D2C3B;--bdr:#2A3A48;
-  --ink:#FFFFFF;--ink-soft:#AAB4BD;--ink-dim:#6E7A85;
-  --m:#F2398C;--m-deep:#B81C63;--ok:#1D9E75;
+  --bg:#FFFFFF;--panel:#FAF7F1;--panel2:#F1EDE5;--bdr:#E4E1D8;
+  --ink:#0B1623;--ink-soft:#4B5768;--ink-dim:#8A95A0;
+  --m:#B81C63;--m-bright:#F2398C;--m-deep:#B81C63;--ok:#1D9E75;
   --sans:'Pretendard Variable',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
-  --mono:ui-monospace,'SF Mono',Menlo,monospace;
+  --mono:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace;
 }
-body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6;letter-spacing:-0.012em;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6;letter-spacing:-0.012em;font-synthesis:none;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 a{color:var(--m)}
 button{font-family:var(--sans);cursor:pointer}
 
@@ -25,14 +25,14 @@ button{font-family:var(--sans);cursor:pointer}
 .login-box{width:100%;max-width:360px;background:var(--panel);border:1px solid var(--bdr);border-radius:8px;padding:36px 32px}
 .login-box h1{font-size:20px;font-weight:700;letter-spacing:-0.03em;margin-bottom:6px}
 .login-box p{font-size:13px;color:var(--ink-soft);margin-bottom:24px}
-.login-box input{width:100%;background:var(--bg);border:1px solid var(--bdr);color:var(--ink);padding:12px 14px;border-radius:4px;font-size:14px;outline:none;margin-bottom:12px}
+.login-box input{width:100%;background:#fff;border:1px solid var(--bdr);color:var(--ink);padding:12px 14px;border-radius:4px;font-size:14px;outline:none;margin-bottom:12px}
 .login-box input:focus{border-color:var(--m)}
-.login-box button{width:100%;background:var(--m);color:#fff;border:none;padding:12px;border-radius:4px;font-size:14px;font-weight:600}
+.login-box button{width:100%;background:var(--m);color:#fff;border:none;padding:12px;border-radius:4px;font-size:14px;font-weight:600;letter-spacing:-0.01em}
 .login-err{color:var(--m);font-size:13px;margin-top:10px;min-height:18px}
 
 /* 앱 */
 .app{display:none;min-height:100vh}
-.topbar{position:sticky;top:0;z-index:10;background:rgba(11,22,35,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--bdr);padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:56px}
+.topbar{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--bdr);padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:56px}
 .topbar .brand{font-weight:700;letter-spacing:-0.03em;font-size:15px}
 .topbar .brand span{color:var(--m)}
 .topbar .right{display:flex;gap:8px;align-items:center}
@@ -42,8 +42,8 @@ button{font-family:var(--sans);cursor:pointer}
 .wrap{max-width:900px;margin:0 auto;padding:24px 20px 80px}
 .btn{background:var(--panel2);border:1px solid var(--bdr);color:var(--ink);padding:8px 14px;border-radius:4px;font-size:13px;font-weight:500;transition:border-color .15s}
 .btn:hover{border-color:var(--m)}
-.btn-primary{background:var(--m);border-color:var(--m);color:#fff;font-weight:600}
-.btn-danger{color:#ff6b8a}
+.btn-primary{background:var(--m);border-color:var(--m);color:#fff;font-weight:600;letter-spacing:-0.01em}
+.btn-danger{color:#c0392b}
 .btn-sm{padding:5px 10px;font-size:12px}
 .muted{color:var(--ink-dim);font-size:12px}
 
@@ -62,7 +62,7 @@ button{font-family:var(--sans);cursor:pointer}
 .dim-list{display:flex;flex-direction:column;gap:6px}
 .dim-item{display:flex;align-items:center;gap:10px;font-size:13px}
 .dim-item .name{width:130px;flex-shrink:0;color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.dim-item .track{flex:1;height:8px;background:var(--bg);border-radius:4px;overflow:hidden}
+.dim-item .track{flex:1;height:8px;background:var(--panel2);border-radius:4px;overflow:hidden}
 .dim-item .fill{height:100%;background:var(--m-deep);border-radius:4px}
 .dim-item .cnt{width:40px;text-align:right;font-family:var(--mono);font-size:12px;color:var(--ink-soft)}
 .dim-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
@@ -73,15 +73,15 @@ button{font-family:var(--sans);cursor:pointer}
 .post-item .t{font-size:14px;font-weight:600;letter-spacing:-0.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .post-item .sub{font-size:12px;color:var(--ink-dim);margin-top:3px}
 .badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.06em;padding:2px 7px;border-radius:3px;vertical-align:middle}
-.badge.ko{background:#1e3a5f;color:#8bc0ff}
-.badge.en{background:#3a2f1e;color:#ffcf8b}
-.badge.pub{background:#123328;color:#6ee0b0}
-.badge.hid{background:#3a1e2a;color:#ff9ab5}
-.badge.sched{background:#2a2340;color:#c0a8ff}
+.badge.ko{background:#e3edf7;color:#2c6aa8}
+.badge.en{background:#f7efdf;color:#a8792c}
+.badge.pub{background:#dcf3e9;color:#1a8560}
+.badge.hid{background:#f7e3ea;color:#b02c5a}
+.badge.sched{background:#ece5f7;color:#6d4ca8}
 
 /* 편집기 */
 .editor label{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-dim);margin:14px 0 6px}
-.editor input,.editor select,.editor textarea{width:100%;background:var(--bg);border:1px solid var(--bdr);color:var(--ink);padding:11px 13px;border-radius:4px;font-size:14px;font-family:var(--sans);outline:none}
+.editor input,.editor select,.editor textarea{width:100%;background:#fff;border:1px solid var(--bdr);color:var(--ink);padding:11px 13px;border-radius:4px;font-size:14px;font-family:var(--sans);outline:none}
 .editor textarea{min-height:340px;line-height:1.8;resize:vertical}
 .editor input:focus,.editor select:focus,.editor textarea:focus{border-color:var(--m)}
 .editor-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
@@ -92,7 +92,7 @@ button{font-family:var(--sans);cursor:pointer}
 .thumb img{width:100%;height:100%;object-fit:cover}
 .thumb button{position:absolute;top:2px;right:2px;width:18px;height:18px;border:none;border-radius:50%;background:rgba(0,0,0,.7);color:#fff;font-size:12px;line-height:1;padding:0}
 .hint{font-size:12px;color:var(--ink-dim);line-height:1.7;margin-top:8px}
-.hint code{background:var(--bg);padding:1px 5px;border-radius:3px;font-family:var(--mono);font-size:11px;color:var(--m)}
+.hint code{background:var(--panel2);padding:1px 6px;border-radius:3px;font-family:var(--mono);font-size:11px;color:var(--m);font-weight:500}
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--panel2);border:1px solid var(--bdr);color:var(--ink);padding:12px 20px;border-radius:6px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:100}
 .toast.show{opacity:1}
 .empty{text-align:center;color:var(--ink-dim);padding:40px;font-size:14px}
@@ -136,6 +136,7 @@ button{font-family:var(--sans);cursor:pointer}
       <div class="muted" style="margin-top:8px">막대: 페이지뷰(PV) · 회색 숫자는 순방문(UV)</div>
     </div>
     <div class="dim-grid">
+      <div class="panel"><h3>언어판 (오늘)</h3><div class="dim-list" id="dimLang"></div></div>
       <div class="panel"><h3>유입경로 (오늘)</h3><div class="dim-list" id="dimSrc"></div></div>
       <div class="panel"><h3>인기 페이지 (오늘)</h3><div class="dim-list" id="dimPath"></div></div>
       <div class="panel"><h3>지역 (오늘)</h3><div class="dim-list" id="dimRg"></div></div>
@@ -263,6 +264,7 @@ function loadDash(){
       statCard('오늘 페이지뷰', totalToday.pv) +
       statCard('오늘 순방문', totalToday.uv) +
       statCard('14일 총 PV', (d.trend||[]).reduce(function(s,x){return s+x.pv;},0));
+    renderDim('dimLang', dims.lang);
     renderDim('dimSrc', dims.src);
     renderDim('dimPath', dims.path);
     renderDim('dimRg', dims.rg);

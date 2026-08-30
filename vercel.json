@@ -14,6 +14,7 @@
     }
   ],
   "rewrites": [
+    { "source": "/admin", "destination": "/admin.html" },
     { "source": "/ko/briefings", "destination": "/ko/briefings.html" },
     { "source": "/briefings", "destination": "/briefings.html" }
   ]
