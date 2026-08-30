@@ -216,13 +216,19 @@ export default async function handler(req, res) {
       const dates = [];
       for (let i = days - 1; i >= 0; i--) dates.push(kstDate(-i));
 
+      // 상세를 볼 날짜 (기본: 오늘). 최근 days 범위 안에 있어야 함.
+      const todayStr = dates[dates.length - 1];
+      let detailDate = (req.query.date || '').toString();
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(detailDate) || dates.indexOf(detailDate) < 0) {
+        detailDate = todayStr;
+      }
+
       const cmds = [];
       for (const d of dates) {
         cmds.push(['GET', 'a:pv:' + d]);
         cmds.push(['PFCOUNT', 'a:uv:' + d]);
       }
-      const today = dates[dates.length - 1];
-      cmds.push(['HGETALL', 'a:h:' + today]);
+      cmds.push(['HGETALL', 'a:h:' + detailDate]);
 
       const results = await pipeline(cmds);
       const trend = [];
@@ -241,11 +247,14 @@ export default async function handler(req, res) {
       } else if (rawHash && typeof rawHash === 'object') {
         hashObj = rawHash;
       }
-      const todayDims = groupDims(hashObj);
-      if (todayDims.src) delete todayDims.src['사이트 내부']; // 과거 오염분 제외
+      const dims = groupDims(hashObj);
+      if (dims.src) delete dims.src['사이트 내부']; // 과거 오염분 제외
+
+      // 선택일의 PV/UV
+      const sel = trend.find((t) => t.date === detailDate) || { pv: 0, uv: 0 };
 
       res.setHeader('Cache-Control', 'no-store');
-      return res.status(200).json({ trend, today, todayDims });
+      return res.status(200).json({ trend, detailDate, dims, selPv: sel.pv, selUv: sel.uv, dates });
     }
 
     return res.status(400).json({ error: 'unknown action' });

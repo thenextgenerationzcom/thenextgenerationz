@@ -66,6 +66,11 @@ button{font-family:var(--sans);cursor:pointer}
 .dim-item .fill{height:100%;background:var(--m-deep);border-radius:4px}
 .dim-item .cnt{width:40px;text-align:right;font-family:var(--mono);font-size:12px;color:var(--ink-soft)}
 .dim-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.date-picker{display:flex;align-items:center;gap:10px;margin:0 0 16px;flex-wrap:wrap}
+.date-picker select{background:#fff;border:1px solid var(--bdr);color:var(--ink);padding:7px 12px;border-radius:4px;font-size:13px;font-family:var(--sans);outline:none;cursor:pointer}
+.date-picker select:focus{border-color:var(--m)}
+.trend .bar{cursor:pointer}
+.trend .bar.sel{background:var(--m)}
 
 /* 글 목록 */
 .post-item{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--panel);border:1px solid var(--bdr);border-radius:6px;margin-bottom:8px}
@@ -133,14 +138,21 @@ button{font-family:var(--sans);cursor:pointer}
       <h3>최근 14일 방문 추이</h3>
       <div class="trend" id="trendBars"></div>
       <div class="trend-labels" id="trendLabels"></div>
-      <div class="muted" style="margin-top:8px">막대: 페이지뷰(PV) · 회색 숫자는 순방문(UV)</div>
+      <div class="muted" style="margin-top:8px">막대: 페이지뷰(PV) · 막대 위 회색은 순방문(UV) · 날짜를 클릭하면 그날 상세를 봅니다</div>
+    </div>
+    <div class="date-picker">
+      <span class="muted">날짜별 상세</span>
+      <select id="dateSel" onchange="loadDetail(this.value)"></select>
+      <span class="muted" id="dateSummary"></span>
     </div>
     <div class="dim-grid">
-      <div class="panel"><h3>언어판 (오늘)</h3><div class="dim-list" id="dimLang"></div></div>
-      <div class="panel"><h3>유입경로 (오늘)</h3><div class="dim-list" id="dimSrc"></div></div>
-      <div class="panel"><h3>인기 페이지 (오늘)</h3><div class="dim-list" id="dimPath"></div></div>
-      <div class="panel"><h3>지역 (오늘)</h3><div class="dim-list" id="dimRg"></div></div>
-      <div class="panel"><h3>기기 (오늘)</h3><div class="dim-list" id="dimDev"></div></div>
+      <div class="panel"><h3 id="h-lang">언어판</h3><div class="dim-list" id="dimLang"></div></div>
+      <div class="panel"><h3 id="h-src">유입경로</h3><div class="dim-list" id="dimSrc"></div></div>
+      <div class="panel"><h3 id="h-path">인기 페이지</h3><div class="dim-list" id="dimPath"></div></div>
+      <div class="panel"><h3 id="h-enter">진입 페이지</h3><div class="dim-list" id="dimEnter"></div></div>
+      <div class="panel"><h3 id="h-rg">지역</h3><div class="dim-list" id="dimRg"></div></div>
+      <div class="panel"><h3 id="h-hr">시간대</h3><div class="dim-list" id="dimHr"></div></div>
+      <div class="panel"><h3 id="h-dev">기기</h3><div class="dim-list" id="dimDev"></div></div>
     </div>
   </div>
 
@@ -239,6 +251,8 @@ function logout(){
   KEY=''; location.reload();
 }
 function showApp(){
+  // 방식 B: 관리자가 로그인한 브라우저는 통계에서 자동 제외
+  try { localStorage.setItem('tng_notrack', '1'); } catch(e){}
   document.getElementById('loginWrap').style.display='none';
   document.getElementById('app').style.display='block';
   loadDash();
@@ -255,44 +269,70 @@ function switchTab(name){
 }
 
 /* ---- 대시보드 ---- */
-function loadDash(){
-  api('overview&days=14').then(function(d){
-    renderTrend(d.trend||[]);
-    var dims = d.todayDims || {};
-    var totalToday = (d.trend && d.trend.length) ? d.trend[d.trend.length-1] : {pv:0,uv:0};
+var _trend = [];
+function loadDash(dateStr){
+  var q = 'overview&days=14' + (dateStr ? '&date='+dateStr : '');
+  api(q).then(function(d){
+    _trend = d.trend || [];
+    var totalPV = _trend.reduce(function(s,x){return s+x.pv;},0);
     document.getElementById('statRow').innerHTML =
-      statCard('오늘 페이지뷰', totalToday.pv) +
-      statCard('오늘 순방문', totalToday.uv) +
-      statCard('14일 총 PV', (d.trend||[]).reduce(function(s,x){return s+x.pv;},0));
-    renderDim('dimLang', dims.lang);
-    renderDim('dimSrc', dims.src);
-    renderDim('dimPath', dims.path);
-    renderDim('dimRg', dims.rg);
-    renderDim('dimDev', dims.dev);
+      statCard('선택일 페이지뷰', d.selPv||0) +
+      statCard('선택일 순방문', d.selUv||0) +
+      statCard('14일 총 PV', totalPV);
+    renderTrend(_trend, d.detailDate);
+    fillDateSelect(_trend, d.detailDate);
+    renderDetail(d);
   }).catch(function(){ toast('통계를 불러오지 못했습니다'); });
+}
+function loadDetail(dateStr){ loadDash(dateStr); }
+function fillDateSelect(trend, sel){
+  var el = document.getElementById('dateSel');
+  var todayStr = trend.length ? trend[trend.length-1].date : '';
+  el.innerHTML = trend.slice().reverse().map(function(t){
+    var label = t.date + (t.date===todayStr ? ' (오늘)' : '');
+    return '<option value="'+t.date+'"'+(t.date===sel?' selected':'')+'>'+label+'</option>';
+  }).join('');
+}
+function renderDetail(d){
+  var dims = d.dims || {};
+  var label = d.detailDate + ' · PV '+(d.selPv||0)+' · UV '+(d.selUv||0);
+  document.getElementById('dateSummary').textContent = label;
+  renderDim('dimLang', dims.lang);
+  renderDim('dimSrc', dims.src);
+  renderDim('dimPath', dims.path);
+  renderDim('dimEnter', dims.enter);
+  renderDim('dimRg', dims.rg);
+  renderDim('dimHr', dims.hr, true);   // 시간대는 시간순 정렬
+  renderDim('dimDev', dims.dev);
 }
 function statCard(label, val){
   return '<div class="stat-card"><div class="label">'+label+'</div><div class="value">'+(val||0)+'</div></div>';
 }
-function renderTrend(trend){
+function renderTrend(trend, selDate){
   var max = Math.max.apply(null, trend.map(function(t){return t.pv;}).concat([1]));
   var bars='', labels='';
   trend.forEach(function(t){
     var h = Math.round((t.pv/max)*100);
-    bars += '<div class="bar" style="height:'+h+'%" title="'+t.date+' · PV '+t.pv+' · UV '+t.uv+'"></div>';
+    var cls = 'bar' + (t.date===selDate?' sel':'');
+    bars += '<div class="'+cls+'" style="height:'+h+'%" title="'+t.date+' · PV '+t.pv+' · UV '+t.uv+'" onclick="loadDetail(\''+t.date+'\')"></div>';
     labels += '<span>'+t.date.slice(5)+'</span>';
   });
   document.getElementById('trendBars').innerHTML = bars;
   document.getElementById('trendLabels').innerHTML = labels;
 }
-function renderDim(elId, obj){
+function renderDim(elId, obj, byKey){
   var el = document.getElementById(elId);
+  if (!el) return;
   if (!obj || !Object.keys(obj).length){ el.innerHTML='<div class="muted">데이터 없음</div>'; return; }
-  var arr = Object.keys(obj).map(function(k){return [k,obj[k]];}).sort(function(a,b){return b[1]-a[1];}).slice(0,8);
-  var max = arr[0][1] || 1;
+  var arr = Object.keys(obj).map(function(k){return [k,obj[k]];});
+  if (byKey) arr.sort(function(a,b){return a[0]<b[0]?-1:1;});      // 시간순(00시→23시)
+  else arr.sort(function(a,b){return b[1]-a[1];});                  // 값 큰 순
+  arr = arr.slice(0, byKey?24:8);
+  var max = Math.max.apply(null, arr.map(function(x){return x[1];}).concat([1]));
   el.innerHTML = arr.map(function(x){
+    var name = byKey ? (x[0]+'시') : x[0];
     var pct = Math.round((x[1]/max)*100);
-    return '<div class="dim-item"><span class="name" title="'+esc(x[0])+'">'+esc(x[0])+'</span>'+
+    return '<div class="dim-item"><span class="name" title="'+esc(name)+'">'+esc(name)+'</span>'+
       '<span class="track"><span class="fill" style="width:'+pct+'%"></span></span>'+
       '<span class="cnt">'+x[1]+'</span></div>';
   }).join('');
