@@ -153,6 +153,8 @@ button{font-family:var(--sans);cursor:pointer}
       <div class="panel"><h3 id="h-rg">지역</h3><div class="dim-list" id="dimRg"></div></div>
       <div class="panel"><h3 id="h-hr">시간대</h3><div class="dim-list" id="dimHr"></div></div>
       <div class="panel"><h3 id="h-dev">기기</h3><div class="dim-list" id="dimDev"></div></div>
+      <div class="panel"><h3 id="h-menu">메뉴 클릭</h3><div class="dim-list" id="dimMenu"></div></div>
+      <div class="panel"><h3 id="h-out">외부로 이동</h3><div class="dim-list" id="dimOut"></div></div>
     </div>
   </div>
 
@@ -278,7 +280,8 @@ function loadDash(dateStr){
     document.getElementById('statRow').innerHTML =
       statCard('선택일 페이지뷰', d.selPv||0) +
       statCard('선택일 순방문', d.selUv||0) +
-      statCard('14일 총 PV', totalPV);
+      statCard('14일 총 PV', totalPV) +
+      statCard('선택일 봇 차단', d.botCount||0);
     renderTrend(_trend, d.detailDate);
     fillDateSelect(_trend, d.detailDate);
     renderDetail(d);
@@ -304,6 +307,8 @@ function renderDetail(d){
   renderDim('dimRg', dims.rg);
   renderDim('dimHr', dims.hr, true);   // 시간대는 시간순 정렬
   renderDim('dimDev', dims.dev);
+  renderDim('dimMenu', dims.menu);
+  renderDim('dimOut', dims.out);
 }
 function statCard(label, val){
   return '<div class="stat-card"><div class="label">'+label+'</div><div class="value">'+(val||0)+'</div></div>';

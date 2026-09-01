@@ -229,6 +229,7 @@ export default async function handler(req, res) {
         cmds.push(['PFCOUNT', 'a:uv:' + d]);
       }
       cmds.push(['HGETALL', 'a:h:' + detailDate]);
+      cmds.push(['GET', 'a:bot:' + detailDate]);
 
       const results = await pipeline(cmds);
       const trend = [];
@@ -239,8 +240,9 @@ export default async function handler(req, res) {
           uv: Number((results[i * 2 + 1] || {}).result) || 0,
         });
       }
-      // HGETALL 결과 → 배열([k,v,k,v]) 또는 객체일 수 있어 정규화
-      let rawHash = (results[results.length - 1] || {}).result;
+      // 마지막 두 결과가 HGETALL, GET(bot)
+      let rawHash = (results[results.length - 2] || {}).result;
+      const botCount = Number((results[results.length - 1] || {}).result) || 0;
       let hashObj = {};
       if (Array.isArray(rawHash)) {
         for (let i = 0; i < rawHash.length; i += 2) hashObj[rawHash[i]] = rawHash[i + 1];
@@ -254,7 +256,7 @@ export default async function handler(req, res) {
       const sel = trend.find((t) => t.date === detailDate) || { pv: 0, uv: 0 };
 
       res.setHeader('Cache-Control', 'no-store');
-      return res.status(200).json({ trend, detailDate, dims, selPv: sel.pv, selUv: sel.uv, dates });
+      return res.status(200).json({ trend, detailDate, dims, selPv: sel.pv, selUv: sel.uv, botCount, dates });
     }
 
     return res.status(400).json({ error: 'unknown action' });
