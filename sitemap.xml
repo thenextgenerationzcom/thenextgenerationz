@@ -7,7 +7,7 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://www.thenextgenerationz.com/"/>
     <xhtml:link rel="alternate" hreflang="ko" href="https://www.thenextgenerationz.com/ko"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.thenextgenerationz.com/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-10-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -17,9 +17,23 @@
     <xhtml:link rel="alternate" hreflang="ko" href="https://www.thenextgenerationz.com/ko"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.thenextgenerationz.com/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.thenextgenerationz.com/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-10-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://www.thenextgenerationz.com/ko/session</loc>
+    <lastmod>2026-10-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.thenextgenerationz.com/ko/publishing</loc>
+    <lastmod>2026-10-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
 
 </urlset>

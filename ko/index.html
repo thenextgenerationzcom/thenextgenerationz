@@ -68,6 +68,35 @@
     },
     {
       "@type": "Service",
+      "@id": "https://www.thenextgenerationz.com/ko/publishing#service",
+      "name": "한 권의 정치 — 재선 이상 지방의원 출판 프로듀싱",
+      "provider": { "@id": "https://www.thenextgenerationz.com/#organization" },
+      "serviceType": "출판 기획 및 프로듀싱",
+      "areaServed": "KR",
+      "audience": { "@type": "Audience", "audienceType": "재선 이상 지방의원" },
+      "url": "https://www.thenextgenerationz.com/ko/publishing",
+      "description": "사전조사, 스토리텔링 기획, 원고 작성, 출판, 출판기념회까지 함께하는 출판 프로듀싱. 책과 행사의 형식을 저자에게 맞춰 고르는 데서 시작합니다. 전 과정 8~10개월."
+    },
+    {
+      "@type": "Service",
+      "@id": "https://www.thenextgenerationz.com/ko/session#service",
+      "name": "3년의 목차 — 초선 지방의원 1:1 의정 설계 워크숍",
+      "provider": { "@id": "https://www.thenextgenerationz.com/#organization" },
+      "serviceType": "의정활동 설계 워크숍",
+      "areaServed": "KR",
+      "audience": { "@type": "Audience", "audienceType": "2026년 당선 초선 지방의원" },
+      "url": "https://www.thenextgenerationz.com/ko/session",
+      "description": "사전 온라인 워크숍으로 공약·상임위·지역 현안을 진단하고, 1:1 심층 워크숍에서 3년 로드맵과 가목차를 완성한 뒤 60일 후 실행을 점검하는 과정. 정원 20명.",
+      "offers": {
+        "@type": "Offer",
+        "price": "400000",
+        "priceCurrency": "KRW",
+        "availability": "https://schema.org/LimitedAvailability",
+        "url": "https://www.thenextgenerationz.com/ko/session#apply"
+      }
+    },
+    {
+      "@type": "Service",
       "name": "지방의원 의정활동 역량강화 워크숍 — 예산과 AI",
       "provider": { "@id": "https://www.thenextgenerationz.com/#organization" },
       "serviceType": "의정활동 교육",
@@ -177,9 +206,14 @@ section{padding:104px 5vw}
 .modules li:last-child{border-bottom:none}
 .modules .num{font-family:var(--mono);font-size:12px;color:var(--m);flex-shrink:0;padding-top:3px;font-weight:500}
 .work-note{margin-top:24px;font-size:13.5px;color:var(--ink-soft);line-height:1.85;letter-spacing:-0.014em;background:var(--bg2);border-radius:4px;padding:16px 18px}
+.work-card.feat{background:var(--card);border-left-width:4px}
+.work-card.feat .work-note{background:var(--bg)}
+.work-badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;background:var(--m);color:#FFFFFF;border-radius:2px;padding:4px 9px;margin-bottom:14px}
 .work-cta{margin-top:26px}
 .work-cta a{font-size:14px;color:var(--m);text-decoration:none;border-bottom:1px solid rgba(184,28,99,.3);padding-bottom:2px;transition:border-color .2s}
 .work-cta a:hover{border-color:var(--m)}
+.work-cta a.go{display:inline-block;background:var(--m-bright);color:var(--ink);font-weight:600;padding:13px 24px;border-radius:2px;border-bottom:none;transition:opacity .2s}
+.work-cta a.go:hover{opacity:.85;border-bottom:none}
 
 /* PILLARS */
 .pillars{background:var(--bg)}
@@ -332,6 +366,7 @@ section[id]{scroll-margin-top:72px}
     <div class="hero-actions">
       <a href="/" class="btn-primary" data-lang="en">The Next GenerationZ 글로벌 플랫폼 가기 →</a>
       <a href="#subscribe" class="btn-ghost">뉴스레터 소식받기 <span class="btn-sub">(영문 기반)</span></a>
+      <a href="/ko/session" class="btn-ghost">3년의 목차 <span class="btn-sub">(초선 지방의원 1:1 · 모집 중)</span></a>
     </div>
   </div>
 </section>
@@ -343,10 +378,90 @@ section[id]{scroll-margin-top:72px}
     <h2 class="section-title">현장에서 바로 쓰이는 것만 다룹니다.</h2>
     <p class="section-lead">
       개념 설명으로 끝나는 교육은 하지 않습니다. 모든 과정은 참가자가 실제 업무에 적용할 결과물을
-      손에 들고 나가는 것을 목표로 설계되어 있습니다. 기관 상황에 맞춰 시간과 모듈을 조정합니다.
+      손에 들고 나가는 것을 목표로 설계되어 있습니다. 아래 첫 번째 과정은 의원 개인이 직접 신청하는
+      1:1 프로그램이고, 나머지는 의회·기관 발주로 진행하며 기관 상황에 맞춰 시간과 모듈을 조정합니다.
     </p>
 
     <div class="work-list">
+
+      <!-- 3년의 목차 — 초선 1:1 (신규 · 개인 신청) -->
+      <article class="work-card feat">
+        <span class="work-badge">모집 중 · 개인 신청</span>
+        <span class="work-kicker">Program 01 · 초선 지방의원 1:1</span>
+        <h3>3년의 목차</h3>
+        <p class="lead-line">3년 뒤 당신의 의정활동이 책이 된다면, 목차는 무엇입니까.</p>
+        <p>
+          조례 발의 건수, 5분 발언 횟수, 팔로워 수. 같은 지표로 겨루면 결국 아무도 구별되지 않습니다.
+          임기는 4년처럼 보이지만 실질적으로는 3년입니다. 그 3년에 공약을 심고 결산으로 확인할 수 있는
+          기회는 두 번뿐이고, 첫 번째가 이번 12월 예산 심의입니다. 1:1로 만나 3년을 설계하고,
+          그 설계를 손에 들고 나가는 과정입니다.
+        </p>
+
+        <div class="work-spec">
+          <div class="spec-item">
+            <span class="spec-key">대상</span>
+            <span class="spec-val">초선 지방의원 — 2026년 첫 당선</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-key">형식</span>
+            <span class="spec-val">1:1 · 대면 우선 온오프라인</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-key">정원</span>
+            <span class="spec-val">20명</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-key">참가비</span>
+            <span class="spec-val">40만원</span>
+          </div>
+        </div>
+
+        <div class="work-note">
+          사전 온라인 워크숍 · 1:1 심층 워크숍 · 산출물 3종(3년 로드맵 · 정의문 · 가목차) · 60일 점검이
+          모두 포함됩니다. 전국 어디든 찾아갑니다. 재선 이상 의원을 위한 과정은 별도로 준비하고 있습니다.
+        </div>
+
+        <div class="work-cta"><a class="go" href="/ko/session">자세히 보기 · 신청하기 →</a></div>
+      </article>
+
+      <!-- 한 권의 정치 — 재선 이상 출판 프로듀싱 -->
+      <article class="work-card feat">
+        <span class="work-badge">상담 접수 중 · 개인 신청</span>
+        <span class="work-kicker">Program 02 · 재선 이상 지방의원</span>
+        <h3>한 권의 정치</h3>
+        <p class="lead-line">여러분의 정치를, 자신의 언어로.</p>
+        <p>
+          정치인의 책은 대부분 비슷합니다. 목차도, 표지도, 출판기념회도. 형식을 고른 적이 없기 때문입니다.
+          이 과정은 여러분에게 맞는 책의 형태와 행사의 형태를 먼저 고르는 데서 시작합니다.
+          사전조사부터 스토리텔링 기획, 원고, 출판, 그리고 출판기념회까지 함께 갑니다.
+        </p>
+
+        <div class="work-spec">
+          <div class="spec-item">
+            <span class="spec-key">대상</span>
+            <span class="spec-val">재선 이상 지방의원</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-key">기간</span>
+            <span class="spec-val">전 과정 8~10개월</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-key">정원</span>
+            <span class="spec-val">연 4권</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-key">산출물</span>
+            <span class="spec-val">책 1권 + 출판기념회</span>
+          </div>
+        </div>
+
+        <div class="work-note">
+          기획 단계까지만 받으실 수도 있습니다. 비용은 범위와 형식에 따라 개별 안내드리며,
+          상담에는 비용이 들지 않습니다.
+        </div>
+
+        <div class="work-cta"><a class="go" href="/ko/publishing">자세히 보기 · 상담 신청 →</a></div>
+      </article>
 
       <!-- 연구·컨설팅 -->
       <article class="work-card">
@@ -408,7 +523,7 @@ section[id]{scroll-margin-top:72px}
 
       <!-- 워크숍 01 — Different -->
       <article class="work-card">
-        <span class="work-kicker">Workshop 01</span>
+        <span class="work-kicker">Workshop 01 · 기관 발주</span>
         <h3>넘버 원이 아닌 온리 원 — I&rsquo;m Different</h3>
         <p class="lead-line">더 잘하는 법이 아니라, 달라지는 법.</p>
         <p>
@@ -458,7 +573,7 @@ section[id]{scroll-margin-top:72px}
 
       <!-- 워크숍 02 — 의정활동 + AI -->
       <article class="work-card">
-        <span class="work-kicker">Workshop 02</span>
+        <span class="work-kicker">Workshop 02 · 기관 발주</span>
         <h3>지방의원 의정활동 역량강화 워크숍 — 예산과 AI</h3>
         <p class="lead-line">공약을 예산에 앉히는 기술.</p>
         <p>

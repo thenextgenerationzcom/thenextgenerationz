@@ -4,18 +4,42 @@
     {
       "source": "/",
       "has": [
-        { "type": "header", "key": "x-vercel-ip-country", "value": "KR" }
+        {
+          "type": "header",
+          "key": "x-vercel-ip-country",
+          "value": "KR"
+        }
       ],
       "missing": [
-        { "type": "cookie", "key": "tng_lang" }
+        {
+          "type": "cookie",
+          "key": "tng_lang"
+        }
       ],
       "destination": "/ko",
       "permanent": false
     }
   ],
   "rewrites": [
-    { "source": "/admin", "destination": "/admin.html" },
-    { "source": "/ko/briefings", "destination": "/ko/briefings.html" },
-    { "source": "/briefings", "destination": "/briefings.html" }
+    {
+      "source": "/admin",
+      "destination": "/admin.html"
+    },
+    {
+      "source": "/ko/session",
+      "destination": "/ko/session.html"
+    },
+    {
+      "source": "/ko/publishing",
+      "destination": "/ko/publishing.html"
+    },
+    {
+      "source": "/ko/briefings",
+      "destination": "/ko/briefings.html"
+    },
+    {
+      "source": "/briefings",
+      "destination": "/briefings.html"
+    }
   ]
 }
