@@ -42,7 +42,7 @@
         "url": "https://www.thenextgenerationz.com"
       },
       "areaServed": "KR",
-      "audience": { "@type": "Audience", "audienceType": "재선 이상 지방의원" },
+      "audience": { "@type": "Audience", "audienceType": "재선 이상 지방의원, 총선 출마 준비자" },
       "description": "사전조사, 스토리텔링 기획, 원고 작성, 출판, 출판기념회까지 함께하는 출판 프로듀싱. 책과 행사의 형식을 저자에게 맞춰 고르는 데서 시작합니다. 전 과정 8~10개월.",
       "url": "https://www.thenextgenerationz.com/ko/publishing"
     },
@@ -139,6 +139,11 @@ h2{font-size:clamp(25px,3.3vw,36px);font-weight:700;line-height:1.36;letter-spac
 .bio-list{display:flex;flex-direction:column;gap:7px;margin-top:18px;font-size:14.5px;color:var(--ink-soft)}
 .bio-list div{padding-left:14px;position:relative}
 .bio-list div::before{content:'';position:absolute;left:0;top:12px;width:5px;height:1px;background:var(--m)}
+.books{display:flex;gap:18px;margin-top:26px;flex-wrap:wrap}
+.book{width:auto}
+.book img{height:198px;width:auto;display:block;border:1px solid var(--bdr);border-radius:2px}
+.book b{display:block;font-size:12.5px;font-weight:600;color:var(--ink);margin-top:10px;line-height:1.5;letter-spacing:-0.022em}
+.book span{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:0.06em;color:var(--ink-dim);margin-top:3px}
 
 /* STEPS */
 .steps{display:flex;flex-direction:column;gap:2px;margin-top:26px}
@@ -254,7 +259,7 @@ footer{background:#0B1623;border-top:1px solid #2A3A48;padding:40px 5vw}
     <p class="crumb"><a href="/ko">더넥스트제너레이션즈</a> / <a href="/ko#work">Work</a> / 한 권의 정치</p>
   </div>
   <div class="in hero">
-    <span class="eyebrow">Program 02 · 재선 이상 지방의원</span>
+    <span class="eyebrow">Program 02 · 재선 이상 지방의원, 총선 출마 준비자</span>
     <h1>한 권의 정치</h1>
     <p class="hook">여러분의 정치를, 자신의 언어로</p>
     <p class="body">진짜 자신의 의정활동을, 자신만의 가치에 맞게 한 권으로 정리하는 과정입니다. 새로운 시대에는 새로운 형식이 있습니다. 남들이 해온 틀에 내용을 붓는 대신, 여러분에게 맞는 책의 형태와 행사의 형태를 먼저 고릅니다. 사전조사부터 스토리텔링 기획, 원고, 출판, 그리고 출판기념회까지 — 성과를 만드는 여정을 끝까지 함께 갑니다.</p>
@@ -295,7 +300,7 @@ footer{background:#0B1623;border-top:1px solid #2A3A48;padding:40px 5vw}
         <p>지금까지를 매듭짓고 다음을 보여주어야 하는 시점. 그 전환을 한 권으로 증명하고 싶은 분.</p>
       </div>
     </div>
-    <p class="punch" style="margin-top:30px">재선 이상 의원을 위한 과정입니다. 쌓인 것이 있어야 한 권이 됩니다.</p>
+    <p class="punch" style="margin-top:30px">재선 이상 지방의원과 총선 출마를 준비하는 분을 위한 과정입니다. 쌓인 것이 있어야 한 권이 됩니다.</p>
   </div>
 </section>
 
@@ -359,8 +364,19 @@ footer{background:#0B1623;border-top:1px solid #2A3A48;padding:40px 5vw}
     <p class="lead">더넥스트제너레이션즈 대표<br>『나는 지방의원이다』(2022) · 『당신을 위한 나의 정치는 이렇게 시작되었습니다』(2025) 대표저자</p>
     <div class="bio-list">
       <div>지방의원·신진 정치인 심층 인터뷰 26회</div>
-      <div>「지방의원 역량강화 워크숍」 (2021)</div>
-      <div>「압도적 의정활동을 위한 AI 워크숍」 (2024)</div>
+      <div>「지방의원 역량강화 워크숍」, 「압도적 의정활동을 위한 AI 워크숍」 등 다수의 지방의원 전담 교육 시행</div>
+      <div>『바꿔, 우리들이 살 세상이야 — 뉴 제너레이션을 위한 액션 툴킷』 (미키 할핀 지음) 공역, 상상파워</div>
+    </div>
+
+    <div class="books">
+      <figure class="book">
+        <img src="../img/book-local-council.jpg" alt="『나는 지방의원이다』 표지" loading="lazy" width="440" height="624">
+        <b>나는 지방의원이다</b><span>2022 · 대표저자</span>
+      </figure>
+      <figure class="book">
+        <img src="../img/book-your-politics.jpg" alt="『당신을 위한 나의 정치는 이렇게 시작되었습니다』 표지" loading="lazy" width="440" height="651">
+        <b>당신을 위한 나의 정치는<br>이렇게 시작되었습니다</b><span>2025 · 대표저자</span>
+      </figure>
     </div>
     <div class="stack" style="margin-top:26px">
       <p class="lead">두 권의 책을 기획하고 대표저자로 썼습니다. 26번의 심층 인터뷰를 하며, 같은 이야기를 어떻게 꺼내느냐에 따라 전혀 다른 책이 된다는 것을 확인했습니다.</p>
@@ -438,7 +454,7 @@ footer{background:#0B1623;border-top:1px solid #2A3A48;padding:40px 5vw}
     <div class="dt">
       <div class="dt-r">
         <span class="dt-k">대상</span>
-        <span class="dt-v"><strong>재선 이상 지방의원</strong>
+        <span class="dt-v"><strong>재선 이상 지방의원, 총선 출마 준비자</strong>
           <span class="note">초선 의원을 위한 과정은 <a href="/ko/session">「3년의 목차」</a>로 따로 있습니다.</span></span>
       </div>
       <div class="dt-r">
@@ -470,7 +486,7 @@ footer{background:#0B1623;border-top:1px solid #2A3A48;padding:40px 5vw}
   <div class="in sec">
     <span class="eyebrow">Apply</span>
     <h2>먼저 이야기부터 들어봅니다</h2>
-    <p class="lead">어떤 책이 가능한지는 가지고 계신 자료와 하고 싶은 이야기를 봐야 알 수 있습니다. <strong>상담은 비용이 들지 않습니다.</strong> 남겨주시면 연락드려 일정을 잡겠습니다.</p>
+    <p class="lead">어떤 책이 가능한지는 가지고 계신 자료와 하고 싶은 이야기를 봐야 알 수 있습니다. <strong>첫 상담에는 비용이 들지 않습니다.</strong> 남겨주시면 연락드려 일정을 잡겠습니다.</p>
 
     <form id="applyForm" onsubmit="handleApply(event, this)">
       <div class="form-grid">
