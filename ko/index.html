@@ -178,13 +178,6 @@ nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.96);backdrop
 .btn-ghost{display:inline-block;background:transparent;color:var(--ink);text-decoration:none;padding:15px 28px;border:1px solid var(--bdr);border-radius:2px;font-size:15px;font-weight:500;letter-spacing:-0.005em;transition:border-color .2s,color .2s}
 .btn-ghost:hover{border-color:var(--m);color:var(--m)}
 .btn-sub{font-size:12.5px;opacity:.7;font-weight:400}
-.hero-pub{margin-top:40px;padding-top:26px;border-top:1px solid var(--bdr);max-width:760px}
-.hero-pub-label{font-size:12.5px;font-weight:600;letter-spacing:0.02em;color:var(--m);display:block;margin-bottom:16px}
-.hero-pub-links{display:flex;flex-wrap:wrap;gap:12px}
-.hero-pub-links a{display:flex;flex-direction:column;gap:3px;flex:1 1 260px;text-decoration:none;border:1px solid var(--bdr);border-left:3px solid var(--m);border-radius:2px;padding:14px 18px;background:var(--bg);transition:border-color .2s,transform .2s}
-.hero-pub-links a:hover{border-color:var(--m);transform:translateY(-1px)}
-.hero-pub-links b{font-size:16px;font-weight:700;letter-spacing:-0.028em;color:var(--ink)}
-.hero-pub-links em{font-style:normal;font-size:12.5px;color:var(--ink-soft);letter-spacing:-0.012em}
 
 /* SECTIONS */
 section{padding:104px 5vw}
@@ -194,6 +187,7 @@ section{padding:104px 5vw}
 .section-lead{font-size:15.5px;color:var(--ink-soft);line-height:1.9;letter-spacing:-0.014em;max-width:660px}
 
 /* WORK */
+.pub{background:var(--bg)}
 .work{background:var(--bg2)}
 .work-list{margin-top:56px;display:flex;flex-direction:column;gap:20px}
 .work-card{background:var(--bg);border:1px solid var(--bdr);border-left:3px solid var(--m);border-radius:0;padding:42px 46px;transition:transform .2s}
@@ -330,8 +324,7 @@ section[id]{scroll-margin-top:72px}
 
   .hero{padding:64px 6vw 58px}
   .hero-actions{flex-direction:column;align-items:stretch}
-  .hero-pub-links{flex-direction:column}
-  .hero-actions a{text-align:center}
+    .hero-actions a{text-align:center}
   section{padding:72px 6vw}
 }
 </style>
@@ -375,26 +368,18 @@ section[id]{scroll-margin-top:72px}
       <a href="/" class="btn-primary" data-lang="en">The Next GenerationZ 글로벌 플랫폼 가기 →</a>
       <a href="#subscribe" class="btn-ghost">뉴스레터 소식받기 <span class="btn-sub">(영문 기반)</span></a>
     </div>
-
-    <div class="hero-pub">
-      <span class="hero-pub-label">더넥스트제너레이션즈 출판 프로젝트</span>
-      <div class="hero-pub-links">
-        <a href="/ko/session"><b>3년의 목차</b><em>초선 지방의원 1:1 · 모집 중</em></a>
-        <a href="/ko/publishing"><b>한 권의 정치</b><em>재선 이상 출판 프로듀싱 · 상담 접수 중</em></a>
-      </div>
-    </div>
   </div>
 </section>
 
-<!-- WORK -->
-<section class="work" id="work">
+<!-- PUBLISHING PROJECT -->
+<section class="pub" id="publishing">
   <div class="inner">
-    <span class="section-label">Work</span>
-    <h2 class="section-title">현장에서 바로 쓰이는 것만 다룹니다.</h2>
+    <span class="section-label">Publishing Project</span>
+    <h2 class="section-title">더넥스트제너레이션즈 출판 프로젝트</h2>
     <p class="section-lead">
-      개념 설명으로 끝나는 교육은 하지 않습니다. 모든 과정은 참가자가 실제 업무에 적용할 결과물을
-      손에 들고 나가는 것을 목표로 설계되어 있습니다. 아래 첫 번째 과정은 의원 개인이 직접 신청하는
-      1:1 프로그램이고, 나머지는 의회·기관 발주로 진행하며 기관 상황에 맞춰 시간과 모듈을 조정합니다.
+      의정활동의 기록은 임기가 끝난 뒤에 모으는 것이 아닙니다. 무엇을 남길지 먼저 정하고,
+      그것을 만들어가는 순서입니다. 초선은 3년의 설계부터, 재선 이상은 한 권의 완성까지
+      — 두 과정으로 나누어 함께합니다.
     </p>
 
     <div class="work-list">
@@ -433,7 +418,7 @@ section[id]{scroll-margin-top:72px}
 
         <div class="work-note">
           사전 온라인 워크숍 · 1:1 심층 워크숍 · 산출물 3종(3년 로드맵 · 정의문 · 가목차) · 60일 점검이
-          모두 포함됩니다. 전국 어디든 찾아갑니다.
+          모두 포함됩니다. <strong>초선 의원 스무 분을 전국 어디든 직접 찾아갑니다.</strong>
           <strong>의정활동 교육비로 수강 신청하실 수 있으며</strong>, 견적서 · 세금계산서 · 교육 수료확인서를 발급해 드립니다.
         </div>
 
@@ -478,6 +463,22 @@ section[id]{scroll-margin-top:72px}
 
         <div class="work-cta"><a class="go" href="/ko/publishing">자세히 보기 · 상담 신청 →</a></div>
       </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section class="work" id="work">
+  <div class="inner">
+    <span class="section-label">Work</span>
+    <h2 class="section-title">현장에서 바로 쓰이는 것만 다룹니다.</h2>
+    <p class="section-lead">
+      개념 설명으로 끝나는 교육은 하지 않습니다. 모든 과정은 참가자가 실제 업무에 적용할 결과물을
+      손에 들고 나가는 것을 목표로 설계되어 있습니다.
+    </p>
+
+    <div class="work-list">
 
       <!-- 연구·컨설팅 -->
       <article class="work-card">
