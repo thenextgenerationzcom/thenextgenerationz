@@ -139,6 +139,12 @@ h2{font-size:clamp(25px,3.3vw,36px);font-weight:700;line-height:1.36;letter-spac
 .bio-list{display:flex;flex-direction:column;gap:7px;margin-top:18px;font-size:14.5px;color:var(--ink-soft)}
 .bio-list div{padding-left:14px;position:relative}
 .bio-list div::before{content:'';position:absolute;left:0;top:12px;width:5px;height:1px;background:var(--m)}
+.creds{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:28px}
+.cred{min-width:0;border-top:2px solid var(--m);padding-top:14px}
+.cred h3{font-size:15.5px;font-weight:700;letter-spacing:-0.028em;color:var(--ink);margin-bottom:11px}
+.cred ul{list-style:none;display:flex;flex-direction:column;gap:7px}
+.cred li{font-size:13.2px;color:var(--ink-soft);line-height:1.62;letter-spacing:-0.014em;padding-left:11px;position:relative}
+.cred li::before{content:'';position:absolute;left:0;top:10px;width:5px;height:1px;background:var(--m);opacity:.6}
 .books{display:flex;gap:18px;margin-top:26px;flex-wrap:wrap}
 .book{width:auto}
 .book img{height:198px;width:auto;display:block;border:1px solid var(--bdr);border-radius:2px}
@@ -203,6 +209,7 @@ footer{background:#0B1623;border-top:1px solid #2A3A48;padding:40px 5vw}
 
 @media(max-width:768px){
   .outs{grid-template-columns:1fr}
+  .creds{grid-template-columns:1fr;gap:22px}
   .sec{padding-block:62px}
   .dt-r{grid-template-columns:1fr;gap:4px}
   .step{grid-template-columns:1fr;gap:6px}
@@ -361,12 +368,47 @@ footer{background:#0B1623;border-top:1px solid #2A3A48;padding:40px 5vw}
   <div class="in sec">
     <span class="eyebrow">Who</span>
     <h2>김희원</h2>
-    <p class="lead">더넥스트제너레이션즈 대표<br>『나는 지방의원이다』(2022) · 『당신을 위한 나의 정치는 이렇게 시작되었습니다』(2025) 대표저자</p>
-    <div class="bio-list">
-      <div>지방의원·신진 정치인 심층 인터뷰 26회</div>
-      <div>「지방의원 역량강화 워크숍」, 「압도적 의정활동을 위한 AI 워크숍」 등 다수의 지방의원 전담 교육 시행</div>
-      <div>『바꿔, 우리들이 살 세상이야 — 뉴 제너레이션을 위한 액션 툴킷』 (미키 할핀 지음) 공역, 상상파워</div>
+    <p class="lead">더넥스트제너레이션즈 대표<br>『나는 지방의원이다』(2022) · 『당신을 위한 나의 정치는 이렇게 시작되었습니다』(2025) 대표저자<br>『바꿔, 우리들이 살 세상이야 — 뉴 제너레이션을 위한 액션 툴킷』(2024) 공역</p>
+    <p class="lead" style="margin-top:16px">정치인의 기록을 다루려면 정치를 알아야 합니다. 정책이 어떻게 만들어지는지,
+      지역이 어떻게 움직이는지, 선거가 어떻게 돌아가는지.</p>
+
+    <div class="creds">
+      <div class="cred">
+        <h3>정책을 압니다</h3>
+        <ul>
+          <li>서울시 청년허브 「서울잡스」 편집장</li>
+          <li>서울시 청년정책 네트워크 — 동대문구 활성화 사업단장</li>
+          <li>서울시 일자리 창출사업 — DDM 일자리발전소 사업단장</li>
+          <li>국회의원실 청년정책 과제 연구 · 제안</li>
+          <li>한국산업기술진흥원 정책 수립 연구</li>
+          <li>한국언론진흥재단 — 지방자치 맞춤형 정책 제안 플랫폼 개발</li>
+        </ul>
+      </div>
+      <div class="cred">
+        <h3>지역을 압니다</h3>
+        <ul>
+          <li>로컬메이킹 플리마켓 「잇다마켓」 1~5회 사업단장</li>
+          <li>서울시 마을공동체 — 부모커뮤니티 활성화 사업</li>
+          <li>공동주택 같이살림 프로젝트 — 아파트 주민사업 2년</li>
+          <li>사회적경제 시범사업 — 1인 가구 돌봄 협력망 구축</li>
+          <li>마을 교육활동 공동체 사업</li>
+        </ul>
+      </div>
+      <div class="cred">
+        <h3>정치를 압니다</h3>
+        <ul>
+          <li>「지방의원 역량강화 워크숍」 · 「압도적 의정활동을 위한 AI 워크숍」 등 지방의원 전담 교육 다수</li>
+          <li>청년 지방의원 의정활동 아카이빙</li>
+          <li>현직 기자들과 함께하는 의제발굴 워크숍</li>
+          <li>경향신문 제20대 대선 특집 기획 — 2030 FGI 프로젝트</li>
+          <li>총선 · 지방선거 · 당대표 선거 캠페인 총괄</li>
+          <li>지방의원 · 신진 정치인 심층 인터뷰 26회</li>
+        </ul>
+      </div>
     </div>
+
+    <p class="punch" style="margin-top:28px">책을 만들 줄 아는 사람은 많습니다.
+      정책과 지역과 정치를 함께 아는 사람은 드뭅니다.</p>
 
     <div class="books">
       <figure class="book">
