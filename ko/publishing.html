@@ -543,7 +543,7 @@ footer{background:#0B1623;border-top:1px solid #2A3A48;padding:40px 5vw}
       <div class="dt-r">
         <span class="dt-k">선행 과정</span>
         <span class="dt-v"><strong>「한 장의 목차」 — 계약 전 필수</strong>
-          <span class="note">이미 원고와 기획을 갖고 계신 경우에도 한 장의 목차로 함께 점검한 뒤 시작합니다.</span></span>
+          <span class="note">이미 원고와 기획을 갖고 계신 경우에는 그 원고를 바탕으로 핵심 질문 · 구성 · 보완할 자료를 한 장의 목차로 함께 점검한 뒤 시작합니다.</span></span>
       </div>
       <div class="dt-r">
         <span class="dt-k">기간</span>
@@ -575,12 +575,13 @@ footer{background:#0B1623;border-top:1px solid #2A3A48;padding:40px 5vw}
     <span class="eyebrow">Apply</span>
     <h2>먼저 이야기부터 들어봅니다</h2>
     <p class="lead">어떤 책이 가능한지는 가지고 계신 자료와 하고 싶은 이야기를 봐야 알 수 있습니다. 그래서 <strong>「한 장의 목차」로 먼저 만납니다.</strong> 남겨주시면 연락드려 일정을 잡겠습니다.</p>
+    <div class="apply-steps" style="margin:18px 0 30px;font-family:var(--mono);font-size:12px;letter-spacing:0.04em;color:#C9D1D8;line-height:2">문의 접수 → 자료 · 목표 확인과 「한 장의 목차」 안내 → 한 장의 목차 진행 → 출판 범위 · 견적 협의 → 계약</div>
 
     <form id="applyForm" onsubmit="handleApply(event, this)">
       <div class="form-grid">
         <div class="field">
-          <label for="a-org">소속 의회</label>
-          <input type="text" id="a-org" name="org" placeholder="○○시의회" required>
+          <label for="a-org">소속 의회 · 활동 지역</label>
+          <input type="text" id="a-org" name="org" placeholder="○○시의회 (비현직은 활동 지역)" required>
         </div>
         <div class="field">
           <label for="a-name">성함</label>
@@ -595,12 +596,13 @@ footer{background:#0B1623;border-top:1px solid #2A3A48;padding:40px 5vw}
           <input type="tel" id="a-phone" name="phone" placeholder="010-0000-0000">
         </div>
         <div class="field">
-          <label for="a-term">선수</label>
+          <label for="a-term">신청 구분</label>
           <select id="a-term" name="term" required>
             <option value="">선택해주세요</option>
             <option value="재선">재선</option>
             <option value="3선 이상">3선 이상</option>
             <option value="초선">초선</option>
+            <option value="비현직 · 출마 준비">현직이 아닌 출마 준비자</option>
           </select>
         </div>
         <div class="field">
@@ -653,7 +655,7 @@ async function handleApply(e, form) {
   const data = Object.fromEntries(new FormData(form).entries());
 
   const extra = [];
-  if (data.term) extra.push('[선수] ' + data.term);
+  if (data.term) extra.push('[신청 구분] ' + data.term);
   if (data.when) extra.push('[시점] ' + data.when);
   if (extra.length) {
     data.message = extra.join('\n') + '\n\n' + (data.message || '');
