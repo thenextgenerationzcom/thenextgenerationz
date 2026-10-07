@@ -170,6 +170,11 @@ h2{font-size:clamp(25px,3.3vw,36px);font-weight:700;line-height:1.36;letter-spac
 .curr-r:last-child{border-bottom:0}
 .curr-r .d{color:var(--ink);min-width:0;line-height:1.6}
 .curr-r .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:0.08em;color:var(--m);white-space:nowrap}
+.curr2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.curr2 .curr{margin-top:0}
+.curr-h{padding:11px 16px;background:var(--bg2);border-bottom:1px solid var(--bdr);font-family:var(--mono);font-size:11px;letter-spacing:0.12em;color:var(--m)}
+.career{margin-top:34px;padding-top:28px;border-top:1px solid var(--bdr)}
+.career h3{font-size:clamp(18px,2.2vw,21px);font-weight:700;letter-spacing:-0.03em;line-height:1.5;margin-bottom:12px}
 
 /* OUT CARDS */
 .outs{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:26px}
@@ -225,6 +230,7 @@ footer{background:#0B1623;border-top:1px solid #2A3A48;padding:40px 5vw}
   .step{grid-template-columns:1fr;gap:6px}
   .curr-r{grid-template-columns:1fr;gap:4px}
   .curr-r .tag{justify-self:start}
+  .curr2{grid-template-columns:1fr}
   .form-grid{grid-template-columns:1fr}
   .footer-inner{flex-direction:column;gap:10px;text-align:center}
   .btns{flex-direction:column;align-items:stretch}
@@ -346,9 +352,17 @@ footer{background:#0B1623;border-top:1px solid #2A3A48;padding:40px 5vw}
 
     <div class="stack">
       <p class="lead">2030년 상반기는 선거 준비 기간입니다. 의정활동이 아닙니다. 2028년 4월 총선에는 지방의원도 선거운동에 동원됩니다. 빼고 나면 2026년 가을부터 2029년 말까지, 약 3년이 남습니다.</p>
-      <p class="lead"><strong>그리고 지금은 취임 3개월째입니다.</strong> 11월에 행정사무감사가 있고, 12월에 2027년도 예산안 심의가 있습니다. 임기의 첫 예산 심의입니다.</p>
+      <p class="lead"><strong>그리고 지금은 취임 3개월째입니다.</strong> 11월에 행정사무감사가 있고, 12월에 2027년도 예산안 심의가 있습니다. 이번 임기의 첫 예산 심의입니다.</p>
       <p class="tagline">공약 하나가 예산이 되어 결과로 돌아오기까지 22개월. 임기 안에 심고, 집행하고, 결산까지 확인할 수 있는 사업은 두 번뿐입니다. 그 첫 번째가 지금 지나가고 있습니다.</p>
       <p class="punch">3년 뒤 여러분만의 의정활동 성과를 지금부터 준비해야 합니다.</p>
+    </div>
+    <div class="career">
+      <span class="eyebrow">경력 의원에게는</span>
+      <h3>쌓인 것을 이야기로 바꿀 시간입니다</h3>
+      <div class="stack">
+        <p class="lead">지난 임기의 조례, 발언, 현장 활동은 이미 충분합니다. 다만 흩어져 있습니다. 선거를 몇 달 앞두고 그것을 급하게 묶으면 의례적인 책이 됩니다.</p>
+        <p class="lead"><strong>이번 임기 초반에 지나온 길을 한 장으로 정리해 두면, 남은 3년은 그 목차의 빈칸을 채우는 시간이 됩니다.</strong> <a href="/ko/publishing#whynow" style="color:var(--m);text-decoration:none">책은 왜 지금부터 준비해야 할까요 →</a></p>
+      </div>
     </div>
   </div>
 </section>
@@ -465,12 +479,25 @@ footer{background:#0B1623;border-top:1px solid #2A3A48;padding:40px 5vw}
           <h3>개인별 맞춤형 심층 온오프라인 워크숍을 통한 정밀 진단</h3>
           <div class="when">온라인 또는 대면</div>
           <div class="curr">
+            <div class="curr-h">공통</div>
             <div class="curr-r"><span class="d">26번의 인터뷰에서 구성한 스토리 패턴 분석</span></div>
             <div class="curr-r"><span class="d">자신만의 목차 만들기</span><span class="tag">가치 진단</span></div>
-            <div class="curr-r"><span class="d">공약·상임위·지역 현안에서 쓸 수 있는 것</span><span class="tag">재료 점검</span></div>
-            <div class="curr-r"><span class="d">3년에 기회가 몇 번 있는가</span><span class="tag">22개월의 의정 시계</span></div>
-            <div class="curr-r"><span class="d">12분기 배치와 올 12월에 할 일</span><span class="tag">마일스톤 체크</span></div>
-            <div class="curr-r"><span class="d">경력 의원은 지난 임기의 성과와 한계 해석부터</span><span class="tag">경력 트랙</span></div>
+          </div>
+          <div class="curr2">
+            <div class="curr">
+              <div class="curr-h">초선 트랙</div>
+              <div class="curr-r"><span class="d">공약·상임위·지역 현안에서 쓸 것 고르기</span><span class="tag">재료 점검</span></div>
+              <div class="curr-r"><span class="d">3년 안에 기회가 몇 번 있는가</span><span class="tag">의정 시계</span></div>
+              <div class="curr-r"><span class="d">12분기 배치와 올 12월에 할 일</span><span class="tag">마일스톤</span></div>
+              <div class="curr-r"><span class="d">3년 뒤의 목차 설계</span><span class="tag">앞으로의 목차</span></div>
+            </div>
+            <div class="curr">
+              <div class="curr-h">경력 트랙</div>
+              <div class="curr-r"><span class="d">지난 임기 자료 점검 — 조례·발언·예산·현장</span><span class="tag">재료 점검</span></div>
+              <div class="curr-r"><span class="d">흩어진 활동에서 하나의 흐름 찾기</span><span class="tag">흐름 찾기</span></div>
+              <div class="curr-r"><span class="d">성과와 한계, 이어갈 것과 멈출 것</span><span class="tag">해석</span></div>
+              <div class="curr-r"><span class="d">지나온 목차와 다음 목차 확정</span><span class="tag">다음 목차</span></div>
+            </div>
           </div>
         </div>
       </div>
@@ -510,6 +537,7 @@ footer{background:#0B1623;border-top:1px solid #2A3A48;padding:40px 5vw}
         <p>각 챕터를 채우기 위해 할 일과 남길 기록. 초선은 앞으로의 계획을, 경력 의원은 지난 기록의 정리와 빈칸을 채웁니다.</p>
       </div>
     </div>
+    <p class="lead" style="margin-top:24px"><strong>경력 트랙에는 출판 준비도 진단이 함께 들어갑니다.</strong> 지금 자료로 책이 되는지, 무엇을 더 쌓아야 하는지를 정리해 드립니다.</p>
   </div>
 </section>
 
@@ -586,7 +614,7 @@ footer{background:#0B1623;border-top:1px solid #2A3A48;padding:40px 5vw}
 <section class="apply" id="apply">
   <div class="in sec">
     <span class="eyebrow">Apply</span>
-    <h2>임기의 첫 예산 심의가 이번 12월입니다</h2>
+    <h2>9대 의회의 첫 예산 심의가 이번 12월입니다</h2>
     <p class="lead">신청하시면 사전 진단 자료를 보내드립니다. 자료를 받은 뒤 일정을 잡습니다. <strong>1기 정원 20명</strong>이며, 청년 초선 의원을 우선해 접수 순으로 배정합니다. 그 외 의원은 같은 양식으로 문의해 주시면 개별 안내해 드립니다.</p>
 
     <form id="applyForm" onsubmit="handleApply(event, this)">
