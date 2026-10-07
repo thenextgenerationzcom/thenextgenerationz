@@ -222,7 +222,12 @@ footer{background:#0B1623;border-top:1px solid #2A3A48;padding:40px 5vw}
 .footer-tagline{font-size:13px;color:#AAB4BD}
 .footer-copy{font-size:12px;color:#AAB4BD;opacity:.6}
 
+.who-head{display:grid;grid-template-columns:168px 1fr;gap:36px;align-items:start}
+.who-photo{width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:50% 28%;border:1px solid var(--bdr);display:block;background:var(--bg2)}
+.who-head h2{margin-bottom:14px}
 @media(max-width:768px){
+  .who-head{grid-template-columns:1fr;gap:22px}
+  .who-photo{max-width:150px}
   .outs{grid-template-columns:1fr}
   .creds{grid-template-columns:1fr;gap:22px}
   .sec{padding-block:62px}
@@ -396,10 +401,15 @@ footer{background:#0B1623;border-top:1px solid #2A3A48;padding:40px 5vw}
 <section>
   <div class="in sec">
     <span class="eyebrow">Who</span>
-    <h2>김희원</h2>
-    <p class="lead">더넥스트제너레이션즈 대표<br>『나는 지방의원이다』(2022) · 『당신을 위한 나의 정치는 이렇게 시작되었습니다』(2025) 대표저자<br>『바꿔, 우리들이 살 세상이야 — 뉴 제너레이션을 위한 액션 툴킷』(2024) 공역</p>
-    <p class="lead" style="margin-top:16px">정치인의 기록을 다루려면 정치를 알아야 합니다. 정책이 어떻게 만들어지는지,
-      지역이 어떻게 움직이는지, 선거가 어떻게 돌아가는지.</p>
+    <div class="who-head">
+      <img src="../img/founder-photo.jpg" alt="김희원 더넥스트제너레이션즈 대표" class="who-photo" width="400" height="500" loading="lazy">
+      <div>
+        <h2>김희원</h2>
+        <p class="lead">더넥스트제너레이션즈 대표<br>『나는 지방의원이다』(2022) · 『당신을 위한 나의 정치는 이렇게 시작되었습니다』(2025) 대표저자<br>『바꿔, 우리들이 살 세상이야 — 뉴 제너레이션을 위한 액션 툴킷』(2024) 공역</p>
+        <p class="lead" style="margin-top:16px">정치인의 기록을 다루려면 정치를 알아야 합니다. 정책이 어떻게 만들어지는지,
+          지역이 어떻게 움직이는지, 선거가 어떻게 돌아가는지.</p>
+      </div>
+    </div>
 
     <div class="creds">
       <div class="cred">
