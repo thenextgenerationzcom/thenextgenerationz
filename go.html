@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>더넥스트제너레이션즈</title>
+<script>
+(function () {
+  // 메일 속 링크 클릭 기록 → 해당 페이지로 이동 (「한 장의 목차」 발송 명단 구글 시트에 기록)
+  var GAS = 'https://script.google.com/macros/s/AKfycbxyPbRd6t4u9GRV0UEAmHYKAM4ygTGIs_9qAtHQZHak9jux80dsVCsu5z6iUF80a3EkxA/exec';
+  var DEST = { home: '/ko/', publishing: '/ko/publishing' };
+  var q = new URLSearchParams(location.search);
+  var k = (q.get('k') || '').toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 12);
+  var to = (q.get('to') || 'session').replace(/[^a-z]/g, '').slice(0, 12);
+  var dest = DEST[to] || '/ko/session';
+  if (k) {
+    try {
+      var body = new URLSearchParams({ k: k, to: to, ua: (navigator.userAgent || '').slice(0, 200) });
+      var ok = navigator.sendBeacon && navigator.sendBeacon(GAS, body);
+      if (!ok) fetch(GAS, { method: 'POST', mode: 'no-cors', body: body, keepalive: true });
+    } catch (e) {}
+  }
+  location.replace(dest);
+})();
+</script>
+<noscript><meta http-equiv="refresh" content="0;url=/ko/session"></noscript>
+</head><body style="font-family:sans-serif;color:#0B1623;padding:24px">
+<a href="/ko/session" style="color:#B81C63">「한 장의 목차」 안내 페이지로 이동합니다 →</a>
+</body></html>
