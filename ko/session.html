@@ -7,7 +7,7 @@
 <meta name="description" content="여러분의 의정활동을 한 권으로 남긴다면, 목차는 어떻게 될까요. 『나는 지방의원이다』 대표저자 김희원이 지방의원을 한 분씩 직접 찾아가 정의문·가목차·활동 및 기록 계획을 한 장에 담는 의정 설계·기록 워크숍. 1기 20명 모집.">
 <meta name="keywords" content="한 장의 목차, 지방의원 워크숍, 초선 지방의원 워크숍, 청년 정치인, 청년 지방의원, 의정활동 설계, 지방의원 컨설팅, 의정활동 로드맵, 김희원, 더넥스트제너레이션즈, 지방의원 교육, 예산 심의">
 <meta property="og:title" content="한 장의 목차 — 지방의원 의정 설계·기록 워크숍">
-<meta property="og:description" content="4년이 아니라 3년입니다. 그리고 임기의 첫 예산 심의가 이번 12월입니다.">
+<meta property="og:description" content="총선까지 1년 반 남짓, 의정에 온전히 집중할 시간은 3년 남짓. 그리고 이번 임기의 첫 예산 심의가 다가오는 12월입니다.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.thenextgenerationz.com/ko/session">
 <meta property="og:image" content="https://www.thenextgenerationz.com/img/og-image.jpg">
@@ -134,7 +134,11 @@ h2{font-size:clamp(25px,3.3vw,36px);font-weight:700;line-height:1.36;letter-spac
 .tl-seg{display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10px;letter-spacing:0.06em;color:var(--ink-dim);border-right:1px solid var(--bdr);overflow:hidden;white-space:nowrap;padding-inline:4px}
 .tl-seg:last-child{border-right:0}
 .tl-seg.core{background:var(--m);color:#fff;font-weight:500}
-.tl-ends{display:flex;justify-content:space-between;margin-top:8px;font-family:var(--mono);font-size:10.5px;color:var(--ink-dim);letter-spacing:0.04em}
+.tl-bar{position:relative}
+.tl-tick{position:absolute;top:0;bottom:0;width:2px;background:#fff;transform:translateX(-1px)}
+.tl-seg.core{justify-content:flex-end;padding-right:14px}
+.tl-ends{position:relative;display:flex;justify-content:space-between;margin-top:8px;font-family:var(--mono);font-size:10.5px;color:var(--ink-dim);letter-spacing:0.04em}
+.tl-mid{position:absolute;top:0;transform:translateX(-50%);color:var(--m);font-weight:500;white-space:nowrap}
 .tl-legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:14px;font-size:13px;color:var(--ink-soft)}
 .tl-legend span{display:inline-flex;align-items:center;gap:7px}
 .dot{width:9px;height:9px;border-radius:50%;flex:none}
@@ -347,8 +351,9 @@ footer{background:#0B1623;border-top:1px solid #2A3A48;padding:40px 5vw}
         <div class="tl-seg" style="width:6.25%"></div>
         <div class="tl-seg core" style="width:81.25%">실질 의정 약 3년</div>
         <div class="tl-seg" style="width:12.5%">선거 준비</div>
+        <i class="tl-tick" style="left:43.75%"></i>
       </div>
-      <div class="tl-ends"><span>2026.7 취임</span><span>2030.6 임기 종료</span></div>
+      <div class="tl-ends"><span>2026.7 취임</span><span class="tl-mid" style="left:43.75%">2028.4 총선</span><span>2030.6 임기 종료</span></div>
       <div class="tl-legend">
         <span><i class="dot" style="background:var(--bdr)"></i>취임 적응기 · 선거 준비 기간</span>
         <span><i class="dot" style="background:var(--m)"></i>의정에 집중할 수 있는 기간</span>
@@ -356,13 +361,13 @@ footer{background:#0B1623;border-top:1px solid #2A3A48;padding:40px 5vw}
     </div>
 
     <div class="stack">
-      <p class="lead">2030년 상반기는 선거 준비 기간입니다. 의정활동이 아닙니다. 2028년 4월 총선 기간에는 지방의원도 선거에 깊이 관여합니다. 빼고 나면 2026년 가을부터 2029년 말까지, 약 3년이 남습니다.</p>
-      <p class="lead"><strong>그리고 지금은 취임 3개월째입니다.</strong> 11월에 행정사무감사가 있고, 12월에 2027년도 예산안 심의가 있습니다. 이번 임기의 첫 예산 심의입니다.</p>
+      <p class="lead"><strong>2028년 총선까지 남은 시간은 1년 반 남짓입니다.</strong> 총선 기간에는 지방의원도 선거에 깊이 관여하고, 2030년 상반기는 다음 지방선거를 준비하는 시간입니다. 임기 전체로 봐도 의정에 온전히 집중할 수 있는 시간은 3년 남짓입니다.</p>
+      <p class="lead"><strong>그리고 그 첫 예산 심의가 바로 다가오는 12월입니다.</strong> 11월 행정사무감사에 이어 2027년도 예산안을 심의합니다. 앞으로를 설계할 초선 의원님에게도, 지나온 길을 정리하고 다음을 준비할 재선 이상 의원님에게도 지금이 방향을 정할 때입니다.</p>
       <p class="tagline">예산 편성부터 1년 집행, 다음 해 결산 승인까지 — 공약 하나가 예산이 되어 결과로 돌아오기까지 22개월. 임기 안에 심고, 집행하고, 결산까지 확인할 수 있는 사업은 두 번뿐입니다. 그 첫 번째가 지금 지나가고 있습니다.</p>
       <p class="punch">3년 뒤 여러분만의 의정활동 성과를 지금부터 준비해야 합니다.</p>
     </div>
     <div class="career">
-      <span class="eyebrow">경력 의원에게는</span>
+      <span class="eyebrow">재선 이상 의원님에게는</span>
       <h3>쌓인 것을 이야기로 바꿀 시간입니다</h3>
       <div class="stack">
         <p class="lead">지난 임기의 조례, 발언, 현장 활동에는 아직 정리하지 못한 재료가 쌓여 있습니다. 다만 흩어져 있습니다. 선거를 몇 달 앞두고 그것을 급하게 묶으면 의례적인 책이 됩니다.</p>
