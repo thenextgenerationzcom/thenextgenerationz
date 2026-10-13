@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>일정 예약 | 한 장의 목차 — 더넥스트제너레이션즈</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="「한 장의 목차」 개인별 워크숍 일정 예약">
+<link rel="icon" type="image/png" sizes="32x32" href="../img/favicon-32.png?v=3">
+<link rel="apple-touch-icon" sizes="180x180" href="../img/favicon-180.png?v=3">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css">
+<style>
+:root{--navy:#0B1623;--m:#B81C63;--mb:#F2398C;--cream:#FAF7F1;--bdr:#E4E1D8;--soft:#4B5768;--dim:#8A95A0;--card:#FCF0F5}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:"Pretendard Variable",Pretendard,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;background:var(--cream);color:var(--navy);line-height:1.6;word-break:keep-all}
+header{background:var(--navy);color:#fff}
+.hin{max-width:720px;margin:0 auto;padding:22px 20px 26px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.top img{height:30px}
+.top span{font-size:13px;color:rgba(255,255,255,.65);font-weight:600}
+.k{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:12px;letter-spacing:.2em;color:var(--mb);margin-top:26px;font-weight:600}
+h1{font-size:30px;font-weight:800;letter-spacing:-.03em;line-height:1.25;margin-top:6px}
+.who{margin-top:10px;font-size:17px;color:rgba(255,255,255,.85)}
+.who b{color:#fff}
+main{max-width:720px;margin:0 auto;padding:22px 20px 60px}
+.note{background:#fff;border:1px solid var(--bdr);border-radius:10px;padding:16px 18px;font-size:15px;color:var(--soft)}
+.note b{color:var(--navy)}
+.note ul{padding-left:18px;margin-top:6px}
+.card{background:#fff;border:1px solid var(--bdr);border-radius:12px;padding:18px;margin-top:18px}
+.step{font-size:13px;font-weight:700;color:var(--m);letter-spacing:.04em}
+.ct{font-size:20px;font-weight:800;margin-top:2px}
+.mnav{display:flex;align-items:center;justify-content:space-between;margin:14px 0 10px}
+.mnav b{font-size:18px}
+.mnav button{width:42px;height:42px;border-radius:50%;border:1px solid var(--bdr);background:#fff;font-size:18px;cursor:pointer;color:var(--navy)}
+.mnav button:disabled{opacity:.3;cursor:default}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.dw{text-align:center;font-size:12px;color:var(--dim);font-weight:600;padding-bottom:2px}
+.dw.sun{color:#C0392B}.dw.sat{color:#2E5AAC}
+.d{aspect-ratio:1/1;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600;color:#C6C9CE;background:transparent;border:1px solid transparent;font-family:inherit}
+.d.on{color:var(--navy);background:var(--card);border-color:#F3C3D8;cursor:pointer}
+.d.on:hover{border-color:var(--mb)}
+.d.sel{background:var(--m);color:#fff;border-color:var(--m)}
+.legend{display:flex;gap:16px;font-size:13px;color:var(--soft);margin-top:12px;flex-wrap:wrap}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.slots{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.slot{flex:1 1 140px;padding:14px 10px;border-radius:10px;border:1.5px solid var(--bdr);background:#fff;font-family:inherit;font-size:17px;font-weight:700;color:var(--navy);cursor:pointer}
+.slot small{display:block;font-size:12px;font-weight:600;color:var(--dim)}
+.slot.sel{border-color:var(--m);background:var(--card);color:var(--m)}
+label{display:block;font-size:14px;font-weight:700;margin-top:14px}
+label span{font-weight:500;color:var(--dim)}
+input,textarea{width:100%;margin-top:6px;padding:13px 14px;border:1.5px solid var(--bdr);border-radius:10px;font:inherit;font-size:16px;color:var(--navy);background:#fff}
+input:focus,textarea:focus{outline:none;border-color:var(--mb)}
+textarea{min-height:84px;resize:vertical}
+.sum{margin-top:16px;padding:14px 16px;border-radius:10px;background:var(--navy);color:#fff;font-size:16px}
+.sum b{color:var(--mb)}
+.go{width:100%;margin-top:14px;padding:17px;border:0;border-radius:12px;background:var(--mb);color:var(--navy);font-family:inherit;font-size:18px;font-weight:800;cursor:pointer}
+.go:disabled{opacity:.45;cursor:default}
+.msg{margin-top:12px;font-size:15px;color:#C0392B;font-weight:600}
+.done{text-align:center;padding:30px 18px}
+.done .big{font-size:26px;font-weight:800;margin-top:8px;letter-spacing:-.02em}
+.done .when{display:inline-block;margin-top:14px;padding:12px 18px;border-radius:10px;background:var(--navy);color:#fff;font-size:19px;font-weight:700}
+.done p{color:var(--soft);margin-top:14px;font-size:15px}
+.loading{text-align:center;color:var(--dim);padding:40px 0}
+.hide{display:none}
+footer{max-width:720px;margin:0 auto;padding:0 20px 40px;font-size:13px;color:var(--dim)}
+footer a{color:var(--soft)}
+</style>
+</head>
+<body>
+<header><div class="hin">
+  <div class="top"><img src="../img/wordmark-text-bright.png" alt="The Next GenerationZ"><span>더넥스트제너레이션즈</span></div>
+  <div class="k">ONE PAGE · BOOKING</div>
+  <h1>「한 장의 목차」<br>워크숍 일정 예약</h1>
+  <div class="who" id="who">&nbsp;</div>
+</div></header>
+
+<main>
+  <div id="loading" class="loading">일정을 불러오는 중입니다…</div>
+  <div id="err" class="note hide"></div>
+
+  <section id="app" class="hide">
+    <div class="note">
+      <b>하루에 한 분만 찾아뵙습니다.</b> 원하시는 날짜와 시작 시간을 골라 주시면 바로 예약됩니다.
+      <ul>
+        <li>색이 칠해진 날짜만 예약할 수 있습니다. 먼저 예약된 날은 닫힙니다.</li>
+        <li>워크숍 1주 전까지 사전 온라인 심층 설문을 보내드립니다.</li>
+        <li>정확한 장소와 시간은 예약 뒤 따로 연락드려 확정합니다.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="step">1 · 날짜</div>
+      <div class="ct">날짜를 골라 주세요</div>
+      <div class="mnav"><button id="prev" aria-label="이전 달">‹</button><b id="mlabel"></b><button id="next" aria-label="다음 달">›</button></div>
+      <div class="grid" id="dows"></div>
+      <div class="grid" id="days" style="margin-top:6px"></div>
+      <div class="legend"><span><i style="background:var(--card);border:1px solid #F3C3D8"></i>예약 가능</span><span><i style="background:var(--m)"></i>선택한 날</span><span><i style="background:#EEE"></i>예약 불가</span></div>
+    </div>
+
+    <div class="card hide" id="slotCard">
+      <div class="step">2 · 시작 시간</div>
+      <div class="ct" id="slotTitle"></div>
+      <div class="slots" id="slots"></div>
+    </div>
+
+    <div class="card hide" id="formCard">
+      <div class="step">3 · 확인</div>
+      <div class="ct">찾아뵐 곳과 연락처</div>
+      <label>방문 장소 <span>(선택 · 예: 의원실, 지역 사무실)</span><input id="place" maxlength="200" placeholder="정하지 않으셨으면 비워 두셔도 됩니다"></label>
+      <label>연락처 <span>(일정 확인용)</span><input id="phone" maxlength="40" inputmode="tel" placeholder="010-0000-0000"></label>
+      <label>남기실 말씀 <span>(선택)</span><textarea id="memo" maxlength="500" placeholder="함께할 보좌진, 주차, 시간 조정 희망 등"></textarea></label>
+      <div class="sum" id="sum"></div>
+      <button class="go" id="go">이 일정으로 예약하기</button>
+      <div class="msg" id="msg"></div>
+    </div>
+  </section>
+
+  <section id="done" class="card done hide">
+    <div class="step">예약 완료</div>
+    <div class="big">예약되었습니다</div>
+    <div class="when" id="doneWhen"></div>
+    <p>확인 메일을 보내드렸습니다. 메일에 첨부한 일정 파일을 열면 달력에 바로 추가됩니다.<br>일정 변경은 메일 회신 또는 010-4275-2113으로 연락 주십시오.</p>
+  </section>
+</main>
+
+<footer>더넥스트제너레이션즈 · 문의 김희원 대표 <a href="tel:010-4275-2113">010-4275-2113</a> · <a href="mailto:thenextgenerationz.com@gmail.com">thenextgenerationz.com@gmail.com</a></footer>
+
+<script>
+(function(){
+  var API = "https://script.google.com/macros/s/AKfycbxyPbRd6t4u9GRV0UEAmHYKAM4ygTGIs_9qAtHQZHak9jux80dsVCsu5z6iUF80a3EkxA/exec";
+  var SLOT_LABEL = {"10:00":"오전","13:30":"오후","14:00":"오후","19:00":"저녁"};
+  var W = ["일","월","화","수","목","금","토"];
+  var $ = function(id){return document.getElementById(id)};
+  var code = (new URLSearchParams(location.search).get("k") || "").toLowerCase().replace(/[^a-z0-9]/g,"");
+  var days = {}, months = [], mi = 0, selDate = null, selSlot = null;
+
+  function show(id, on){ $(id).classList.toggle("hide", !on); }
+  function kdate(ds){ var p = ds.split("-").map(Number); var d = new Date(p[0], p[1]-1, p[2]); return p[0]+"년 "+p[1]+"월 "+p[2]+"일("+W[d.getDay()]+")"; }
+  function fail(html){ show("loading", false); show("app", false); var e=$("err"); e.innerHTML = html; show("err", true); }
+
+  if (!code) { fail("<b>예약 링크가 올바르지 않습니다.</b><br>받으신 메일의 링크로 다시 들어오시거나 010-4275-2113으로 연락 주십시오."); return; }
+
+  fetch(API + "?action=bk_info&k=" + encodeURIComponent(code)).then(function(r){return r.json()}).then(function(d){
+    if (!d.ok) { fail("<b>예약 정보를 찾지 못했습니다.</b><br>신청 확인이 끝난 뒤 보내드린 링크로만 예약할 수 있습니다. 010-4275-2113으로 연락 주십시오."); return; }
+    $("who").innerHTML = "<b>" + esc(d.council) + " " + esc(d.name) + "</b> 의원님";
+    show("loading", false);
+    if (d.booked) { done(d.booked); return; }
+    if (!d.days.length) { fail("<b>지금은 예약 가능한 날짜가 없습니다.</b><br>010-4275-2113으로 연락 주시면 일정을 맞춰 드리겠습니다."); return; }
+    d.days.forEach(function(x){ days[x.date] = x.slots; var m = x.date.slice(0,7); if (months.indexOf(m) < 0) months.push(m); });
+    $("dows").innerHTML = ["월","화","수","목","금","토","일"].map(function(w,i){return '<div class="dw'+(i==5?' sat':i==6?' sun':'')+'">'+w+'</div>'}).join("");
+    show("app", true); render();
+  }).catch(function(){ fail("<b>일정을 불러오지 못했습니다.</b><br>잠시 뒤 다시 열어 주시거나 010-4275-2113으로 연락 주십시오."); });
+
+  function esc(s){ return String(s||"").replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]}); }
+
+  function render(){
+    var ym = months[mi].split("-").map(Number), y = ym[0], m = ym[1];
+    $("mlabel").textContent = y + "년 " + m + "월";
+    $("prev").disabled = mi === 0; $("next").disabled = mi === months.length - 1;
+    var first = new Date(y, m-1, 1), lead = (first.getDay() + 6) % 7, n = new Date(y, m, 0).getDate(), h = "";
+    for (var i=0;i<lead;i++) h += "<div></div>";
+    for (var d=1; d<=n; d++){
+      var ds = y + "-" + ("0"+m).slice(-2) + "-" + ("0"+d).slice(-2), on = !!days[ds];
+      h += '<button class="d'+(on?' on':'')+(ds===selDate?' sel':'')+'" '+(on?'data-d="'+ds+'"':'disabled')+'>'+d+'</button>';
+    }
+    $("days").innerHTML = h;
+  }
+  $("prev").onclick = function(){ if (mi>0){mi--; render();} };
+  $("next").onclick = function(){ if (mi<months.length-1){mi++; render();} };
+  $("days").onclick = function(e){
+    var b = e.target.closest("[data-d]"); if (!b) return;
+    selDate = b.getAttribute("data-d"); selSlot = null; render();
+    $("slotTitle").textContent = kdate(selDate) + " — 시작 시간을 골라 주세요";
+    $("slots").innerHTML = days[selDate].map(function(s){ return '<button class="slot" data-s="'+s+'"><small>'+(SLOT_LABEL[s]||"")+'</small>'+s+'</button>'; }).join("");
+    show("slotCard", true); show("formCard", false);
+    $("slotCard").scrollIntoView({behavior:"smooth", block:"start"});
+  };
+  $("slots").onclick = function(e){
+    var b = e.target.closest("[data-s]"); if (!b) return;
+    selSlot = b.getAttribute("data-s");
+    [].forEach.call(document.querySelectorAll(".slot"), function(x){ x.classList.toggle("sel", x===b); });
+    $("sum").innerHTML = "선택한 일정 &nbsp;<b>" + kdate(selDate) + " " + selSlot + "</b> 시작";
+    show("formCard", true); $("msg").textContent = "";
+    $("formCard").scrollIntoView({behavior:"smooth", block:"start"});
+  };
+  $("go").onclick = function(){
+    if (!selDate || !selSlot) return;
+    var btn = $("go"); btn.disabled = true; btn.textContent = "예약하는 중…"; $("msg").textContent = "";
+    var body = new URLSearchParams({action:"bk_book", k:code, date:selDate, slot:selSlot, place:$("place").value.trim(), phone:$("phone").value.trim(), memo:$("memo").value.trim()});
+    fetch(API, {method:"POST", body:body}).then(function(r){return r.json()}).then(function(d){
+      if (d.ok) { done(d.booked); return; }
+      if (d.error === "already") { done(d.booked); return; }
+      btn.disabled = false; btn.textContent = "이 일정으로 예약하기";
+      if (d.error === "taken") { $("msg").textContent = "방금 다른 분이 이 일정을 예약했습니다. 다른 날짜나 시간을 골라 주세요."; delete days[selDate]; selDate=null; show("slotCard",false); show("formCard",false); render(); $("app").scrollIntoView({behavior:"smooth"}); }
+      else $("msg").textContent = "예약을 마치지 못했습니다. 잠시 뒤 다시 눌러 주시거나 010-4275-2113으로 연락 주십시오.";
+    }).catch(function(){ btn.disabled = false; btn.textContent = "이 일정으로 예약하기"; $("msg").textContent = "연결이 끊겼습니다. 다시 눌러 주세요."; });
+  };
+  function done(b){ show("app", false); $("doneWhen").textContent = kdate(b.date) + " " + b.slot + " 시작"; show("done", true); window.scrollTo(0,0); }
+})();
+</script>
+</body>
+</html>
