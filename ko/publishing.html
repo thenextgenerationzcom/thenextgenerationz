@@ -676,6 +676,7 @@ async function handleApply(e, form) {
     });
     if (res.ok) {
       form.reset();
+      if (window.tngCv) window.tngCv('출판 신청서 제출');
       btn.textContent = '신청 완료 ✓';
       btn.style.background = '#1D9E75';
       btn.style.color = '#fff';
