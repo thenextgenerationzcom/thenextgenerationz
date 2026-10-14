@@ -838,6 +838,7 @@ async function handleSubscribe(e, form) {
       body: JSON.stringify({ email }),
     });
     if (res.ok) {
+      if (window.tngCv) window.tngCv('구독');
       btn.textContent = '구독 완료 ✓';
       btn.style.background = '#1D9E75';
       btn.style.color = '#fff';
@@ -872,6 +873,7 @@ async function handleContact(e, form) {
     });
     if (res.ok) {
       form.reset();
+      if (window.tngCv) window.tngCv('문의 제출');
       btn.textContent = '전송 완료 ✓';
       btn.style.background = '#1D9E75';
       btn.style.color = '#fff';
