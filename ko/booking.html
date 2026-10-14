@@ -190,7 +190,7 @@ footer a{color:var(--soft)}
     var btn = $("go"); btn.disabled = true; btn.textContent = "예약하는 중…"; $("msg").textContent = "";
     var body = new URLSearchParams({action:"bk_book", k:code, date:selDate, slot:selSlot, place:$("place").value.trim(), phone:$("phone").value.trim(), memo:$("memo").value.trim()});
     fetch(API, {method:"POST", body:body}).then(function(r){return r.json()}).then(function(d){
-      if (d.ok) { done(d.booked); return; }
+      if (d.ok) { if (window.tngCv) window.tngCv("일정 예약 완료"); done(d.booked); return; }
       if (d.error === "already") { done(d.booked); return; }
       btn.disabled = false; btn.textContent = "이 일정으로 예약하기";
       if (d.error === "taken") { $("msg").textContent = "방금 다른 분이 이 일정을 예약했습니다. 다른 날짜나 시간을 골라 주세요."; delete days[selDate]; selDate=null; show("slotCard",false); show("formCard",false); render(); $("app").scrollIntoView({behavior:"smooth"}); }
@@ -200,5 +200,6 @@ footer a{color:var(--soft)}
   function done(b){ show("app", false); $("doneWhen").textContent = kdate(b.date) + " " + b.slot + " 시작"; show("done", true); window.scrollTo(0,0); }
 })();
 </script>
+<script src="/a.js" defer></script>
 </body>
 </html>
