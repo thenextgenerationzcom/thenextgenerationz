@@ -69,6 +69,15 @@ function publicView(p) {
 }
 
 // ---------- 통계 조회 헬퍼 ----------
+// track.js의 DC_CITIES와 같은 목록. 봇 필터 도입 전 기록된 지역 줄에 '봇 추정'을 붙이는 데 쓴다.
+const DC_CITIES = [
+  'prineville', 'forest city', 'altoona', 'los lunas', 'papillion', 'sandston',
+  'new albany', 'eagle mountain', 'gallatin', 'stanton springs', 'clonee', 'lulea', 'luleå',
+  'the dalles', 'council bluffs', 'moncks corner', 'pryor', 'lenoir', 'boardman',
+  'quincy', 'boydton', 'ashburn',
+];
+// 기간 합계를 보여줄 전환 라벨
+const CV_TOTALS = ['워크숍 신청서 제출', '일정 예약 완료'];
 function kstDate(offsetDays) {
   const now = new Date(Date.now() + 9 * 3600 * 1000 + (offsetDays || 0) * 86400000);
   return now.toISOString().slice(0, 10); // YYYY-MM-DD (KST 기준)
@@ -228,10 +237,19 @@ export default async function handler(req, res) {
         cmds.push(['GET', 'a:pv:' + d]);
         cmds.push(['PFCOUNT', 'a:uv:' + d]);
       }
+      for (const d of dates) {
+        cmds.push(['HMGET', 'a:h:' + d].concat(CV_TOTALS.map((l) => 'cv:' + l)));
+      }
       cmds.push(['HGETALL', 'a:h:' + detailDate]);
       cmds.push(['GET', 'a:bot:' + detailDate]);
 
       const results = await pipeline(cmds);
+      const cvTotals = {};
+      CV_TOTALS.forEach((l) => (cvTotals[l] = 0));
+      for (let i = 0; i < dates.length; i++) {
+        const row = (results[dates.length * 2 + i] || {}).result || [];
+        CV_TOTALS.forEach((l, j) => (cvTotals[l] += Number(row[j]) || 0));
+      }
       const trend = [];
       for (let i = 0; i < dates.length; i++) {
         trend.push({
@@ -251,12 +269,21 @@ export default async function handler(req, res) {
       }
       const dims = groupDims(hashObj);
       if (dims.src) delete dims.src['사이트 내부']; // 과거 오염분 제외
+      // 봇 필터 도입 전 기록된 데이터센터 도시는 표시만 구분한다 (PV·UV 수치는 되돌릴 수 없음)
+      if (dims.rg) {
+        const rg = {};
+        for (const k of Object.keys(dims.rg)) {
+          const city = (k.split('·')[1] || '').toLowerCase().trim();
+          rg[DC_CITIES.indexOf(city) >= 0 ? k + '·봇' : k] = dims.rg[k];
+        }
+        dims.rg = rg;
+      }
 
       // 선택일의 PV/UV
       const sel = trend.find((t) => t.date === detailDate) || { pv: 0, uv: 0 };
 
       res.setHeader('Cache-Control', 'no-store');
-      return res.status(200).json({ trend, detailDate, dims, selPv: sel.pv, selUv: sel.uv, botCount, dates });
+      return res.status(200).json({ trend, detailDate, dims, selPv: sel.pv, selUv: sel.uv, botCount, dates, cvTotals, days });
     }
 
     return res.status(400).json({ error: 'unknown action' });
