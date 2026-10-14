@@ -393,6 +393,7 @@ async function handleSubscribe(e, form) {
     });
 
     if (res.ok) {
+      if (window.tngCv) window.tngCv('구독(영문)');
       btn.textContent = 'Subscribed ✓';
       btn.style.background = '#1D9E75';
       btn.style.color = '#fff';
