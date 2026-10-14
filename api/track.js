@@ -54,9 +54,26 @@ function isBot(ua) {
     'curl', 'wget', 'okhttp', 'java/', 'libwww', 'httpclient', 'scrapy',
     'vercel', 'uptimerobot', 'pingdom', 'statuscake', 'gtmetrix', 'lighthouse',
     'chrome-lighthouse', 'google-inspectiontool', 'monitoring', 'preview',
+    'meta-externalagent', 'meta-externalfetcher', 'facebookcatalog',
   ];
   for (const k of sig) if (s.includes(k)) return true;
   return false;
+}
+
+// 데이터센터 도시: 사람이 거의 살지 않고 서버만 있는 곳(메타·구글·아마존·MS 등).
+// 여기서 오는 접속은 링크 미리보기 수집기나 보안 검사기로 보고 사람 통계에서 뺀다.
+const DC_CITIES = [
+  'prineville', 'forest city', 'altoona', 'los lunas', 'papillion', 'sandston',
+  'new albany', 'eagle mountain', 'gallatin', 'stanton springs', 'clonee', 'lulea', 'luleå',
+  'the dalles', 'council bluffs', 'moncks corner', 'pryor', 'lenoir', 'boardman',
+  'quincy', 'boydton', 'ashburn',
+];
+function isDcCity(country, city) {
+  let c = '';
+  try { c = decodeURIComponent(city || ''); } catch (e) { c = city || ''; }
+  c = c.toLowerCase().trim();
+  if (!c || (country || '').toUpperCase() === 'KR') return false;
+  return DC_CITIES.indexOf(c) >= 0;
 }
 
 // 유입경로 분류
@@ -122,19 +139,45 @@ export default async function handler(req, res) {
   try {
     const ev = parseBody(await readBody(req));
     const date = kstDate();
-    const bot = isBot(ua);
 
     // ── 이벤트 유형 분기 ──
-    // ev.t === 'menu' : 메뉴/내부 링크 클릭, ev.t === 'out' : 외부 링크 이동
+    // ev.t === 'menu' : 메뉴/내부 링크 클릭, ev.t === 'out' : 외부 링크 이동, ev.t === 'cv' : 전환
     const evType = (ev.t || 'pv').toString();
 
-    // 봇은 별도 카운터에만 기록하고 사람 통계에는 넣지 않는다
-    if (bot) {
-      await pipeline([
-        ['INCR', 'a:bot:' + date],
-        ['EXPIRE', 'a:bot:' + date, 60 * 86400],
-      ]);
+    // 봇 판별: ① User-Agent ② 자동화 브라우저 신호 ③ 데이터센터 도시
+    let botReason = '';
+    if (isBot(ua)) botReason = '크롤러(UA)';
+    else if (ev.bw === '1') botReason = '자동화 브라우저';
+    else if (isDcCity(country, city)) botReason = '데이터센터·' + (regionLabel(country, city, region).split('·')[1] || '');
+
+    // 봇은 별도 카운터에만 기록하고 사람 통계에는 넣지 않는다 (페이지뷰만 센다)
+    if (botReason) {
+      const cmds = [];
+      if (evType === 'pv') {
+        cmds.push(['INCR', 'a:bot:' + date]);
+        cmds.push(['HINCRBY', 'a:h:' + date, 'bot:' + botReason, 1]);
+        cmds.push(['EXPIRE', 'a:bot:' + date, 60 * 86400]);
+        cmds.push(['EXPIRE', 'a:h:' + date, 60 * 86400]);
+      }
+      if (cmds.length) await pipeline(cmds);
       return res.status(200).json({ ok: true, bot: true });
+    }
+
+    // 전환 (신청 버튼·작성 시작·제출·예약 완료 등) — 방문당 1회만 들어온다
+    if (evType === 'cv') {
+      const label = (ev.label || '').toString().slice(0, 40);
+      if (label) {
+        const cmds = [['HINCRBY', 'a:h:' + date, 'cv:' + label, 1]];
+        // 실제 신청이 일어난 건은 어디서 왔는지 함께 남긴다
+        if (/제출|예약 완료|구독/.test(label)) {
+          const src = classifySource(ev.r || '', ev.u || '', 'thenextgenerationz.com');
+          const short = label.replace(' 신청서 제출', ' 신청').replace('일정 예약 완료', '예약').replace(' 제출', '');
+          cmds.push(['HINCRBY', 'a:h:' + date, 'cvsrc:' + short + ' ← ' + src, 1]);
+        }
+        cmds.push(['EXPIRE', 'a:h:' + date, 60 * 86400]);
+        await pipeline(cmds);
+      }
+      return res.status(200).json({ ok: true });
     }
 
     // 클릭 이벤트 (메뉴/외부) — pv 증가 없이 해당 차원만 기록
