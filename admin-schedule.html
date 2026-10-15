@@ -255,8 +255,8 @@ details summary{cursor:pointer;font-weight:700;font-size:14px}
               <label>끝<input type="time" id="myEnd" step="900"></label>
               <label>장소<input type="text" id="myPlace" maxlength="120" placeholder="선택"></label>
               <label>매주 반복<select id="myRep"><option value="1">한 번만</option><option value="4">4주</option><option value="8">8주</option><option value="12">12주</option><option value="16">16주</option></select></label>
-              <label class="wide" style="flex-direction:row;align-items:center;gap:6px;font-weight:600;color:var(--navy)"><input type="checkbox" id="myBlock" checked> 이 시간에는 의원 예약을 받지 않기</label>
-              <p class="muted wide">시작 시간을 비우면 하루 종일 일정으로 보고 그날을 막습니다. 시간을 넣으면 앞뒤 1시간(이동)을 두고 겹치는 방문 시간만 막습니다.</p>
+              <label>알림<select id="myRemind"><option value="0">캘린더 기본 알림</option><option value="10">10분 전</option><option value="30">30분 전</option><option value="60">1시간 전</option><option value="120">2시간 전</option><option value="1440">하루 전</option></select></label>
+              <p class="muted wide">구글 캘린더(thenextgenerationz.com@gmail.com)에 바로 들어갑니다. 휴대폰 캘린더에서 넣은 일정도 여기 보이고, 겹치는 의원 방문 시간은 자동으로 닫힙니다(앞뒤 1시간 이동 포함, 시간을 비우면 하루 종일). 막지 않을 일정은 제목 맨 앞에 <b>*</b>를 붙이세요. <a href="https://calendar.google.com/calendar/u/0/r?authuser=thenextgenerationz.com@gmail.com" target="_blank" rel="noopener" style="color:var(--m)">구글 캘린더 열기 ↗</a></p>
               <div class="wide row"><button class="btn p" id="myGo" type="button">일정 추가</button><span class="toast" id="myMsg"></span></div>
             </div>
           </details>
@@ -282,7 +282,7 @@ details summary{cursor:pointer;font-weight:700;font-size:14px}
     <!-- 내 일정 -->
     <section id="t-my" class="hide">
       <div class="sub"><h3>내 일정</h3><label class="muted"><input type="checkbox" id="showPastMy"> 지난 일정 함께 보기</label></div>
-      <p class="muted" style="margin:-4px 0 6px">의원 방문과 내 일정을 날짜순으로 모아 봅니다. 새 일정은 달력에서 날짜를 누르고 <b>내 일정 추가</b>로 넣습니다.</p>
+      <p class="muted" style="margin:-4px 0 6px">의원 방문과 구글 캘린더(thenextgenerationz.com@gmail.com)의 내 일정을 날짜순으로 모아 봅니다. 새 일정은 달력에서 날짜를 누르고 <b>내 일정 추가</b>로 넣거나, 휴대폰 구글 캘린더에 바로 넣으셔도 됩니다. <a href="https://calendar.google.com/calendar/u/0/r?authuser=thenextgenerationz.com@gmail.com" target="_blank" rel="noopener" style="color:var(--m)">구글 캘린더 열기 ↗</a></p>
       <div id="myList"></div>
     </section>
 
@@ -365,13 +365,13 @@ details summary{cursor:pointer;font-weight:700;font-size:14px}
   function load(keepSel){
     if (!KEY) { gate(""); return Promise.resolve(); }
     if (!D) show("loading", true);
-    return Promise.all([call({ op: "get" }), loadInbox(), loadSched()]).then(function(rs){ var d = rs[0];
+    return Promise.all([call({ op: "get" }), loadInbox()]).then(function(rs){ var d = rs[0];
       if (!d.ok) {
         if (d.error === "auth") { try { localStorage.removeItem("tng_bk_key"); } catch(e){} KEY = ""; gate("키가 맞지 않습니다. 다시 확인해 주세요."); return; }
         if (d.error === "unknown") { gate("Apps Script에 새 버전이 아직 배포되지 않았습니다. 「배포 관리」에서 새 버전으로 배포한 뒤 다시 열어 주세요."); return; }
         gate("불러오지 못했습니다: " + esc(d.error || "")); return;
       }
-      D = d;
+      D = d; MY = d.cal || [];
       show("loading", false); show("gate", false); show("app", true);
       months = [];
       d.days.forEach(function(x){ var m = x.date.slice(0,7); if (months.indexOf(m) < 0) months.push(m); });
@@ -408,7 +408,7 @@ details summary{cursor:pointer;font-weight:700;font-size:14px}
   function openSlots(x, bk){
     var busy = (bk || []).map(function(b){ return b.slot; });
     if (busy.length && !x.double) return [];
-    return allSlots(x).filter(function(s){ return x.off.indexOf(s) < 0 && busy.indexOf(s) < 0; });
+    return allSlots(x).filter(function(s){ return x.off.indexOf(s) < 0 && busy.indexOf(s) < 0 && (x.calOff || []).indexOf(s) < 0; });
   }
   function renderCal(){
     $("dows").innerHTML = ["월","화","수","목","금","토","일"].map(function(w,i){ return '<div class="dw' + (i===5?' sat':i===6?' sun':'') + '">' + w + '</div>'; }).join("");
@@ -424,7 +424,7 @@ details summary{cursor:pointer;font-weight:700;font-size:14px}
       if (x.blocked) cls += " blocked";
       if (sel === ds) cls += " sel";
       bk.forEach(function(b){ chips += '<span class="chip bk" title="' + esc(b.council + " " + b.name) + '">' + esc(b.slot + " " + b.name) + '</span>'; });
-      myOn(ds).forEach(function(v){ chips += '<span class="chip me" title="' + esc((v.start ? v.start + (v.end ? "~" + v.end : "") + " " : "") + v.title + (v.place ? " · " + v.place : "")) + '">' + esc((v.start ? hm(v.start) + " " : "") + v.title) + '</span>'; });
+      myOn(ds).forEach(function(v){ chips += '<span class="chip me" title="' + esc((v.allDay ? "하루 종일 " : v.start + (v.end ? "~" + v.end : "") + " ") + v.title + (v.place ? " · " + v.place : "")) + '">' + esc((v.allDay ? "" : hm(v.start) + " ") + v.title) + '</span>'; });
       if (x.blocked) chips += '<span class="chip tag">하루 막음' + (x.memo ? " · " + esc(x.memo) : "") + '</span>';
       else {
         var av = openSlots(x, bk);
@@ -493,6 +493,7 @@ details summary{cursor:pointer;font-weight:700;font-size:14px}
     show("edSlotsWrap", draft.mode !== "block");
     $("edSlots").innerHTML = allSlots(x, draft.extra).map(function(s){
       if (busy.indexOf(s) >= 0) return '<button type="button" class="slot taken" disabled>' + s + '<small>예약됨</small></button>';
+      if ((x.calOff || []).indexOf(s) >= 0) return '<button type="button" class="slot shut" disabled title="구글 캘린더 일정과 겹쳐 닫힘">' + s + '<small>내 일정과 겹침</small></button>';
       if (x.slots.indexOf(s) < 0) return '<button type="button" class="slot extra" data-x="' + s + '">' + s + '<small>추가 · 지우기</small></button>';
       var shut = draft.off.indexOf(s) >= 0;
       return '<button type="button" class="slot ' + (shut ? "shut" : "open") + '" data-s="' + s + '">' + s + '<small>' + (shut ? "막음" : "열림") + '</small></button>';
@@ -559,96 +560,48 @@ details summary{cursor:pointer;font-weight:700;font-size:14px}
     })();
   };
 
-  // ── 내 일정 ──
+  // ── 내 일정 (구글 캘린더) ──
   function myOn(ds){ return (MY || []).filter(function(v){ return v.date === ds; }); }
-  function toMin(t){ return Number(t.slice(0,2)) * 60 + Number(t.slice(3,5)); }
-  function addDays(ds, n){ var d = dobj(ds); d.setDate(d.getDate() + n); return d.getFullYear() + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" + ("0"+d.getDate()).slice(-2); }
-  // 일정과 겹치는 방문 시작 시간 (방문 길이 + 앞뒤 1시간 이동)
-  function clash(x, v){
-    if (!v.start) return null; // 하루 종일
-    var dur = (D.rules && D.rules.duration) || 150, s = toMin(v.start) - 60, e = (v.end ? toMin(v.end) : toMin(v.start) + 60) + 60;
-    return allSlots(x).filter(function(t){ var a = toMin(t); return a < e && a + dur > s; });
-  }
   function myCard(v){
-    return '<div class="myitem"><div><b>' + esc((v.start ? v.start + (v.end ? "~" + v.end : "") : "하루 종일") + " · " + v.title) + '</b>' +
-      '<div class="meta">' + esc([v.place, v.block === "day" ? "그날 예약 막음" : v.blocked && v.blocked.length ? v.blocked.join("·") + " 예약 막음" : "", v.series ? "매주 반복" : ""].filter(Boolean).join(" · ")) + '</div></div>' +
-      '<div class="row"><button class="btn g" type="button" data-mydel="' + esc(v.id) + '" style="padding:5px 9px;font-size:12.5px">삭제</button>' +
-      (v.series ? '<button class="btn g" type="button" data-mydel="' + esc(v.id) + '" data-all="1" style="padding:5px 9px;font-size:12.5px">반복 전체 삭제</button>' : '') + '</div></div>';
+    return '<div class="myitem"><div><b>' + esc((v.allDay ? "하루 종일" : v.start + (v.end ? "~" + v.end : "")) + " · " + v.title) + '</b>' +
+      '<div class="meta">' + esc([v.place, v.free ? "예약 막지 않음" : "", v.series ? "반복 일정" : ""].filter(Boolean).join(" · ")) + '</div></div>' +
+      '<div class="row"><button class="btn g" type="button" data-mydel="' + esc(v.id) + '" data-date="' + v.date + '" style="padding:5px 9px;font-size:12.5px">삭제</button>' +
+      (v.series ? '<button class="btn g" type="button" data-mydel="' + esc(v.id) + '" data-date="' + v.date + '" data-all="1" style="padding:5px 9px;font-size:12.5px">반복 전체 삭제</button>' : '') + '</div></div>';
   }
-  function dayCall(ds, fn){ // 그날 설정을 읽어 바꾼 뒤 저장
-    var x = dayInfo(ds); if (!x) return Promise.resolve();
-    var st = { mode: x.blocked ? "block" : x.double ? "double" : "open", off: x.off.slice(), extra: (x.extra || []).slice(), memo: x.memo || "" };
-    if (fn(st, x) === false) return Promise.resolve();
-    return call({ op: "set", date: ds, mode: st.mode, off: st.mode === "block" ? "" : st.off.join(","), extra: st.mode === "block" ? "" : st.extra.join(","), memo: st.memo });
-  }
-  function seq(list, fn){ var i = 0; return new Promise(function(ok){ (function next(){ if (i >= list.length) return ok(); Promise.resolve(fn(list[i++])).then(next, next); })(); }); }
-
   $("myGo").onclick = function(){
     var title = $("myTitle").value.trim(); if (!title) { toast("myMsg", "무엇을 하는지 적어 주세요.", false); return; }
     var start = $("myStart").value, end = $("myEnd").value;
     if (end && !start) { toast("myMsg", "끝 시간만 넣을 수는 없습니다. 시작 시간도 넣어 주세요.", false); return; }
-    var rep = Number($("myRep").value) || 1, block = $("myBlock").checked, series = rep > 1 ? "r" + Date.now().toString(36) : "";
-    var items = [];
-    for (var k = 0; k < rep; k++) {
-      var ds = addDays(sel, 7 * k), x = dayInfo(ds);
-      var v = { id: "s" + Date.now().toString(36) + k + Math.random().toString(36).slice(2,5), date: ds, start: start, end: end, title: title, place: $("myPlace").value.trim(), series: series, block: "none", blocked: [] };
-      if (block && x) {
-        var c = clash(x, v);
-        if (c === null) v.block = "day";
-        else { v.block = "slots"; v.blocked = c.filter(function(t){ return x.off.indexOf(t) < 0; }); }
-      }
-      items.push(v);
-    }
-    var btn = this; btn.disabled = true; toast("myMsg", "저장하는 중…", true);
-    tapi("schedsave", { items: items }).then(function(d){
-      if (!d || !d.ok) throw new Error((d && d.error) || "fail");
-      return seq(items, function(v){
-        if (v.block === "day") return dayCall(v.date, function(st){ if (st.mode === "block") return false; st.mode = "block"; if (!st.memo) st.memo = v.title; });
-        if (v.blocked.length) return dayCall(v.date, function(st){ if (st.mode === "block") return false; v.blocked.forEach(function(t){ if (st.off.indexOf(t) < 0) st.off.push(t); }); });
-      });
-    }).then(function(){
-      btn.disabled = false; $("myTitle").value = ""; $("myPlace").value = "";
-      return load(true).then(function(){ toast("myMsg", items.length + "건 추가했습니다.", true); });
-    }).catch(function(err){ btn.disabled = false; toast("myMsg", err && err.message === "auth" ? "관리자(/admin)에 먼저 로그인해 주세요." : "저장하지 못했습니다. 다시 눌러 주세요.", false); });
+    var btn = this; btn.disabled = true; toast("myMsg", "구글 캘린더에 넣는 중…", true);
+    call({ op: "caladd", date: sel, start: start, end: end, title: title, place: $("myPlace").value.trim(), rep: $("myRep").value, remind: $("myRemind").value }).then(function(d){
+      btn.disabled = false;
+      if (!d.ok) { toast("myMsg", d.error === "unknown" ? "Apps Script를 새 버전으로 배포해 주세요." : "넣지 못했습니다 (" + (d.message || d.error || "") + ")", false); return; }
+      $("myTitle").value = ""; $("myPlace").value = "";
+      return load(true).then(function(){ toast("myMsg", "구글 캘린더에 넣었습니다.", true); });
+    }).catch(function(){ btn.disabled = false; toast("myMsg", "연결이 끊겼습니다. 다시 눌러 주세요.", false); });
   };
-
-  // 삭제: 이 일정이 막았던 시간은 다른 일정이 겹치지 않으면 다시 엽니다
   document.addEventListener("click", function(e){
     var b = e.target.closest("[data-mydel]"); if (!b) return;
-    var v0 = MY.filter(function(v){ return v.id === b.getAttribute("data-mydel"); })[0]; if (!v0) return;
-    var del = b.getAttribute("data-all") ? MY.filter(function(v){ return v.series && v.series === v0.series; }) : [v0];
-    var ids = del.map(function(v){ return v.id; });
+    if (!b.dataset.armed) { b.dataset.armed = "1"; b.dataset.label = b.textContent; b.textContent = "한 번 더 누르면 삭제"; setTimeout(function(){ if (b.isConnected && b.dataset.armed) { delete b.dataset.armed; b.textContent = b.dataset.label; } }, 4000); return; }
     b.disabled = true; b.textContent = "삭제하는 중…";
-    tapi("schedsave", { remove: ids }).then(function(d){
-      if (!d || !d.ok) throw new Error("fail");
-      var rest = d.items;
-      return seq(del, function(v){
-        var others = rest.filter(function(o){ return o.date === v.date; });
-        if (v.block === "day") {
-          if (others.some(function(o){ return o.block === "day"; })) return;
-          return dayCall(v.date, function(st){ if (st.mode !== "block") return false; st.mode = "open"; if (st.memo === v.title) st.memo = ""; });
-        }
-        if (v.blocked && v.blocked.length) {
-          var need = []; others.forEach(function(o){ (o.blocked || []).forEach(function(t){ need.push(t); }); });
-          return dayCall(v.date, function(st){ var before = st.off.length; st.off = st.off.filter(function(t){ return v.blocked.indexOf(t) < 0 || need.indexOf(t) >= 0; }); if (st.off.length === before) return false; });
-        }
-      });
-    }).then(function(){ return load(true); }).catch(function(){ b.disabled = false; b.textContent = "삭제하지 못함"; });
+    call({ op: "caldel", id: b.getAttribute("data-mydel"), date: b.getAttribute("data-date") || "", all: b.getAttribute("data-all") ? "1" : "" }).then(function(d){
+      if (!d.ok) { b.disabled = false; b.textContent = "삭제하지 못함"; return; }
+      load(true);
+    }).catch(function(){ b.disabled = false; b.textContent = "연결이 끊겼습니다"; });
   });
 
   function renderMy(){
     var past = $("showPastMy").checked, rows = [];
     D.bookings.filter(active).forEach(function(b){ rows.push({ date: b.date, t: b.slot, kind: "vs", title: b.council + " " + b.name + " 의원 방문", meta: [b.place && "장소 " + b.place, b.phone && "연락처 " + b.phone].filter(Boolean).join(" · ") }); });
-    (MY || []).forEach(function(v){ rows.push({ date: v.date, t: v.start || "", kind: "me", title: v.title, meta: [(v.start ? v.start + (v.end ? "~" + v.end : "") : "하루 종일"), v.place].filter(Boolean).join(" · "), v: v }); });
+    (MY || []).forEach(function(v){ rows.push({ date: v.date, t: v.allDay ? "" : v.start, kind: "me", title: v.title, meta: [(v.allDay ? "하루 종일" : v.start + (v.end ? "~" + v.end : "")), v.place, v.free ? "예약 막지 않음" : ""].filter(Boolean).join(" · "), v: v }); });
     rows = rows.filter(function(r){ return past || r.date >= D.today; }).sort(function(a, b){ return (a.date + (a.t || "00:00")).localeCompare(b.date + (b.t || "00:00")); });
     $("nMy").textContent = rows.filter(function(r){ return r.date >= D.today; }).length;
-    if (!TKEY) { $("myList").innerHTML = '<p class="muted">내 일정을 쓰려면 <a href="/admin">관리자 화면</a>에 먼저 로그인해 주세요.</p>'; return; }
     var h = "", last = "";
     rows.forEach(function(r){
       if (r.date !== last) { h += '<div class="dayh">' + esc(kd(r.date)) + (r.date === D.today ? ' · 오늘' : '') + '</div>'; last = r.date; }
       h += '<div class="li"><div class="when">' + esc(r.t || "종일") + '</div><div class="who"><b>' + esc(r.title) + '</b><span class="pill ' + r.kind + '">' + (r.kind === "vs" ? "의원 방문" : "내 일정") + '</span>' +
         (r.meta ? '<div class="meta">' + esc(r.meta) + '</div>' : '') + '</div><div class="act"><button class="btn g" type="button" data-go="' + r.date + '" style="padding:6px 10px;font-size:13px">달력에서 보기</button>' +
-        (r.v ? '<button class="btn g" type="button" data-mydel="' + esc(r.v.id) + '" style="padding:6px 10px;font-size:13px">삭제</button>' : '') + '</div></div>';
+        (r.v ? '<button class="btn g" type="button" data-mydel="' + esc(r.v.id) + '" data-date="' + r.date + '" style="padding:6px 10px;font-size:13px">삭제</button>' : '') + '</div></div>';
     });
     $("myList").innerHTML = h || '<p class="muted">다가오는 일정이 없습니다.</p>';
   }
