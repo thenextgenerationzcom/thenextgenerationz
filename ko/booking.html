@@ -64,6 +64,10 @@ textarea{min-height:84px;resize:vertical}
 .done p{color:var(--soft);margin-top:14px;font-size:15px}
 .loading{text-align:center;color:var(--dim);padding:40px 0}
 .hide{display:none}
+.pv{background:#FFF4E2;border:1px solid #F0D3A6;color:#7A4A00;border-radius:10px;padding:12px 14px;margin-bottom:14px;font-size:14.5px;line-height:1.6}
+.pv b{color:#5C3700}
+.pv a{display:inline-block;margin:6px 6px 0 0;padding:5px 10px;border-radius:999px;border:1px solid #E2B877;color:#5C3700;text-decoration:none;font-weight:700;font-size:13px}
+.pv a.on{background:#5C3700;border-color:#5C3700;color:#fff}
 footer{max-width:720px;margin:0 auto;padding:0 20px 40px;font-size:13px;color:var(--dim)}
 footer a{color:var(--soft)}
 </style>
@@ -77,6 +81,7 @@ footer a{color:var(--soft)}
 </div></header>
 
 <main>
+  <div id="pv" class="pv hide"></div>
   <div id="loading" class="loading">일정을 불러오는 중입니다…</div>
   <div id="err" class="note hide"></div>
 
@@ -130,19 +135,36 @@ footer a{color:var(--soft)}
 <script>
 (function(){
   var API = "https://script.google.com/macros/s/AKfycbxyPbRd6t4u9GRV0UEAmHYKAM4ygTGIs_9qAtHQZHak9jux80dsVCsu5z6iUF80a3EkxA/exec";
-  var SLOT_LABEL = {"10:00":"오전","13:30":"오후","14:00":"오후","19:00":"저녁"};
+  function slotLabel(s){ var h = Number(String(s).slice(0,2)); return h < 12 ? "오전" : h < 18 ? "오후" : "저녁"; }
   var W = ["일","월","화","수","목","금","토"];
   var $ = function(id){return document.getElementById(id)};
-  var code = (new URLSearchParams(location.search).get("k") || "").toLowerCase().replace(/[^a-z0-9]/g,"");
+  var QS = new URLSearchParams(location.search);
+  var code = (QS.get("k") || "").toLowerCase().replace(/[^a-z0-9]/g,"");
+  var preview = QS.has("preview");  // 관리자 미리보기: 의원 화면 그대로 보이지만 예약은 저장되지 않음
   var days = {}, months = [], mi = 0, selDate = null, selSlot = null;
 
   function show(id, on){ $(id).classList.toggle("hide", !on); }
   function kdate(ds){ var p = ds.split("-").map(Number); var d = new Date(p[0], p[1]-1, p[2]); return p[0]+"년 "+p[1]+"월 "+p[2]+"일("+W[d.getDay()]+")"; }
   function fail(html){ show("loading", false); show("app", false); var e=$("err"); e.innerHTML = html; show("err", true); }
 
-  if (!code) { fail("<b>예약 링크가 올바르지 않습니다.</b><br>받으신 메일의 링크로 다시 들어오시거나 010-4275-2113으로 연락 주십시오."); return; }
+  if (preview) {
+    var region = QS.get("region") === "지역" ? "지역" : "수도권";
+    var pv = "<b>미리보기 화면입니다.</b> 의원님께 보이는 그대로이며, 여기서 누르는 예약은 저장되지 않습니다.";
+    if (!code) pv += '<br><a href="?preview=1" class="' + (region === "수도권" ? "on" : "") + '">수도권 의원 기준</a><a href="?preview=1&region=지역" class="' + (region === "지역" ? "on" : "") + '">그 외 지역 의원 기준</a>';
+    $("pv").innerHTML = pv; show("pv", true);
+  }
+  if (!code && !preview) { fail("<b>예약 링크가 올바르지 않습니다.</b><br>받으신 메일의 링크로 다시 들어오시거나 010-4275-2113으로 연락 주십시오."); return; }
 
-  fetch(API + "?action=bk_info&k=" + encodeURIComponent(code)).then(function(r){return r.json()}).then(function(d){
+  var req;
+  if (code) req = fetch(API + "?action=bk_info&k=" + encodeURIComponent(code)).then(function(r){return r.json()});
+  else {
+    var key = ""; try { key = localStorage.getItem("tng_bk_key") || ""; } catch(e){}
+    if (!key) { fail("<b>미리보기는 관리자 일정 화면에 키를 넣은 기기에서만 볼 수 있습니다.</b><br><a href=\"/admin/schedule\">일정 관리</a>에서 키를 넣은 뒤 다시 열어 주세요."); return; }
+    req = fetch(API, { method: "POST", body: new URLSearchParams({ action: "bk_admin", key: key, op: "preview", region: region }) }).then(function(r){return r.json()})
+      .then(function(d){ return d.ok ? { ok: true, council: region === "수도권" ? "수도권" : "그 외 지역", name: "○○○", booked: null, days: d.days } : { ok: false, error: d.error }; });
+  }
+  req.then(function(d){
+    if (!d.ok && preview && !code) { fail("<b>미리보기를 불러오지 못했습니다" + (d.error === "unknown" ? " — Apps Script에 새 버전을 배포해 주세요" : "") + ".</b>"); return; }
     if (!d.ok) { fail("<b>예약 정보를 찾지 못했습니다.</b><br>신청 확인이 끝난 뒤 보내드린 링크로만 예약할 수 있습니다. 010-4275-2113으로 연락 주십시오."); return; }
     $("who").innerHTML = "<b>" + esc(d.council) + " " + esc(d.name) + "</b> 의원님";
     show("loading", false);
@@ -173,7 +195,7 @@ footer a{color:var(--soft)}
     var b = e.target.closest("[data-d]"); if (!b) return;
     selDate = b.getAttribute("data-d"); selSlot = null; render();
     $("slotTitle").textContent = kdate(selDate) + " — 시작 시간을 골라 주세요";
-    $("slots").innerHTML = days[selDate].map(function(s){ return '<button class="slot" data-s="'+s+'"><small>'+(SLOT_LABEL[s]||"")+'</small>'+s+'</button>'; }).join("");
+    $("slots").innerHTML = days[selDate].map(function(s){ return '<button class="slot" data-s="'+s+'"><small>'+slotLabel(s)+'</small>'+s+'</button>'; }).join("");
     show("slotCard", true); show("formCard", false);
     $("slotCard").scrollIntoView({behavior:"smooth", block:"start"});
   };
@@ -187,6 +209,7 @@ footer a{color:var(--soft)}
   };
   $("go").onclick = function(){
     if (!selDate || !selSlot) return;
+    if (preview) { $("msg").textContent = "미리보기라 예약되지 않습니다. 의원님은 이 버튼을 누르면 바로 예약됩니다."; return; }
     var btn = $("go"); btn.disabled = true; btn.textContent = "예약하는 중…"; $("msg").textContent = "";
     var body = new URLSearchParams({action:"bk_book", k:code, date:selDate, slot:selSlot, place:$("place").value.trim(), phone:$("phone").value.trim(), memo:$("memo").value.trim()});
     fetch(API, {method:"POST", body:body}).then(function(r){return r.json()}).then(function(d){
