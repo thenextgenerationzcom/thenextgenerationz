@@ -6,7 +6,7 @@
 //   ADMIN_KEY                            — 관리자 인증 키
 //
 // 공개 action:  list, get, img
-// 관리자 action: all, save, remove, uploadimg, overview  (ADMIN_KEY 필요)
+// 관리자 action: all, save, remove, uploadimg, overview, inbox, inboxmark  (ADMIN_KEY 필요)
 
 const RURL = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
 const RTOK = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
@@ -153,6 +153,36 @@ export default async function handler(req, res) {
 
     // ===== 여기부터 관리자 전용 =====
     if (!isAdmin) return res.status(401).json({ error: 'unauthorized' });
+
+    // 관리자: 홈페이지로 들어온 신청·문의 (api/contact.js가 보관)
+    if (action === 'inbox') {
+      const r = await redis(['GET', 'tng_inbox']);
+      let list = [];
+      try { list = JSON.parse((r && r.result) || '[]') || []; } catch (e) { list = []; }
+      const kind = (req.query.kind || '').toString();
+      if (kind) list = list.filter((x) => x.kind === kind);
+      res.setHeader('Cache-Control', 'no-store');
+      return res.status(200).json({ ok: true, items: list });
+    }
+
+    // 관리자: 신청 처리 표시 (added = 신청자 명단에 등록, hidden = 숨김, new = 되돌리기)
+    if (action === 'inboxmark') {
+      const body = parseBody(await readBody(req));
+      const id = clean(body.id, 40);
+      const status = ['added', 'hidden', 'new'].indexOf(body.status) >= 0 ? body.status : '';
+      if (!id || !status) return res.status(400).json({ error: 'bad request' });
+      const r = await redis(['GET', 'tng_inbox']);
+      let list = [];
+      try { list = JSON.parse((r && r.result) || '[]') || []; } catch (e) { list = []; }
+      const it = list.find((x) => x.id === id);
+      if (!it) return res.status(404).json({ error: 'not found' });
+      it.status = status;
+      it.markedAt = Date.now();
+      if (body.code != null) it.code = clean(body.code, 40);
+      if (body.link != null) it.link = clean(body.link, 300);
+      await redis(['SET', 'tng_inbox', JSON.stringify(list)]);
+      return res.status(200).json({ ok: true, item: it });
+    }
 
     // 관리자: 전체 글 (상태 포함)
     if (action === 'all') {

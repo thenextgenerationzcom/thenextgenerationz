@@ -5,12 +5,40 @@
 //   CONTACT_TO       — 문의를 받을 이메일 (예: thenextgenerationz.com@gmail.com)
 //   CONTACT_FROM     — 발신 주소. Resend에서 도메인 인증 전에는
 //                      onboarding@resend.dev 를 그대로 쓰면 됩니다.
+//   KV_REST_API_URL / KV_REST_API_TOKEN — (있으면) 들어온 문의를 'tng_inbox'에 함께 보관합니다.
+//                      관리자 일정 화면(/admin/schedule)의 '홈페이지 신청' 목록이 여기서 읽습니다.
 
 const esc = (s = '') =>
   String(s)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
+
+const RURL = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
+const RTOK = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+const INBOX_KEY = 'tng_inbox';
+
+async function redis(cmd) {
+  const r = await fetch(RURL, {
+    method: 'POST',
+    headers: { Authorization: 'Bearer ' + RTOK, 'Content-Type': 'application/json' },
+    body: JSON.stringify(cmd),
+  });
+  return r.json();
+}
+const cut = (s, n) => String(s == null ? '' : s).slice(0, n);
+
+// 문의 한 건을 보관합니다. 실패해도 메일 발송은 그대로 진행합니다.
+async function keep(entry) {
+  if (!RURL || !RTOK) return false;
+  const r = await redis(['GET', INBOX_KEY]);
+  let list = [];
+  try { list = JSON.parse((r && r.result) || '[]') || []; } catch (e) { list = []; }
+  list.unshift(entry);
+  if (list.length > 500) list = list.slice(0, 500);
+  await redis(['SET', INBOX_KEY, JSON.stringify(list)]);
+  return true;
+}
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -20,7 +48,7 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { org, name, email, phone, type, message, website } = req.body || {};
+  const { org, name, email, phone, type, message, website, term } = req.body || {};
 
   // 허니팟 — 봇이 채우면 성공한 척하고 버립니다
   if (website) return res.status(200).json({ success: true });
@@ -35,12 +63,35 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: '문의 내용이 너무 깁니다' });
   }
 
+  // 홈페이지로 들어온 신청·문의 보관 (관리자 화면에서 확인)
+  const t = String(type);
+  const kind = t.startsWith('한 장의 목차') ? 'session' : t.startsWith('한 권의 정치') ? 'publishing' : 'contact';
+  let kept = false;
+  try {
+    kept = await keep({
+      id: 'q' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+      at: Date.now(),
+      kind,
+      type: cut(type, 120),
+      org: cut(org, 120),
+      name: cut(name, 60),
+      email: cut(email, 120),
+      phone: cut(phone, 40),
+      term: cut(term, 60),
+      message: cut(String(message).replace(/^\[신청 구분\][^\n]*\n\n?/, ''), 5000),
+      status: 'new',
+    });
+  } catch (err) {
+    console.error('inbox keep error:', err);
+  }
+
   const apiKey = process.env.RESEND_API_KEY;
   const to = process.env.CONTACT_TO;
   const from = process.env.CONTACT_FROM || 'onboarding@resend.dev';
 
   if (!apiKey || !to) {
     console.error('contact: missing RESEND_API_KEY or CONTACT_TO');
+    if (kept) return res.status(200).json({ success: true });
     return res.status(500).json({ error: 'Server configuration missing' });
   }
 
@@ -79,9 +130,11 @@ export default async function handler(req, res) {
 
     const data = await response.json().catch(() => ({}));
     console.error('resend error:', data);
+    if (kept) return res.status(200).json({ success: true }); // 보관은 됐으니 신청은 접수된 것으로 봅니다
     return res.status(502).json({ error: 'Failed to send' });
   } catch (err) {
     console.error('contact server error:', err);
+    if (kept) return res.status(200).json({ success: true });
     return res.status(500).json({ error: 'Internal server error' });
   }
 }
