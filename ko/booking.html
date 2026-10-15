@@ -90,7 +90,7 @@ footer a{color:var(--soft)}
       <b>하루에 한 분만 찾아뵙습니다.</b> 원하시는 날짜와 시작 시간을 골라 주시면 바로 예약됩니다.
       <ul>
         <li>색이 칠해진 날짜만 예약할 수 있습니다. 먼저 예약된 날은 닫힙니다.</li>
-        <li>워크숍 1주 전까지 사전 온라인 심층 설문을 보내드립니다.</li>
+        <li>예약하시면 확인 메일로 사전 온라인 심층 설문 링크를 보내드립니다. 워크숍 전에 답해 주시면 그 내용을 바탕으로 질문을 준비해 찾아뵙겠습니다.</li>
         <li>정확한 장소와 시간은 예약 뒤 따로 연락드려 확정합니다.</li>
       </ul>
     </div>
@@ -126,7 +126,7 @@ footer a{color:var(--soft)}
     <div class="step">예약 완료</div>
     <div class="big">예약되었습니다</div>
     <div class="when" id="doneWhen"></div>
-    <p>확인 메일을 보내드렸습니다. 메일에 첨부한 일정 파일을 열면 달력에 바로 추가됩니다.<br>일정 변경은 메일 회신 또는 010-4275-2113으로 연락 주십시오.</p>
+    <p>확인 메일을 보내드렸습니다. 메일에 든 사전 온라인 심층 설문에 워크숍 전까지 답해 주십시오. 첨부한 일정 파일을 열면 달력에 바로 추가됩니다.<br>일정 변경은 메일 회신 또는 010-4275-2113으로 연락 주십시오.</p>
   </section>
 </main>
 
@@ -147,33 +147,52 @@ footer a{color:var(--soft)}
   function kdate(ds){ var p = ds.split("-").map(Number); var d = new Date(p[0], p[1]-1, p[2]); return p[0]+"년 "+p[1]+"월 "+p[2]+"일("+W[d.getDay()]+")"; }
   function fail(html){ show("loading", false); show("app", false); var e=$("err"); e.innerHTML = html; show("err", true); }
 
-  if (preview) {
-    var region = QS.get("region") === "지역" ? "지역" : "수도권";
+  var region = QS.get("region") === "지역" ? "지역" : "수도권", PVD = {};
+  function regionBar(){
     var pv = "<b>미리보기 화면입니다.</b> 의원님께 보이는 그대로이며, 여기서 누르는 예약은 저장되지 않습니다.";
-    if (!code) pv += '<br><a href="?preview=1" class="' + (region === "수도권" ? "on" : "") + '">수도권 의원 기준</a><a href="?preview=1&region=지역" class="' + (region === "지역" ? "on" : "") + '">그 외 지역 의원 기준</a>';
+    if (!code) pv += '<br><a href="#" data-r="수도권" class="' + (region === "수도권" ? "on" : "") + '">수도권 의원 기준</a><a href="#" data-r="지역" class="' + (region === "지역" ? "on" : "") + '">그 외 지역 의원 기준</a>' +
+      '<br><span style="font-size:13px">두 기준은 12월 16일까지 화·수요일만 다릅니다. 이날은 수도권 의원만 고를 수 있습니다.</span>';
     $("pv").innerHTML = pv; show("pv", true);
   }
+  if (preview) regionBar();
   if (!code && !preview) { fail("<b>예약 링크가 올바르지 않습니다.</b><br>받으신 메일의 링크로 다시 들어오시거나 010-4275-2113으로 연락 주십시오."); return; }
 
-  var req;
-  if (code) req = fetch(API + "?action=bk_info&k=" + encodeURIComponent(code)).then(function(r){return r.json()});
-  else {
-    var key = ""; try { key = localStorage.getItem("tng_bk_key") || ""; } catch(e){}
-    if (!key) { fail("<b>미리보기는 관리자 일정 화면에 키를 넣은 기기에서만 볼 수 있습니다.</b><br><a href=\"/admin/schedule\">일정 관리</a>에서 키를 넣은 뒤 다시 열어 주세요."); return; }
-    req = fetch(API, { method: "POST", body: new URLSearchParams({ action: "bk_admin", key: key, op: "preview", region: region }) }).then(function(r){return r.json()})
-      .then(function(d){ return d.ok ? { ok: true, council: region === "수도권" ? "수도권" : "그 외 지역", name: "○○○", booked: null, days: d.days } : { ok: false, error: d.error }; });
-  }
-  req.then(function(d){
-    if (!d.ok && preview && !code) { fail("<b>미리보기를 불러오지 못했습니다" + (d.error === "unknown" ? " — Apps Script에 새 버전을 배포해 주세요" : "") + ".</b>"); return; }
-    if (!d.ok) { fail("<b>예약 정보를 찾지 못했습니다.</b><br>신청 확인이 끝난 뒤 보내드린 링크로만 예약할 수 있습니다. 010-4275-2113으로 연락 주십시오."); return; }
+  function start(d){
     $("who").innerHTML = "<b>" + esc(d.council) + " " + esc(d.name) + "</b> 의원님";
     show("loading", false);
     if (d.booked) { done(d.booked); return; }
     if (!d.days.length) { fail("<b>지금은 예약 가능한 날짜가 없습니다.</b><br>010-4275-2113으로 연락 주시면 일정을 맞춰 드리겠습니다."); return; }
+    days = {}; months = []; selDate = null; selSlot = null;
     d.days.forEach(function(x){ days[x.date] = x.slots; var m = x.date.slice(0,7); if (months.indexOf(m) < 0) months.push(m); });
+    if (mi >= months.length) mi = 0;
     $("dows").innerHTML = ["월","화","수","목","금","토","일"].map(function(w,i){return '<div class="dw'+(i==5?' sat':i==6?' sun':'')+'">'+w+'</div>'}).join("");
-    show("app", true); render();
-  }).catch(function(){ fail("<b>일정을 불러오지 못했습니다.</b><br>잠시 뒤 다시 열어 주시거나 010-4275-2113으로 연락 주십시오."); });
+    show("err", false); show("slotCard", false); show("formCard", false); show("app", true); render();
+  }
+
+  if (code) {
+    fetch(API + "?action=bk_info&k=" + encodeURIComponent(code)).then(function(r){return r.json()}).then(function(d){
+      if (!d.ok) { fail("<b>예약 정보를 찾지 못했습니다.</b><br>신청 확인이 끝난 뒤 보내드린 링크로만 예약할 수 있습니다. 010-4275-2113으로 연락 주십시오."); return; }
+      start(d);
+    }).catch(function(){ fail("<b>일정을 불러오지 못했습니다.</b><br>잠시 뒤 다시 열어 주시거나 010-4275-2113으로 연락 주십시오."); });
+  } else {
+    // 미리보기: 두 기준을 한 번에 불러 두고, 버튼은 다시 불러오지 않고 바로 바꿉니다
+    var key = ""; try { key = localStorage.getItem("tng_bk_key") || ""; } catch(e){}
+    if (!key) { fail("<b>미리보기는 관리자 일정 화면에 키를 넣은 기기에서만 볼 수 있습니다.</b><br><a href=\"/admin/schedule\">일정 관리</a>에서 키를 넣은 뒤 다시 열어 주세요."); return; }
+    var pv1 = function(r){ return fetch(API, { method: "POST", body: new URLSearchParams({ action: "bk_admin", key: key, op: "preview", region: r }) }).then(function(x){ return x.json(); }); };
+    var showRegion = function(){
+      var d = PVD[region];
+      if (!d || !d.ok) { fail("<b>미리보기를 불러오지 못했습니다" + (d && d.error === "unknown" ? " — Apps Script에 새 버전을 배포해 주세요" : "") + ".</b>"); return; }
+      start({ council: region === "수도권" ? "수도권" : "그 외 지역", name: "○○○", booked: null, days: d.days });
+    };
+    Promise.all([pv1("수도권"), pv1("지역")]).then(function(rs){ PVD["수도권"] = rs[0]; PVD["지역"] = rs[1]; showRegion(); })
+      .catch(function(){ fail("<b>일정을 불러오지 못했습니다.</b><br>잠시 뒤 다시 열어 주세요."); });
+    $("pv").addEventListener("click", function(e){
+      var a = e.target.closest("[data-r]"); if (!a) return; e.preventDefault();
+      region = a.getAttribute("data-r"); regionBar();
+      try { history.replaceState(null, "", "?preview=1" + (region === "지역" ? "&region=지역" : "")); } catch(err){}
+      if (PVD[region]) showRegion();
+    });
+  }
 
   function esc(s){ return String(s||"").replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]}); }
 
