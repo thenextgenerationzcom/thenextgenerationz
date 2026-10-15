@@ -62,6 +62,14 @@ textarea{min-height:84px;resize:vertical}
 .done .big{font-size:26px;font-weight:800;margin-top:8px;letter-spacing:-.02em}
 .done .when{display:inline-block;margin-top:14px;padding:12px 18px;border-radius:10px;background:var(--navy);color:#fff;font-size:19px;font-weight:700}
 .done p{color:var(--soft);margin-top:14px;font-size:15px}
+.top a{display:flex;align-items:center;text-decoration:none}
+.top span a{color:inherit;text-decoration:none}
+.next{display:grid;gap:10px;margin-top:22px;text-align:left}
+.next a{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:15px 18px;border-radius:12px;border:1.5px solid var(--bdr,#E4E1D8);background:#fff;color:var(--navy);text-decoration:none;font-weight:700;font-size:16px}
+.next a small{display:block;font-weight:500;font-size:13px;color:var(--soft);margin-top:2px}
+.next a.hot{background:var(--navy);border-color:var(--navy);color:#fff}
+.next a.hot small{color:rgba(255,255,255,.7)}
+.next a:hover{border-color:var(--mb)}
 .loading{text-align:center;color:var(--dim);padding:40px 0}
 .hide{display:none}
 .pv{background:#FFF4E2;border:1px solid #F0D3A6;color:#7A4A00;border-radius:10px;padding:12px 14px;margin-bottom:14px;font-size:14.5px;line-height:1.6}
@@ -74,7 +82,7 @@ footer a{color:var(--soft)}
 </head>
 <body>
 <header><div class="hin">
-  <div class="top"><img src="../img/wordmark-text-bright.png" alt="The Next GenerationZ"><span>더넥스트제너레이션즈</span></div>
+  <div class="top"><a href="/ko/" aria-label="더넥스트제너레이션즈 홈페이지"><img src="../img/wordmark-text-bright.png" alt="The Next GenerationZ"></a><span><a href="/ko/">홈페이지 ↗</a></span></div>
   <div class="k">ONE PAGE · BOOKING</div>
   <h1>「한 장의 목차」<br>워크숍 일정 예약</h1>
   <div class="who" id="who">&nbsp;</div>
@@ -128,12 +136,17 @@ footer a{color:var(--soft)}
     <div class="big" id="doneBig">예약되었습니다</div>
     <div class="when" id="doneWhen"></div>
     <p id="doneP">확인 메일을 보내드렸습니다. 메일에 든 사전 온라인 심층 설문에 워크숍 전까지 답해 주십시오. 첨부한 일정 파일을 열면 달력에 바로 추가됩니다.</p>
-    <p id="chgWrap" class="hide"><button class="go" id="chgBtn" style="max-width:280px">일정 바꾸기</button></p>
+    <div class="next">
+      <a class="hot" href="https://docs.google.com/forms/d/e/1FAIpQLSdDlwnb3LKtL_Af_fn_ByGFPy5RPyN-p3N_TCR2YlaNyCZcfA/viewform" target="_blank" rel="noopener"><span>사전 온라인 심층 설문 답하기<small>워크숍 전에 답해 주시면 질문을 맞춰 준비합니다</small></span><span>→</span></a>
+      <a href="/ko/session"><span>「한 장의 목차」 안내 다시 보기<small>진행 방식과 손에 남는 것</small></span><span>→</span></a>
+      <a href="/ko/"><span>더넥스트제너레이션즈 홈페이지<small>thenextgenerationz.com</small></span><span>→</span></a>
+    </div>
+    <p id="chgWrap" class="hide"><button class="go" id="chgBtn" style="max-width:280px;background:#fff;border:1.5px solid var(--mb);color:var(--m)">일정 바꾸기</button></p>
     <p id="chgNote" style="font-size:14px">일정 변경은 워크숍 전날까지 이 화면에서 직접 하실 수 있습니다. 그 뒤에는 메일 회신 또는 010-4275-2113으로 연락 주십시오.</p>
   </section>
 </main>
 
-<footer>더넥스트제너레이션즈 · 문의 김희원 대표 <a href="tel:010-4275-2113">010-4275-2113</a> · <a href="mailto:thenextgenerationz.com@gmail.com">thenextgenerationz.com@gmail.com</a></footer>
+<footer><a href="/ko/">더넥스트제너레이션즈</a> · 문의 김희원 대표 <a href="tel:010-4275-2113">010-4275-2113</a> · <a href="mailto:thenextgenerationz.com@gmail.com">thenextgenerationz.com@gmail.com</a></footer>
 
 <script>
 (function(){
