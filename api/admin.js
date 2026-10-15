@@ -6,7 +6,7 @@
 //   ADMIN_KEY                            — 관리자 인증 키
 //
 // 공개 action:  list, get, img
-// 관리자 action: all, save, remove, uploadimg, overview, inbox, inboxmark  (ADMIN_KEY 필요)
+// 관리자 action: all, save, remove, uploadimg, overview, inbox, inboxmark, sched, schedsave  (ADMIN_KEY 필요)
 
 const RURL = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
 const RTOK = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
@@ -182,6 +182,45 @@ export default async function handler(req, res) {
       if (body.link != null) it.link = clean(body.link, 300);
       await redis(['SET', 'tng_inbox', JSON.stringify(list)]);
       return res.status(200).json({ ok: true, item: it });
+    }
+
+    // 관리자: 내 일정 (일정 관리 화면의 '내 일정')
+    if (action === 'sched') {
+      const r = await redis(['GET', 'tng_sched']);
+      let list = [];
+      try { list = JSON.parse((r && r.result) || '[]') || []; } catch (e) { list = []; }
+      res.setHeader('Cache-Control', 'no-store');
+      return res.status(200).json({ ok: true, items: list });
+    }
+    // 관리자: 내 일정 저장 (items 배열을 id 기준으로 추가·수정) / 삭제 (remove: [id...])
+    if (action === 'schedsave') {
+      const body = parseBody(await readBody(req));
+      const r = await redis(['GET', 'tng_sched']);
+      let list = [];
+      try { list = JSON.parse((r && r.result) || '[]') || []; } catch (e) { list = []; }
+      const rm = Array.isArray(body.remove) ? body.remove.map(String) : [];
+      if (rm.length) list = list.filter((x) => rm.indexOf(x.id) < 0);
+      const items = Array.isArray(body.items) ? body.items.slice(0, 60) : [];
+      for (const it of items) {
+        const date = clean(it.date, 10);
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) continue;
+        const tm = (v) => (/^\d{2}:\d{2}$/.test(String(v || '')) ? String(v) : '');
+        const rec = {
+          id: clean(it.id, 40) || ('s' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6)),
+          date, start: tm(it.start), end: tm(it.end),
+          title: clean(it.title, 120), place: clean(it.place, 120), memo: clean(it.memo, 500),
+          block: ['none', 'slots', 'day'].indexOf(it.block) >= 0 ? it.block : 'none',
+          blocked: Array.isArray(it.blocked) ? it.blocked.map((x) => clean(x, 5)).slice(0, 10) : [],
+          series: clean(it.series, 40),
+          updatedAt: Date.now(),
+        };
+        const i = list.findIndex((x) => x.id === rec.id);
+        if (i >= 0) list[i] = rec; else list.push(rec);
+      }
+      list.sort((x, y) => (x.date + (x.start || '')).localeCompare(y.date + (y.start || '')));
+      if (list.length > 2000) list = list.slice(list.length - 2000);
+      await redis(['SET', 'tng_sched', JSON.stringify(list)]);
+      return res.status(200).json({ ok: true, items: list });
     }
 
     // 관리자: 전체 글 (상태 포함)
