@@ -91,6 +91,16 @@ textarea{width:100%;min-height:60px;resize:vertical}
 .d.blocked .chip.tag{background:rgba(255,255,255,.16);color:#fff;font-weight:700}
 .d .av{font-size:11px;color:var(--ok);font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .d.lead .av{color:var(--dim);font-weight:600}
+.chip.me{background:#E8EEF7;color:#24406B;font-weight:600}
+.d.blocked .chip.me{background:rgba(255,255,255,.85)}
+.myitem{border:1px solid var(--bdr);border-left:3px solid #24406B;border-radius:4px;padding:9px 12px;display:flex;justify-content:space-between;gap:10px;align-items:flex-start;font-size:14px}
+.myitem .meta{color:var(--soft);font-size:13px}
+.myform{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.myform .wide{grid-column:1/-1}
+.myform label{display:flex;flex-direction:column;gap:3px;font-size:12.5px;color:var(--soft);font-weight:600;min-width:0}
+.dayh{font-weight:800;font-size:15px;margin:14px 0 6px}
+.pill.me{background:#E8EEF7;color:#24406B}
+.pill.vs{background:var(--card);color:var(--m)}
 .slot.extra{border-color:var(--navy);border-style:dashed} .slot.extra small{color:var(--navy)}
 .d.sel{outline:2px solid var(--m);outline-offset:-1px}
 .d:not(.empty):hover{border-color:var(--m)}
@@ -188,6 +198,7 @@ details summary{cursor:pointer;font-weight:700;font-size:14px}
 
     <nav class="tabs" role="tablist">
       <button class="tab on" data-t="cal" type="button" role="tab">달력</button>
+      <button class="tab" data-t="my" type="button" role="tab">내 일정 <span class="n" id="nMy"></span></button>
       <button class="tab" data-t="bk" type="button" role="tab">예약 <span class="n" id="nBk"></span></button>
       <button class="tab" data-t="ap" type="button" role="tab">신청자 <span class="n" id="nAp"></span></button>
     </nav>
@@ -203,7 +214,7 @@ details summary{cursor:pointer;font-weight:700;font-size:14px}
           <span><i style="background:#2B3440"></i>하루 막음</span><span><b style="color:var(--ok);font-size:11px">10·14·19</b>의원이 고를 수 있는 시작 시간</span>
           
           <span><i style="background:var(--okbg)"></i>하루 2회</span>
-          <span><i style="background:#FBFAF7;border:1px solid var(--bdr)"></i>8일 안쪽(의원 예약 불가)</span><span><i style="background:none;font-style:normal;font-size:10px;width:auto;color:var(--dim)">수업</i>나만 보는 표시</span>
+          <span><i style="background:#E8EEF7"></i>내 일정</span><span><i style="background:none;font-style:normal;font-size:10px;width:auto;color:var(--dim)">수업</i>나만 보는 표시</span>
         </div>
       </div>
 
@@ -213,6 +224,7 @@ details summary{cursor:pointer;font-weight:700;font-size:14px}
           <h3 id="edTitle"></h3>
           <p class="rule" id="edRule"></p>
           <div class="sect" id="edBk"></div>
+          <div class="sect" id="edMy"></div>
           <div class="sect">
             <span class="lab">이날 방문</span>
             <div class="seg" id="edMode">
@@ -233,6 +245,19 @@ details summary{cursor:pointer;font-weight:700;font-size:14px}
             <div class="row"><input type="text" id="edMemo" maxlength="200" placeholder="예: 오후 학회, 지방 출장" style="flex:1"><button class="btn g" id="edSave" type="button">메모 저장</button></div>
           </div>
           <div class="sect"><span class="toast" id="edMsg"></span></div>
+          <details class="sect" id="myAdd">
+            <summary>내 일정 추가</summary>
+            <div class="myform" style="margin-top:10px">
+              <label class="wide">무엇<input type="text" id="myTitle" maxlength="120" placeholder="예: 대학원 수업, ○○ 미팅, 강연"></label>
+              <label>시작<input type="time" id="myStart" step="900"></label>
+              <label>끝<input type="time" id="myEnd" step="900"></label>
+              <label>장소<input type="text" id="myPlace" maxlength="120" placeholder="선택"></label>
+              <label>매주 반복<select id="myRep"><option value="1">한 번만</option><option value="4">4주</option><option value="8">8주</option><option value="12">12주</option><option value="16">16주</option></select></label>
+              <label class="wide" style="flex-direction:row;align-items:center;gap:6px;font-weight:600;color:var(--navy)"><input type="checkbox" id="myBlock" checked> 이 시간에는 의원 예약을 받지 않기</label>
+              <p class="muted wide">시작 시간을 비우면 하루 종일 일정으로 보고 그날을 막습니다. 시간을 넣으면 앞뒤 1시간(이동)을 두고 겹치는 방문 시간만 막습니다.</p>
+              <div class="wide row"><button class="btn p" id="myGo" type="button">일정 추가</button><span class="toast" id="myMsg"></span></div>
+            </div>
+          </details>
         </div>
       </div>
 
@@ -250,6 +275,13 @@ details summary{cursor:pointer;font-weight:700;font-size:14px}
           <p class="toast" id="rMsg" style="margin-top:8px"></p>
         </details>
       </div>
+    </section>
+
+    <!-- 내 일정 -->
+    <section id="t-my" class="hide">
+      <div class="sub"><h3>내 일정</h3><label class="muted"><input type="checkbox" id="showPastMy"> 지난 일정 함께 보기</label></div>
+      <p class="muted" style="margin:-4px 0 6px">의원 방문과 내 일정을 날짜순으로 모아 봅니다. 새 일정은 달력에서 날짜를 누르고 <b>내 일정 추가</b>로 넣습니다.</p>
+      <div id="myList"></div>
     </section>
 
     <!-- 예약 -->
@@ -312,6 +344,11 @@ details summary{cursor:pointer;font-weight:700;font-size:14px}
     var init = body ? { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) } : { method: "GET" };
     return fetch(url, init).then(function(r){ if (r.status === 401) return { ok: false, error: "auth" }; return r.json(); });
   }
+  var MY = [];
+  function loadSched(){
+    if (!TKEY) { MY = []; return Promise.resolve(); }
+    return tapi("sched").then(function(d){ MY = d && d.ok ? d.items : []; }).catch(function(){ MY = []; });
+  }
   function loadInbox(){
     if (!TKEY) { INB = { error: "nokey" }; return Promise.resolve(); }
     return tapi("inbox&kind=session").then(function(d){ INB = d && d.ok ? { items: d.items } : { error: (d && d.error) || "fail" }; })
@@ -326,7 +363,7 @@ details summary{cursor:pointer;font-weight:700;font-size:14px}
   function load(keepSel){
     if (!KEY) { gate(""); return Promise.resolve(); }
     if (!D) show("loading", true);
-    return Promise.all([call({ op: "get" }), loadInbox()]).then(function(rs){ var d = rs[0];
+    return Promise.all([call({ op: "get" }), loadInbox(), loadSched()]).then(function(rs){ var d = rs[0];
       if (!d.ok) {
         if (d.error === "auth") { try { localStorage.removeItem("tng_bk_key"); } catch(e){} KEY = ""; gate("키가 맞지 않습니다. 다시 확인해 주세요."); return; }
         if (d.error === "unknown") { gate("Apps Script에 새 버전이 아직 배포되지 않았습니다. 「배포 관리」에서 새 버전으로 배포한 뒤 다시 열어 주세요."); return; }
@@ -337,7 +374,7 @@ details summary{cursor:pointer;font-weight:700;font-size:14px}
       months = [];
       d.days.forEach(function(x){ var m = x.date.slice(0,7); if (months.indexOf(m) < 0) months.push(m); });
       if (mi >= months.length) mi = 0;
-      renderStats(); renderCal(); renderBk(); renderAp(); renderIn();
+      renderStats(); renderCal(); renderBk(); renderAp(); renderIn(); renderMy();
       if (keepSel && sel) openDay(sel);
     }).catch(function(){ show("loading", false); gate("연결이 끊겼습니다. 새로고침을 눌러 다시 시도해 주세요."); });
   }
@@ -382,14 +419,14 @@ details summary{cursor:pointer;font-weight:700;font-size:14px}
       var ds = y + "-" + ("0"+m).slice(-2) + "-" + ("0"+dd).slice(-2), x = dayInfo(ds);
       if (!x) { h += '<div class="d empty" style="opacity:.35"><span class="num">' + dd + '</span></div>'; continue; }
       var cls = "d", chips = "", bk = bksOn(ds);
-      if (ds < D.open) cls += " lead";
       if (x.blocked) cls += " blocked";
       if (sel === ds) cls += " sel";
       bk.forEach(function(b){ chips += '<span class="chip bk" title="' + esc(b.council + " " + b.name) + '">' + esc(b.slot + " " + b.name) + '</span>'; });
+      myOn(ds).forEach(function(v){ chips += '<span class="chip me" title="' + esc((v.start ? v.start + (v.end ? "~" + v.end : "") + " " : "") + v.title + (v.place ? " · " + v.place : "")) + '">' + esc((v.start ? hm(v.start) + " " : "") + v.title) + '</span>'; });
       if (x.blocked) chips += '<span class="chip tag">하루 막음' + (x.memo ? " · " + esc(x.memo) : "") + '</span>';
       else {
         var av = openSlots(x, bk);
-        chips += av.length ? '<span class="av" title="의원이 고를 수 있는 시작 시간">' + av.map(hm).join("·") + '</span>' : '<span class="chip part">시간 없음</span>';
+        chips += av.length ? '<span class="av" title="의원이 고를 수 있는 시작 시간">' + av.map(hm).join("·") + '</span>' : (bk.length ? '' : '<span class="chip part">시간 없음</span>');
         if (x.double) chips += '<span class="chip dbl">2회</span>';
         if (x.memo) chips += '<span class="chip tag">' + esc(x.memo) + '</span>';
       }
@@ -408,10 +445,12 @@ details summary{cursor:pointer;font-weight:700;font-size:14px}
     show("edHint", false); show("edBody", true);
     $("edTitle").textContent = kd(ds, true);
     var rule = (x.cls ? "화·수 수업일(나만 보는 표시) · 기본 시작 시간 " : "기본 시작 시간 ") + x.slots.join(" · ");
-    if (ds < D.open) rule += " · 오늘부터 " + D.rules.lead + "일 안쪽이라 의원은 아직 예약할 수 없는 날";
     $("edRule").textContent = rule;
     var bk = bksOn(ds);
     $("edBk").innerHTML = bk.length ? '<span class="lab">예약</span>' + bk.map(bkCard).join("") : "";
+    var my = myOn(ds);
+    $("edMy").innerHTML = my.length ? '<span class="lab">내 일정</span>' + my.map(myCard).join("") : "";
+    $("myMsg").textContent = "";
     $("edMemo").value = draft.memo || "";
     $("edMsg").textContent = "";
     drawDraft();
@@ -497,6 +536,105 @@ details summary{cursor:pointer;font-weight:700;font-size:14px}
         .then(function(){ i++; next(); }).catch(function(){ toast("rMsg", "연결이 끊겼습니다. 다시 적용해 주세요.", false); });
     })();
   };
+
+  // ── 내 일정 ──
+  function myOn(ds){ return (MY || []).filter(function(v){ return v.date === ds; }); }
+  function toMin(t){ return Number(t.slice(0,2)) * 60 + Number(t.slice(3,5)); }
+  function addDays(ds, n){ var d = dobj(ds); d.setDate(d.getDate() + n); return d.getFullYear() + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" + ("0"+d.getDate()).slice(-2); }
+  // 일정과 겹치는 방문 시작 시간 (방문 길이 + 앞뒤 1시간 이동)
+  function clash(x, v){
+    if (!v.start) return null; // 하루 종일
+    var dur = (D.rules && D.rules.duration) || 150, s = toMin(v.start) - 60, e = (v.end ? toMin(v.end) : toMin(v.start) + 60) + 60;
+    return allSlots(x).filter(function(t){ var a = toMin(t); return a < e && a + dur > s; });
+  }
+  function myCard(v){
+    return '<div class="myitem"><div><b>' + esc((v.start ? v.start + (v.end ? "~" + v.end : "") : "하루 종일") + " · " + v.title) + '</b>' +
+      '<div class="meta">' + esc([v.place, v.block === "day" ? "그날 예약 막음" : v.blocked && v.blocked.length ? v.blocked.join("·") + " 예약 막음" : "", v.series ? "매주 반복" : ""].filter(Boolean).join(" · ")) + '</div></div>' +
+      '<div class="row"><button class="btn g" type="button" data-mydel="' + esc(v.id) + '" style="padding:5px 9px;font-size:12.5px">삭제</button>' +
+      (v.series ? '<button class="btn g" type="button" data-mydel="' + esc(v.id) + '" data-all="1" style="padding:5px 9px;font-size:12.5px">반복 전체 삭제</button>' : '') + '</div></div>';
+  }
+  function dayCall(ds, fn){ // 그날 설정을 읽어 바꾼 뒤 저장
+    var x = dayInfo(ds); if (!x) return Promise.resolve();
+    var st = { mode: x.blocked ? "block" : x.double ? "double" : "open", off: x.off.slice(), extra: (x.extra || []).slice(), memo: x.memo || "" };
+    if (fn(st, x) === false) return Promise.resolve();
+    return call({ op: "set", date: ds, mode: st.mode, off: st.mode === "block" ? "" : st.off.join(","), extra: st.mode === "block" ? "" : st.extra.join(","), memo: st.memo });
+  }
+  function seq(list, fn){ var i = 0; return new Promise(function(ok){ (function next(){ if (i >= list.length) return ok(); Promise.resolve(fn(list[i++])).then(next, next); })(); }); }
+
+  $("myGo").onclick = function(){
+    var title = $("myTitle").value.trim(); if (!title) { toast("myMsg", "무엇을 하는지 적어 주세요.", false); return; }
+    var start = $("myStart").value, end = $("myEnd").value;
+    if (end && !start) { toast("myMsg", "끝 시간만 넣을 수는 없습니다. 시작 시간도 넣어 주세요.", false); return; }
+    var rep = Number($("myRep").value) || 1, block = $("myBlock").checked, series = rep > 1 ? "r" + Date.now().toString(36) : "";
+    var items = [];
+    for (var k = 0; k < rep; k++) {
+      var ds = addDays(sel, 7 * k), x = dayInfo(ds);
+      var v = { id: "s" + Date.now().toString(36) + k + Math.random().toString(36).slice(2,5), date: ds, start: start, end: end, title: title, place: $("myPlace").value.trim(), series: series, block: "none", blocked: [] };
+      if (block && x) {
+        var c = clash(x, v);
+        if (c === null) v.block = "day";
+        else { v.block = "slots"; v.blocked = c.filter(function(t){ return x.off.indexOf(t) < 0; }); }
+      }
+      items.push(v);
+    }
+    var btn = this; btn.disabled = true; toast("myMsg", "저장하는 중…", true);
+    tapi("schedsave", { items: items }).then(function(d){
+      if (!d || !d.ok) throw new Error((d && d.error) || "fail");
+      return seq(items, function(v){
+        if (v.block === "day") return dayCall(v.date, function(st){ if (st.mode === "block") return false; st.mode = "block"; if (!st.memo) st.memo = v.title; });
+        if (v.blocked.length) return dayCall(v.date, function(st){ if (st.mode === "block") return false; v.blocked.forEach(function(t){ if (st.off.indexOf(t) < 0) st.off.push(t); }); });
+      });
+    }).then(function(){
+      btn.disabled = false; $("myTitle").value = ""; $("myPlace").value = "";
+      return load(true).then(function(){ toast("myMsg", items.length + "건 추가했습니다.", true); });
+    }).catch(function(err){ btn.disabled = false; toast("myMsg", err && err.message === "auth" ? "관리자(/admin)에 먼저 로그인해 주세요." : "저장하지 못했습니다. 다시 눌러 주세요.", false); });
+  };
+
+  // 삭제: 이 일정이 막았던 시간은 다른 일정이 겹치지 않으면 다시 엽니다
+  document.addEventListener("click", function(e){
+    var b = e.target.closest("[data-mydel]"); if (!b) return;
+    var v0 = MY.filter(function(v){ return v.id === b.getAttribute("data-mydel"); })[0]; if (!v0) return;
+    var del = b.getAttribute("data-all") ? MY.filter(function(v){ return v.series && v.series === v0.series; }) : [v0];
+    var ids = del.map(function(v){ return v.id; });
+    b.disabled = true; b.textContent = "삭제하는 중…";
+    tapi("schedsave", { remove: ids }).then(function(d){
+      if (!d || !d.ok) throw new Error("fail");
+      var rest = d.items;
+      return seq(del, function(v){
+        var others = rest.filter(function(o){ return o.date === v.date; });
+        if (v.block === "day") {
+          if (others.some(function(o){ return o.block === "day"; })) return;
+          return dayCall(v.date, function(st){ if (st.mode !== "block") return false; st.mode = "open"; if (st.memo === v.title) st.memo = ""; });
+        }
+        if (v.blocked && v.blocked.length) {
+          var need = []; others.forEach(function(o){ (o.blocked || []).forEach(function(t){ need.push(t); }); });
+          return dayCall(v.date, function(st){ var before = st.off.length; st.off = st.off.filter(function(t){ return v.blocked.indexOf(t) < 0 || need.indexOf(t) >= 0; }); if (st.off.length === before) return false; });
+        }
+      });
+    }).then(function(){ return load(true); }).catch(function(){ b.disabled = false; b.textContent = "삭제하지 못함"; });
+  });
+
+  function renderMy(){
+    var past = $("showPastMy").checked, rows = [];
+    D.bookings.filter(active).forEach(function(b){ rows.push({ date: b.date, t: b.slot, kind: "vs", title: b.council + " " + b.name + " 의원 방문", meta: [b.place && "장소 " + b.place, b.phone && "연락처 " + b.phone].filter(Boolean).join(" · ") }); });
+    (MY || []).forEach(function(v){ rows.push({ date: v.date, t: v.start || "", kind: "me", title: v.title, meta: [(v.start ? v.start + (v.end ? "~" + v.end : "") : "하루 종일"), v.place].filter(Boolean).join(" · "), v: v }); });
+    rows = rows.filter(function(r){ return past || r.date >= D.today; }).sort(function(a, b){ return (a.date + (a.t || "00:00")).localeCompare(b.date + (b.t || "00:00")); });
+    $("nMy").textContent = rows.filter(function(r){ return r.date >= D.today; }).length;
+    if (!TKEY) { $("myList").innerHTML = '<p class="muted">내 일정을 쓰려면 <a href="/admin">관리자 화면</a>에 먼저 로그인해 주세요.</p>'; return; }
+    var h = "", last = "";
+    rows.forEach(function(r){
+      if (r.date !== last) { h += '<div class="dayh">' + esc(kd(r.date)) + (r.date === D.today ? ' · 오늘' : '') + '</div>'; last = r.date; }
+      h += '<div class="li"><div class="when">' + esc(r.t || "종일") + '</div><div class="who"><b>' + esc(r.title) + '</b><span class="pill ' + r.kind + '">' + (r.kind === "vs" ? "의원 방문" : "내 일정") + '</span>' +
+        (r.meta ? '<div class="meta">' + esc(r.meta) + '</div>' : '') + '</div><div class="act"><button class="btn g" type="button" data-go="' + r.date + '" style="padding:6px 10px;font-size:13px">달력에서 보기</button>' +
+        (r.v ? '<button class="btn g" type="button" data-mydel="' + esc(r.v.id) + '" style="padding:6px 10px;font-size:13px">삭제</button>' : '') + '</div></div>';
+    });
+    $("myList").innerHTML = h || '<p class="muted">다가오는 일정이 없습니다.</p>';
+  }
+  $("showPastMy").onchange = renderMy;
+  $("myList").addEventListener("click", function(e){
+    var b = e.target.closest("[data-go]"); if (!b) return;
+    var ds = b.getAttribute("data-go"); mi = Math.max(0, months.indexOf(ds.slice(0,7))); tab("cal"); openDay(ds);
+  });
 
   // ── 예약 목록 ──
   function renderBk(){
@@ -600,7 +738,7 @@ details summary{cursor:pointer;font-weight:700;font-size:14px}
       "아래 의원님 전용 링크에서 찾아뵐 날짜와 시작 시간을 골라 주십시오.\n▶ 일정 예약: " + a.link + "\n\n" +
       "· 하루에 한 분만 찾아뵙습니다. 먼저 예약된 날은 닫힙니다.\n" +
       "· 예약하시면 확인 메일과 달력에 넣을 수 있는 일정 파일을 바로 보내드립니다.\n" +
-      "· 워크숍 1주 전까지 사전 온라인 심층 설문 링크를 보내드립니다. 답해 주신 내용을 바탕으로 질문을 준비해 찾아뵙겠습니다.\n" +
+      "· 확인 메일에 사전 온라인 심층 설문 링크를 함께 넣어 드립니다. 워크숍 전에 답해 주시면 그 내용을 바탕으로 질문을 준비해 찾아뵙겠습니다.\n" +
       "· 교육비 집행에 필요한 서류가 있으시면 이 메일에 회신으로 알려 주십시오.\n\n" +
       "링크가 열리지 않거나 원하시는 날짜가 없으면 이 메일에 회신하시거나 010-4275-2113으로 연락 주십시오.\n\n" +
       "더넥스트제너레이션즈 김희원 드림\nthenextgenerationz.com@gmail.com · 010-4275-2113";
@@ -627,7 +765,7 @@ details summary{cursor:pointer;font-weight:700;font-size:14px}
   // ── 탭 ──
   function tab(t){
     [].forEach.call(document.querySelectorAll(".tab"), function(b){ b.classList.toggle("on", b.getAttribute("data-t") === t); });
-    show("t-cal", t === "cal"); show("t-bk", t === "bk"); show("t-ap", t === "ap");
+    show("t-cal", t === "cal"); show("t-my", t === "my"); show("t-bk", t === "bk"); show("t-ap", t === "ap");
   }
   [].forEach.call(document.querySelectorAll(".tab"), function(b){ b.onclick = function(){ tab(b.getAttribute("data-t")); }; });
 
