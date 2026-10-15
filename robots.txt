@@ -10,5 +10,6 @@ Allow: /
 Disallow: /api/
 Disallow: /admin.html
 Disallow: /admin
+Disallow: /admin-schedule.html
 
 Sitemap: https://www.thenextgenerationz.com/sitemap.xml

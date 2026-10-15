@@ -30,6 +30,10 @@
       "destination": "/admin.html"
     },
     {
+      "source": "/admin/schedule",
+      "destination": "/admin-schedule.html"
+    },
+    {
       "source": "/ko/session",
       "destination": "/ko/session.html"
     },

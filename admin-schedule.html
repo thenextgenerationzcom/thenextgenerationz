@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>일정 관리 | 한 장의 목차 — 더넥스트제너레이션즈</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32.png?v=3">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css">
+<style>
+/* 레이아웃: 위에 요약, 아래 탭(달력·예약·신청자). 달력은 넓은 화면에서 왼쪽 달력 + 오른쪽 날짜 편집 */
+:root{
+  --navy:#0B1623; --m:#B81C63; --mb:#F2398C; --cream:#FAF7F1; --card:#FCF0F5;
+  --bdr:#E4E1D8; --soft:#4B5768; --dim:#8A95A0; --white:#FFFFFF;
+  --off:#EEECE6; --offtx:#9AA1A8; --warn:#A15C00; --warnbg:#FFF4E2; --ok:#1F7A4D; --okbg:#E7F5EE;
+  --sans:"Pretendard Variable",Pretendard,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--sans);background:var(--cream);color:var(--navy);line-height:1.55;word-break:keep-all;font-synthesis:none;font-size:15px}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--mb);outline-offset:2px}
+.hide{display:none!important}
+
+header{background:var(--navy);color:var(--white)}
+.hin{max-width:1180px;margin:0 auto;padding:16px max(16px,env(safe-area-inset-right,0px)) 16px max(16px,env(safe-area-inset-left,0px));display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.brand{display:flex;flex-direction:column}
+.k{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--mb);font-weight:600;text-transform:uppercase}
+.brand b{font-size:20px;font-weight:800;letter-spacing:-.02em}
+.hbtn{display:flex;gap:8px}
+.hbtn button{background:transparent;border:1px solid rgba(255,255,255,.3);color:var(--white);border-radius:4px;padding:7px 12px;font-size:13px}
+.hbtn button:hover,.hbtn .hlink:hover{border-color:var(--mb)}
+.hbtn .hlink{display:inline-flex;align-items:center;border:1px solid rgba(255,255,255,.3);color:var(--white);border-radius:4px;padding:7px 12px;font-size:13px;text-decoration:none}
+.tab .new{display:inline-block;background:var(--mb);color:var(--white);font-size:11px;font-weight:700;border-radius:999px;padding:0 7px;margin-left:5px;vertical-align:1px}
+.li .msg{font-size:13.5px;color:var(--navy);white-space:pre-wrap;margin-top:6px;background:var(--cream);border-radius:4px;padding:8px 10px;max-height:9.5em;overflow:auto}
+.pill.new{background:var(--card);color:var(--m)}
+
+main{max-width:1180px;margin:0 auto;padding:20px max(16px,env(safe-area-inset-right,0px)) 60px max(16px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:18px}
+.panel{background:var(--white);border:1px solid var(--bdr);border-radius:6px;padding:18px}
+.muted{color:var(--soft);font-size:13.5px}
+.err{color:var(--m);font-size:14px;font-weight:600}
+
+/* 키 입력 */
+.gate{max-width:440px}
+.gate h2{font-size:18px;margin-bottom:6px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+input[type=text],input[type=password],input[type=date],select,textarea{border:1px solid var(--bdr);border-radius:4px;padding:9px 11px;background:var(--white);min-width:0}
+textarea{width:100%;min-height:60px;resize:vertical}
+.btn{border:none;border-radius:4px;padding:10px 16px;font-weight:700;font-size:14px}
+.btn.p{background:var(--m);color:var(--white)}
+.btn.p:hover{background:var(--mb)}
+.btn.g{background:var(--white);border:1px solid var(--bdr);color:var(--navy)}
+.btn.g:hover{border-color:var(--navy)}
+.btn.dg{background:var(--white);border:1px solid var(--m);color:var(--m)}
+.btn:disabled{opacity:.45;cursor:default}
+
+/* 요약 */
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.stat{background:var(--white);border:1px solid var(--bdr);border-radius:6px;padding:14px 16px;min-width:0}
+.stat .l{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--dim);text-transform:uppercase}
+.stat .v{font-size:26px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.stat .s{font-size:13px;color:var(--soft);overflow-wrap:anywhere}
+
+/* 탭 */
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--bdr)}
+.tab{background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-1px;padding:10px 14px;font-size:15px;font-weight:600;color:var(--soft)}
+.tab.on{color:var(--navy);border-bottom-color:var(--m)}
+.tab .n{font-family:var(--mono);font-size:12px;color:var(--dim);margin-left:4px}
+
+/* 달력 */
+.calwrap{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:18px;align-items:start}
+.mnav{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.mnav b{font-size:18px}
+.mnav button{width:38px;height:38px;border-radius:50%;border:1px solid var(--bdr);background:var(--white);font-size:17px}
+.mnav button:disabled{opacity:.3;cursor:default}
+.grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.dw{text-align:center;font-size:12px;color:var(--dim);font-weight:600;padding-bottom:2px}
+.dw.sun{color:#C0392B}.dw.sat{color:#2E5AAC}
+.d{min-height:84px;border:1px solid var(--bdr);border-radius:4px;background:var(--white);padding:5px 5px 6px;text-align:left;display:flex;flex-direction:column;gap:3px;min-width:0;overflow:hidden}
+.d.empty{border:none;background:transparent;cursor:default}
+.d .num{font-size:13px;font-weight:700;font-variant-numeric:tabular-nums;display:flex;justify-content:space-between;gap:2px}
+.d .num i{font-style:normal;font-size:10px;font-weight:600;color:var(--dim)}
+.d.lead{background:#FBFAF7}
+.d.lead .num{color:var(--dim)}
+.d.blocked{background:repeating-linear-gradient(135deg,var(--off),var(--off) 6px,#F6F5F1 6px,#F6F5F1 12px)}
+.d.blocked .num{color:var(--offtx)}
+.d.sel{outline:2px solid var(--m);outline-offset:-1px}
+.d:not(.empty):hover{border-color:var(--navy)}
+.chip{display:block;font-size:11px;line-height:1.3;border-radius:3px;padding:2px 4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chip.bk{background:var(--m);color:var(--white);font-weight:600}
+.chip.tag{background:var(--off);color:var(--soft)}
+.chip.dbl{background:var(--okbg);color:var(--ok);font-weight:600}
+.chip.part{background:var(--warnbg);color:var(--warn)}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12.5px;color:var(--soft);margin-top:10px}
+.legend span{display:flex;align-items:center;gap:5px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:2px}
+
+/* 날짜 편집 */
+.ed h3{font-size:19px;letter-spacing:-.01em}
+.ed .rule{font-size:13.5px;color:var(--soft);margin-top:2px}
+.sect{margin-top:16px;display:flex;flex-direction:column;gap:8px}
+.sect>.lab{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--dim);text-transform:uppercase}
+.seg{display:flex;border:1px solid var(--bdr);border-radius:4px;overflow:hidden}
+.seg button{flex:1;background:var(--white);border:none;border-right:1px solid var(--bdr);padding:9px 6px;font-size:14px;font-weight:600;color:var(--soft)}
+.seg button:last-child{border-right:none}
+.seg button.on{background:var(--navy);color:var(--white)}
+.slots{display:flex;gap:8px;flex-wrap:wrap}
+.slot{flex:1 1 90px;border:1.5px solid var(--bdr);border-radius:4px;background:var(--white);padding:9px 8px;text-align:center;font-weight:700;font-variant-numeric:tabular-nums}
+.slot small{display:block;font-size:12px;font-weight:600}
+.slot.open{border-color:var(--ok)} .slot.open small{color:var(--ok)}
+.slot.shut{background:var(--off);color:var(--offtx)} .slot.shut small{color:var(--offtx)}
+.slot.taken{border-color:var(--m);background:var(--card);cursor:default} .slot.taken small{color:var(--m)}
+.slot:disabled{cursor:default}
+.bkitem{border:1px solid var(--bdr);border-left:3px solid var(--m);border-radius:4px;padding:10px 12px;display:flex;flex-direction:column;gap:3px;font-size:14px}
+.bkitem b{font-size:15px}
+.bkitem .meta{color:var(--soft);font-size:13px;overflow-wrap:anywhere}
+.confirm{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:6px;font-size:13px;color:var(--m)}
+.toast{font-size:13.5px;font-weight:600;min-height:20px}
+.toast.ok{color:var(--ok)} .toast.no{color:var(--m)}
+
+/* 목록 */
+.list{display:flex;flex-direction:column;gap:8px}
+.li{border:1px solid var(--bdr);border-radius:6px;background:var(--white);padding:12px 14px;display:grid;grid-template-columns:150px minmax(0,1fr) auto;gap:12px;align-items:start}
+.li.cx{opacity:.5}
+.li .when{font-weight:800;font-variant-numeric:tabular-nums}
+.li .when small{display:block;font-weight:600;color:var(--soft);font-size:13px}
+.li .who b{font-size:15.5px}
+.li .who .meta{font-size:13px;color:var(--soft);overflow-wrap:anywhere}
+.li .act{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.pill{display:inline-block;font-size:11.5px;font-weight:700;border-radius:999px;padding:1px 8px;margin-left:6px;vertical-align:1px}
+.pill.ok{background:var(--okbg);color:var(--ok)}
+.pill.wait{background:var(--warnbg);color:var(--warn)}
+.pill.cx{background:var(--off);color:var(--offtx)}
+.sub{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.sub h3{font-size:17px}
+.form{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.form label{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--soft);font-weight:600;min-width:0}
+.form .wide{grid-column:1/-1}
+.linkbox{background:var(--card);border:1px solid #F3C3D8;border-radius:4px;padding:10px 12px;font-size:13.5px;overflow-wrap:anywhere}
+details summary{cursor:pointer;font-weight:700;font-size:14px}
+
+@media (max-width:860px){
+  .calwrap{grid-template-columns:minmax(0,1fr)}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .form{grid-template-columns:minmax(0,1fr)}
+  .li{grid-template-columns:minmax(0,1fr)}
+  .li .act{justify-content:flex-start}
+}
+@media (max-width:520px){
+  .d{min-height:60px;padding:3px}
+  .chip{font-size:10px;padding:1px 3px}
+  .d .num i{display:none}
+}
+@media (prefers-reduced-motion:no-preference){ .d,.slot,.btn{transition:border-color .15s,background .15s} }
+</style>
+</head>
+<body>
+<header>
+  <div class="hin">
+    <div class="brand"><span class="k">One Page · Schedule</span><b>「한 장의 목차」 일정 관리</b></div>
+    <div class="hbtn"><a class="hlink" href="/admin">← 관리자</a><button id="reload" type="button">새로고침</button><button id="forget" type="button">키 지우기</button></div>
+  </div>
+</header>
+
+<main>
+  <section class="panel gate hide" id="gate">
+    <h2>일정 관리 키를 입력해 주세요</h2>
+    <p class="muted">이 기기에서 한 번만 입력하면 됩니다. 키는 Apps Script 「한 장의 목차 발송」에서 <b>bkAdminKey</b>를 실행하면 실행 로그에 나옵니다.</p>
+    <form class="row" id="gateForm" style="margin-top:12px">
+      <input type="password" id="keyIn" autocomplete="off" placeholder="일정 관리 키" style="flex:1">
+      <button class="btn p" type="submit">열기</button>
+    </form>
+    <p class="err" id="gateErr" style="margin-top:8px"></p>
+  </section>
+
+  <p class="muted" id="loading">일정을 불러오는 중입니다…</p>
+
+  <div id="app" class="hide" style="display:flex;flex-direction:column;gap:18px">
+    <div class="stats" id="stats"></div>
+
+    <nav class="tabs" role="tablist">
+      <button class="tab on" data-t="cal" type="button" role="tab">달력</button>
+      <button class="tab" data-t="bk" type="button" role="tab">예약 <span class="n" id="nBk"></span></button>
+      <button class="tab" data-t="ap" type="button" role="tab">신청자 <span class="n" id="nAp"></span></button>
+    </nav>
+
+    <!-- 달력 -->
+    <section id="t-cal" class="calwrap">
+      <div class="panel">
+        <div class="mnav"><button id="prev" type="button" aria-label="이전 달">‹</button><b id="mlabel"></b><button id="next" type="button" aria-label="다음 달">›</button></div>
+        <div class="grid" id="dows"></div>
+        <div class="grid" id="days" style="margin-top:4px"></div>
+        <div class="legend">
+          <span><i style="background:var(--m)"></i>예약</span>
+          <span><i style="background:repeating-linear-gradient(135deg,var(--off),var(--off) 3px,#F6F5F1 3px,#F6F5F1 6px);border:1px solid var(--bdr)"></i>하루 막음</span>
+          <span><i style="background:var(--warnbg)"></i>일부 시간 막음</span>
+          <span><i style="background:var(--okbg)"></i>하루 2회</span>
+          <span><i style="background:#FBFAF7;border:1px solid var(--bdr)"></i>8일 안쪽(의원 예약 불가)</span>
+        </div>
+      </div>
+
+      <div class="panel ed" id="ed">
+        <p class="muted" id="edHint">달력에서 날짜를 누르면 그날 일정을 보고 바꿀 수 있습니다.</p>
+        <div id="edBody" class="hide">
+          <h3 id="edTitle"></h3>
+          <p class="rule" id="edRule"></p>
+          <div class="sect" id="edBk"></div>
+          <div class="sect">
+            <span class="lab">이날 방문</span>
+            <div class="seg" id="edMode">
+              <button type="button" data-m="open">받기</button>
+              <button type="button" data-m="block">하루 막기</button>
+              <button type="button" data-m="double">하루 2회</button>
+            </div>
+            <p class="muted" id="edModeHelp"></p>
+          </div>
+          <div class="sect" id="edSlotsWrap">
+            <span class="lab">시작 시간 (눌러서 열기·막기)</span>
+            <div class="slots" id="edSlots"></div>
+          </div>
+          <div class="sect">
+            <span class="lab">메모 (나만 보임)</span>
+            <input type="text" id="edMemo" maxlength="200" placeholder="예: 오후 학회, 지방 출장">
+          </div>
+          <div class="sect">
+            <div class="row"><button class="btn p" id="edSave" type="button">이날 저장</button><span class="toast" id="edMsg"></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" style="grid-column:1/-1">
+        <details id="range">
+          <summary>여러 날 한 번에 막기·풀기</summary>
+          <form class="row" id="rangeForm" style="margin-top:12px">
+            <input type="date" id="rFrom" aria-label="시작일">
+            <span>~</span>
+            <input type="date" id="rTo" aria-label="끝일">
+            <select id="rMode" aria-label="바꿀 내용"><option value="block">하루 막기</option><option value="open">다시 받기</option></select>
+            <input type="text" id="rMemo" maxlength="200" placeholder="메모 (예: 휴가)" style="flex:1;min-width:140px">
+            <button class="btn g" type="submit">적용</button>
+          </form>
+          <p class="toast" id="rMsg" style="margin-top:8px"></p>
+        </details>
+      </div>
+    </section>
+
+    <!-- 예약 -->
+    <section id="t-bk" class="hide">
+      <div class="sub"><h3>다가오는 방문</h3><label class="muted"><input type="checkbox" id="showPast"> 지난 방문·취소 함께 보기</label></div>
+      <div class="list" id="bkList"></div>
+    </section>
+
+    <!-- 신청자 -->
+    <section id="t-ap" class="hide" style="display:flex;flex-direction:column;gap:18px">
+      <div>
+        <div class="sub"><h3>홈페이지로 들어온 신청</h3><label class="muted"><input type="checkbox" id="showDone"> 처리한 신청도 보기</label></div>
+        <p class="muted" style="margin:-4px 0 10px">워크숍 페이지 신청서가 여기 쌓입니다. <b>신청자로 등록</b>을 누르면 아래 명단에 들어가고 예약 링크가 만들어집니다.</p>
+        <div class="list" id="inList"></div>
+        <div class="linkbox hide" id="inLink" style="margin-top:10px"></div>
+      </div>
+      <div>
+        <div class="sub"><h3>신청자</h3><span class="muted">예약 링크를 복사해 의원께 보내 주세요.</span></div>
+        <div class="list" id="apList"></div>
+      </div>
+      <div class="panel">
+        <div class="sub"><h3>신청자 추가</h3><span class="muted">추가하면 예약 링크가 바로 만들어집니다.</span></div>
+        <form class="form" id="addForm">
+          <label>의회<input type="text" id="aCouncil" placeholder="예: 인천광역시 계양구의회" required></label>
+          <label>이름<input type="text" id="aName" placeholder="예: 홍길동" required></label>
+          <label>트랙<select id="aTrack"><option>초선</option><option>경력</option><option>출마 준비</option></select></label>
+          <label>이메일<input type="text" id="aEmail" inputmode="email"></label>
+          <label>전화<input type="text" id="aPhone" inputmode="tel"></label>
+          <label>비고<input type="text" id="aNote" placeholder="예: 교육비 서류 요청"></label>
+          <div class="wide row"><button class="btn p" type="submit">추가하고 링크 만들기</button><span class="toast" id="aMsg"></span></div>
+        </form>
+        <div class="linkbox hide" id="aLink" style="margin-top:12px"></div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<script>
+(function(){
+  var API = "https://script.google.com/macros/s/AKfycbxyPbRd6t4u9GRV0UEAmHYKAM4ygTGIs_9qAtHQZHak9jux80dsVCsu5z6iUF80a3EkxA/exec";
+  var W = ["일","월","화","수","목","금","토"];
+  var $ = function(id){ return document.getElementById(id); };
+  var TKEY = "", INB = null, KEY = "", D = null, months = [], mi = 0, sel = null, draft = null;
+  try { KEY = localStorage.getItem("tng_bk_key") || ""; TKEY = localStorage.getItem("tng_admin_key") || ""; } catch(e){}
+
+  function esc(s){ return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+  function show(el, on){ (typeof el === "string" ? $(el) : el).classList.toggle("hide", !on); }
+  function dobj(ds){ var p = ds.split("-").map(Number); return new Date(p[0], p[1]-1, p[2]); }
+  function kd(ds, withY){ var d = dobj(ds); return (withY ? d.getFullYear()+"년 " : "") + (d.getMonth()+1) + "월 " + d.getDate() + "일(" + W[d.getDay()] + ")"; }
+  function toast(id, txt, ok){ var e = $(id); e.textContent = txt; e.className = "toast " + (ok ? "ok" : "no"); }
+
+  function call(params){
+    var body = new URLSearchParams(Object.assign({ action: "bk_admin", key: KEY }, params));
+    return fetch(API, { method: "POST", body: body }).then(function(r){ return r.json(); });
+  }
+
+  // 홈페이지 신청함 (관리자 키 = /admin 로그인 키)
+  function tapi(action, body){
+    var url = "/api/admin?action=" + action + "&key=" + encodeURIComponent(TKEY);
+    var init = body ? { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) } : { method: "GET" };
+    return fetch(url, init).then(function(r){ if (r.status === 401) return { ok: false, error: "auth" }; return r.json(); });
+  }
+  function loadInbox(){
+    if (!TKEY) { INB = { error: "nokey" }; return Promise.resolve(); }
+    return tapi("inbox&kind=session").then(function(d){ INB = d && d.ok ? { items: d.items } : { error: (d && d.error) || "fail" }; })
+      .catch(function(){ INB = { error: "fail" }; });
+  }
+
+  function gate(msg){
+    show("loading", false); show("app", false); show("gate", true);
+    $("gateErr").textContent = msg || ""; $("keyIn").focus();
+  }
+
+  function load(keepSel){
+    if (!KEY) { gate(""); return Promise.resolve(); }
+    if (!D) show("loading", true);
+    return Promise.all([call({ op: "get" }), loadInbox()]).then(function(rs){ var d = rs[0];
+      if (!d.ok) {
+        if (d.error === "auth") { try { localStorage.removeItem("tng_bk_key"); } catch(e){} KEY = ""; gate("키가 맞지 않습니다. 다시 확인해 주세요."); return; }
+        if (d.error === "unknown") { gate("Apps Script에 새 버전이 아직 배포되지 않았습니다. 「배포 관리」에서 새 버전으로 배포한 뒤 다시 열어 주세요."); return; }
+        gate("불러오지 못했습니다: " + esc(d.error || "")); return;
+      }
+      D = d;
+      show("loading", false); show("gate", false); show("app", true);
+      months = [];
+      d.days.forEach(function(x){ var m = x.date.slice(0,7); if (months.indexOf(m) < 0) months.push(m); });
+      if (mi >= months.length) mi = 0;
+      renderStats(); renderCal(); renderBk(); renderAp(); renderIn();
+      if (keepSel && sel) openDay(sel);
+    }).catch(function(){ show("loading", false); gate("연결이 끊겼습니다. 새로고침을 눌러 다시 시도해 주세요."); });
+  }
+
+  // ── 요약 ──
+  function active(b){ return b.status !== "취소"; }
+  function renderStats(){
+    var apps = D.applicants.filter(function(a){ return a.status !== "취소"; });
+    var bks = D.bookings.filter(active);
+    var booked = {}; bks.forEach(function(b){ booked[b.code] = b; });
+    var waiting = apps.filter(function(a){ return !booked[a.code]; });
+    var next = bks.filter(function(b){ return b.date >= D.today; }).sort(function(a,b){ return (a.date+a.slot).localeCompare(b.date+b.slot); })[0];
+    $("stats").innerHTML =
+      stat("신청자", apps.length, newIn().length ? '<b style="color:var(--m)">홈페이지 새 신청 ' + newIn().length + '건</b>' : "취소 제외") +
+      stat("예약 완료", bks.filter(function(b){ return b.date >= D.today; }).length, "다가오는 방문") +
+      stat("예약 대기", waiting.length, waiting.length ? waiting.slice(0,3).map(function(a){ return esc(a.name); }).join(", ") + (waiting.length > 3 ? " 외" : "") : "모두 예약함") +
+      stat("다음 방문", next ? kd(next.date).replace(/\(.\)/, "") : "—", next ? esc(next.slot + " · " + next.council + " " + next.name) : "아직 없음");
+    $("nBk").textContent = bks.filter(function(b){ return b.date >= D.today; }).length;
+    $("nAp").innerHTML = apps.length + (newIn().length ? '<span class="new">새 ' + newIn().length + '</span>' : '');
+  }
+  function stat(l, v, s){ return '<div class="stat"><div class="l">' + l + '</div><div class="v">' + v + '</div><div class="s">' + s + '</div></div>'; }
+
+  // ── 달력 ──
+  function dayInfo(ds){ for (var i = 0; i < D.days.length; i++) if (D.days[i].date === ds) return D.days[i]; return null; }
+  function bksOn(ds){ return D.bookings.filter(function(b){ return active(b) && b.date === ds; }).sort(function(a,b){ return a.slot.localeCompare(b.slot); }); }
+
+  function renderCal(){
+    $("dows").innerHTML = ["월","화","수","목","금","토","일"].map(function(w,i){ return '<div class="dw' + (i===5?' sat':i===6?' sun':'') + '">' + w + '</div>'; }).join("");
+    var ym = months[mi].split("-").map(Number), y = ym[0], m = ym[1];
+    $("mlabel").textContent = y + "년 " + m + "월";
+    $("prev").disabled = mi === 0; $("next").disabled = mi === months.length - 1;
+    var first = new Date(y, m-1, 1), lead = (first.getDay() + 6) % 7, n = new Date(y, m, 0).getDate(), h = "";
+    for (var i = 0; i < lead; i++) h += '<div class="d empty"></div>';
+    for (var dd = 1; dd <= n; dd++){
+      var ds = y + "-" + ("0"+m).slice(-2) + "-" + ("0"+dd).slice(-2), x = dayInfo(ds);
+      if (!x) { h += '<div class="d empty" style="opacity:.35"><span class="num">' + dd + '</span></div>'; continue; }
+      var cls = "d", chips = "", bk = bksOn(ds);
+      if (ds < D.open) cls += " lead";
+      if (x.blocked) cls += " blocked";
+      if (sel === ds) cls += " sel";
+      bk.forEach(function(b){ chips += '<span class="chip bk" title="' + esc(b.council + " " + b.name) + '">' + esc(b.slot + " " + b.name) + '</span>'; });
+      if (x.blocked) chips += '<span class="chip tag">막음' + (x.memo ? " · " + esc(x.memo) : "") + '</span>';
+      else {
+        if (x.double) chips += '<span class="chip dbl">2회</span>';
+        if (x.off.length) chips += '<span class="chip part">' + esc(x.off.join(" ")) + ' 막음</span>';
+        if (x.memo) chips += '<span class="chip tag">' + esc(x.memo) + '</span>';
+      }
+      h += '<button type="button" class="' + cls + '" data-d="' + ds + '"><span class="num">' + dd + (x.cls ? '<i>수업</i>' : '') + '</span>' + chips + '</button>';
+    }
+    $("days").innerHTML = h;
+  }
+  $("prev").onclick = function(){ if (mi > 0) { mi--; renderCal(); } };
+  $("next").onclick = function(){ if (mi < months.length - 1) { mi++; renderCal(); } };
+  $("days").onclick = function(e){ var b = e.target.closest("[data-d]"); if (b) { openDay(b.getAttribute("data-d")); if (window.innerWidth <= 860) $("ed").scrollIntoView({ behavior: "smooth", block: "start" }); } };
+
+  function openDay(ds){
+    var x = dayInfo(ds); if (!x) return;
+    sel = ds; renderCal();
+    draft = { mode: x.blocked ? "block" : x.double ? "double" : "open", off: x.off.slice(), memo: x.memo };
+    show("edHint", false); show("edBody", true);
+    $("edTitle").textContent = kd(ds, true);
+    var rule = (x.cls ? "수업일: 수도권 의원만, " : "기본 시작 시간 ") + x.slots.join(" · ");
+    if (ds < D.open) rule += " · 오늘부터 " + D.rules.lead + "일 안쪽이라 의원은 아직 예약할 수 없는 날";
+    $("edRule").textContent = rule;
+    var bk = bksOn(ds);
+    $("edBk").innerHTML = bk.length ? '<span class="lab">예약</span>' + bk.map(bkCard).join("") : "";
+    $("edMemo").value = draft.memo || "";
+    $("edMsg").textContent = "";
+    drawDraft();
+  }
+  function bkCard(b){
+    return '<div class="bkitem"><b>' + esc(b.slot) + ' · ' + esc(b.council) + ' ' + esc(b.name) + ' 의원</b>' +
+      '<span class="meta">' + esc([b.region, b.place && ("장소 " + b.place), b.phone && ("연락처 " + b.phone)].filter(Boolean).join(" · ")) + '</span>' +
+      (b.memo ? '<span class="meta">남긴 말: ' + esc(b.memo) + '</span>' : '') +
+      '<span class="meta">예약한 때 ' + esc(b.at) + '</span>' +
+      '<div class="confirm"><button class="btn dg" type="button" data-cx="' + b.row + '" data-code="' + esc(b.code) + '" style="padding:6px 10px;font-size:13px">예약 취소</button></div></div>';
+  }
+  function drawDraft(){
+    var x = dayInfo(sel), bk = bksOn(sel), busy = bk.map(function(b){ return b.slot; });
+    [].forEach.call($("edMode").children, function(b){ b.classList.toggle("on", b.getAttribute("data-m") === draft.mode); });
+    $("edModeHelp").textContent = draft.mode === "block" ? "이날은 아무도 예약할 수 없습니다." :
+      draft.mode === "double" ? "같은 권역 의원이면 하루 두 분까지 받습니다. 두 방문 사이는 3시간 30분 넘게 띄웁니다." :
+      "하루 한 분만 받습니다. 아래에서 열 시간을 고르세요.";
+    show("edSlotsWrap", draft.mode !== "block");
+    $("edSlots").innerHTML = x.slots.map(function(s){
+      if (busy.indexOf(s) >= 0) return '<button type="button" class="slot taken" disabled>' + s + '<small>예약됨</small></button>';
+      var shut = draft.off.indexOf(s) >= 0;
+      return '<button type="button" class="slot ' + (shut ? "shut" : "open") + '" data-s="' + s + '">' + s + '<small>' + (shut ? "막음" : "열림") + '</small></button>';
+    }).join("");
+  }
+  $("edMode").onclick = function(e){ var b = e.target.closest("[data-m]"); if (!b) return; draft.mode = b.getAttribute("data-m"); drawDraft(); };
+  $("edSlots").onclick = function(e){
+    var b = e.target.closest("[data-s]"); if (!b) return;
+    var s = b.getAttribute("data-s"), i = draft.off.indexOf(s);
+    if (i >= 0) draft.off.splice(i, 1); else draft.off.push(s);
+    drawDraft();
+  };
+  $("edSave").onclick = function(){
+    var btn = this; btn.disabled = true; toast("edMsg", "저장하는 중…", true);
+    call({ op: "set", date: sel, mode: draft.mode, off: draft.mode === "block" ? "" : draft.off.join(","), memo: $("edMemo").value.trim() }).then(function(d){
+      btn.disabled = false;
+      if (!d.ok) { toast("edMsg", "저장하지 못했습니다 (" + (d.error || "") + ")", false); return; }
+      return load(true).then(function(){ toast("edMsg", "저장했습니다.", true); });
+    }).catch(function(){ btn.disabled = false; toast("edMsg", "연결이 끊겼습니다. 다시 눌러 주세요.", false); });
+  };
+
+  // 예약 취소 (두 번 눌러 확정)
+  document.addEventListener("click", function(e){
+    var b = e.target.closest("[data-cx]"); if (!b) return;
+    if (!b.dataset.armed) { b.dataset.armed = "1"; b.textContent = "한 번 더 누르면 취소"; setTimeout(function(){ if (b.isConnected) { delete b.dataset.armed; b.textContent = "예약 취소"; } }, 4000); return; }
+    b.disabled = true; b.textContent = "취소하는 중…";
+    call({ op: "cancel", row: b.getAttribute("data-cx"), code: b.getAttribute("data-code") }).then(function(d){
+      if (!d.ok) { b.disabled = false; b.textContent = "취소하지 못함 (" + (d.error || "") + ")"; return; }
+      load(true);
+    });
+  });
+
+  // 기간 막기
+  $("rangeForm").onsubmit = function(e){
+    e.preventDefault();
+    var a = $("rFrom").value, z = $("rTo").value, mode = $("rMode").value, memo = $("rMemo").value.trim();
+    if (!a || !z || a > z) { toast("rMsg", "시작일과 끝일을 확인해 주세요.", false); return; }
+    var list = D.days.filter(function(x){ return x.date >= a && x.date <= z; }).map(function(x){ return x.date; });
+    if (!list.length) { toast("rMsg", "예약 기간 안의 날짜가 아닙니다.", false); return; }
+    var i = 0;
+    (function next(){
+      if (i >= list.length) { load(true).then(function(){ toast("rMsg", list.length + "일을 바꿨습니다.", true); }); return; }
+      toast("rMsg", (i+1) + " / " + list.length + "일 저장하는 중…", true);
+      var x = dayInfo(list[i]);
+      call({ op: "set", date: list[i], mode: mode, off: mode === "open" ? "" : "", memo: mode === "block" ? memo : (x && !x.blocked ? x.memo : "") })
+        .then(function(){ i++; next(); }).catch(function(){ toast("rMsg", "연결이 끊겼습니다. 다시 적용해 주세요.", false); });
+    })();
+  };
+
+  // ── 예약 목록 ──
+  function renderBk(){
+    var past = $("showPast").checked;
+    var rows = D.bookings.filter(function(b){ return past || (active(b) && b.date >= D.today); })
+      .sort(function(a,b){ return (a.date+a.slot).localeCompare(b.date+b.slot); });
+    $("bkList").innerHTML = rows.length ? rows.map(function(b){
+      var cx = !active(b);
+      return '<div class="li' + (cx ? " cx" : "") + '"><div class="when">' + esc(kd(b.date)) + '<small>' + esc(b.slot) + ' 시작</small></div>' +
+        '<div class="who"><b>' + esc(b.council) + ' ' + esc(b.name) + '</b>' + (cx ? '<span class="pill cx">취소</span>' : '') +
+        '<div class="meta">' + esc([b.region, b.place && ("장소 " + b.place), b.phone && ("연락처 " + b.phone)].filter(Boolean).join(" · ")) + '</div>' +
+        (b.memo ? '<div class="meta">남긴 말: ' + esc(b.memo) + '</div>' : '') + '</div>' +
+        '<div class="act">' + (cx ? '' : '<button class="btn g" type="button" data-go="' + b.date + '" style="padding:6px 10px;font-size:13px">달력에서 보기</button><button class="btn dg" type="button" data-cx="' + b.row + '" data-code="' + esc(b.code) + '" style="padding:6px 10px;font-size:13px">예약 취소</button>') + '</div></div>';
+    }).join("") : '<p class="muted">아직 예약이 없습니다. 신청자 탭에서 예약 링크를 보내면 의원이 직접 날짜를 고릅니다.</p>';
+  }
+  $("showPast").onchange = renderBk;
+  $("bkList").addEventListener("click", function(e){
+    var b = e.target.closest("[data-go]"); if (!b) return;
+    var ds = b.getAttribute("data-go"); mi = Math.max(0, months.indexOf(ds.slice(0,7))); tab("cal"); openDay(ds);
+  });
+
+  // ── 신청자 ──
+  function renderAp(){
+    var booked = {}; D.bookings.filter(active).forEach(function(b){ booked[b.code] = b; });
+    $("apList").innerHTML = D.applicants.length ? D.applicants.map(function(a, i){
+      var b = booked[a.code], cx = a.status === "취소";
+      return '<div class="li' + (cx ? " cx" : "") + '"><div class="when">' + esc(a.track || "—") + '<small>' + esc(a.region || "") + '</small></div>' +
+        '<div class="who"><b>' + esc(a.council) + ' ' + esc(a.name) + '</b>' +
+        (cx ? '<span class="pill cx">취소</span>' : b ? '<span class="pill ok">' + esc(kd(b.date) + " " + b.slot) + '</span>' : '<span class="pill wait">예약 전</span>') +
+        '<div class="meta">' + esc([a.email, a.phone, a.applied && ("신청 " + a.applied)].filter(Boolean).join(" · ")) + '</div>' +
+        (a.note ? '<div class="meta">' + esc(a.note) + '</div>' : '') + '</div>' +
+        '<div class="act">' + (a.link && !cx ? '<button class="btn g" type="button" data-copy="' + i + '" style="padding:6px 10px;font-size:13px">예약 링크 복사</button><button class="btn g" type="button" data-mail="' + i + '" style="padding:6px 10px;font-size:13px">안내 메일 복사</button>' : '') + '</div></div>';
+    }).join("") : '<p class="muted">아직 신청자가 없습니다. 아래에서 추가하세요.</p>';
+  }
+  function newIn(){ return INB && INB.items ? INB.items.filter(function(x){ return x.status === "new"; }) : []; }
+  function track(term){ term = term || ""; return term.indexOf("초선") === 0 ? "초선" : term.indexOf("경력") === 0 ? "경력" : term ? "출마 준비" : "초선"; }
+  function when(ms){ var d = new Date(ms); return (d.getMonth()+1) + "월 " + d.getDate() + "일(" + W[d.getDay()] + ") " + ("0"+d.getHours()).slice(-2) + ":" + ("0"+d.getMinutes()).slice(-2); }
+  function already(x){
+    var nm = (x.name || "").replace(/\s|의원/g, "");
+    return D.applicants.filter(function(a){ return a.status !== "취소" && (a.name || "").replace(/\s/g, "") === nm; })[0];
+  }
+  function renderIn(){
+    var el = $("inList");
+    if (!INB || INB.error) {
+      el.innerHTML = '<p class="muted">' + (INB && INB.error === "nokey" || INB && INB.error === "auth"
+        ? '홈페이지 신청을 보려면 <a href="/admin">관리자 화면</a>에 먼저 로그인해 주세요. 같은 기기에서 한 번 로그인하면 여기서도 바로 보입니다.'
+        : '홈페이지 신청을 불러오지 못했습니다. 새로고침을 눌러 주세요.') + '</p>';
+      return;
+    }
+    var all = $("showDone").checked;
+    var rows = INB.items.filter(function(x){ return all || x.status === "new"; });
+    el.innerHTML = rows.length ? rows.map(function(x){
+      var dup = x.status === "new" ? already(x) : null;
+      var pill = x.status === "added" ? '<span class="pill ok">등록함</span>' : x.status === "hidden" ? '<span class="pill cx">숨김</span>' : '<span class="pill new">새 신청</span>';
+      var act = x.status === "new"
+        ? (dup ? '<span class="muted" style="font-size:12.5px">명단에 같은 이름이 있습니다</span><button class="btn g" type="button" data-in="mark" data-id="' + esc(x.id) + '" style="padding:6px 10px;font-size:13px">등록한 것으로 표시</button>'
+               : '<button class="btn p" type="button" data-in="add" data-id="' + esc(x.id) + '" style="padding:6px 10px;font-size:13px">신청자로 등록</button>') +
+          '<button class="btn g" type="button" data-in="hide" data-id="' + esc(x.id) + '" style="padding:6px 10px;font-size:13px">숨기기</button>'
+        : '<button class="btn g" type="button" data-in="undo" data-id="' + esc(x.id) + '" style="padding:6px 10px;font-size:13px">되돌리기</button>';
+      return '<div class="li' + (x.status === "hidden" ? " cx" : "") + '"><div class="when">' + esc(track(x.term)) + '<small>' + esc(when(x.at)) + '</small></div>' +
+        '<div class="who"><b>' + esc(x.org) + ' ' + esc(x.name) + '</b>' + pill +
+        '<div class="meta">' + esc([x.email, x.phone, x.term].filter(Boolean).join(" · ")) + '</div>' +
+        (x.message ? '<div class="msg">' + esc(x.message) + '</div>' : '') + '</div>' +
+        '<div class="act">' + act + '</div></div>';
+    }).join("") : '<p class="muted">' + (all ? "아직 들어온 신청이 없습니다." : "새로 들어온 신청이 없습니다.") + '</p>';
+  }
+  $("showDone").onchange = renderIn;
+  $("inList").addEventListener("click", function(e){
+    var b = e.target.closest("[data-in]"); if (!b) return;
+    var x = INB.items.filter(function(i){ return i.id === b.getAttribute("data-id"); })[0]; if (!x) return;
+    var op = b.getAttribute("data-in"); b.disabled = true;
+    if (op === "add") {
+      b.textContent = "등록하는 중…";
+      call({ op: "add", council: x.org, name: x.name, track: track(x.term), email: x.email, phone: x.phone,
+             note: "홈페이지 신청 " + when(x.at) }).then(function(d){
+        if (!d.ok) { b.disabled = false; b.textContent = "등록하지 못함 (" + (d.error || "") + ")"; return; }
+        return tapi("inboxmark", { id: x.id, status: "added", code: d.code || "", link: d.link || "" }).then(function(){
+          var box = $("inLink"); box.innerHTML = esc(x.org + " " + x.name) + " 의원을 신청자로 등록했습니다 (권역: " + esc(d.region || "확인 필요") + "). 아래 신청자 목록의 <b>안내 메일 복사</b>로 예약 링크가 든 메일 문안을 바로 쓸 수 있습니다.<br><b>" + esc(d.link || "") + "</b>"; show(box, true);
+          return load(true);
+        });
+      }).catch(function(){ b.disabled = false; b.textContent = "연결이 끊겼습니다"; });
+      return;
+    }
+    var st = op === "hide" ? "hidden" : op === "mark" ? "added" : "new";
+    tapi("inboxmark", { id: x.id, status: st }).then(function(d){
+      if (!d.ok) { b.disabled = false; b.textContent = "처리하지 못함"; return; }
+      x.status = st; renderIn(); renderStats();
+    }).catch(function(){ b.disabled = false; });
+  });
+
+  function copy(text, btn, label){
+    var done = function(){ btn.textContent = "복사했습니다"; setTimeout(function(){ btn.textContent = label; }, 1800); };
+    try { navigator.clipboard.writeText(text).then(done, function(){ fallback(text); }); } catch(e){ fallback(text); }
+  }
+  function fallback(text){ var box = $("aLink"); box.innerHTML = "자동 복사가 막혀 있습니다. 아래 주소를 직접 복사해 주세요.<br><b>" + esc(text) + "</b>"; show(box, true); tab("ap"); }
+  function mailText(a){
+    var nm = (a.name || "").replace(/\s*의원$/, "");
+    return "[한 장의 목차] 신청 확인과 일정 예약 안내 — " + nm + " 의원님\n\n" +
+      nm + " 의원님, 안녕하십니까.\n더넥스트제너레이션즈 김희원입니다.\n\n" +
+      "「한 장의 목차」 1기 신청이 확인되었습니다. 신청해 주셔서 감사합니다.\n\n" +
+      "아래 의원님 전용 링크에서 찾아뵐 날짜와 시작 시간을 골라 주십시오.\n▶ 일정 예약: " + a.link + "\n\n" +
+      "· 하루에 한 분만 찾아뵙습니다. 먼저 예약된 날은 닫힙니다.\n" +
+      "· 예약하시면 확인 메일과 달력에 넣을 수 있는 일정 파일을 바로 보내드립니다.\n" +
+      "· 워크숍 1주 전까지 사전 온라인 심층 설문 링크를 보내드립니다. 답해 주신 내용을 바탕으로 질문을 준비해 찾아뵙겠습니다.\n" +
+      "· 교육비 집행에 필요한 서류가 있으시면 이 메일에 회신으로 알려 주십시오.\n\n" +
+      "링크가 열리지 않거나 원하시는 날짜가 없으면 이 메일에 회신하시거나 010-4275-2113으로 연락 주십시오.\n\n" +
+      "더넥스트제너레이션즈 김희원 드림\nthenextgenerationz.com@gmail.com · 010-4275-2113";
+  }
+  $("apList").addEventListener("click", function(e){
+    var m = e.target.closest("[data-mail]");
+    if (m) { copy(mailText(D.applicants[Number(m.getAttribute("data-mail"))]), m, "안내 메일 복사"); return; }
+    var b = e.target.closest("[data-copy]"); if (!b) return;
+    copy(D.applicants[Number(b.getAttribute("data-copy"))].link, b, "예약 링크 복사");
+  });
+  $("addForm").onsubmit = function(e){
+    e.preventDefault();
+    var btn = this.querySelector("button"); btn.disabled = true; toast("aMsg", "추가하는 중…", true);
+    call({ op: "add", council: $("aCouncil").value.trim(), name: $("aName").value.trim(), track: $("aTrack").value,
+           email: $("aEmail").value.trim(), phone: $("aPhone").value.trim(), note: $("aNote").value.trim() }).then(function(d){
+      btn.disabled = false;
+      if (!d.ok) { toast("aMsg", d.error === "need" ? "의회와 이름을 적어 주세요." : "추가하지 못했습니다 (" + (d.error || "") + ")", false); return; }
+      toast("aMsg", "추가했습니다. 권역: " + (d.region || "확인 필요"), true);
+      var box = $("aLink"); box.innerHTML = "예약 링크<br><b>" + esc(d.link) + "</b>"; show(box, true);
+      $("addForm").reset(); load(false);
+    }).catch(function(){ btn.disabled = false; toast("aMsg", "연결이 끊겼습니다. 다시 눌러 주세요.", false); });
+  };
+
+  // ── 탭 ──
+  function tab(t){
+    [].forEach.call(document.querySelectorAll(".tab"), function(b){ b.classList.toggle("on", b.getAttribute("data-t") === t); });
+    show("t-cal", t === "cal"); show("t-bk", t === "bk"); show("t-ap", t === "ap");
+  }
+  [].forEach.call(document.querySelectorAll(".tab"), function(b){ b.onclick = function(){ tab(b.getAttribute("data-t")); }; });
+
+  // ── 키 ──
+  $("gateForm").onsubmit = function(e){
+    e.preventDefault(); KEY = $("keyIn").value.trim(); if (!KEY) return;
+    try { localStorage.setItem("tng_bk_key", KEY); } catch(err){}
+    show("gate", false); load(false);
+  };
+  $("forget").onclick = function(){ try { localStorage.removeItem("tng_bk_key"); } catch(e){} KEY = ""; D = null; gate("키를 지웠습니다."); };
+  $("reload").onclick = function(){ load(true); };
+
+  load(false);
+})();
+</script>
+</body>
+</html>
