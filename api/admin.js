@@ -165,6 +165,28 @@ export default async function handler(req, res) {
       return res.status(200).json({ ok: true, items: list });
     }
 
+    // 관리자: 메일 등으로 따로 받은 신청을 신청함에 직접 넣기
+    if (action === 'inboxadd') {
+      const body = parseBody(await readBody(req));
+      const org = clean(body.org, 120), name = clean(body.name, 60);
+      if (!org || !name) return res.status(400).json({ error: 'need' });
+      const r = await redis(['GET', 'tng_inbox']);
+      let list = [];
+      try { list = JSON.parse((r && r.result) || '[]') || []; } catch (e) { list = []; }
+      const at = Number(body.at) || Date.now();
+      const item = {
+        id: 'q' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+        at, kind: ['session', 'publishing', 'contact'].indexOf(body.kind) >= 0 ? body.kind : 'session',
+        type: clean(body.type || '한 장의 목차 — 신청·문의', 120), org, name,
+        email: clean(body.email, 120), phone: clean(body.phone, 40), term: clean(body.term, 60),
+        message: clean(body.message, 5000), status: 'new', source: clean(body.source || '수동 입력', 40),
+      };
+      list.unshift(item);
+      list.sort((x, y) => (y.at || 0) - (x.at || 0));
+      await redis(['SET', 'tng_inbox', JSON.stringify(list.slice(0, 500))]);
+      return res.status(200).json({ ok: true, item });
+    }
+
     // 관리자: 신청 처리 표시 (added = 신청자 명단에 등록, hidden = 숨김, new = 되돌리기)
     if (action === 'inboxmark') {
       const body = parseBody(await readBody(req));
