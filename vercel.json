@@ -26,6 +26,10 @@
       "destination": "/go.html"
     },
     {
+      "source": "/img/m/:k.gif",
+      "destination": "/api/track?mo=:k"
+    },
+    {
       "source": "/admin",
       "destination": "/admin.html"
     },
