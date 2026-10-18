@@ -38,6 +38,10 @@
       "destination": "/ko/session.html"
     },
     {
+      "source": "/ko/poli-code",
+      "destination": "/ko/poli-code.html"
+    },
+    {
       "source": "/ko/publishing",
       "destination": "/ko/publishing.html"
     },
