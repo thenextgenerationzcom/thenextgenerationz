@@ -154,6 +154,18 @@ export default async function handler(req, res) {
     // ===== 여기부터 관리자 전용 =====
     if (!isAdmin) return res.status(401).json({ error: 'unauthorized' });
 
+    // 관리자: 메일 열람 기록 (api/track.js의 1픽셀)
+    if (action === 'opens') {
+      const rs = await pipeline([['HGETALL', 'mo:first'], ['HGETALL', 'mo:cnt'], ['HGETALL', 'mo:ua']]);
+      const obj = (x) => {
+        const v = x && x.result; const o = {};
+        if (Array.isArray(v)) { for (let i = 0; i < v.length; i += 2) o[v[i]] = v[i + 1]; } else if (v && typeof v === 'object') Object.assign(o, v);
+        return o;
+      };
+      res.setHeader('Cache-Control', 'no-store');
+      return res.status(200).json({ ok: true, first: obj(rs[0]), cnt: obj(rs[1]), ua: obj(rs[2]) });
+    }
+
     // 관리자: 홈페이지로 들어온 신청·문의 (api/contact.js가 보관)
     if (action === 'inbox') {
       const r = await redis(['GET', 'tng_inbox']);

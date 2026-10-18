@@ -119,6 +119,23 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   if (req.method === 'OPTIONS') return res.status(200).end();
+
+  // 메일 열람 확인용 1픽셀: /img/m/{추적코드}.gif → /api/track?mo={추적코드}
+  // 코드별 첫 열람 시각·열람 횟수·마지막 기기만 남긴다 (IP는 저장하지 않음)
+  if (req.method === 'GET' && req.query && req.query.mo) {
+    const k = String(req.query.mo).toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 12);
+    if (k && RURL && RTOK) {
+      try {
+        const now = new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 19).replace('T', ' ');
+        const ua = String(req.headers['user-agent'] || '').slice(0, 160);
+        await pipeline([['HSETNX', 'mo:first', k, now], ['HINCRBY', 'mo:cnt', k, 1], ['HSET', 'mo:ua', k, ua]]);
+      } catch (e) {}
+    }
+    res.setHeader('Content-Type', 'image/gif');
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+    return res.status(200).send(Buffer.from('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7', 'base64'));
+  }
+
   if (req.method !== 'POST') return res.status(405).end();
 
   const ua = req.headers['user-agent'] || '';
