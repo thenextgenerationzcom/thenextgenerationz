@@ -37,22 +37,17 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Mono:wght@500;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
 <style>
 /* Layout: 의원 명패(nameplate)를 중심 오브제로. 질문은 '장면' 카드, 결과는 명패 + 네 글자 계기판 */
 :root{
   --bg:#FFFFFF; --paper:#FAF7F1; --ink:#0B1623; --ink2:#4B5768; --ink3:#7A8494;
-  --line:#E4E1D8; --mag:#B81C63; --mag-soft:#FCF0F5; --navy:#14233A; --plate:#0B1623; --plate-ink:#FFFFFF; --plate-sub:#C9D1DD; --gold:#E8C77A;
-  --sans:'IBM Plex Sans KR','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',sans-serif;
+  --line:#E4E1D8; --mag:#B81C63; --mag-soft:#FCF0F5; --navy:#14233A; --plate:#0B1623; --plate-ink:#FFFFFF; --plate-sub:#C9D1DD; --gold:#E8C77A; color-scheme:light;
+  --sans:'Pretendard Variable',Pretendard,'IBM Plex Sans KR','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',sans-serif;
   --serif:'Gowun Batang','Nanum Myeongjo','AppleMyungjo',serif;
   --mono:'IBM Plex Mono','SFMono-Regular',Menlo,Consolas,monospace;
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0E141D; --paper:#151D29; --ink:#EEF1F5; --ink2:#B4BDCA; --ink3:#8792A2;
-  --line:#2A3443; --mag:#F2639F; --mag-soft:#2A1622; --navy:#E9EDF3; --plate:#05090F; --plate-ink:#FFFFFF; --plate-sub:#AEB8C6; --gold:#E8C77A; color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#0E141D; --paper:#151D29; --ink:#EEF1F5; --ink2:#B4BDCA; --ink3:#8792A2;
-  --line:#2A3443; --mag:#F2639F; --mag-soft:#2A1622; --navy:#E9EDF3; --plate:#05090F; --plate-ink:#FFFFFF; --plate-sub:#AEB8C6; --gold:#E8C77A; color-scheme:dark}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 var(--sans);word-break:keep-all;-webkit-font-smoothing:antialiased}
 button{font:inherit;color:inherit;cursor:pointer}
@@ -61,7 +56,8 @@ button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid var
 .top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding-bottom:18px;border-bottom:1px solid var(--line)}
 .logo{font:700 18px/1 var(--mono);letter-spacing:.06em;color:var(--ink)}
 .logo i{font-style:normal;color:var(--mag)}
-.brand{font-size:11px;letter-spacing:.14em;font-weight:600;color:var(--ink3)}
+.brand{font-size:12px;font-weight:600;color:var(--ink3);text-decoration:none}
+.brand:hover{color:var(--mag)}
 h1,h2,h3{text-wrap:balance;margin:0}
 .eyebrow{font-size:12px;font-weight:600;letter-spacing:.12em;color:var(--mag)}
 
@@ -186,10 +182,55 @@ details.gallery[open] summary::after{content:'–'}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 
+/* ===== 홈페이지 공통 메뉴·하단 (ko/session.html과 같은 모양) ===== */
+nav.site{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:0 5vw}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;position:relative}
+.nav-logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.nav-icon{height:30px;width:auto;display:block}
+.nav-wordmark{height:27px;width:auto;display:block}
+.nav-links{display:flex;align-items:center;gap:28px}
+.nav-links a{font-size:13.5px;color:var(--ink2);text-decoration:none;letter-spacing:0.01em;transition:color .2s;white-space:nowrap}
+.nav-links a:hover{color:var(--ink)}
+.nav-lang{font-family:var(--mono);font-size:12px;letter-spacing:0.06em;color:var(--ink2)!important;border:1px solid var(--line);padding:5px 10px;border-radius:3px}
+.nav-lang:hover{border-color:var(--mag);color:var(--mag)!important}
+.nav-cta{background:#F2398C!important;color:var(--ink)!important;padding:8px 18px;border-radius:2px;font-size:14px;font-weight:600!important;text-decoration:none!important}
+.nav-cta:hover{opacity:.82}
+.nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:6px;flex-direction:column;gap:5px;width:36px;height:36px;align-items:center;justify-content:center;flex-shrink:0}
+.nav-toggle span{display:block;width:20px;height:2px;background:var(--ink);border-radius:1px;transition:transform .25s ease,opacity .25s ease}
+.nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-toggle.open span:nth-child(2){opacity:0}
+.nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.more{background:var(--paper);padding:64px 5vw}
+.more-in{max-width:888px;margin:0 auto}
+.more .eyebrow{font-family:var(--mono);letter-spacing:.18em}
+.more h2{font:700 clamp(22px,3vw,28px)/1.4 var(--sans);letter-spacing:-.03em;margin:12px 0 24px}
+.more-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.more-card{display:flex;flex-direction:column;gap:8px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:20px 20px 18px;text-decoration:none;color:var(--ink);transition:border-color .15s,transform .15s}
+.more-card:hover{border-color:var(--mag);transform:translateY(-2px)}
+.more-card b{font-size:17px}
+.more-card span{font-size:14px;color:var(--ink2);line-height:1.6;flex:1}
+.more-card i{font-style:normal;font-size:14px;font-weight:700;color:var(--mag)}
+footer.site-foot{background:#0B1623;border-top:1px solid #2A3A48;padding:40px 5vw}
+.footer-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.footer-logo{display:flex;align-items:center;gap:10px}
+.footer-tagline{font-size:13px;color:#AAB4BD}
+.footer-copy{font-size:12px;color:#AAB4BD;opacity:.6}
+@media(max-width:768px){
+  .nav-toggle{display:flex}
+  .nav-links{position:absolute;top:64px;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;background:var(--paper);border-bottom:1px solid var(--line);max-height:0;overflow:hidden;transition:max-height .3s ease}
+  .nav-links.open{max-height:400px}
+  .nav-links a{width:100%;padding:14px 5vw;border-bottom:1px solid var(--line);color:var(--ink2)}
+  .nav-links a.nav-lang{margin:14px 5vw;width:auto;text-align:center;border:1px solid var(--line);border-radius:3px}
+  .nav-links a.nav-cta{margin:0 5vw 14px;width:auto;text-align:center;border-bottom:none;border-radius:4px}
+  .more-grid{grid-template-columns:1fr}
+  .more{padding:48px 16px}
+  .footer-inner{flex-direction:column;gap:10px;text-align:center}
+}
+
 /* 공개 전 잠금 */
 .pc-lock,.pc-bar{display:none}
-html.pc-locked .wrap{display:none}
-html.pc-locked .pc-lock{display:grid;min-height:100vh;place-items:center;padding:24px 16px;text-align:center}
+html.pc-locked .wrap,html.pc-locked .more{display:none}
+html.pc-locked .pc-lock{display:grid;min-height:62vh;place-items:center;padding:24px 16px;text-align:center}
 .pc-lock .logo{font-size:22px}
 .pc-lock h1{font:700 26px/1.4 var(--serif);margin:18px 0 10px}
 .pc-lock p{color:var(--ink2);margin:0 0 24px}
@@ -198,10 +239,29 @@ html.pc-preview .pc-bar{display:block;background:var(--mag);color:#fff;font-size
 </head>
 <body>
 <div class="pc-bar" role="status">미리보기 · 관리자만 보입니다. 10월 23일(금) 0시에 모두에게 열립니다.</div>
+<nav class="site">
+  <div class="nav-inner">
+    <a href="/ko" class="nav-logo">
+      <img src="../img/nav-icon.png" alt="" class="nav-icon">
+      <img src="../img/wordmark-text.png" alt="더넥스트제너레이션즈" class="nav-wordmark">
+    </a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="메뉴" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
+      <a href="/ko#about">소개</a>
+      <a href="/ko#work">Work</a>
+      <a href="/ko/session">한 장의 목차</a>
+      <a href="https://investpolitics.com">InvestPolitics</a>
+      <a href="/" class="nav-lang" data-lang="en">EN</a>
+      <a href="/ko/session#apply" class="nav-cta">워크숍 신청</a>
+    </div>
+  </div>
+</nav>
 <div class="pc-lock"><div><div class="logo">POLI<i>·</i>CODE</div><h1>10월 23일(금)에 공개합니다</h1><p>미래를 여는 정치인을 위한 정치 스타일 퀴즈를 준비하고 있습니다.</p><a class="cta" href="/ko/session">「한 장의 목차」 워크숍 보기 →</a></div></div>
 
 <div class="wrap">
-  <header class="top"><div class="logo">POLI<i>·</i>CODE</div><div class="brand">THE NEXT GENERATIONZ</div></header>
+  <header class="top"><div class="logo">POLI<i>·</i>CODE</div><a class="brand" href="/ko">더넥스트제너레이션즈 홈 ›</a></header>
 
   <main>
   <section id="intro">
@@ -303,6 +363,38 @@ html.pc-preview .pc-bar{display:block;background:var(--mag);color:#fff;font-size
 
   <footer class="foot"><span>THE NEXT GENERATIONZ · POLI CODE v1.0</span><span>답은 이 브라우저 안에서만 계산되고 어디에도 저장되지 않습니다.</span></footer>
 </div>
+
+<section class="more" aria-labelledby="moreTitle">
+  <div class="more-in">
+    <span class="eyebrow">MORE FROM THE NEXT GENERATIONZ</span>
+    <h2 id="moreTitle">퀴즈 다음으로 가 볼 곳</h2>
+    <div class="more-grid">
+      <a class="more-card" href="/ko/session"><b>「한 장의 목차」</b><span>의원님의 경험과 고민으로 정의문, 다섯 개의 가목차, 활동·기록 계획을 함께 만드는 개인 맞춤형 워크숍</span><i>워크숍 보기 →</i></a>
+      <a class="more-card" href="/ko/publishing"><b>「한 권의 정치」</b><span>여러분의 정치를, 자신의 언어로. 사전조사부터 원고·출판까지 함께하는 정치인의 책</span><i>자세히 보기 →</i></a>
+      <a class="more-card" href="/ko"><b>더넥스트제너레이션즈</b><span>미래세대 정치와 정책을 다루는 더넥스트제너레이션즈 홈페이지</span><i>홈으로 →</i></a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-foot">
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <img src="../img/nav-icon-bright.png" alt="" class="nav-icon">
+      <img src="../img/wordmark-text-bright.png" alt="The Next GenerationZ" class="nav-wordmark">
+    </div>
+    <div class="footer-tagline">Discover What's Next, through Korea.</div>
+    <div class="footer-copy">© 2026 더넥스트제너레이션즈</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var links=document.getElementById('navLinks'),t=document.getElementById('navToggle');
+  t.addEventListener('click',function(){var o=links.classList.toggle('open');t.classList.toggle('open',o);t.setAttribute('aria-expanded',o)});
+  links.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){links.classList.remove('open');t.classList.remove('open');t.setAttribute('aria-expanded','false')})});
+  document.querySelectorAll('[data-lang]').forEach(function(el){el.addEventListener('click',function(){document.cookie='tng_lang='+el.getAttribute('data-lang')+'; path=/; max-age=31536000; samesite=lax'})});
+})();
+</script>
 
 <script>
 const Q=[
