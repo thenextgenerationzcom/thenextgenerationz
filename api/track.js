@@ -10,6 +10,7 @@ import { createHash } from 'crypto';
 const RURL = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
 const RTOK = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
 const SALT = process.env.ANALYTICS_SALT || 'tng-default-salt';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbxyPbRd6t4u9GRV0UEAmHYKAM4ygTGIs_9qAtHQZHak9jux80dsVCsu5z6iUF80a3EkxA/exec';
 
 async function pipeline(cmds) {
   const r = await fetch(RURL + '/pipeline', {
@@ -129,6 +130,18 @@ export default async function handler(req, res) {
         const now = new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 19).replace('T', ' ');
         const ua = String(req.headers['user-agent'] || '').slice(0, 160);
         await pipeline([['HSETNX', 'mo:first', k, now], ['HINCRBY', 'mo:cnt', k, 1], ['HSET', 'mo:ua', k, ua]]);
+      } catch (e) {}
+    }
+    // 발송 명단 구글 시트의 「첫 열람」·「열람 수」 칸에도 적는다 (메일 클릭과 같은 Apps Script 웹 앱)
+    if (k) {
+      try {
+        await fetch(GAS_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams({ k: k, to: 'open', ua: String(req.headers['user-agent'] || '').slice(0, 160) }).toString(),
+          redirect: 'manual',
+          signal: AbortSignal.timeout(6000),
+        });
       } catch (e) {}
     }
     res.setHeader('Content-Type', 'image/gif');
