@@ -154,6 +154,12 @@ export default async function handler(req, res) {
     // ===== 여기부터 관리자 전용 =====
     if (!isAdmin) return res.status(401).json({ error: 'unauthorized' });
 
+    // 관리자 키 확인 (Apps Script 일정 관리가 이 키로 관리자인지 물어봄)
+    if (action === 'whoami') {
+      res.setHeader('Cache-Control', 'no-store');
+      return res.status(200).json({ ok: true });
+    }
+
     // 관리자: 메일 열람 기록 (api/track.js의 1픽셀)
     if (action === 'opens') {
       const rs = await pipeline([['HGETALL', 'mo:first'], ['HGETALL', 'mo:cnt'], ['HGETALL', 'mo:ua']]);
