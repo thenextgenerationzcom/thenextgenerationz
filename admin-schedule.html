@@ -191,7 +191,7 @@ details summary{cursor:pointer;font-weight:700;font-size:14px}
 <main>
   <section class="panel gate hide" id="gate">
     <h2>일정 관리 키를 입력해 주세요</h2>
-    <p class="muted">이 기기에서 한 번만 입력하면 됩니다. 키는 Apps Script 「한 장의 목차 발송」에서 <b>bkAdminKey</b>를 실행하면 실행 로그에 나옵니다.</p>
+    <p class="muted"><a href="/admin" style="color:#B81C63">관리자(/admin)</a>에 로그인한 기기에서는 키 없이 바로 열립니다. 로그인하지 않은 기기라면 일정 관리 키를 넣어 주세요(Apps Script 「한 장의 목차 발송」에서 <b>bkAdminKey</b>를 실행하면 실행 로그에 나옵니다).</p>
     <form class="row" id="gateForm" style="margin-top:12px">
       <input type="password" id="keyIn" autocomplete="off" placeholder="일정 관리 키" style="flex:1">
       <button class="btn p" type="submit">열기</button>
@@ -351,8 +351,11 @@ details summary{cursor:pointer;font-weight:700;font-size:14px}
   function kd(ds, withY){ var d = dobj(ds); return (withY ? d.getFullYear()+"년 " : "") + (d.getMonth()+1) + "월 " + d.getDate() + "일(" + W[d.getDay()] + ")"; }
   function toast(id, txt, ok){ var e = $(id); e.textContent = txt; e.className = "toast " + (ok ? "ok" : "no"); }
 
+  // 관리자(/admin)에 로그인한 기기는 그 키로 바로 들어갑니다. 아니면 일정 관리 키를 씁니다.
+  var MODE = TKEY ? "tk" : (KEY ? "bk" : "");
   function call(params){
-    var body = new URLSearchParams(Object.assign({ action: "bk_admin", key: KEY }, params));
+    var auth = MODE === "tk" ? { action: "bk_admin", key: TKEY, tk: "1" } : { action: "bk_admin", key: KEY };
+    var body = new URLSearchParams(Object.assign(auth, params));
     return fetch(API, { method: "POST", body: body }).then(function(r){ return r.json(); });
   }
 
@@ -379,11 +382,15 @@ details summary{cursor:pointer;font-weight:700;font-size:14px}
   }
 
   function load(keepSel){
-    if (!KEY) { gate(""); return Promise.resolve(); }
+    if (!MODE) { gate(""); return Promise.resolve(); }
     if (!D) show("loading", true);
     return Promise.all([call({ op: "get" }), loadInbox()]).then(function(rs){ var d = rs[0];
       if (!d.ok) {
-        if (d.error === "auth") { try { localStorage.removeItem("tng_bk_key"); } catch(e){} KEY = ""; gate("키가 맞지 않습니다. 다시 확인해 주세요."); return; }
+        if (d.error === "auth") {
+          if (MODE === "tk" && KEY) { MODE = "bk"; return load(keepSel); }
+          if (MODE === "bk") { try { localStorage.removeItem("tng_bk_key"); } catch(e){} KEY = ""; }
+          MODE = ""; gate(TKEY ? "관리자 로그인이 만료됐습니다. /admin에 다시 로그인하거나 일정 관리 키를 넣어 주세요." : "키가 맞지 않습니다. 다시 확인해 주세요."); return;
+        }
         if (d.error === "unknown") { gate("Apps Script에 새 버전이 아직 배포되지 않았습니다. 「배포 관리」에서 새 버전으로 배포한 뒤 다시 열어 주세요."); return; }
         gate("불러오지 못했습니다: " + esc(d.error || "")); return;
       }
@@ -808,11 +815,11 @@ details summary{cursor:pointer;font-weight:700;font-size:14px}
 
   // ── 키 ──
   $("gateForm").onsubmit = function(e){
-    e.preventDefault(); KEY = $("keyIn").value.trim(); if (!KEY) return;
+    e.preventDefault(); KEY = $("keyIn").value.trim(); if (!KEY) return; MODE = "bk";
     try { localStorage.setItem("tng_bk_key", KEY); } catch(err){}
     show("gate", false); load(false);
   };
-  $("forget").onclick = function(){ try { localStorage.removeItem("tng_bk_key"); } catch(e){} KEY = ""; D = null; gate("키를 지웠습니다."); };
+  $("forget").onclick = function(){ try { localStorage.removeItem("tng_bk_key"); } catch(e){} KEY = ""; MODE = TKEY ? "tk" : ""; D = null; if (MODE) load(false); else gate("키를 지웠습니다."); };
   $("reload").onclick = function(){ load(true); };
 
   load(false);
