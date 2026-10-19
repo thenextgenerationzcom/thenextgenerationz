@@ -156,6 +156,13 @@ footer a{color:var(--soft)}
   var $ = function(id){return document.getElementById(id)};
   var QS = new URLSearchParams(location.search);
   var code = (QS.get("k") || "").toLowerCase().replace(/[^a-z0-9]/g,"");
+  // 서버 응답이 중간에 끊기는 경우가 있어, 읽기(와 중복이 안 생기는 예약)는 자동으로 다시 시도합니다
+  function fetchJ(url, init, tries){
+    return fetch(url, init).then(function(r){ return r.json(); }).catch(function(err){
+      if ((tries || 1) <= 1) throw err;
+      return new Promise(function(ok){ setTimeout(ok, 1200); }).then(function(){ return fetchJ(url, init, tries - 1); });
+    });
+  }
   var preview = QS.has("preview");  // 관리자 미리보기: 의원 화면 그대로 보이지만 예약은 저장되지 않음
   var days = {}, months = [], mi = 0, selDate = null, selSlot = null, cur = null, canChange = false, changing = false;
 
@@ -190,7 +197,7 @@ footer a{color:var(--soft)}
   }
 
   if (code) {
-    fetch(API + "?action=bk_info&k=" + encodeURIComponent(code)).then(function(r){return r.json()}).then(function(d){
+    fetchJ(API + "?action=bk_info&k=" + encodeURIComponent(code), undefined, 3).then(function(d){
       if (!d.ok) { fail("<b>예약 정보를 찾지 못했습니다.</b><br>신청 확인이 끝난 뒤 보내드린 링크로만 예약할 수 있습니다. 010-4275-2113으로 연락 주십시오."); return; }
       start(d);
     }).catch(function(){ fail("<b>일정을 불러오지 못했습니다.</b><br>잠시 뒤 다시 열어 주시거나 010-4275-2113으로 연락 주십시오."); });
@@ -198,7 +205,7 @@ footer a{color:var(--soft)}
     // 미리보기: 두 기준을 한 번에 불러 두고, 버튼은 다시 불러오지 않고 바로 바꿉니다
     var key = "", tkey = ""; try { key = localStorage.getItem("tng_bk_key") || ""; tkey = localStorage.getItem("tng_admin_key") || ""; } catch(e){}
     if (!key && !tkey) { fail("<b>미리보기는 관리자(/admin)에 로그인한 기기에서만 볼 수 있습니다.</b><br><a href=\"/admin\">관리자</a>에 로그인한 뒤 다시 열어 주세요."); return; }
-    var pv0 = function(r, auth){ return fetch(API, { method: "POST", body: new URLSearchParams(Object.assign({ action: "bk_admin", op: "preview", region: r }, auth)) }).then(function(x){ return x.json(); }); };
+    var pv0 = function(r, auth){ return fetchJ(API, { method: "POST", body: new URLSearchParams(Object.assign({ action: "bk_admin", op: "preview", region: r }, auth)) }, 3); };
     var pv1 = function(r){
       if (!tkey) return pv0(r, { key: key });
       return pv0(r, { key: tkey, tk: "1" }).then(function(d){ return (d && d.error === "auth" && key) ? pv0(r, { key: key }) : d; });
@@ -262,18 +269,18 @@ footer a{color:var(--soft)}
         if (d.error === "taken") { $("msg").textContent = "방금 다른 분이 이 일정을 예약했습니다. 다른 날짜나 시간을 골라 주세요."; delete days[selDate]; selDate=null; show("slotCard",false); show("formCard",false); render(); return; }
         if (d.error === "late") { $("msg").textContent = "워크숍 당일에는 여기서 바꿀 수 없습니다. 010-4275-2113으로 연락 주십시오."; return; }
         $("msg").textContent = "일정을 바꾸지 못했습니다. 잠시 뒤 다시 눌러 주시거나 010-4275-2113으로 연락 주십시오.";
-      }).catch(function(){ btn.disabled = false; btn.textContent = "이 일정으로 바꾸기"; $("msg").textContent = "연결이 끊겼습니다. 다시 눌러 주세요."; });
+      }).catch(function(){ btn.disabled = false; btn.textContent = "이 일정으로 바꾸기"; $("msg").textContent = "응답을 받지 못했습니다. 이미 바뀌었을 수 있으니 이 화면을 새로고침해 지금 일정을 먼저 확인해 주세요."; });
       return;
     }
     btn.textContent = "예약하는 중…";
     var body = new URLSearchParams({action:"bk_book", k:code, date:selDate, slot:selSlot, place:$("place").value.trim(), phone:$("phone").value.trim(), memo:$("memo").value.trim()});
-    fetch(API, {method:"POST", body:body}).then(function(r){return r.json()}).then(function(d){
+    fetchJ(API, {method:"POST", body:body}, 2).then(function(d){
       if (d.ok) { if (window.tngCv) window.tngCv("일정 예약 완료"); done(d.booked); return; }
       if (d.error === "already") { done(d.booked); return; }
       btn.disabled = false; btn.textContent = "이 일정으로 예약하기";
       if (d.error === "taken") { $("msg").textContent = "방금 다른 분이 이 일정을 예약했습니다. 다른 날짜나 시간을 골라 주세요."; delete days[selDate]; selDate=null; show("slotCard",false); show("formCard",false); render(); $("app").scrollIntoView({behavior:"smooth"}); }
       else $("msg").textContent = "예약을 마치지 못했습니다. 잠시 뒤 다시 눌러 주시거나 010-4275-2113으로 연락 주십시오.";
-    }).catch(function(){ btn.disabled = false; btn.textContent = "이 일정으로 예약하기"; $("msg").textContent = "연결이 끊겼습니다. 다시 눌러 주세요."; });
+    }).catch(function(){ btn.disabled = false; btn.textContent = "이 일정으로 예약하기"; $("msg").textContent = "응답을 받지 못했습니다. 이 화면을 새로고침해 예약이 됐는지 먼저 확인해 주세요. 안 됐으면 다시 눌러 주시면 됩니다."; });
   };
   function done(b, changed){
     show("app", false); show("chgBar", false);
