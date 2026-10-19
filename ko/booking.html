@@ -196,9 +196,13 @@ footer a{color:var(--soft)}
     }).catch(function(){ fail("<b>일정을 불러오지 못했습니다.</b><br>잠시 뒤 다시 열어 주시거나 010-4275-2113으로 연락 주십시오."); });
   } else {
     // 미리보기: 두 기준을 한 번에 불러 두고, 버튼은 다시 불러오지 않고 바로 바꿉니다
-    var key = ""; try { key = localStorage.getItem("tng_bk_key") || ""; } catch(e){}
-    if (!key) { fail("<b>미리보기는 관리자 일정 화면에 키를 넣은 기기에서만 볼 수 있습니다.</b><br><a href=\"/admin/schedule\">일정 관리</a>에서 키를 넣은 뒤 다시 열어 주세요."); return; }
-    var pv1 = function(r){ return fetch(API, { method: "POST", body: new URLSearchParams({ action: "bk_admin", key: key, op: "preview", region: r }) }).then(function(x){ return x.json(); }); };
+    var key = "", tkey = ""; try { key = localStorage.getItem("tng_bk_key") || ""; tkey = localStorage.getItem("tng_admin_key") || ""; } catch(e){}
+    if (!key && !tkey) { fail("<b>미리보기는 관리자(/admin)에 로그인한 기기에서만 볼 수 있습니다.</b><br><a href=\"/admin\">관리자</a>에 로그인한 뒤 다시 열어 주세요."); return; }
+    var pv0 = function(r, auth){ return fetch(API, { method: "POST", body: new URLSearchParams(Object.assign({ action: "bk_admin", op: "preview", region: r }, auth)) }).then(function(x){ return x.json(); }); };
+    var pv1 = function(r){
+      if (!tkey) return pv0(r, { key: key });
+      return pv0(r, { key: tkey, tk: "1" }).then(function(d){ return (d && d.error === "auth" && key) ? pv0(r, { key: key }) : d; });
+    };
     var showRegion = function(){
       var d = PVD[region];
       if (!d || !d.ok) { fail("<b>미리보기를 불러오지 못했습니다" + (d && d.error === "unknown" ? " — Apps Script에 새 버전을 배포해 주세요" : "") + ".</b>"); return; }
