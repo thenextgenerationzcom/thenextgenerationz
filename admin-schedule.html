@@ -356,7 +356,14 @@ details summary{cursor:pointer;font-weight:700;font-size:14px}
   function call(params){
     var auth = MODE === "tk" ? { action: "bk_admin", key: TKEY, tk: "1" } : { action: "bk_admin", key: KEY };
     var body = new URLSearchParams(Object.assign(auth, params));
-    return fetch(API, { method: "POST", body: body }).then(function(r){ return r.json(); });
+    var read = ["get", "preview", "notifypreview"].indexOf(String(params.op || "get")) >= 0;
+    var tries = read ? 3 : 1;
+    function go(n){
+      return fetch(API, { method: "POST", body: body }).then(function(r){ return r.json(); })
+        .catch(function(err){ if (n > 1) return new Promise(function(ok){ setTimeout(ok, 1200); }).then(function(){ return go(n - 1); }); throw err; });
+    }
+    // 읽기는 연결이 끊기면 자동으로 다시 시도. 저장·발송은 서버에서 이미 처리됐을 수 있어 다시 보내지 않음
+    return go(tries);
   }
 
   // 홈페이지 신청함 (관리자 키 = /admin 로그인 키)
@@ -401,7 +408,7 @@ details summary{cursor:pointer;font-weight:700;font-size:14px}
       if (mi >= months.length) mi = 0;
       renderStats(); renderCal(); renderBk(); renderAp(); renderIn(); renderMy();
       if (keepSel && sel) openDay(sel);
-    }).catch(function(){ show("loading", false); gate("연결이 끊겼습니다. 새로고침을 눌러 다시 시도해 주세요."); });
+    }).catch(function(){ show("loading", false); gate("서버 응답을 받지 못했습니다. 잠시 뒤 새로고침을 눌러 주세요."); });
   }
 
   // ── 요약 ──
@@ -498,7 +505,7 @@ details summary{cursor:pointer;font-weight:700;font-size:14px}
       if (!d.ok) { g.disabled = false; msg.className = "toast no"; msg.textContent = d.error === "taken" ? "그 시간에는 다른 예약이 있습니다." : "옮기지 못했습니다 (" + (d.error || "") + ")"; return; }
       mi = Math.max(0, months.indexOf(ds.slice(0,7))); sel = ds;
       return load(true).then(function(){ toast("edMsg", kd(ds) + " " + tm + "로 옮기고 의원께 확인 메일을 보냈습니다.", true); });
-    }).catch(function(){ g.disabled = false; msg.className = "toast no"; msg.textContent = "연결이 끊겼습니다."; });
+    }).catch(function(){ g.disabled = false; msg.className = "toast no"; msg.textContent = "응답을 받지 못했습니다. 서버에서는 이미 처리됐을 수 있으니, 새로고침으로 반영됐는지 먼저 확인해 주세요."; });
   });
   function bkCard(b){
     return '<div class="bkitem"><b>' + esc(b.slot) + ' · ' + esc(b.council) + ' ' + esc(b.name) + ' 의원</b>' +
@@ -534,7 +541,7 @@ details summary{cursor:pointer;font-weight:700;font-size:14px}
       if (!d.ok) { toast("edMsg", "저장하지 못했습니다 (" + (d.error || "") + ")", false); return; }
       if (again) { again = false; saveDay(); return; }
       return load(true).then(function(){ toast("edMsg", kd(ds) + " 저장했습니다.", true); });
-    }).catch(function(){ saving = false; toast("edMsg", "연결이 끊겼습니다. 다시 눌러 주세요.", false); });
+    }).catch(function(){ saving = false; toast("edMsg", "응답을 받지 못했습니다. 서버에서는 이미 처리됐을 수 있으니, 새로고침으로 반영됐는지 먼저 확인해 주세요.", false); });
   }
   $("edMode").onclick = function(e){ var b = e.target.closest("[data-m]"); if (!b) return; draft.mode = b.getAttribute("data-m"); drawDraft(); saveDay(); };
   $("edSlots").onclick = function(e){
@@ -563,7 +570,7 @@ details summary{cursor:pointer;font-weight:700;font-size:14px}
     call({ op: "cancel", row: b.getAttribute("data-cx"), code: b.getAttribute("data-code"), notify: "1" }).then(function(d){
       if (!d.ok) { b.disabled = false; b.textContent = "취소하지 못함 (" + (d.error || "") + ")"; return; }
       load(true);
-    });
+    }).catch(function(){ b.disabled = false; b.textContent = "응답 없음 — 새로고침해서 반영됐는지 확인"; });
   });
 
   // 기간 막기
@@ -579,7 +586,7 @@ details summary{cursor:pointer;font-weight:700;font-size:14px}
       toast("rMsg", (i+1) + " / " + list.length + "일 저장하는 중…", true);
       var x = dayInfo(list[i]);
       call({ op: "set", date: list[i], mode: mode, off: mode === "open" ? "" : "", memo: mode === "block" ? memo : (x && !x.blocked ? x.memo : "") })
-        .then(function(){ i++; next(); }).catch(function(){ toast("rMsg", "연결이 끊겼습니다. 다시 적용해 주세요.", false); });
+        .then(function(){ i++; next(); }).catch(function(){ toast("rMsg", "응답을 받지 못했습니다. 서버에서는 이미 처리됐을 수 있으니, 새로고침으로 반영됐는지 먼저 확인해 주세요.", false); });
     })();
   };
 
@@ -601,7 +608,7 @@ details summary{cursor:pointer;font-weight:700;font-size:14px}
       if (!d.ok) { toast("myMsg", d.error === "unknown" ? "Apps Script를 새 버전으로 배포해 주세요." : "넣지 못했습니다 (" + (d.message || d.error || "") + ")", false); return; }
       $("myTitle").value = ""; $("myPlace").value = "";
       return load(true).then(function(){ toast("myMsg", "구글 캘린더에 넣었습니다.", true); });
-    }).catch(function(){ btn.disabled = false; toast("myMsg", "연결이 끊겼습니다. 다시 눌러 주세요.", false); });
+    }).catch(function(){ btn.disabled = false; toast("myMsg", "응답을 받지 못했습니다. 서버에서는 이미 처리됐을 수 있으니, 새로고침으로 반영됐는지 먼저 확인해 주세요.", false); });
   };
   document.addEventListener("click", function(e){
     var b = e.target.closest("[data-mydel]"); if (!b) return;
@@ -610,7 +617,7 @@ details summary{cursor:pointer;font-weight:700;font-size:14px}
     call({ op: "caldel", id: b.getAttribute("data-mydel"), date: b.getAttribute("data-date") || "", all: b.getAttribute("data-all") ? "1" : "" }).then(function(d){
       if (!d.ok) { b.disabled = false; b.textContent = "삭제하지 못함"; return; }
       load(true);
-    }).catch(function(){ b.disabled = false; b.textContent = "연결이 끊겼습니다"; });
+    }).catch(function(){ b.disabled = false; b.textContent = "응답 없음 — 새로고침해서 반영됐는지 확인"; });
   });
 
   function renderMy(){
@@ -720,7 +727,7 @@ details summary{cursor:pointer;font-weight:700;font-size:14px}
             openMail(d.code, function(sent, r){ say(sent ? "<b>안내 메일을 " + esc(r.to) + "로 보냈습니다.</b>" : "<b style='color:var(--m)'>안내 메일은 보내지 않았습니다. 아래 신청자 목록에서 보낼 수 있습니다.</b>"); if (sent) load(true); });
           });
         });
-      }).catch(function(){ b.disabled = false; b.textContent = "연결이 끊겼습니다"; });
+      }).catch(function(){ b.disabled = false; b.textContent = "응답 없음 — 새로고침해서 반영됐는지 확인"; });
       return;
     }
     var st = op === "hide" ? "hidden" : op === "mark" ? "added" : "new";
@@ -739,7 +746,7 @@ details summary{cursor:pointer;font-weight:700;font-size:14px}
     call({ op: "notifypreview", code: code }).then(function(d){
       if (!d.ok) { $("mmTo").textContent = "—"; toast("mmMsg", d.error === "noemail" ? "이메일이 없어 보낼 수 없습니다." : d.error === "unknown" ? "Apps Script를 새 버전으로 배포해 주세요." : "문안을 불러오지 못했습니다 (" + (d.error || "") + ")", false); return; }
       MM.link = d.link || ""; $("mmTo").textContent = d.to; $("mmSub").value = d.subject; $("mmBody").value = d.body; $("mmSend").disabled = false; $("mmBody").focus(); $("mmBody").setSelectionRange(0, 0); $("mmBody").scrollTop = 0;
-    }).catch(function(){ toast("mmMsg", "연결이 끊겼습니다. 닫고 다시 열어 주세요.", false); });
+    }).catch(function(){ toast("mmMsg", "초안을 불러오지 못했습니다. 닫고 다시 열어 주세요.", false); });
   }
   function closeMail(sent, res){ show("mailModal", false); document.body.style.overflow = ""; var f = MM && MM.done; MM = null; if (f) f(sent, res); }
   $("mmCancel").onclick = function(){ closeMail(false); };
@@ -754,7 +761,7 @@ details summary{cursor:pointer;font-weight:700;font-size:14px}
       btn.disabled = false;
       if (!d.ok) { toast("mmMsg", "보내지 못했습니다 (" + (d.error || "") + ")", false); return; }
       closeMail(true, d);
-    }).catch(function(){ btn.disabled = false; toast("mmMsg", "연결이 끊겼습니다. 다시 눌러 주세요.", false); });
+    }).catch(function(){ btn.disabled = false; toast("mmMsg", "응답을 받지 못했습니다. 메일이 이미 나갔을 수 있으니 다시 누르기 전에 닫고 새로고침해서 「안내 메일」 시각을 먼저 확인해 주세요.", false); });
   };
 
   function copy(text, btn, label){
@@ -803,7 +810,7 @@ details summary{cursor:pointer;font-weight:700;font-size:14px}
       toast("aMsg", "추가했습니다. 권역: " + (d.region || "확인 필요"), true);
       var box = $("aLink"); box.innerHTML = "예약 링크<br><b>" + esc(d.link) + "</b>"; show(box, true);
       $("addForm").reset(); load(false);
-    }).catch(function(){ btn.disabled = false; toast("aMsg", "연결이 끊겼습니다. 다시 눌러 주세요.", false); });
+    }).catch(function(){ btn.disabled = false; toast("aMsg", "응답을 받지 못했습니다. 서버에서는 이미 처리됐을 수 있으니, 새로고침으로 반영됐는지 먼저 확인해 주세요.", false); });
   };
 
   // ── 탭 ──
