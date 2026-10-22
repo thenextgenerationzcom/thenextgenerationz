@@ -617,9 +617,16 @@ $('shareIg').onclick=async()=>{const f=fileOf();if(!f){$('toast').textContent=NO
   if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f]});cv('퀴즈 공유');$('toast').textContent=tip;return}catch(e){if(e&&e.name==='AbortError'){$('toast').textContent=copied?'문구는 복사해 두었어요.':'';return}}}
   saveFile();cv('퀴즈 공유');$('toast').textContent='카드 이미지를 저장했어요. 인스타그램 앱에서 올려 주세요. '+tip};
 /* 페이스북: 문구를 먼저 복사하고 공유 창을 엶. 미리보기에 내 코드 카드가 나옵니다 */
-$('shareFb').onclick=async()=>{const w=window.open('about:blank','fbshare','width=640,height=640');const copied=await copyCaption();
-  const u='https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(shareUrl('fb'));if(w)w.location.href=u;else location.href=u;cv('퀴즈 공유');
-  $('toast').textContent=copied?'문구를 복사해 두었어요. 페이스북 글 칸에 붙여넣기 하세요.':'아래 「함께 올릴 문구」를 복사해 붙여넣기 하세요.'};
+$('shareFb').onclick=()=>{
+  const u='https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(shareUrl('fb'));
+  /* 문구 복사는 기다리지 않고 시작만 함 — 휴대폰에서는 새 탭이 열리는 순간 이 페이지가 멈추기 때문 */
+  const pr=(navigator.clipboard&&navigator.clipboard.writeText)?navigator.clipboard.writeText(shareText()).then(()=>true,()=>false):Promise.resolve(false);
+  const desk=matchMedia('(pointer:fine)').matches;
+  const w=desk?window.open(u,'fbshare','width=640,height=640'):window.open(u,'_blank');
+  if(!w)location.href=u;
+  cv('퀴즈 공유');
+  pr.then(ok=>{$('toast').textContent=ok?'문구를 복사해 두었어요. 페이스북 글 칸에 붙여넣기 하세요.':'아래 「함께 올릴 문구」를 복사해 붙여넣기 하세요.'});
+};
 $('saveImg').onclick=()=>{$('toast').textContent=saveFile()?'카드 이미지(정사각형)를 저장했어요.':NOTREADY};
 /* 공유 링크로 들어온 경우: 친구의 코드를 보여 주기 */
 (function(){const q=new URLSearchParams(location.search),c=(q.get('from')||'').toUpperCase();if(!P[c])return;
