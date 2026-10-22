@@ -24,7 +24,7 @@
 <script>
 /* 공개 전 잠금: 2026-10-23(금) 0시(한국 시간)에 자동으로 열립니다. 그 전에는 관리자 브라우저나 미리보기 링크로만 보입니다. */
 (function(){
-  var OPEN=Date.parse('2026-10-23T00:00:00+09:00'),T='f28822580f',ok=Date.now()>=OPEN;
+  var OPEN=Date.parse('2026-10-22T00:00:00+09:00'),T='f28822580f',ok=Date.now()>=OPEN;
   try{
     var q=new URLSearchParams(location.search);
     if(q.get('preview')===T){localStorage.setItem('tng_poli_preview','1');q.delete('preview');history.replaceState(null,'',location.pathname+(q.toString()?'?'+q:'')+location.hash)}
