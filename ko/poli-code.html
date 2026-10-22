@@ -227,6 +227,26 @@ footer.site-foot{background:#0B1623;border-top:1px solid #2A3A48;padding:40px 5v
   .footer-inner{flex-direction:column;gap:10px;text-align:center}
 }
 
+/* 도감 안내 · 공유받은 코드 · 공유 버튼 */
+.nav-links a.nav-poli{color:var(--ink);font-weight:600}
+.guide{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;margin:14px 0 0;padding:18px 20px;border:1.5px solid var(--ink);border-radius:12px;text-decoration:none;color:var(--ink);transition:border-color .15s,background .15s}
+.guide:hover{border-color:var(--mag);background:var(--mag-soft)}
+.guide>*{min-width:0}
+.guide .k{font:700 12px var(--mono);letter-spacing:.12em;color:var(--mag)}
+.guide b{display:block;font-size:18px;margin:2px 0 2px}
+.guide span{font-size:14px;color:var(--ink2)}
+.guide i{font-style:normal;font:700 15px var(--sans);color:var(--mag);white-space:nowrap}
+.from{display:none;margin:0 0 16px;padding:12px 16px;border-radius:10px;background:var(--mag-soft);font-size:15px;line-height:1.6}
+.from.on{display:block}
+.from b{font-family:var(--mono)}
+.share-row{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 10px}
+.sbtn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:10px;padding:13px 18px;font-weight:700;font-size:15px;color:#fff;cursor:pointer}
+.sbtn.ig{background:linear-gradient(45deg,#F58529,#DD2A7B 55%,#8134AF)}
+.sbtn.fb{background:#1877F2}
+.sbtn svg{width:18px;height:18px;flex:none}
+.dexlink{display:inline-block;margin-top:12px;font-weight:700;color:var(--mag);text-decoration:none}
+@media (max-width:520px){.guide{grid-template-columns:1fr}.sbtn{flex:1 1 100%;justify-content:center}}
+
 /* 공개 전 잠금 */
 .pc-lock,.pc-bar{display:none}
 html.pc-locked .wrap,html.pc-locked .more{display:none}
@@ -252,6 +272,7 @@ html.pc-preview .pc-bar{display:block;background:var(--mag);color:#fff;font-size
       <a href="/ko#about">소개</a>
       <a href="/ko#work">Work</a>
       <a href="/ko/session">한 장의 목차</a>
+      <a href="/ko/poli-code" class="nav-poli" aria-current="page">POLI CODE</a>
       <a href="https://investpolitics.com">InvestPolitics</a>
       <a href="/" class="nav-lang" data-lang="en">EN</a>
       <a href="/ko/session#apply" class="nav-cta">워크숍 신청</a>
@@ -267,6 +288,7 @@ html.pc-preview .pc-bar{display:block;background:var(--mag);color:#fff;font-size
   <section id="intro">
     <div class="intro">
       <div>
+        <p class="from" id="fromNote"></p>
         <div class="eyebrow">미래를 여는 정치인을 위한 정치 스타일 퀴즈</div>
         <h1>내 정치에는<br>어떤 코드가 있을까요?</h1>
         <p class="lead">문제를 어디서 알아채고, 무엇을 바꾸고, 누구와 움직이고, 무엇을 남기고 싶은지. 12개의 장면에서 하나씩 고르면 네 글자 코드가 나옵니다.</p>
@@ -280,6 +302,7 @@ html.pc-preview .pc-bar{display:block;background:var(--mag);color:#fff;font-size
       </div>
     </div>
     <p class="source">더넥스트제너레이션즈에서는 <b>지방의원·미래세대 정치인 심층 인터뷰 26회와 역량강화 워크숍, 정책 연구</b>에서 보아 온 정치활동 방식을 네 가지 기준으로 정리했습니다. 네 번째 글자인 공공가치 기준은 행정학의 대표 연구인 Jørgensen &amp; Bozeman(2007)의 <b>72개 공공가치 목록</b>에 더넥스트제너레이션즈의 가치 체계를 더해 만들었습니다.</p>
+    <a class="guide" href="/ko/poli-codes"><div><span class="k">POLI CODE 도감</span><b>16가지 POLI CODE 도감</b><span>생활발명가부터 광장지기까지, 코드별 설명과 특징을 한눈에 봅니다.</span></div><i>도감 보기 →</i></a>
   </section>
 
   <section id="quiz" hidden>
@@ -330,8 +353,13 @@ html.pc-preview .pc-bar{display:block;background:var(--mag);color:#fff;font-size
         <div class="card-out">
           <img id="cardImg" alt="나의 POLI CODE 결과 카드">
           <div>
-            <p>카드 이미지를 길게 누르거나 오른쪽 클릭해서 저장하세요. 인스타그램 피드 비율(4:5)입니다.</p>
+            <div class="share-row">
+              <button class="sbtn ig" id="shareIg" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>인스타그램에 올리기</button>
+              <button class="sbtn fb" id="shareFb" type="button"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 8h3V4h-3c-2.8 0-4.5 1.8-4.5 4.6V11H7v4h2.5v9h4v-9h3l.5-4h-3.5V8.8c0-.5.3-.8.5-.8z"/></svg>페이스북에 공유</button>
+            </div>
+            <p>휴대폰에서 「인스타그램에 올리기」를 누르면 카드 이미지를 스토리·피드로 바로 보낼 수 있어요. 컴퓨터에서는 이미지를 저장한 뒤 올려 주세요.</p>
             <div class="actions">
+              <button class="ghost" id="saveImg" type="button">이미지 저장</button>
               <button class="ghost" id="shareLink" type="button">링크 공유</button>
               <button class="ghost" id="copy" type="button">공유 문구 복사</button>
               <button class="ghost" id="restart" type="button">다시 해보기</button>
@@ -355,6 +383,7 @@ html.pc-preview .pc-bar{display:block;background:var(--mag);color:#fff;font-size
         <div class="grid16" id="grid16"></div>
         <div class="gprev" id="gprev">궁금한 코드를 눌러 보세요.</div>
       </details>
+      <a class="dexlink" id="dexLink" href="/ko/poli-codes">16가지 POLI CODE 도감에서 내 코드 자세히 보기 →</a>
 
       <p class="fine">POLI CODE는 성격검사나 능력 평가가 아니라, 지금 먼저 손이 가는 방식을 재미있게 읽어 보는 퀴즈입니다. 공공가치 축(H/W)은 Jørgensen &amp; Bozeman(2007), 「Public Values: An Inventory」의 72개 공공가치 목록을 참고해 더넥스트제너레이션즈가 두 갈래로 묶은 기준이며, 원 연구의 분류를 그대로 옮긴 것은 아닙니다. 이 퀴즈는 이름·연락처를 묻지 않으며, 답한 내용을 저장하거나 보내지 않습니다. 홈페이지 방문 통계만 개인을 알 수 없는 방식으로 집계합니다.</p>
     </div>
@@ -518,11 +547,20 @@ function gallery(me){
     b.append(s,n);b.onclick=()=>{$('gprev').textContent=code+' '+P[code][0]+' — '+P[code][1]+' 이럴 때 빛나요: '+SCENE[code]+'.'};return b}));
 }
 function wrapText(ctx,text,x,y,maxW,lh){let line='',yy=y;for(const ch of text){const test=line+ch;if(ctx.measureText(test).width>maxW&&line){ctx.fillText(line,x,yy);line=ch.trimStart();yy+=lh}else line=test}if(line)ctx.fillText(line,x,yy);return yy}
+let CARD={feed:null,story:null};
 async function drawCard(code){
   try{await document.fonts.ready}catch(e){}
-  const W=1080,H=1350,c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');const p=P[code];
+  const feed=paintCard(code,1350),story=paintCard(code,1920);
+  $('cardImg').src=feed.toDataURL('image/png');
+  CARD={feed:null,story:null};
+  feed.toBlob(b=>{CARD.feed=b},'image/png');story.toBlob(b=>{CARD.story=b},'image/png');
+  $('dexLink').href='/ko/poli-codes?me='+code+'#'+code;
+}
+function paintCard(code,H){
+  const W=1080,c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');const p=P[code];
   x.fillStyle='#FAF7F1';x.fillRect(0,0,W,H);
-  x.fillStyle='#B81C63';x.fillRect(0,0,W,14);
+  x.translate(0,Math.round((H-1350)/2));
+  x.save();x.setTransform(1,0,0,1,0,0);x.fillStyle='#B81C63';x.fillRect(0,0,W,14);x.restore();
   x.fillStyle='#0B1623';x.font='700 34px "IBM Plex Mono", monospace';x.fillText('POLI·CODE',90,130);
   x.fillStyle='#7A8494';x.font='600 24px "IBM Plex Sans KR", sans-serif';x.textAlign='right';x.fillText('THE NEXT GENERATIONZ',W-90,130);x.textAlign='left';
   // nameplate
@@ -539,17 +577,29 @@ async function drawCard(code){
   AX.forEach((a,k)=>{const ch=code[k],lab=ch===a.a?a.la:a.lb;x.font='600 26px "IBM Plex Sans KR", sans-serif';const w=x.measureText(ch+' '+lab).width+40;
     if(cx+w>W-90){cx=90}
     x.strokeStyle='#0B1623';x.lineWidth=2;x.strokeRect(cx,cy-40,w,58);x.fillStyle='#0B1623';x.fillText(ch+' '+lab,cx+20,cy-1);cx+=w+14});
-  x.fillStyle='#B81C63';x.font='600 26px "IBM Plex Sans KR", sans-serif';x.fillText('미래를 여는 정치인을 위한 정치 스타일 퀴즈 · thenextgenerationz.com',90,H-110);
-  $('cardImg').src=c.toDataURL('image/png');
+  x.fillStyle='#B81C63';x.font='600 26px "IBM Plex Sans KR", sans-serif';x.fillText('미래를 여는 정치인을 위한 정치 스타일 퀴즈 · thenextgenerationz.com',90,1350-110);
+  return c;
 }
-function shareText(){const p=P[st.r.code];return '나의 POLI CODE는 '+st.r.code+' · '+p[0]+'\n'+p[1]+'\n이럴 때 빛나요: '+SCENE[st.r.code]+'\n더넥스트제너레이션즈 POLI CODE · 미래를 여는 정치인을 위한 정치 스타일 퀴즈\nhttps://www.thenextgenerationz.com/ko/poli-code?utm=share'}
+function shareUrl(u){return 'https://www.thenextgenerationz.com/pc/'+st.r.code+'?utm='+(u||'share')}
+function shareText(){const p=P[st.r.code];return '나의 POLI CODE는 '+st.r.code+' · '+p[0]+'\n'+p[1]+'\n이럴 때 빛나요: '+SCENE[st.r.code]+'\n당신의 네 글자는? 12개 장면 · 3분\n'+shareUrl('share')}
 $('copy').onclick=async()=>{const t=shareText();try{await navigator.clipboard.writeText(t);$('toast').textContent='공유 문구를 복사했어요.'}catch(e){const f=$('copyFallback');f.value=t;f.hidden=false;f.focus();f.select();$('toast').textContent='자동 복사가 막혀 있어요. 아래 문구를 선택해서 복사해 주세요.'}};
 
-const SHARE_URL='https://www.thenextgenerationz.com/ko/poli-code?utm=share';
-$('shareLink').onclick=async()=>{const d={title:'POLI CODE — 미래를 여는 정치인의 16가지 정치 스타일',text:'나의 POLI CODE는 '+st.r.code+' · '+P[st.r.code][0]+'. 당신의 네 글자는?',url:SHARE_URL};
+$('shareLink').onclick=async()=>{const SHARE_URL=shareUrl('share');const d={title:'POLI CODE — 미래를 여는 정치인의 16가지 정치 스타일',text:'나의 POLI CODE는 '+st.r.code+' · '+P[st.r.code][0]+'. 당신의 네 글자는?',url:SHARE_URL};
   if(navigator.share){try{await navigator.share(d);cv('퀴즈 공유');return}catch(e){if(e&&e.name==='AbortError')return}}
   try{await navigator.clipboard.writeText(SHARE_URL);$('toast').textContent='퀴즈 링크를 복사했어요.';cv('퀴즈 공유')}catch(e){const f=$('copyFallback');f.value=SHARE_URL;f.hidden=false;f.focus();f.select();$('toast').textContent='아래 링크를 선택해서 복사해 주세요.'}};
 $('toSession').addEventListener('click',()=>cv('퀴즈→워크숍'));
+function fileOf(kind){const b=CARD[kind];return b?new File([b],'POLI-CODE-'+st.r.code+(kind==='story'?'-story':'')+'.png',{type:'image/png'}):null}
+function saveFile(kind){const f=fileOf(kind);if(!f)return false;const a=document.createElement('a');a.href=URL.createObjectURL(f);a.download=f.name;document.body.append(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500);return true}
+/* 인스타그램: 휴대폰은 공유 창으로 스토리 이미지(9:16)를 바로 보냄. 안 되면 이미지를 저장 */
+$('shareIg').onclick=async()=>{const f=fileOf('story');if(!f){$('toast').textContent='카드를 만드는 중이에요. 잠시 뒤 다시 눌러 주세요.';return}
+  if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],text:'나의 POLI CODE는 '+st.r.code+' · '+P[st.r.code][0]+'. 당신의 네 글자는? '+shareUrl('ig')});cv('퀴즈 공유');$('toast').textContent='공유 창에서 인스타그램을 골라 스토리나 피드에 올려 주세요.';return}catch(e){if(e&&e.name==='AbortError')return}}
+  saveFile('story');cv('퀴즈 공유');$('toast').textContent='스토리용 이미지를 저장했어요. 인스타그램 앱에서 스토리나 피드에 올려 주세요. 링크 스티커에는 '+shareUrl('ig')+' 를 넣으면 됩니다.'};
+/* 페이스북: 공유 창. 미리보기에 내 코드 카드가 나옵니다 */
+$('shareFb').onclick=()=>{const u='https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(shareUrl('fb'));window.open(u,'fbshare','width=640,height=640');cv('퀴즈 공유')};
+$('saveImg').onclick=()=>{if(saveFile('feed'))$('toast').textContent='피드용 이미지(4:5)를 저장했어요.';else $('toast').textContent='카드를 만드는 중이에요. 잠시 뒤 다시 눌러 주세요.'};
+/* 공유 링크로 들어온 경우: 친구의 코드를 보여 주기 */
+(function(){const q=new URLSearchParams(location.search),c=(q.get('from')||'').toUpperCase();if(!P[c])return;
+  const n=$('fromNote');n.innerHTML='';const t=document.createTextNode('공유받은 POLI CODE는 ');const b=document.createElement('b');b.textContent=c;const r=document.createTextNode(' · '+P[c][0]+'입니다. 나는 16가지 중 어떤 코드일까요?');n.append(t,b,r);n.classList.add('on')})();
 function cv(l){try{window.tngCv&&window.tngCv(l)}catch(e){}}
 $('start').onclick=()=>{st={i:0,ans:Array(12).fill(null),r:null};show('quiz');render();cv('퀴즈 시작')};
 $('back').onclick=()=>{if(st.i>0){st.i--;render()}};

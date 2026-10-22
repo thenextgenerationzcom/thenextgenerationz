@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>16가지 POLI CODE 도감 | 미래를 여는 정치인의 정치 스타일 — 더넥스트제너레이션즈</title>
+<meta name="description" content="생활발명가부터 광장지기까지. 문제를 어디서 알아채고, 무엇을 바꾸고, 누구와 움직이고, 무엇을 남기는지 — 네 가지 기준으로 읽는 16가지 정치 스타일의 설명과 특징.">
+<meta property="og:title" content="16가지 POLI CODE 도감 — 미래를 여는 정치인의 정치 스타일">
+<meta property="og:description" content="생활발명가부터 광장지기까지, 16가지 정치 스타일의 설명과 특징을 한눈에.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.thenextgenerationz.com/ko/poli-codes">
+<meta property="og:image" content="https://www.thenextgenerationz.com/img/og-poli-code.jpg?v=1">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://www.thenextgenerationz.com/ko/poli-codes">
+<link rel="icon" type="image/png" sizes="32x32" href="../img/favicon-32.png?v=3">
+<link rel="apple-touch-icon" sizes="180x180" href="../img/favicon-180.png?v=3">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: 의원 명패(nameplate)를 중심 오브제로. 질문은 '장면' 카드, 결과는 명패 + 네 글자 계기판 */
+:root{
+  --bg:#FFFFFF; --paper:#FAF7F1; --ink:#0B1623; --ink2:#4B5768; --ink3:#7A8494;
+  --line:#E4E1D8; --mag:#B81C63; --mag-soft:#FCF0F5; --navy:#14233A; --plate:#0B1623; --plate-ink:#FFFFFF; --plate-sub:#C9D1DD; --gold:#E8C77A; color-scheme:light;
+  --sans:'Pretendard Variable',Pretendard,'IBM Plex Sans KR','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',sans-serif;
+  --serif:'Gowun Batang','Nanum Myeongjo','AppleMyungjo',serif;
+  --mono:'IBM Plex Mono','SFMono-Regular',Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 var(--sans);word-break:keep-all;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid var(--mag);outline-offset:3px}
+.wrap{max-width:920px;margin:0 auto;padding-block:20px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding-bottom:18px;border-bottom:1px solid var(--line)}
+.logo{font:700 18px/1 var(--mono);letter-spacing:.06em;color:var(--ink)}
+.logo i{font-style:normal;color:var(--mag)}
+.brand{font-size:12px;font-weight:600;color:var(--ink3);text-decoration:none}
+.brand:hover{color:var(--mag)}
+h1,h2,h3{text-wrap:balance;margin:0}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.12em;color:var(--mag)}
+
+/* intro */
+.intro{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding:48px 0 36px}
+.intro>*{min-width:0}
+.intro h1{font:700 clamp(32px,5vw,50px)/1.22 var(--serif);letter-spacing:-.02em;margin:14px 0 18px}
+.lead{color:var(--ink2);font-size:17px;max-width:30em;margin:0 0 26px}
+.facts{display:flex;flex-wrap:wrap;gap:8px 18px;margin:22px 0 0;padding:0;list-style:none;font-size:13px;color:var(--ink2)}
+.facts b{font:700 15px var(--mono);color:var(--ink);margin-right:4px}
+.cta{display:inline-flex;align-items:center;gap:10px;background:var(--mag);color:#fff;border:0;border-radius:10px;padding:15px 22px;font-weight:700;font-size:16px;text-decoration:none}
+.cta:hover{filter:brightness(1.08)}
+.ghost{background:transparent;border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:13px 16px;font-weight:600}
+.ghost:hover{border-color:var(--ink3)}
+.platestack{position:relative;height:300px}
+.plate{background:var(--plate);color:var(--plate-ink);border-radius:6px;padding:20px 22px 18px;box-shadow:0 14px 0 -6px rgba(11,22,35,.18),0 22px 40px -18px rgba(11,22,35,.35);position:relative}
+.plate::after{content:'';position:absolute;left:0;right:0;bottom:-10px;height:10px;background:linear-gradient(var(--plate),transparent);opacity:.35;border-radius:0 0 6px 6px}
+.plate .pcode{font:700 46px/1 var(--mono);letter-spacing:.08em}
+.plate .pname{font:700 22px/1.3 var(--serif);color:var(--gold);margin-top:10px}
+.plate .psub{font-size:11px;letter-spacing:.14em;color:var(--plate-sub);font-weight:600}
+.platestack .plate{position:absolute;width:min(300px,90%)}
+.platestack .p1{right:0;top:10px;transform:rotate(3deg)}
+.platestack .p2{left:0;top:150px;transform:rotate(-4deg)}
+.source{margin:6px 0 0;padding:16px 18px;background:var(--paper);border-radius:10px;font-size:14px;color:var(--ink2)}
+.source b{color:var(--ink)}
+
+/* quiz */
+.quiz{padding:30px 0 0}
+.qhead{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:13px;color:var(--ink2);font-weight:600}
+.qhead strong{font:700 14px var(--mono);color:var(--ink);font-variant-numeric:tabular-nums}
+.ticks{display:grid;grid-template-columns:repeat(12,1fr);gap:4px;margin:12px 0 0}
+.ticks span{height:6px;border-radius:3px;background:var(--line)}
+.ticks span.on{background:var(--mag)}
+.ticks span.done{background:var(--ink3)}
+.scene{margin:34px 0 0;display:inline-block;font-size:13px;font-weight:600;color:var(--mag);background:var(--mag-soft);padding:5px 11px;border-radius:999px}
+.question{font:700 clamp(22px,3.2vw,30px)/1.45 var(--serif);margin:16px 0 26px;max-width:32em}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.choice{text-align:left;background:var(--bg);border:1.5px solid var(--line);border-radius:12px;padding:20px 20px 22px;display:flex;gap:14px;align-items:flex-start;min-height:132px;font-size:17px;line-height:1.6;font-weight:500;transition:border-color .15s,background .15s,transform .15s}
+.choice:hover{border-color:var(--ink3);transform:translateY(-2px)}
+.choice .k{flex:none;font:700 13px/1 var(--mono);width:30px;height:30px;border-radius:6px;display:grid;place-items:center;background:var(--paper);color:var(--ink2)}
+.choice.sel{border-color:var(--mag);background:var(--mag-soft)}
+.choice.sel .k{background:var(--mag);color:#fff}
+.hint{font-size:13px;color:var(--ink3);margin:16px 0 0}
+.qnav{display:flex;justify-content:space-between;align-items:center;margin-top:30px;padding-top:18px;border-top:1px solid var(--line)}
+.back{background:none;border:0;color:var(--ink2);font-weight:600;padding:8px 4px}
+.next{background:var(--ink);color:var(--bg);border:0;border-radius:10px;padding:12px 20px;font-weight:700}
+.next:disabled{opacity:.3;cursor:not-allowed}
+
+/* result */
+.res{padding:30px 0 0;display:grid;gap:28px}
+.res>*{min-width:0}
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+.hero>*{min-width:0}
+.bigplate{padding:30px 30px 26px}
+.bigplate .pcode{font-size:clamp(54px,9vw,78px)}
+.bigplate .pname{font-size:clamp(26px,4vw,34px)}
+.bigplate .pline{color:var(--plate-sub);font-size:15px;line-height:1.75;margin:14px 0 0}
+.rarity{display:flex;flex-direction:column;align-items:flex-start;gap:8px;margin-top:18px;font-size:14px;line-height:1.6;color:var(--plate-ink)}
+.badge{font-size:12px;font-weight:700;color:var(--plate);background:var(--gold);padding:3px 9px;border-radius:999px}
+.power h3{font:700 20px var(--serif);margin-bottom:10px}
+.power p{margin:0 0 16px;color:var(--ink2)}
+.power .pw{font-size:18px;font-weight:600;color:var(--ink);border-left:3px solid var(--mag);padding-left:14px;margin-bottom:18px}
+.letters{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.letters li{display:grid;grid-template-columns:32px 1fr;gap:10px;font-size:15px;color:var(--ink2)}
+.letters b{font:700 15px/30px var(--mono);text-align:center;border:1px solid var(--line);border-radius:6px;color:var(--ink)}
+.sec h3{font:700 20px var(--serif);margin-bottom:6px}
+.sec .sub{font-size:13px;color:var(--ink3);margin:0 0 14px}
+.meters{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.meter{border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.meter .mh{display:flex;justify-content:space-between;gap:10px;font-size:14px;font-weight:700}
+.meter .mh span{font-size:12px;font-weight:600;color:var(--ink3)}
+.meter .mh span.strong{color:var(--mag)}
+.dots{display:flex;gap:6px;margin:12px 0 8px}
+.dots i{flex:1;height:10px;border-radius:3px;background:var(--line)}
+.dots i.a{background:var(--ink)}
+.dots i.b{background:var(--mag)}
+.ml{display:flex;justify-content:space-between;gap:8px;font-size:13px;color:var(--ink2)}
+.ml .on{color:var(--ink);font-weight:700}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.box{background:var(--paper);border-radius:10px;padding:18px 20px}
+.box h4{margin:0 0 8px;font-size:15px}
+.box p{margin:0;font-size:15px;color:var(--ink2)}
+.box .tag{font:700 12px var(--mono);color:var(--mag);letter-spacing:.06em;display:block;margin-bottom:6px}
+.missions{display:grid;gap:12px}
+.card-out{display:grid;grid-template-columns:minmax(0,260px) 1fr;gap:22px;align-items:start}
+.card-out img{width:100%;max-width:100%;border-radius:8px;border:1px solid var(--line);display:block;background:var(--paper)}
+.card-out p{margin:0 0 12px;color:var(--ink2);font-size:15px}
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+.toast{min-height:22px;font-size:13px;color:var(--mag);margin-top:8px}
+.next-step{border:1.5px solid var(--ink);border-radius:12px;padding:22px 24px;display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center}
+.next-step>*{min-width:0}
+.next-step h3{font:700 20px var(--serif);margin-bottom:6px}
+.next-step p{margin:0;color:var(--ink2);font-size:15px}
+.fine{font-size:12.5px;color:var(--ink3);line-height:1.7;margin:0}
+.privacy{font-size:13px;color:var(--ink3);line-height:1.6;margin:14px 0 0}
+details.gallery summary{cursor:pointer;font-weight:700;font-size:16px;list-style:none;display:flex;justify-content:space-between;align-items:center;padding:4px 0}
+details.gallery summary::-webkit-details-marker{display:none}
+details.gallery summary::after{content:'+';font:700 22px var(--mono);color:var(--ink3)}
+details.gallery[open] summary::after{content:'–'}
+.grid16{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:14px}
+.g{text-align:left;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+.g strong{display:block;font:700 15px var(--mono);letter-spacing:.04em}
+.g span{font-size:13px;color:var(--ink2)}
+.g small{display:block;font-size:11.5px;color:var(--ink3);font-variant-numeric:tabular-nums}
+.g.me{border-color:var(--mag);background:var(--mag-soft)}
+.gprev{margin-top:12px;padding:14px 16px;background:var(--paper);border-radius:8px;font-size:14px;color:var(--ink2);min-height:48px}
+.foot{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--ink3)}
+
+@media (max-width:760px){
+  .intro{grid-template-columns:1fr;padding-top:30px;gap:22px}
+  .platestack{height:300px}
+  .platestack .p2{top:150px}
+  .hero,.pair,.meters,.card-out{grid-template-columns:1fr}
+  .card-out img{max-width:260px}
+  .next-step{grid-template-columns:1fr}
+  .grid16{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:520px){
+  .choices{grid-template-columns:1fr}
+  .choice{min-height:0;padding:16px}
+  .intro .cta{width:100%;justify-content:center}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* ===== 홈페이지 공통 메뉴·하단 (ko/session.html과 같은 모양) ===== */
+nav.site{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:0 5vw}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;position:relative}
+.nav-logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.nav-icon{height:30px;width:auto;display:block}
+.nav-wordmark{height:27px;width:auto;display:block}
+.nav-links{display:flex;align-items:center;gap:28px}
+.nav-links a{font-size:13.5px;color:var(--ink2);text-decoration:none;letter-spacing:0.01em;transition:color .2s;white-space:nowrap}
+.nav-links a:hover{color:var(--ink)}
+.nav-lang{font-family:var(--mono);font-size:12px;letter-spacing:0.06em;color:var(--ink2)!important;border:1px solid var(--line);padding:5px 10px;border-radius:3px}
+.nav-lang:hover{border-color:var(--mag);color:var(--mag)!important}
+.nav-cta{background:#F2398C!important;color:var(--ink)!important;padding:8px 18px;border-radius:2px;font-size:14px;font-weight:600!important;text-decoration:none!important}
+.nav-cta:hover{opacity:.82}
+.nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:6px;flex-direction:column;gap:5px;width:36px;height:36px;align-items:center;justify-content:center;flex-shrink:0}
+.nav-toggle span{display:block;width:20px;height:2px;background:var(--ink);border-radius:1px;transition:transform .25s ease,opacity .25s ease}
+.nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-toggle.open span:nth-child(2){opacity:0}
+.nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.more{background:var(--paper);padding:64px 5vw}
+.more-in{max-width:888px;margin:0 auto}
+.more .eyebrow{font-family:var(--mono);letter-spacing:.18em}
+.more h2{font:700 clamp(22px,3vw,28px)/1.4 var(--sans);letter-spacing:-.03em;margin:12px 0 24px}
+.more-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.more-card{display:flex;flex-direction:column;gap:8px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:20px 20px 18px;text-decoration:none;color:var(--ink);transition:border-color .15s,transform .15s}
+.more-card:hover{border-color:var(--mag);transform:translateY(-2px)}
+.more-card b{font-size:17px}
+.more-card span{font-size:14px;color:var(--ink2);line-height:1.6;flex:1}
+.more-card i{font-style:normal;font-size:14px;font-weight:700;color:var(--mag)}
+footer.site-foot{background:#0B1623;border-top:1px solid #2A3A48;padding:40px 5vw}
+.footer-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.footer-logo{display:flex;align-items:center;gap:10px}
+.footer-tagline{font-size:13px;color:#AAB4BD}
+.footer-copy{font-size:12px;color:#AAB4BD;opacity:.6}
+@media(max-width:768px){
+  .nav-toggle{display:flex}
+  .nav-links{position:absolute;top:64px;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;background:var(--paper);border-bottom:1px solid var(--line);max-height:0;overflow:hidden;transition:max-height .3s ease}
+  .nav-links.open{max-height:400px}
+  .nav-links a{width:100%;padding:14px 5vw;border-bottom:1px solid var(--line);color:var(--ink2)}
+  .nav-links a.nav-lang{margin:14px 5vw;width:auto;text-align:center;border:1px solid var(--line);border-radius:3px}
+  .nav-links a.nav-cta{margin:0 5vw 14px;width:auto;text-align:center;border-bottom:none;border-radius:4px}
+  .more-grid{grid-template-columns:1fr}
+  .more{padding:48px 16px}
+  .footer-inner{flex-direction:column;gap:10px;text-align:center}
+}
+
+/* 도감 안내 · 공유받은 코드 · 공유 버튼 */
+.nav-links a.nav-poli{color:var(--ink);font-weight:600}
+.guide{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;margin:14px 0 0;padding:18px 20px;border:1.5px solid var(--ink);border-radius:12px;text-decoration:none;color:var(--ink);transition:border-color .15s,background .15s}
+.guide:hover{border-color:var(--mag);background:var(--mag-soft)}
+.guide>*{min-width:0}
+.guide .k{font:700 12px var(--mono);letter-spacing:.12em;color:var(--mag)}
+.guide b{display:block;font-size:18px;margin:2px 0 2px}
+.guide span{font-size:14px;color:var(--ink2)}
+.guide i{font-style:normal;font:700 15px var(--sans);color:var(--mag);white-space:nowrap}
+.from{display:none;margin:0 0 16px;padding:12px 16px;border-radius:10px;background:var(--mag-soft);font-size:15px;line-height:1.6}
+.from.on{display:block}
+.from b{font-family:var(--mono)}
+.share-row{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 10px}
+.sbtn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:10px;padding:13px 18px;font-weight:700;font-size:15px;color:#fff;cursor:pointer}
+.sbtn.ig{background:linear-gradient(45deg,#F58529,#DD2A7B 55%,#8134AF)}
+.sbtn.fb{background:#1877F2}
+.sbtn svg{width:18px;height:18px;flex:none}
+.dexlink{display:inline-block;margin-top:12px;font-weight:700;color:var(--mag);text-decoration:none}
+@media (max-width:520px){.guide{grid-template-columns:1fr}.sbtn{flex:1 1 100%;justify-content:center}}
+
+/* 공개 전 잠금 */
+.pc-lock,.pc-bar{display:none}
+html.pc-locked .wrap,html.pc-locked .more{display:none}
+html.pc-locked .pc-lock{display:grid;min-height:62vh;place-items:center;padding:24px 16px;text-align:center}
+.pc-lock .logo{font-size:22px}
+.pc-lock h1{font:700 26px/1.4 var(--serif);margin:18px 0 10px}
+.pc-lock p{color:var(--ink2);margin:0 0 24px}
+html.pc-preview .pc-bar{display:block;background:var(--mag);color:#fff;font-size:13px;font-weight:600;text-align:center;padding:8px 16px}
+
+.nav-links a.nav-poli{color:var(--ink);font-weight:600}
+
+/* ── 16가지 도감 ── */
+.dex-hero{padding:44px 0 28px;border-bottom:1px solid var(--line)}
+.dex-hero h1{font:700 clamp(30px,4.6vw,46px)/1.25 var(--sans);letter-spacing:-.03em;margin:12px 0 14px}
+.dex-hero .lead{margin-bottom:22px}
+.dex-sec{padding:40px 0 0}
+.dex-sec>h2{font:700 clamp(21px,2.6vw,26px)/1.4 var(--sans);letter-spacing:-.02em;margin:8px 0 6px}
+.dex-sec>.sub{color:var(--ink2);margin:0 0 20px;font-size:15px}
+.axes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.ax{background:var(--paper);border-radius:10px;padding:18px 18px 16px}
+.ax .k{font:700 12px var(--mono);letter-spacing:.12em;color:var(--mag)}
+.ax h3{font:700 17px var(--sans);margin:6px 0 12px}
+.ax p{margin:0 0 8px;font-size:14px;color:var(--ink2);line-height:1.55}
+.ax p b{font:700 20px var(--mono);color:var(--ink);margin-right:6px;vertical-align:-2px}
+.idx{display:grid;grid-template-columns:150px repeat(4,minmax(0,1fr));gap:8px;align-items:stretch}
+.idx .rl{font-size:13px;font-weight:600;color:var(--ink2);display:flex;align-items:center}
+.idx a{display:block;border:1px solid var(--line);border-radius:8px;padding:10px 12px;text-decoration:none;color:var(--ink);background:var(--bg);transition:border-color .15s}
+.idx a:hover{border-color:var(--mag)}
+.idx a small{display:block;font:700 13px var(--mono);color:var(--mag);letter-spacing:.04em}
+.idx a span{font-weight:700;font-size:15px}
+.grp{padding:44px 0 0}
+.grp>.k{font:700 12px var(--mono);letter-spacing:.12em;color:var(--mag)}
+.grp>h2{font:700 clamp(20px,2.4vw,24px)/1.4 var(--sans);letter-spacing:-.02em;margin:6px 0 18px}
+.tcs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.tc{background:var(--paper);border-radius:12px;padding:22px 22px 18px;scroll-margin-top:84px;border:2px solid transparent;transition:border-color .3s}
+.tc:target,.tc.me{border-color:var(--mag);background:var(--mag-soft)}
+.tc-code{font:700 15px var(--mono);letter-spacing:.06em;color:var(--mag)}
+.tc-code .gc{color:var(--ink3)}
+.tc h3{font:700 23px var(--sans);letter-spacing:-.02em;margin:4px 0 4px}
+.tc-tag{font-size:13.5px;font-weight:700;color:var(--mag);margin-bottom:10px}
+.tc-line{font-size:16px;line-height:1.65;margin:0 0 12px;color:var(--ink)}
+.tc dl{margin:0;border-top:1px solid var(--line)}
+.tc dt{font-size:13px;font-weight:700;color:var(--ink2);margin-top:10px}
+.tc dd{margin:2px 0 0;font-size:14.5px;line-height:1.6;color:var(--ink2)}
+.tc-letters{list-style:none;margin:14px 0 0;padding:12px 0 0;border-top:1px solid var(--line);display:grid;gap:6px}
+.tc-letters li{display:grid;grid-template-columns:24px 1fr;gap:8px;font-size:13px;color:var(--ink2);line-height:1.5}
+.tc-letters b{font:700 13px/22px var(--mono);text-align:center;border:1px solid var(--line);border-radius:4px;color:var(--ink);background:var(--bg)}
+.dex-cta{margin:44px 0 0;background:#0B1623;color:#fff;border-radius:12px;padding:26px 26px;display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center}
+.dex-cta>*{min-width:0}
+.dex-cta h2{font:700 22px/1.4 var(--sans);margin:0 0 6px;color:#fff}
+.dex-cta p{margin:0;color:#AAB4BD;font-size:14.5px}
+.dex-me{display:none;margin:0 0 14px;padding:12px 16px;border-radius:10px;background:var(--mag-soft);font-size:14.5px}
+.dex-me.on{display:block}
+.dex-me a{color:var(--mag);font-weight:700}
+@media (max-width:760px){
+  .axes{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .idx{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .idx .rl{grid-column:1/-1;margin-top:6px}
+  .tcs{grid-template-columns:1fr}
+  .dex-cta{grid-template-columns:1fr}
+  .dex-cta .cta{justify-content:center}
+}
+</style>
+</head>
+<body>
+<nav class="site">
+  <div class="nav-inner">
+    <a href="/ko" class="nav-logo">
+      <img src="../img/nav-icon.png" alt="" class="nav-icon">
+      <img src="../img/wordmark-text.png" alt="더넥스트제너레이션즈" class="nav-wordmark">
+    </a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="메뉴" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
+      <a href="/ko#about">소개</a>
+      <a href="/ko#work">Work</a>
+      <a href="/ko/session">한 장의 목차</a>
+      <a href="/ko/poli-code" class="nav-poli">POLI CODE</a>
+      <a href="https://investpolitics.com">InvestPolitics</a>
+      <a href="/" class="nav-lang" data-lang="en">EN</a>
+      <a href="/ko/session#apply" class="nav-cta">워크숍 신청</a>
+    </div>
+  </div>
+</nav>
+<div class="wrap">
+  <header class="top"><a class="logo" href="/ko/poli-code" style="text-decoration:none">POLI<i>·</i>CODE</a><a class="brand" href="/ko/poli-code">퀴즈 하러 가기 ›</a></header>
+  <main>
+  <section class="dex-hero">
+    <div class="eyebrow">POLI CODE · 16 STYLES</div>
+    <h1>16가지 POLI CODE 도감</h1>
+    <p class="lead">문제를 어디서 알아채고, 무엇을 바꾸고, 누구와 움직이고, 무엇을 남기는가. 네 가지 기준의 조합으로 미래를 여는 정치인의 16가지 정치 스타일을 읽습니다. 어느 쪽이 더 낫다는 이야기가 아닙니다.</p>
+    <p class="dex-me" id="dexMe"></p>
+    <a class="cta" href="/ko/poli-code">내 POLI CODE 찾기 →</a>
+    <ul class="facts"><li><b>12</b>개 장면</li><li><b>3</b>분 안팎</li><li><b>16</b>가지 코드</li></ul>
+  </section>
+
+  <section class="dex-sec">
+    <div class="eyebrow">네 가지 기준 · FOUR AXES</div>
+    <h2>어디서 알아채고, 무엇을 바꾸고, 누구와 움직이고, 무엇을 남기는가</h2>
+    <p class="sub">한 축마다 두 글자 중 하나를 고르면 네 글자 코드가 됩니다.</p>
+    <div class="axes">
+      <div class="ax"><div class="k">ACT 1</div><h3>문제의 실마리</h3><p><b>L</b>현장·사람</p><p><b>R</b>자료·성찰</p></div>
+      <div class="ax"><div class="k">ACT 2</div><h3>변화의 방식</h3><p><b>B</b>새로 만들기</p><p><b>M</b>있는 것 움직이기</p></div>
+      <div class="ax"><div class="k">ACT 3</div><h3>일을 미는 방식</h3><p><b>F</b>직접 설계</p><p><b>T</b>함께 엮기</p></div>
+      <div class="ax"><div class="k">ACT 4</div><h3>남기고 싶은 성과</h3><p><b>H</b>정하는 방식</p><p><b>W</b>돌아가는 몫</p></div>
+    </div>
+  </section>
+
+  <section class="dex-sec">
+    <div class="eyebrow">한눈에 보기 · 16 STYLES</div>
+    <h2>16가지 정치 스타일</h2>
+    <p class="sub">이름을 누르면 설명으로 이동합니다.</p>
+    <div class="idx">
+      <div class="rl">현장에서 새로 만드는</div>
+      <a href="#LBFW"><small>LBFW</small><span>생활발명가</span></a>
+      <a href="#LBFH"><small>LBFH</small><span>문 여는 사람</span></a>
+      <a href="#LBTW"><small>LBTW</small><span>동네건축가</span></a>
+      <a href="#LBTH"><small>LBTH</small><span>마을정원사</span></a>
+      <div class="rl">현장에서 있는 것을 움직이는</div>
+      <a href="#LMFW"><small>LMFW</small><span>현장해결사</span></a>
+      <a href="#LMFH"><small>LMFH</small><span>열린 창구</span></a>
+      <a href="#LMTW"><small>LMTW</small><span>징검다리</span></a>
+      <a href="#LMTH"><small>LMTH</small><span>목소리 통역사</span></a>
+      <div class="rl">자료에서 새로 만드는</div>
+      <a href="#RBFW"><small>RBFW</small><span>정책설계자</span></a>
+      <a href="#RBFH"><small>RBFH</small><span>규칙수선공</span></a>
+      <a href="#RBTW"><small>RBTW</small><span>편집장</span></a>
+      <a href="#RBTH"><small>RBTH</small><span>판 짜는 사람</span></a>
+      <div class="rl">자료에서 있는 것을 움직이는</div>
+      <a href="#RMFW"><small>RMFW</small><span>추진가</span></a>
+      <a href="#RMFH"><small>RMFH</small><span>파수꾼</span></a>
+      <a href="#RMTW"><small>RMTW</small><span>협상가</span></a>
+      <a href="#RMTH"><small>RMTH</small><span>광장지기</span></a>
+    </div>
+  </section>
+
+  <section class="grp" aria-labelledby="gLB">
+    <div class="k">LB · 01–04 / 16</div>
+    <h2 id="gLB">현장에서 알아채고, 없던 것을 새로 만드는 네 유형</h2>
+    <div class="tcs">
+<article class="tc" id="LBFW">
+  <div class="tc-code"><span class="gc">LB</span>FW</div>
+  <h3>생활발명가</h3>
+  <div class="tc-tag">직접 설계 · 돌아가는 몫</div>
+  <p class="tc-line">동네의 일상에서 힌트를 얻어 생활을 바꾸는 새 해결책을 직접 만듭니다.</p>
+  <dl>
+    <dt>이럴 때 빛나요</dt><dd>주민의 한마디에서 생활 속 불편을 찾아, 없던 지원 제도를 새로 만들 때</dd>
+    <dt>이 유형의 힘</dt><dd>사소한 현장 이야기에서 새로운 정책 아이디어를 건져 올리는 감각</dd>
+  </dl>
+  <ul class="tc-letters"><li><b>L</b><span>현장·사람 — 동네의 작은 불편을 놓치지 않는 감각</span></li><li><b>B</b><span>새로 만들기 — 새 기준과 구조를 설계하는 힘</span></li><li><b>F</b><span>직접 설계 — 복잡한 문제를 내 손으로 구체적인 안으로 바꾸는 힘</span></li><li><b>W</b><span>돌아가는 몫 — 주민이 실제로 체감하는 변화를 챙기는 눈</span></li></ul>
+</article>
+<article class="tc" id="LBFH">
+  <div class="tc-code"><span class="gc">LB</span>FH</div>
+  <h3>문 여는 사람</h3>
+  <div class="tc-tag">직접 설계 · 정하는 방식</div>
+  <p class="tc-line">주민이 겪는 불편에서 막힌 절차를 찾아, 누구나 들어올 수 있는 규칙을 직접 만듭니다.</p>
+  <dl>
+    <dt>이럴 때 빛나요</dt><dd>복잡한 절차 때문에 신청을 포기하던 주민을 위해, 문턱 낮은 절차를 새로 만들 때</dd>
+    <dt>이 유형의 힘</dt><dd>닫혀 있던 문을 제도의 언어로 여는 감각</dd>
+  </dl>
+  <ul class="tc-letters"><li><b>L</b><span>현장·사람 — 동네의 작은 불편을 놓치지 않는 감각</span></li><li><b>B</b><span>새로 만들기 — 새 기준과 구조를 설계하는 힘</span></li><li><b>F</b><span>직접 설계 — 복잡한 문제를 내 손으로 구체적인 안으로 바꾸는 힘</span></li><li><b>H</b><span>정하는 방식 — 참여와 책임이 작동하는 과정을 챙기는 눈</span></li></ul>
+</article>
+<article class="tc" id="LBTW">
+  <div class="tc-code"><span class="gc">LB</span>TW</div>
+  <h3>동네건축가</h3>
+  <div class="tc-tag">함께 엮기 · 돌아가는 몫</div>
+  <p class="tc-line">현장의 목소리를 모아 이웃·기관과 함께 생활에 필요한 제도를 짓습니다.</p>
+  <dl>
+    <dt>이럴 때 빛나요</dt><dd>주민·기관과 머리를 맞대 동네에 꼭 필요한 시설의 운영 원칙을 함께 지을 때</dd>
+    <dt>이 유형의 힘</dt><dd>같이 만든 약속을 실제 변화로 이어가는 설계 감각</dd>
+  </dl>
+  <ul class="tc-letters"><li><b>L</b><span>현장·사람 — 동네의 작은 불편을 놓치지 않는 감각</span></li><li><b>B</b><span>새로 만들기 — 새 기준과 구조를 설계하는 힘</span></li><li><b>T</b><span>함께 엮기 — 사람과 기관의 역할을 엮어 일을 성사시키는 힘</span></li><li><b>W</b><span>돌아가는 몫 — 주민이 실제로 체감하는 변화를 챙기는 눈</span></li></ul>
+</article>
+<article class="tc" id="LBTH">
+  <div class="tc-code"><span class="gc">LB</span>TH</div>
+  <h3>마을정원사</h3>
+  <div class="tc-tag">함께 엮기 · 정하는 방식</div>
+  <p class="tc-line">사람들이 직접 가꾸는 결정의 판을 만들고 오래 키워갑니다.</p>
+  <dl>
+    <dt>이럴 때 빛나요</dt><dd>주민이 직접 의제를 고르고 결정하는 모임을 만들어 해마다 키워 갈 때</dd>
+    <dt>이 유형의 힘</dt><dd>서로 다른 참여의 씨앗을 하나의 지속적인 구조로 연결하는 힘</dd>
+  </dl>
+  <ul class="tc-letters"><li><b>L</b><span>현장·사람 — 동네의 작은 불편을 놓치지 않는 감각</span></li><li><b>B</b><span>새로 만들기 — 새 기준과 구조를 설계하는 힘</span></li><li><b>T</b><span>함께 엮기 — 사람과 기관의 역할을 엮어 일을 성사시키는 힘</span></li><li><b>H</b><span>정하는 방식 — 참여와 책임이 작동하는 과정을 챙기는 눈</span></li></ul>
+</article>
+    </div>
+  </section>
+
+  <section class="grp" aria-labelledby="gLM">
+    <div class="k">LM · 05–08 / 16</div>
+    <h2 id="gLM">현장에서 알아채고, 있는 행정을 움직이는 네 유형</h2>
+    <div class="tcs">
+<article class="tc" id="LMFW">
+  <div class="tc-code"><span class="gc">LM</span>FW</div>
+  <h3>현장해결사</h3>
+  <div class="tc-tag">직접 설계 · 돌아가는 몫</div>
+  <p class="tc-line">사람이 부딪힌 문제를 발견하면 지금 움직일 수 있는 것부터 바꿉니다.</p>
+  <dl>
+    <dt>이럴 때 빛나요</dt><dd>현장에서 들은 불편을 그 주 안에 담당 부서와 바로 고쳐 낼 때</dd>
+    <dt>이 유형의 힘</dt><dd>현실의 문제를 구체적인 조치로 바꾸는 추진력</dd>
+  </dl>
+  <ul class="tc-letters"><li><b>L</b><span>현장·사람 — 동네의 작은 불편을 놓치지 않는 감각</span></li><li><b>M</b><span>있는 것 움직이기 — 이미 있는 조직과 사업을 움직이는 힘</span></li><li><b>F</b><span>직접 설계 — 복잡한 문제를 내 손으로 구체적인 안으로 바꾸는 힘</span></li><li><b>W</b><span>돌아가는 몫 — 주민이 실제로 체감하는 변화를 챙기는 눈</span></li></ul>
+</article>
+<article class="tc" id="LMFH">
+  <div class="tc-code"><span class="gc">LM</span>FH</div>
+  <h3>열린 창구</h3>
+  <div class="tc-tag">직접 설계 · 정하는 방식</div>
+  <p class="tc-line">현장의 목소리로 기존 행정이 더 책임 있게 답하도록 만듭니다.</p>
+  <dl>
+    <dt>이럴 때 빛나요</dt><dd>민원이 어디서 멈췄는지 끝까지 확인하고, 처리 결과를 주민에게 직접 알려 줄 때</dd>
+    <dt>이 유형의 힘</dt><dd>주민의 불편을 놓치지 않고 누가 답해야 하는지 분명히 하는 감각</dd>
+  </dl>
+  <ul class="tc-letters"><li><b>L</b><span>현장·사람 — 동네의 작은 불편을 놓치지 않는 감각</span></li><li><b>M</b><span>있는 것 움직이기 — 이미 있는 조직과 사업을 움직이는 힘</span></li><li><b>F</b><span>직접 설계 — 복잡한 문제를 내 손으로 구체적인 안으로 바꾸는 힘</span></li><li><b>H</b><span>정하는 방식 — 참여와 책임이 작동하는 과정을 챙기는 눈</span></li></ul>
+</article>
+<article class="tc" id="LMTW">
+  <div class="tc-code"><span class="gc">LM</span>TW</div>
+  <h3>징검다리</h3>
+  <div class="tc-tag">함께 엮기 · 돌아가는 몫</div>
+  <p class="tc-line">주민과 기관을 이어 눈앞의 생활 변화가 가능하게 만듭니다.</p>
+  <dl>
+    <dt>이럴 때 빛나요</dt><dd>서로 연락하지 않던 부서와 주민을 한자리에 앉혀 해결책을 찾게 할 때</dd>
+    <dt>이 유형의 힘</dt><dd>막힌 관계에 징검다리를 놓는 조정 감각</dd>
+  </dl>
+  <ul class="tc-letters"><li><b>L</b><span>현장·사람 — 동네의 작은 불편을 놓치지 않는 감각</span></li><li><b>M</b><span>있는 것 움직이기 — 이미 있는 조직과 사업을 움직이는 힘</span></li><li><b>T</b><span>함께 엮기 — 사람과 기관의 역할을 엮어 일을 성사시키는 힘</span></li><li><b>W</b><span>돌아가는 몫 — 주민이 실제로 체감하는 변화를 챙기는 눈</span></li></ul>
+</article>
+<article class="tc" id="LMTH">
+  <div class="tc-code"><span class="gc">LM</span>TH</div>
+  <h3>목소리 통역사</h3>
+  <div class="tc-tag">함께 엮기 · 정하는 방식</div>
+  <p class="tc-line">현장의 여러 목소리를 서로 알아듣게 옮겨, 함께 납득할 결정으로 이어갑니다.</p>
+  <dl>
+    <dt>이럴 때 빛나요</dt><dd>입장이 엇갈린 주민들의 말을 서로 알아듣게 옮겨, 함께 정한 약속을 만들 때</dd>
+    <dt>이 유형의 힘</dt><dd>다른 말을 쓰는 사람들 사이에서 공통의 언어를 찾는 힘</dd>
+  </dl>
+  <ul class="tc-letters"><li><b>L</b><span>현장·사람 — 동네의 작은 불편을 놓치지 않는 감각</span></li><li><b>M</b><span>있는 것 움직이기 — 이미 있는 조직과 사업을 움직이는 힘</span></li><li><b>T</b><span>함께 엮기 — 사람과 기관의 역할을 엮어 일을 성사시키는 힘</span></li><li><b>H</b><span>정하는 방식 — 참여와 책임이 작동하는 과정을 챙기는 눈</span></li></ul>
+</article>
+    </div>
+  </section>
+
+  <section class="grp" aria-labelledby="gRB">
+    <div class="k">RB · 09–12 / 16</div>
+    <h2 id="gRB">자료에서 읽어 내고, 없던 것을 새로 만드는 네 유형</h2>
+    <div class="tcs">
+<article class="tc" id="RBFW">
+  <div class="tc-code"><span class="gc">RB</span>FW</div>
+  <h3>정책설계자</h3>
+  <div class="tc-tag">직접 설계 · 돌아가는 몫</div>
+  <p class="tc-line">복잡한 자료를 읽고 변화가 담긴 설계도를 직접 그립니다.</p>
+  <dl>
+    <dt>이럴 때 빛나요</dt><dd>통계와 예산서에서 빈칸을 찾아 새 정책의 설계도를 그릴 때</dd>
+    <dt>이 유형의 힘</dt><dd>문제의 원인을 정책의 구체적 구조로 바꾸는 힘</dd>
+  </dl>
+  <ul class="tc-letters"><li><b>R</b><span>자료·성찰 — 흩어진 자료에서 패턴을 찾아내는 눈</span></li><li><b>B</b><span>새로 만들기 — 새 기준과 구조를 설계하는 힘</span></li><li><b>F</b><span>직접 설계 — 복잡한 문제를 내 손으로 구체적인 안으로 바꾸는 힘</span></li><li><b>W</b><span>돌아가는 몫 — 주민이 실제로 체감하는 변화를 챙기는 눈</span></li></ul>
+</article>
+<article class="tc" id="RBFH">
+  <div class="tc-code"><span class="gc">RB</span>FH</div>
+  <h3>규칙수선공</h3>
+  <div class="tc-tag">직접 설계 · 정하는 방식</div>
+  <p class="tc-line">자료 속 제도의 빈틈을 찾아 더 납득할 규칙으로 고쳐 씁니다.</p>
+  <dl>
+    <dt>이럴 때 빛나요</dt><dd>조례와 운영 규정의 허점을 찾아 더 공정한 규칙으로 고쳐 쓸 때</dd>
+    <dt>이 유형의 힘</dt><dd>흩어진 근거에서 원칙을 세우는 꼼꼼함</dd>
+  </dl>
+  <ul class="tc-letters"><li><b>R</b><span>자료·성찰 — 흩어진 자료에서 패턴을 찾아내는 눈</span></li><li><b>B</b><span>새로 만들기 — 새 기준과 구조를 설계하는 힘</span></li><li><b>F</b><span>직접 설계 — 복잡한 문제를 내 손으로 구체적인 안으로 바꾸는 힘</span></li><li><b>H</b><span>정하는 방식 — 참여와 책임이 작동하는 과정을 챙기는 눈</span></li></ul>
+</article>
+<article class="tc" id="RBTW">
+  <div class="tc-code"><span class="gc">RB</span>TW</div>
+  <h3>편집장</h3>
+  <div class="tc-tag">함께 엮기 · 돌아가는 몫</div>
+  <p class="tc-line">흩어진 자료와 여러 사람의 기여를 엮어 하나의 새 정책으로 편집합니다.</p>
+  <dl>
+    <dt>이럴 때 빛나요</dt><dd>여러 단체와 전문가의 제안을 모아 하나의 정책 패키지로 엮을 때</dd>
+    <dt>이 유형의 힘</dt><dd>여러 사람의 조각을 한 장의 설계도로 묶는 힘</dd>
+  </dl>
+  <ul class="tc-letters"><li><b>R</b><span>자료·성찰 — 흩어진 자료에서 패턴을 찾아내는 눈</span></li><li><b>B</b><span>새로 만들기 — 새 기준과 구조를 설계하는 힘</span></li><li><b>T</b><span>함께 엮기 — 사람과 기관의 역할을 엮어 일을 성사시키는 힘</span></li><li><b>W</b><span>돌아가는 몫 — 주민이 실제로 체감하는 변화를 챙기는 눈</span></li></ul>
+</article>
+<article class="tc" id="RBTH">
+  <div class="tc-code"><span class="gc">RB</span>TH</div>
+  <h3>판 짜는 사람</h3>
+  <div class="tc-tag">함께 엮기 · 정하는 방식</div>
+  <p class="tc-line">구조를 읽고 여러 사람이 결정에 참여할 새 판을 만듭니다.</p>
+  <dl>
+    <dt>이럴 때 빛나요</dt><dd>형식만 남은 위원회를 주민이 실제로 결정하는 구조로 다시 짤 때</dd>
+    <dt>이 유형의 힘</dt><dd>시스템을 이해하고 참여의 규칙까지 설계하는 감각</dd>
+  </dl>
+  <ul class="tc-letters"><li><b>R</b><span>자료·성찰 — 흩어진 자료에서 패턴을 찾아내는 눈</span></li><li><b>B</b><span>새로 만들기 — 새 기준과 구조를 설계하는 힘</span></li><li><b>T</b><span>함께 엮기 — 사람과 기관의 역할을 엮어 일을 성사시키는 힘</span></li><li><b>H</b><span>정하는 방식 — 참여와 책임이 작동하는 과정을 챙기는 눈</span></li></ul>
+</article>
+    </div>
+  </section>
+
+  <section class="grp" aria-labelledby="gRM">
+    <div class="k">RM · 13–16 / 16</div>
+    <h2 id="gRM">자료에서 읽어 내고, 있는 행정을 움직이는 네 유형</h2>
+    <div class="tcs">
+<article class="tc" id="RMFW">
+  <div class="tc-code"><span class="gc">RM</span>FW</div>
+  <h3>추진가</h3>
+  <div class="tc-tag">직접 설계 · 돌아가는 몫</div>
+  <p class="tc-line">원인을 파악하고 이미 있는 행정이 제대로 움직이게 합니다.</p>
+  <dl>
+    <dt>이럴 때 빛나요</dt><dd>근거를 들고 질의해 미뤄지던 사업을 행정이 실행하게 만들 때</dd>
+    <dt>이 유형의 힘</dt><dd>문제의 핵심을 붙잡아 변화를 실현하는 실행 감각</dd>
+  </dl>
+  <ul class="tc-letters"><li><b>R</b><span>자료·성찰 — 흩어진 자료에서 패턴을 찾아내는 눈</span></li><li><b>M</b><span>있는 것 움직이기 — 이미 있는 조직과 사업을 움직이는 힘</span></li><li><b>F</b><span>직접 설계 — 복잡한 문제를 내 손으로 구체적인 안으로 바꾸는 힘</span></li><li><b>W</b><span>돌아가는 몫 — 주민이 실제로 체감하는 변화를 챙기는 눈</span></li></ul>
+</article>
+<article class="tc" id="RMFH">
+  <div class="tc-code"><span class="gc">RM</span>FH</div>
+  <h3>파수꾼</h3>
+  <div class="tc-tag">직접 설계 · 정하는 방식</div>
+  <p class="tc-line">자료 속 작은 어긋남을 발견해 책임의 경로를 분명하게 합니다.</p>
+  <dl>
+    <dt>이럴 때 빛나요</dt><dd>해마다 반복되던 예산 항목의 근거를 따져 묻고 책임 있는 답을 받아 낼 때</dd>
+    <dt>이 유형의 힘</dt><dd>당연해 보이는 관행을 그냥 넘기지 않는 눈</dd>
+  </dl>
+  <ul class="tc-letters"><li><b>R</b><span>자료·성찰 — 흩어진 자료에서 패턴을 찾아내는 눈</span></li><li><b>M</b><span>있는 것 움직이기 — 이미 있는 조직과 사업을 움직이는 힘</span></li><li><b>F</b><span>직접 설계 — 복잡한 문제를 내 손으로 구체적인 안으로 바꾸는 힘</span></li><li><b>H</b><span>정하는 방식 — 참여와 책임이 작동하는 과정을 챙기는 눈</span></li></ul>
+</article>
+<article class="tc" id="RMTW">
+  <div class="tc-code"><span class="gc">RM</span>TW</div>
+  <h3>협상가</h3>
+  <div class="tc-tag">함께 엮기 · 돌아가는 몫</div>
+  <p class="tc-line">근거를 들고 여러 기관과 동료를 한 테이블에 앉혀 주민이 느낄 변화를 이끌어냅니다.</p>
+  <dl>
+    <dt>이럴 때 빛나요</dt><dd>자료를 들고 여러 기관을 오가며 서로 다른 입장을 하나의 합의로 묶을 때</dd>
+    <dt>이 유형의 힘</dt><dd>근거를 합의로 바꾸는 협상력</dd>
+  </dl>
+  <ul class="tc-letters"><li><b>R</b><span>자료·성찰 — 흩어진 자료에서 패턴을 찾아내는 눈</span></li><li><b>M</b><span>있는 것 움직이기 — 이미 있는 조직과 사업을 움직이는 힘</span></li><li><b>T</b><span>함께 엮기 — 사람과 기관의 역할을 엮어 일을 성사시키는 힘</span></li><li><b>W</b><span>돌아가는 몫 — 주민이 실제로 체감하는 변화를 챙기는 눈</span></li></ul>
+</article>
+<article class="tc" id="RMTH">
+  <div class="tc-code"><span class="gc">RM</span>TH</div>
+  <h3>광장지기</h3>
+  <div class="tc-tag">함께 엮기 · 정하는 방식</div>
+  <p class="tc-line">복잡한 구조를 해석해 여럿이 책임 있게 함께 움직이도록 조율합니다.</p>
+  <dl>
+    <dt>이럴 때 빛나요</dt><dd>쟁점이 큰 정책을 공개 토론에 올려 여러 주체가 책임을 나눠 지게 할 때</dd>
+    <dt>이 유형의 힘</dt><dd>논의와 실행의 연결고리를 찾는 능력</dd>
+  </dl>
+  <ul class="tc-letters"><li><b>R</b><span>자료·성찰 — 흩어진 자료에서 패턴을 찾아내는 눈</span></li><li><b>M</b><span>있는 것 움직이기 — 이미 있는 조직과 사업을 움직이는 힘</span></li><li><b>T</b><span>함께 엮기 — 사람과 기관의 역할을 엮어 일을 성사시키는 힘</span></li><li><b>H</b><span>정하는 방식 — 참여와 책임이 작동하는 과정을 챙기는 눈</span></li></ul>
+</article>
+    </div>
+  </section>
+
+  <div class="dex-cta">
+    <div><h2>나는 16가지 중 어떤 코드일까요?</h2><p>12개 장면에서 하나씩 고르면 됩니다. 이름·연락처를 묻지 않고, 답은 어디에도 저장하지 않습니다.</p></div>
+    <a class="cta" href="/ko/poli-code">내 POLI CODE 찾기 →</a>
+  </div>
+
+  <p class="source" style="margin-top:28px">더넥스트제너레이션즈에서는 <b>지방의원·미래세대 정치인 심층 인터뷰 26회와 역량강화 워크숍, 정책 연구</b>에서 보아 온 정치활동 방식을 네 가지 기준으로 정리했습니다. 네 번째 글자인 공공가치 기준은 행정학의 대표 연구인 Jørgensen &amp; Bozeman(2007)의 <b>72개 공공가치 목록</b>에 더넥스트제너레이션즈의 가치 체계를 더해 만들었습니다.</p>
+  <p class="fine" style="margin-top:14px">POLI CODE는 성격검사나 능력 평가가 아니라, 지금 먼저 손이 가는 방식을 읽어 보는 틀입니다. 16가지 코드는 가능한 조합이며 검증된 유형이 아닙니다. "이럴 때 빛나요"의 장면은 특정 인물·사례가 아닌 예시입니다.</p>
+  </main>
+  <footer class="foot"><span>THE NEXT GENERATIONZ · POLI CODE v1.0</span><span>16가지 POLI CODE 도감</span></footer>
+</div>
+
+<section class="more" aria-labelledby="moreTitle">
+  <div class="more-in">
+    <span class="eyebrow">MORE FROM THE NEXT GENERATIONZ</span>
+    <h2 id="moreTitle">퀴즈 다음으로 가 볼 곳</h2>
+    <div class="more-grid">
+      <a class="more-card" href="/ko/session"><b>「한 장의 목차」</b><span>의원님의 경험과 고민으로 정의문, 다섯 개의 가목차, 활동·기록 계획을 함께 만드는 개인 맞춤형 워크숍</span><i>워크숍 보기 →</i></a>
+      <a class="more-card" href="/ko/publishing"><b>「한 권의 정치」</b><span>여러분의 정치를, 자신의 언어로. 사전조사부터 원고·출판까지 함께하는 정치인의 책</span><i>자세히 보기 →</i></a>
+      <a class="more-card" href="/ko"><b>더넥스트제너레이션즈</b><span>미래세대 정치와 정책을 다루는 더넥스트제너레이션즈 홈페이지</span><i>홈으로 →</i></a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-foot">
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <img src="../img/nav-icon-bright.png" alt="" class="nav-icon">
+      <img src="../img/wordmark-text-bright.png" alt="The Next GenerationZ" class="nav-wordmark">
+    </div>
+    <div class="footer-tagline">Discover What's Next, through Korea.</div>
+    <div class="footer-copy">© 2026 더넥스트제너레이션즈</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var links=document.getElementById('navLinks'),t=document.getElementById('navToggle');
+  t.addEventListener('click',function(){var o=links.classList.toggle('open');t.classList.toggle('open',o);t.setAttribute('aria-expanded',o)});
+  links.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){links.classList.remove('open');t.classList.remove('open');t.setAttribute('aria-expanded','false')})});
+  document.querySelectorAll('[data-lang]').forEach(function(el){el.addEventListener('click',function(){document.cookie='tng_lang='+el.getAttribute('data-lang')+'; path=/; max-age=31536000; samesite=lax'})});
+})();
+</script>
+<script>
+/* 퀴즈 결과에서 넘어오면(#코드) 내 코드를 표시 */
+(function(){
+  var NAMES={"LBFW":"생활발명가","LBFH":"문 여는 사람","LBTW":"동네건축가","LBTH":"마을정원사","LMFW":"현장해결사","LMFH":"열린 창구","LMTW":"징검다리","LMTH":"목소리 통역사","RBFW":"정책설계자","RBFH":"규칙수선공","RBTW":"편집장","RBTH":"판 짜는 사람","RMFW":"추진가","RMFH":"파수꾼","RMTW":"협상가","RMTH":"광장지기"};
+  var c=(location.hash||'').slice(1).toUpperCase(), q=new URLSearchParams(location.search);
+  if(q.get('me')&&NAMES[q.get('me').toUpperCase()]) c=q.get('me').toUpperCase();
+  if(!NAMES[c]) return;
+  var el=document.getElementById(c); if(el) el.classList.add('me');
+  if(q.get('me')){ var m=document.getElementById('dexMe'); m.innerHTML='나의 POLI CODE: <b>'+c+' · '+NAMES[c]+'</b> — <a href="#'+c+'">내 코드 설명 보기 ↓</a>'; m.classList.add('on'); }
+})();
+</script>
+<script src="/a.js" defer></script>
+</body>
+</html>
