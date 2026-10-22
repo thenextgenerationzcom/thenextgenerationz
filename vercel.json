@@ -46,6 +46,14 @@
       "destination": "/ko/poli-code.html"
     },
     {
+      "source": "/ko/poli-codes",
+      "destination": "/ko/poli-codes.html"
+    },
+    {
+      "source": "/pc/:code",
+      "destination": "/pc/:code.html"
+    },
+    {
       "source": "/ko/publishing",
       "destination": "/ko/publishing.html"
     },
