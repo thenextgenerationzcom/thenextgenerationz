@@ -248,6 +248,11 @@ footer.site-foot{background:#0B1623;border-top:1px solid #2A3A48;padding:40px 5v
 .sh:active{transform:none;background:var(--paper)}
 .sh svg{width:26px;height:26px;flex:none}
 .sh-note{margin:10px 0 0 !important;font-size:13px !important;color:var(--ink3) !important;line-height:1.6}
+.cap{margin-top:14px;border:1px solid var(--line);border-radius:12px;background:var(--paper);overflow:hidden}
+.cap-h{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px 10px 16px;border-bottom:1px solid var(--line)}
+.cap-h span{font-size:13px;font-weight:700;color:var(--ink2)}
+.cap-b{background:var(--ink);color:var(--bg);border:0;border-radius:8px;padding:8px 14px;font-size:13.5px;font-weight:700}
+.cap-t{margin:0 !important;padding:14px 16px !important;font-size:14px !important;line-height:1.7;color:var(--ink) !important;white-space:pre-line;word-break:keep-all;overflow-wrap:break-word}
 .sh-sub{display:flex;align-items:center;gap:10px;margin-top:14px;padding-top:14px;border-top:1px solid var(--line);color:var(--ink3);font-size:14px}
 .tl{background:none;border:0;padding:4px 0;font-weight:600;font-size:14px;color:var(--ink2);text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:4px}
 .tl:hover{color:var(--ink);text-decoration-color:var(--ink)}
@@ -367,10 +372,12 @@ html.pc-preview .pc-bar{display:block;background:var(--mag);color:#fff;font-size
               <button class="sh" id="shareLink" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1 1"/><path d="M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1-1"/></svg><span>링크 복사</span></button>
               <button class="sh" id="saveImg" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="M7 10.5 12 15.5l5-5"/><path d="M5 19.5h14"/></svg><span>이미지 저장</span></button>
             </div>
-            <p class="sh-note">휴대폰에서 인스타그램을 누르면 결과 카드를 스토리·피드로 바로 보낼 수 있어요.</p>
+            <p class="sh-note">인스타그램·페이스북을 누르면 아래 문구가 자동으로 복사돼요. 글쓰기 칸에 붙여넣기만 하면 됩니다.</p>
+            <div class="cap">
+              <div class="cap-h"><span>함께 올릴 문구</span><button class="cap-b" id="copy" type="button">문구 복사</button></div>
+              <p class="cap-t" id="capText"></p>
+            </div>
             <div class="sh-sub">
-              <button class="tl" id="copy" type="button">공유 문구 복사</button>
-              <span aria-hidden="true">·</span>
               <button class="tl" id="restart" type="button">↺ 다시 해보기</button>
             </div>
             <div class="toast" id="toast" role="status"></div>
@@ -556,56 +563,64 @@ function gallery(me){
     b.append(s,n);b.onclick=()=>{$('gprev').textContent=code+' '+P[code][0]+' — '+P[code][1]+' 이럴 때 빛나요: '+SCENE[code]+'.'};return b}));
 }
 function wrapText(ctx,text,x,y,maxW,lh){let line='',yy=y;for(const ch of text){const test=line+ch;if(ctx.measureText(test).width>maxW&&line){ctx.fillText(line,x,yy);line=ch.trimStart();yy+=lh}else line=test}if(line)ctx.fillText(line,x,yy);return yy}
-let CARD={feed:null,story:null};
+let CARD={sq:null};
 async function drawCard(code){
   try{await document.fonts.ready}catch(e){}
-  const feed=paintCard(code,1350),story=paintCard(code,1920);
-  $('cardImg').src=feed.toDataURL('image/png');
-  CARD={feed:null,story:null};
-  feed.toBlob(b=>{CARD.feed=b},'image/png');story.toBlob(b=>{CARD.story=b},'image/png');
+  const c=paintCard(code);
+  $('cardImg').src=c.toDataURL('image/png');
+  CARD={sq:null};c.toBlob(b=>{CARD.sq=b},'image/png');
   $('dexLink').href='/ko/poli-codes?me='+code+'#'+code;
+  $('capText').textContent=shareText();
 }
-function paintCard(code,H){
-  const W=1080,c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');const p=P[code];
+/* 1080×1080 정사각형: 인스타그램 피드·스토리, 페이스북 어디에 올려도 아래 이름까지 잘리지 않음 */
+function paintCard(code){
+  const W=1080,H=1080,c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');const p=P[code];
   x.fillStyle='#FAF7F1';x.fillRect(0,0,W,H);
-  x.translate(0,Math.round((H-1350)/2));
-  x.save();x.setTransform(1,0,0,1,0,0);x.fillStyle='#B81C63';x.fillRect(0,0,W,14);x.restore();
-  x.fillStyle='#0B1623';x.font='700 34px "IBM Plex Mono", monospace';x.fillText('POLI·CODE',90,130);
-  x.fillStyle='#7A8494';x.font='600 24px "IBM Plex Sans KR", sans-serif';x.textAlign='right';x.fillText('THE NEXT GENERATIONZ',W-90,130);x.textAlign='left';
-  // nameplate
-  x.fillStyle='rgba(11,22,35,.18)';x.fillRect(110,330,860,500);
-  x.fillStyle='#0B1623';x.fillRect(90,300,900,500);
-  x.fillStyle='#C9D1DD';x.font='600 26px "IBM Plex Sans KR", sans-serif';x.fillText('나의 POLI CODE',150,390);
-  x.fillStyle='#FFFFFF';x.font='700 190px "IBM Plex Mono", monospace';x.fillText(code,140,580);
-  x.fillStyle='#E8C77A';x.font='700 76px "Gowun Batang", serif';x.fillText(p[0],150,700);
-  // line
-  x.fillStyle='#0B1623';x.font='500 38px "IBM Plex Sans KR", sans-serif';
-  const y=wrapText(x,p[1],90,930,900,58);
-  // axes chips
-  const r=st.r;let cx=90;const cy=Math.max(y+90,1110);
-  AX.forEach((a,k)=>{const ch=code[k],lab=ch===a.a?a.la:a.lb;x.font='600 26px "IBM Plex Sans KR", sans-serif';const w=x.measureText(ch+' '+lab).width+40;
-    if(cx+w>W-90){cx=90}
-    x.strokeStyle='#0B1623';x.lineWidth=2;x.strokeRect(cx,cy-40,w,58);x.fillStyle='#0B1623';x.fillText(ch+' '+lab,cx+20,cy-1);cx+=w+14});
-  x.fillStyle='#B81C63';x.font='600 26px "IBM Plex Sans KR", sans-serif';x.fillText('미래를 여는 정치인을 위한 정치 스타일 퀴즈 · thenextgenerationz.com',90,1350-110);
+  x.fillStyle='#B81C63';x.fillRect(0,0,W,12);
+  x.fillStyle='#0B1623';x.font='700 30px "IBM Plex Mono", monospace';x.fillText('POLI·CODE',80,96);
+  x.fillStyle='#7A8494';x.font='600 22px "IBM Plex Sans KR", sans-serif';x.textAlign='right';x.fillText('미래를 여는 정치인을 위한 정치 스타일 퀴즈',W-80,96);x.textAlign='left';
+  // 명패
+  x.fillStyle='rgba(11,22,35,.16)';x.fillRect(98,186,884,370);
+  x.fillStyle='#0B1623';x.fillRect(80,166,920,370);
+  x.fillStyle='#C9D1DD';x.font='600 24px "IBM Plex Sans KR", sans-serif';x.fillText('나의 POLI CODE',136,234);
+  x.fillStyle='#FFFFFF';x.font='700 168px "IBM Plex Mono", monospace';x.fillText(code,128,402);
+  x.fillStyle='#E8C77A';x.font='700 66px "Gowun Batang", serif';x.fillText(p[0],136,492);
+  // 한 줄 설명
+  x.fillStyle='#0B1623';x.font='500 34px "IBM Plex Sans KR", sans-serif';
+  const y=wrapText(x,p[1],80,650,920,54);
+  // 네 글자 칩
+  let cx=80;const cy=Math.max(y+96,800);
+  AX.forEach((a,k)=>{const ch=code[k],lab=ch===a.a?a.la:a.lb;x.font='600 24px "IBM Plex Sans KR", sans-serif';const w=x.measureText(ch+' '+lab).width+36;
+    if(cx+w>W-80){cx=80}
+    x.strokeStyle='#0B1623';x.lineWidth=2;x.strokeRect(cx,cy-36,w,52);x.fillStyle='#0B1623';x.fillText(ch+' '+lab,cx+18,cy-2);cx+=w+12});
+  // 아래: 브랜드
+  x.fillStyle='#E4E1D8';x.fillRect(80,H-138,W-160,2);
+  x.fillStyle='#0B1623';x.font='700 26px "IBM Plex Mono", monospace';x.fillText('THE NEXT GENERATIONZ',80,H-80);
+  x.fillStyle='#B81C63';x.font='600 24px "IBM Plex Sans KR", sans-serif';x.textAlign='right';x.fillText('thenextgenerationz.com/ko/poli-code',W-80,H-80);x.textAlign='left';
   return c;
 }
 function shareUrl(u){return 'https://www.thenextgenerationz.com/pc/'+st.r.code+'?utm='+(u||'share')}
-function shareText(){const p=P[st.r.code];return '나의 POLI CODE는 '+st.r.code+' · '+p[0]+'\n'+p[1]+'\n이럴 때 빛나요: '+SCENE[st.r.code]+'\n당신의 네 글자는? 12개 장면 · 3분\n'+shareUrl('share')}
-$('copy').onclick=async()=>{const t=shareText();try{await navigator.clipboard.writeText(t);$('toast').textContent='공유 문구를 복사했어요.'}catch(e){const f=$('copyFallback');f.value=t;f.hidden=false;f.focus();f.select();$('toast').textContent='자동 복사가 막혀 있어요. 아래 문구를 선택해서 복사해 주세요.'}};
+function shareText(){const p=P[st.r.code];return '나의 POLI CODE는 '+st.r.code+' · '+p[0]+'\n'+p[1]+'\n이럴 때 빛나요: '+SCENE[st.r.code]+'\n\n16가지 중 당신의 네 글자는? 12개 장면 · 3분\n'+shareUrl('share')+'\n\n#POLICODE #폴리코드 #정치스타일 #지방의원 #더넥스트제너레이션즈'}
+async function copyCaption(){try{await navigator.clipboard.writeText(shareText());return true}catch(e){return false}}
+$('copy').onclick=async()=>{const t=shareText();try{await navigator.clipboard.writeText(t);$('toast').textContent='문구를 복사했어요.';$('copy').textContent='복사됨 ✓';setTimeout(()=>{$('copy').textContent='문구 복사'},2000)}catch(e){const f=$('copyFallback');f.value=t;f.hidden=false;f.focus();f.select();$('toast').textContent='자동 복사가 막혀 있어요. 아래 문구를 선택해서 복사해 주세요.'}};
 
 $('shareLink').onclick=async()=>{const SHARE_URL=shareUrl('share');const d={title:'POLI CODE — 미래를 여는 정치인의 16가지 정치 스타일',text:'나의 POLI CODE는 '+st.r.code+' · '+P[st.r.code][0]+'. 당신의 네 글자는?',url:SHARE_URL};
   if(navigator.share){try{await navigator.share(d);cv('퀴즈 공유');return}catch(e){if(e&&e.name==='AbortError')return}}
   try{await navigator.clipboard.writeText(SHARE_URL);$('toast').textContent='퀴즈 링크를 복사했어요.';cv('퀴즈 공유')}catch(e){const f=$('copyFallback');f.value=SHARE_URL;f.hidden=false;f.focus();f.select();$('toast').textContent='아래 링크를 선택해서 복사해 주세요.'}};
 $('toSession').addEventListener('click',()=>cv('퀴즈→워크숍'));
-function fileOf(kind){const b=CARD[kind];return b?new File([b],'POLI-CODE-'+st.r.code+(kind==='story'?'-story':'')+'.png',{type:'image/png'}):null}
-function saveFile(kind){const f=fileOf(kind);if(!f)return false;const a=document.createElement('a');a.href=URL.createObjectURL(f);a.download=f.name;document.body.append(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500);return true}
-/* 인스타그램: 휴대폰은 공유 창으로 스토리 이미지(9:16)를 바로 보냄. 안 되면 이미지를 저장 */
-$('shareIg').onclick=async()=>{const f=fileOf('story');if(!f){$('toast').textContent='카드를 만드는 중이에요. 잠시 뒤 다시 눌러 주세요.';return}
-  if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],text:'나의 POLI CODE는 '+st.r.code+' · '+P[st.r.code][0]+'. 당신의 네 글자는? '+shareUrl('ig')});cv('퀴즈 공유');$('toast').textContent='공유 창에서 인스타그램을 골라 스토리나 피드에 올려 주세요.';return}catch(e){if(e&&e.name==='AbortError')return}}
-  saveFile('story');cv('퀴즈 공유');$('toast').textContent='스토리용 이미지를 저장했어요. 인스타그램 앱에서 스토리나 피드에 올려 주세요. 링크 스티커에는 '+shareUrl('ig')+' 를 넣으면 됩니다.'};
-/* 페이스북: 공유 창. 미리보기에 내 코드 카드가 나옵니다 */
-$('shareFb').onclick=()=>{const u='https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(shareUrl('fb'));window.open(u,'fbshare','width=640,height=640');cv('퀴즈 공유')};
-$('saveImg').onclick=()=>{if(saveFile('feed'))$('toast').textContent='피드용 이미지(4:5)를 저장했어요.';else $('toast').textContent='카드를 만드는 중이에요. 잠시 뒤 다시 눌러 주세요.'};
+function fileOf(){const b=CARD.sq;return b?new File([b],'POLI-CODE-'+st.r.code+'.png',{type:'image/png'}):null}
+function saveFile(){const f=fileOf();if(!f)return false;const a=document.createElement('a');a.href=URL.createObjectURL(f);a.download=f.name;document.body.append(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500);return true}
+const NOTREADY='카드를 만드는 중이에요. 잠시 뒤 다시 눌러 주세요.';
+/* 인스타그램: 문구를 먼저 복사해 두고, 휴대폰 공유 창으로 카드 이미지를 보냄. 안 되면 이미지를 저장 */
+$('shareIg').onclick=async()=>{const f=fileOf();if(!f){$('toast').textContent=NOTREADY;return}
+  const copied=await copyCaption();const tip=copied?'문구를 복사해 두었어요. 인스타그램 글쓰기 칸을 길게 눌러 붙여넣기 하세요.':'아래 「함께 올릴 문구」를 복사해 글쓰기 칸에 붙여넣기 하세요.';
+  if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f]});cv('퀴즈 공유');$('toast').textContent=tip;return}catch(e){if(e&&e.name==='AbortError'){$('toast').textContent=copied?'문구는 복사해 두었어요.':'';return}}}
+  saveFile();cv('퀴즈 공유');$('toast').textContent='카드 이미지를 저장했어요. 인스타그램 앱에서 올려 주세요. '+tip};
+/* 페이스북: 문구를 먼저 복사하고 공유 창을 엶. 미리보기에 내 코드 카드가 나옵니다 */
+$('shareFb').onclick=async()=>{const w=window.open('about:blank','fbshare','width=640,height=640');const copied=await copyCaption();
+  const u='https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(shareUrl('fb'));if(w)w.location.href=u;else location.href=u;cv('퀴즈 공유');
+  $('toast').textContent=copied?'문구를 복사해 두었어요. 페이스북 글 칸에 붙여넣기 하세요.':'아래 「함께 올릴 문구」를 복사해 붙여넣기 하세요.'};
+$('saveImg').onclick=()=>{$('toast').textContent=saveFile()?'카드 이미지(정사각형)를 저장했어요.':NOTREADY};
 /* 공유 링크로 들어온 경우: 친구의 코드를 보여 주기 */
 (function(){const q=new URLSearchParams(location.search),c=(q.get('from')||'').toUpperCase();if(!P[c])return;
   const n=$('fromNote');n.innerHTML='';const t=document.createTextNode('공유받은 POLI CODE는 ');const b=document.createElement('b');b.textContent=c;const r=document.createTextNode(' · '+P[c][0]+'입니다. 나는 16가지 중 어떤 코드일까요?');n.append(t,b,r);n.classList.add('on')})();
