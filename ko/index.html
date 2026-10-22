@@ -155,6 +155,8 @@ nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.96);backdrop
 .nav-links{display:flex;align-items:center;gap:28px}
 .nav-links a{font-size:13.5px;color:var(--ink-soft);text-decoration:none;letter-spacing:0.01em;transition:color .2s;white-space:nowrap}
 .nav-links a:hover{color:var(--ink)}
+.nav-links a.nav-poli{color:var(--ink);font-weight:600}
+.nav-new{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;color:#fff;background:var(--m);border-radius:2px;padding:1px 5px;margin-left:4px;vertical-align:2px}
 .nav-lang{font-family:var(--mono);font-size:12px;letter-spacing:0.06em;color:var(--ink-soft) !important;border:1px solid var(--bdr);padding:5px 10px;border-radius:3px;transition:border-color .2s,color .2s}
 .nav-lang:hover{border-color:var(--m);color:var(--m) !important}
 .nav-cta{background:var(--m-bright) !important;color:var(--ink) !important;padding:8px 18px;border-radius:2px;font-size:14px;font-weight:600 !important;letter-spacing:-0.005em;text-decoration:none !important;transition:opacity .2s}
@@ -187,6 +189,17 @@ section{padding:104px 5vw}
 .section-lead{font-size:15.5px;color:var(--ink-soft);line-height:1.9;letter-spacing:-0.014em;max-width:660px}
 
 /* WORK */
+/* POLI CODE 띠 (히어로 바로 아래) */
+.poli-band{background:#0B1623;padding:30px 5vw}
+.poli-in{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:28px;align-items:center}
+.poli-in>*{min-width:0}
+.poli-k{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--m-bright);display:block;margin-bottom:10px}
+.poli-band h2{font-size:clamp(20px,2.6vw,27px);font-weight:700;line-height:1.4;letter-spacing:-.03em;color:#fff;margin:0 0 8px}
+.poli-band p{font-size:14.5px;line-height:1.75;color:#AAB4BD;margin:0}
+.poli-band p b{color:#fff;font-weight:600}
+.poli-go{display:inline-block;background:var(--m-bright);color:#0B1623;text-decoration:none;font-weight:700;font-size:15px;padding:15px 26px;border-radius:2px;white-space:nowrap;transition:opacity .2s}
+.poli-go:hover{opacity:.85}
+@media(max-width:768px){.poli-in{grid-template-columns:1fr;gap:18px}.poli-go{display:block;text-align:center}}
 .pub{background:var(--bg)}
 .work{background:var(--bg2)}
 .work-list{margin-top:56px;display:flex;flex-direction:column;gap:20px}
@@ -344,6 +357,7 @@ section[id]{scroll-margin-top:72px}
     <div class="nav-links" id="navLinks">
       <a href="#about">소개</a>
       <a href="#work">Work</a>
+      <a href="/ko/poli-code" class="nav-poli">POLI CODE <span class="nav-new">NEW</span></a>
       <a href="https://investpolitics.com">InvestPolitics</a>
       <a href="/" class="nav-lang" data-lang="en">EN</a>
       <a href="#contact" class="nav-cta">문의하기</a>
@@ -368,6 +382,18 @@ section[id]{scroll-margin-top:72px}
       <a href="/" class="btn-primary" data-lang="en">The Next GenerationZ 글로벌 플랫폼 가기 →</a>
       <a href="#subscribe" class="btn-ghost">뉴스레터 소식받기 <span class="btn-sub">(영문 기반)</span></a>
     </div>
+  </div>
+</section>
+
+<!-- POLI CODE -->
+<section class="poli-band" aria-labelledby="poliTitle">
+  <div class="poli-in">
+    <div>
+      <span class="poli-k">NEW · POLI CODE</span>
+      <h2 id="poliTitle">16가지 중 당신은 어떤 정치인입니까?</h2>
+      <p>미래를 여는 정치인을 위한 정치 스타일 퀴즈. <b>12개 장면 · 3분</b>이면 나의 네 글자 코드가 나옵니다. 회원가입 없이 바로 할 수 있습니다.</p>
+    </div>
+    <a class="poli-go" href="/ko/poli-code">내 POLI CODE 찾기 →</a>
   </div>
 </section>
 
