@@ -599,7 +599,7 @@ function paintCard(code){
   x.fillStyle='#B81C63';x.font='600 24px "IBM Plex Sans KR", sans-serif';x.textAlign='right';x.fillText('thenextgenerationz.com/ko/poli-code',W-80,H-80);x.textAlign='left';
   return c;
 }
-function shareUrl(u){return 'https://www.thenextgenerationz.com/pc/'+st.r.code+'?utm='+(u||'share')}
+function shareUrl(u){return 'https://www.thenextgenerationz.com/pc/'+st.r.code+'?utm='+(u||'share')+'&v=2'}
 function shareText(){const p=P[st.r.code];return '나의 POLI CODE는 '+st.r.code+' · '+p[0]+'\n'+p[1]+'\n이럴 때 빛나요: '+SCENE[st.r.code]+'\n\n16가지 중 당신의 네 글자는? 12개 장면 · 3분\n'+shareUrl('share')+'\n\n#POLICODE #폴리코드 #정치스타일 #지방의원 #더넥스트제너레이션즈'}
 async function copyCaption(){try{await navigator.clipboard.writeText(shareText());return true}catch(e){return false}}
 $('copy').onclick=async()=>{const t=shareText();try{await navigator.clipboard.writeText(t);$('toast').textContent='문구를 복사했어요.';$('copy').textContent='복사됨 ✓';setTimeout(()=>{$('copy').textContent='문구 복사'},2000)}catch(e){const f=$('copyFallback');f.value=t;f.hidden=false;f.focus();f.select();$('toast').textContent='자동 복사가 막혀 있어요. 아래 문구를 선택해서 복사해 주세요.'}};
