@@ -49,7 +49,8 @@ function isBot(ua) {
     'bot', 'spider', 'crawl', 'slurp', 'crawler', 'facebookexternalhit', 'facebot',
     'embedly', 'quora link', 'pinterest', 'redditbot', 'telegrambot', 'whatsapp',
     'slackbot', 'discordbot', 'linkedinbot', 'twitterbot', 'applebot', 'googlebot',
-    'bingbot', 'yandex', 'baiduspider', 'duckduckbot', 'yeti', 'daum', 'naver',
+    'bingbot', 'yandex', 'baiduspider', 'duckduckbot', 'yeti', 'daumoa',
+    // 'naver'·'daum'은 넣지 않음: 네이버앱·다음앱 안에서 링크를 연 실제 사람까지 봇으로 걸러졌음
     'ahrefs', 'semrush', 'mj12bot', 'dotbot', 'petalbot', 'bytespider',
     'headlesschrome', 'phantomjs', 'python-requests', 'axios', 'go-http-client',
     'curl', 'wget', 'okhttp', 'java/', 'libwww', 'httpclient', 'scrapy',
