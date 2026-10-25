@@ -20,7 +20,7 @@
       if (!ok) fetch(GAS, { method: 'POST', mode: 'no-cors', body: body, keepalive: true });
     } catch (e) {}
   }
-  location.replace(dest);
+  location.replace(dest + (k ? (dest.indexOf('?') < 0 ? '?' : '&') + 'utm=email' : ''));
 })();
 </script>
 <noscript><meta http-equiv="refresh" content="0;url=/ko/session"></noscript>
