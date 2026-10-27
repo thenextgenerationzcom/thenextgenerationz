@@ -124,13 +124,13 @@ section{padding:88px 5vw}
 
 /* INVESTPOLITICS */
 .ip-section{background:var(--bg2)}
-.ip-card{background:var(--bg);border:1px solid var(--bdr);border-radius:8px;padding:48px;max-width:780px;border-left:3px solid var(--m)}
+.ip-card{background:var(--bg);border:1px solid var(--bdr);border-radius:8px;padding:48px;border-left:3px solid var(--m)}
 .ip-label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--m);margin-bottom:12px;display:block}
 .ip-card h2{font-family:var(--serif);font-size:30px;font-weight:700;margin-bottom:16px;line-height:1.2;color:var(--ink)}
 .ip-card p{font-size:15px;color:var(--ink-soft);line-height:1.7;max-width:580px;margin-bottom:28px}
 .ip-link{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:var(--m);text-decoration:none;border-bottom:1px solid rgba(184,28,99,.3);padding-bottom:1px;transition:border-color .2s}
 .ip-link:hover{border-color:var(--m)}
-.ip-eds{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:640px;margin:0 0 18px}
+.ip-eds{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:0 0 18px}
 .ip-ed{display:block;background:var(--bg2);border:1px solid var(--bdr);padding:20px 22px;text-decoration:none;color:var(--ink);transition:border-color .2s,transform .2s}
 .ip-ed:hover{border-color:var(--m);transform:translateY(-1px)}
 .ip-ed .ip-k{display:block;font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:10.5px;letter-spacing:.16em;color:var(--m);margin-bottom:8px}
@@ -213,6 +213,16 @@ section[id]{scroll-margin-top:72px}
   .nav-logo{font-size:15px}
 }
 
+
+/* 상단 메뉴: InvestPolitics 한국판·미국판 */
+.nav-ip{display:inline-flex;align-items:center;gap:6px}
+.nav-links a.nav-ed{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:10.5px;font-weight:600;letter-spacing:.08em;color:var(--ink,#0B1623);border:1px solid var(--bdr,var(--line,#E4E1D8));border-radius:2px;padding:3px 6px;line-height:1.2}
+.nav-links a.nav-ed:hover{border-color:var(--m,#B81C63);color:var(--m,#B81C63)}
+@media(max-width:768px){
+  .nav-links .nav-ip{display:flex;width:100%;box-sizing:border-box;padding:14px 5vw;border-bottom:1px solid var(--bdr,var(--line,#E4E1D8));gap:8px}
+  .nav-links .nav-ip a.nav-ip-t{width:auto;padding:0;border-bottom:none;margin-right:auto}
+  .nav-links .nav-ip a.nav-ed{width:auto;padding:4px 10px;border:1px solid var(--bdr,var(--line,#E4E1D8));border-bottom:1px solid var(--bdr,var(--line,#E4E1D8))}
+}
 </style>
 </head>
 <body>
@@ -230,7 +240,7 @@ section[id]{scroll-margin-top:72px}
     <div class="nav-links" id="navLinks">
       <a href="#about">About</a>
       <a href="#latest">Archive</a>
-      <a href="https://investpolitics.com">InvestPolitics</a>
+      <span class="nav-ip"><a href="https://investpolitics.com" class="nav-ip-t">InvestPolitics</a><a href="https://investpolitics.kr" class="nav-ed" title="InvestPolitics 한국판">KR</a><a href="https://investpolitics.us" class="nav-ed" title="InvestPolitics US edition">US</a></span>
       <a href="/ko" class="nav-lang" data-lang="ko">KO</a>
       <a href="#subscribe" class="nav-cta">Subscribe</a>
     </div>
