@@ -130,6 +130,15 @@ section{padding:88px 5vw}
 .ip-card p{font-size:15px;color:var(--ink-soft);line-height:1.7;max-width:580px;margin-bottom:28px}
 .ip-link{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:var(--m);text-decoration:none;border-bottom:1px solid rgba(184,28,99,.3);padding-bottom:1px;transition:border-color .2s}
 .ip-link:hover{border-color:var(--m)}
+.ip-eds{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:640px;margin:0 0 18px}
+.ip-ed{display:block;background:var(--bg2);border:1px solid var(--bdr);padding:20px 22px;text-decoration:none;color:var(--ink);transition:border-color .2s,transform .2s}
+.ip-ed:hover{border-color:var(--m);transform:translateY(-1px)}
+.ip-ed .ip-k{display:block;font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:10.5px;letter-spacing:.16em;color:var(--m);margin-bottom:8px}
+.ip-ed b{display:block;font-size:17px;font-weight:700;letter-spacing:-.02em;margin-bottom:4px}
+.ip-ed .ip-d{display:block;font-size:13.2px;color:var(--ink-soft);line-height:1.6}
+.ip-ed .ip-go{display:block;margin-top:12px;font-size:13px;color:var(--m)}
+.ip-card p.ip-note{font-size:13px;margin-bottom:0}
+@media(max-width:560px){.ip-eds{grid-template-columns:1fr}.ip-card{padding:36px 24px}}
 
 /* FOUNDER */
 .founder{background:var(--bg)}
@@ -326,7 +335,21 @@ section[id]{scroll-margin-top:72px}
       <span class="ip-label">A project by The Next GenerationZ</span>
       <h2>From insight to infrastructure</h2>
       <p>InvestPolitics is an experimental civic platform that reimagines political trust as a form of public participation. It explores how citizens can discover, evaluate, and support public leaders — beyond polls, parties, and election cycles.</p>
-      <a href="https://investpolitics.com" class="ip-link">Explore InvestPolitics →</a>
+      <div class="ip-eds">
+        <a class="ip-ed" href="https://investpolitics.kr" target="_blank" rel="noopener">
+          <span class="ip-k">KOREA EDITION</span>
+          <b>investpolitics.kr</b>
+          <span class="ip-d">For politicians and citizens in Korea</span>
+          <span class="ip-go">Visit the Korea edition →</span>
+        </a>
+        <a class="ip-ed" href="https://investpolitics.us" target="_blank" rel="noopener">
+          <span class="ip-k">US EDITION</span>
+          <b>investpolitics.us</b>
+          <span class="ip-d">For politicians and citizens in the US</span>
+          <span class="ip-go">Visit the US edition →</span>
+        </a>
+      </div>
+      <p class="ip-note">Both editions are built by The Next GenerationZ. Visitors to investpolitics.com are routed to the Korea edition from Korea and to the US edition from everywhere else.</p>
     </div>
   </div>
 </section>
