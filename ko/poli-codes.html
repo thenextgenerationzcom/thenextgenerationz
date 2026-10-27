@@ -291,6 +291,16 @@ html.pc-preview .pc-bar{display:block;background:var(--mag);color:#fff;font-size
   .dex-cta{grid-template-columns:1fr}
   .dex-cta .cta{justify-content:center}
 }
+
+/* 상단 메뉴: InvestPolitics 한국판·미국판 */
+.nav-ip{display:inline-flex;align-items:center;gap:6px}
+.nav-links a.nav-ed{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:10.5px;font-weight:600;letter-spacing:.08em;color:var(--ink,#0B1623);border:1px solid var(--bdr,var(--line,#E4E1D8));border-radius:2px;padding:3px 6px;line-height:1.2}
+.nav-links a.nav-ed:hover{border-color:var(--m,#B81C63);color:var(--m,#B81C63)}
+@media(max-width:768px){
+  .nav-links .nav-ip{display:flex;width:100%;box-sizing:border-box;padding:14px 5vw;border-bottom:1px solid var(--bdr,var(--line,#E4E1D8));gap:8px}
+  .nav-links .nav-ip a.nav-ip-t{width:auto;padding:0;border-bottom:none;margin-right:auto}
+  .nav-links .nav-ip a.nav-ed{width:auto;padding:4px 10px;border:1px solid var(--bdr,var(--line,#E4E1D8));border-bottom:1px solid var(--bdr,var(--line,#E4E1D8))}
+}
 </style>
 </head>
 <body>
@@ -308,7 +318,7 @@ html.pc-preview .pc-bar{display:block;background:var(--mag);color:#fff;font-size
       <a href="/ko#work">Work</a>
       <a href="/ko/session">한 장의 목차</a>
       <a href="/ko/poli-code" class="nav-poli">POLI CODE</a>
-      <a href="https://investpolitics.com">InvestPolitics</a>
+      <span class="nav-ip"><a href="https://investpolitics.com" class="nav-ip-t">InvestPolitics</a><a href="https://investpolitics.kr" class="nav-ed" title="InvestPolitics 한국판">KR</a><a href="https://investpolitics.us" class="nav-ed" title="InvestPolitics US edition">US</a></span>
       <a href="/" class="nav-lang" data-lang="en">EN</a>
       <a href="/ko/session#apply" class="nav-cta">워크숍 신청</a>
     </div>
