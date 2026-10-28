@@ -61,7 +61,10 @@
     } catch (e) {}
 
     // 세션 첫 진입 여부 + 첫 진입 유입경로 보관
+    // 세션 번호: 이 탭에서만 쓰는 임의 값(개인 식별 불가). 방문 흐름(어떤 페이지를 이어 봤는지)을 묶는 데만 쓴다.
     var entry = '0';
+    var sid = ssGet('tng_sid');
+    if (!sid) { sid = Math.random().toString(36).slice(2, 10); ssSet('tng_sid', sid); }
     if (!ssGet('tng_sess')) {
       ssSet('tng_sess', '1');
       ssSet('tng_src_r', document.referrer || '');
@@ -76,6 +79,9 @@
       u: utm,
       d: /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) ? 'm' : 'd',
       en: entry,
+      s: sid,
+      l: (navigator.language || '').slice(0, 12),
+      z: (function () { try { return Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) { return ''; } })(),
     });
 
     // ── 클릭 추적: 신청 버튼(전환) / 내부 링크(메뉴) / 외부 링크(이탈) ──

@@ -78,6 +78,21 @@ button{font-family:var(--sans);cursor:pointer}
 .dim-item .fill{height:100%;background:var(--m-deep);border-radius:4px}
 .dim-item .cnt{width:40px;text-align:right;font-family:var(--mono);font-size:12px;color:var(--ink-soft)}
 .dim-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:640px){.dim-grid{grid-template-columns:1fr}}
+.dim-grid .wide{grid-column:1/-1}
+.wide .dim-item .name{width:260px}
+.vlog{width:100%;border-collapse:collapse;font-size:12px;min-width:760px}
+.vlog th{text-align:left;font-weight:600;color:var(--ink-dim);font-size:11px;padding:6px 8px;border-bottom:1px solid var(--bdr);white-space:nowrap}
+.vlog td{padding:7px 8px;border-bottom:1px solid var(--bdr);vertical-align:top;color:var(--ink-soft);line-height:1.5}
+.vlog td.t{font-family:var(--mono);white-space:nowrap}
+.vlog .j{color:var(--ink-dim);font-size:11px;word-break:break-all}
+.scroll-x{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tagx{display:inline-block;font-size:10px;padding:1px 6px;border-radius:3px;background:var(--panel2);border:1px solid var(--bdr);color:var(--ink-dim);margin-left:4px;white-space:nowrap}
+.tagx.warn{color:#b45309;border-color:#f3d19c;background:#fff8eb}
+.help{font-size:12.5px;line-height:1.75;color:var(--ink-soft)}
+.help b{color:var(--ink)}
+.help summary{cursor:pointer;font-weight:600;font-size:14px;color:var(--ink)}
+.help ul{margin:8px 0 0 18px}
 .date-picker{display:flex;align-items:center;gap:10px;margin:0 0 16px;flex-wrap:wrap}
 .date-picker select{background:#fff;border:1px solid var(--bdr);color:var(--ink);padding:7px 12px;border-radius:4px;font-size:13px;font-family:var(--sans);outline:none;cursor:pointer}
 .date-picker select:focus{border-color:var(--m)}
@@ -167,7 +182,8 @@ button{font-family:var(--sans);cursor:pointer}
       <div class="panel"><h3>신청이 일어난 유입경로</h3><div class="dim-list" id="dimCvSrc"></div></div>
       <div class="panel"><h3>전환 전체</h3><div class="dim-list" id="dimCv"></div></div>
       <div class="panel"><h3 id="h-lang">언어판</h3><div class="dim-list" id="dimLang"></div></div>
-      <div class="panel"><h3 id="h-src">유입경로</h3><div class="dim-list" id="dimSrc"></div></div>
+      <div class="panel"><h3>유입 큰 분류</h3><div class="dim-list" id="dimSrcg"></div></div>
+      <div class="panel wide"><h3 id="h-src">유입경로 상세</h3><div class="dim-list" id="dimSrc"></div></div>
       <div class="panel"><h3 id="h-path">인기 페이지</h3><div class="dim-list" id="dimPath"></div></div>
       <div class="panel"><h3 id="h-enter">진입 페이지</h3><div class="dim-list" id="dimEnter"></div></div>
       <div class="panel"><h3 id="h-rg">지역</h3><div class="dim-list" id="dimRg"></div></div>
@@ -175,7 +191,32 @@ button{font-family:var(--sans);cursor:pointer}
       <div class="panel"><h3 id="h-dev">기기</h3><div class="dim-list" id="dimDev"></div></div>
       <div class="panel"><h3 id="h-menu">메뉴 클릭</h3><div class="dim-list" id="dimMenu"></div></div>
       <div class="panel"><h3 id="h-out">외부로 이동</h3><div class="dim-list" id="dimOut"></div></div>
-      <div class="panel"><h3>봇 차단 사유</h3><div class="dim-list" id="dimBot"></div></div>
+      <div class="panel wide"><h3>봇 차단 사유</h3><div class="dim-list" id="dimBot"></div></div>
+      <div class="panel wide">
+        <h3>방문 기록 <span class="muted" style="font-weight:400">· 선택일 · 방문 1건 = 한 사람이 들어온 1회 (최근 300건)</span></h3>
+        <div class="scroll-x"><div id="visitLog"></div></div>
+        <div class="muted" style="margin-top:8px">IP·개인정보는 저장하지 않습니다. 언어·시간대·이동 경로는 2026-10-28 이후 방문부터 보입니다.</div>
+      </div>
+      <div class="panel wide">
+        <h3>봇 차단 기록 <span class="muted" style="font-weight:400">· 선택일 · 사람 통계에서 뺀 접속 (최근 150건)</span></h3>
+        <div class="scroll-x"><div id="botLog"></div></div>
+      </div>
+      <div class="panel wide help">
+        <details>
+          <summary>통계 읽는 법 — 유입경로·지역·봇 차단</summary>
+          <ul>
+            <li><b>직접 보낸 링크</b> — 링크 끝에 꼬리표를 붙여 보낸 것. 이메일 발송(email), 문자(sms), 인스타 공유(ig·igs), 페이스북 공유(fb) 등. 가장 정확한 분류입니다.</li>
+            <li><b>검색</b> — 구글·네이버·다음 검색 결과에서 들어온 방문. 네이버앱으로 검색해 들어오면 '검색·네이버' 또는 '검색·네이버앱'으로 잡힙니다.</li>
+            <li><b>SNS/메신저</b> — 페이스북·인스타·카카오톡 등. 카카오톡·인스타 앱 안에서 링크를 열면 출처 주소가 비어서 오는데, 이때는 앱 정보를 보고 '(앱 안에서 열림)'으로 표시합니다.</li>
+            <li><b>이메일</b> — 지메일·네이버메일 웹에서 꼬리표 없는 링크로 들어온 방문(예: 메일을 전달받은 사람).</li>
+            <li><b>블로그/카페</b> — 네이버 블로그·카페, 티스토리 등에 걸린 링크.</li>
+            <li><b>다른 사이트</b> — 그 밖의 웹사이트에 걸린 링크. 사이트 주소가 함께 나옵니다.</li>
+            <li><b>경로 정보 없음</b> — 브라우저가 어디서 왔는지 알려 주지 않은 방문. 주소창 직접 입력, 즐겨찾기, PDF·한글 문서 속 링크, 일부 메신저·메일 앱이 여기에 들어갑니다. 정확히 나누려면 보내는 링크에 꼬리표를 붙이는 수밖에 없습니다.</li>
+            <li><b>지역</b> — 접속 IP 기준 대략의 도시. 해외로 나와도 브라우저 언어·시간대가 한국어·서울이면 '한국어 사용자' 표시가 붙습니다(해외 체류·VPN 가능). 독일 프랑크푸르트 주변(Mörfelden-Walldorf 등)·미국 버지니아 등은 서버가 몰린 곳이라, 메일 보안 검사기가 링크를 미리 열어 본 경우가 많습니다.</li>
+            <li><b>봇 차단</b> — 사람이 아닌 접속은 페이지뷰·순방문에 넣지 않고 따로 셉니다. 검색봇(구글·네이버)이 많으면 검색 등록이 잘 되고 있다는 뜻이라 나쁜 신호가 아닙니다. 링크를 공유하면 메타·카카오 미리보기 수집기도 들어옵니다.</li>
+          </ul>
+        </details>
+      </div>
     </div>
   </div>
 
@@ -324,7 +365,10 @@ function renderDetail(d){
   var label = d.detailDate + ' · PV '+(d.selPv||0)+' · UV '+(d.selUv||0);
   document.getElementById('dateSummary').textContent = label;
   renderDim('dimLang', dims.lang);
-  renderDim('dimSrc', dims.src);
+  renderDim('dimSrc', dims.src, false, 14);
+  renderDim('dimSrcg', dims.srcg);
+  renderVisits(d.visits || []);
+  renderBots(d.botLog || []);
   renderDim('dimPath', dims.path);
   renderDim('dimEnter', dims.enter);
   renderDim('dimRg', dims.rg);
@@ -371,14 +415,38 @@ function renderTrend(trend, selDate){
   document.getElementById('trendBars').innerHTML = bars;
   document.getElementById('trendLabels').innerHTML = labels;
 }
-function renderDim(elId, obj, byKey){
+function renderVisits(v){
+  var el = document.getElementById('visitLog');
+  if (!v.length){ el.innerHTML = '<div class="muted">기록 없음 (방문 기록은 2026-10-28부터 쌓입니다)</div>'; return; }
+  el.innerHTML = '<table class="vlog"><thead><tr><th>시각</th><th>들어온 페이지 → 이어 본 페이지</th><th>유입</th><th>지역</th><th>기기·브라우저</th><th>언어·시간대</th></tr></thead><tbody>' +
+    v.map(function(x){
+      var foreign = x.rg && x.rg.indexOf('한국') !== 0;
+      var koUser = (x.lang||'').indexOf('ko') === 0 || x.tz === 'Asia/Seoul';
+      var tag = '';
+      if (foreign && koUser) tag = '<span class="tagx">한국어 사용자</span>';
+      else if (foreign && (x.lang || x.tz)) tag = '<span class="tagx warn">해외 브라우저</span>';
+      var journey = x.j ? '<div class="j">' + esc(x.j) + '</div>' : '';
+      var ref = x.ref ? '<div class="j">' + esc(x.ref) + '</div>' : '';
+      return '<tr><td class="t">' + esc(x.t) + '</td><td>' + esc(x.p) + journey + '</td><td>' + esc(x.src) + ref + '</td><td>' + esc(x.rg) + tag +
+        '</td><td>' + esc(x.br || x.dev || '') + '</td><td>' + esc([x.lang, x.tz].filter(Boolean).join(' · ') || '–') + '</td></tr>';
+    }).join('') + '</tbody></table>';
+}
+function renderBots(v){
+  var el = document.getElementById('botLog');
+  if (!v.length){ el.innerHTML = '<div class="muted">기록 없음 (봇 이름·기록은 2026-10-28부터 쌓입니다)</div>'; return; }
+  el.innerHTML = '<table class="vlog" style="min-width:560px"><thead><tr><th>시각</th><th>사유</th><th>페이지</th><th>지역</th></tr></thead><tbody>' +
+    v.map(function(x){
+      return '<tr><td class="t">' + esc(x.t) + '</td><td>' + esc(x.why) + '</td><td>' + esc(x.p) + '</td><td>' + esc(x.rg) + '</td></tr>';
+    }).join('') + '</tbody></table>';
+}
+function renderDim(elId, obj, byKey, limit){
   var el = document.getElementById(elId);
   if (!el) return;
   if (!obj || !Object.keys(obj).length){ el.innerHTML='<div class="muted">데이터 없음</div>'; return; }
   var arr = Object.keys(obj).map(function(k){return [k,obj[k]];});
   if (byKey) arr.sort(function(a,b){return a[0]<b[0]?-1:1;});      // 시간순(00시→23시)
   else arr.sort(function(a,b){return b[1]-a[1];});                  // 값 큰 순
-  arr = arr.slice(0, byKey?24:8);
+  arr = arr.slice(0, byKey?24:(limit||8));
   var max = Math.max.apply(null, arr.map(function(x){return x[1];}).concat([1]));
   el.innerHTML = arr.map(function(x){
     var name = byKey ? (x[0]+'시') : x[0];
