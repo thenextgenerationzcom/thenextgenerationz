@@ -82,6 +82,25 @@ function kstDate(offsetDays) {
   const now = new Date(Date.now() + 9 * 3600 * 1000 + (offsetDays || 0) * 86400000);
   return now.toISOString().slice(0, 10); // YYYY-MM-DD (KST 기준)
 }
+// 유입경로 이름 정리: 예전 기록('UTM·email', '직접 유입', '추천·…', 'SNS·…')을 새 이름으로 맞춘다 (api/track.js 와 같은 규칙)
+const UTM_NAMES = [
+  [/^email/, '이메일 발송'], [/^sms|^mms|^text/, '문자'], [/^kakao|^kt/, '카카오톡 공유'],
+  [/^igs|^ig|^insta/, '인스타그램 공유'], [/^fb|^facebook/, '페이스북 공유'], [/^th|^threads/, '스레드 공유'],
+  [/^x$|^tw/, 'X 공유'], [/^band/, '밴드 공유'], [/^qr/, 'QR 코드'], [/^card|^namecard/, '명함'],
+];
+function niceSrc(k) {
+  k = String(k || '');
+  if (k.indexOf('UTM·') === 0) {
+    const v = k.slice(4).toLowerCase();
+    for (const [re, name] of UTM_NAMES) if (re.test(v)) return '직접 보낸 링크·' + name + (name.indexOf(v) < 0 ? ' (' + v + ')' : '');
+    return '직접 보낸 링크·' + v;
+  }
+  if (k === '직접 유입') return '경로 정보 없음·주소 입력·즐겨찾기 등';
+  if (k.indexOf('추천·') === 0) return '다른 사이트·' + k.slice(3);
+  if (k.indexOf('SNS·') === 0 && k.indexOf('SNS/메신저') !== 0) return 'SNS/메신저·' + k.slice(4);
+  if (k === '검색·DuckDuckGo') return '검색·덕덕고';
+  return k;
+}
 function groupDims(hash) {
   // { 'src:검색·구글': '12', 'rg:KR': '30', ... } → { src:{...}, rg:{...}, ... }
   const out = {};
@@ -349,8 +368,11 @@ export default async function handler(req, res) {
       for (const d of dates) {
         cmds.push(['HMGET', 'a:h:' + d].concat(CV_TOTALS.map((l) => 'cv:' + l)));
       }
+      const iHash = cmds.length;
       cmds.push(['HGETALL', 'a:h:' + detailDate]);
       cmds.push(['GET', 'a:bot:' + detailDate]);
+      cmds.push(['LRANGE', 'a:log:' + detailDate, 0, 299]);
+      cmds.push(['LRANGE', 'a:botlog:' + detailDate, 0, 149]);
 
       const results = await pipeline(cmds);
       const cvTotals = {};
@@ -367,9 +389,23 @@ export default async function handler(req, res) {
           uv: Number((results[i * 2 + 1] || {}).result) || 0,
         });
       }
-      // 마지막 두 결과가 HGETALL, GET(bot)
-      let rawHash = (results[results.length - 2] || {}).result;
-      const botCount = Number((results[results.length - 1] || {}).result) || 0;
+      let rawHash = (results[iHash] || {}).result;
+      const botCount = Number((results[iHash + 1] || {}).result) || 0;
+      const parseList = (r) => ((r || {}).result || []).map((x) => { try { return JSON.parse(x); } catch (e) { return null; } }).filter(Boolean);
+      const visits = parseList(results[iHash + 2]);
+      const botLog = parseList(results[iHash + 3]);
+      // 방문별 이동 경로 (세션 번호로 묶인 페이지 목록)
+      const sids = [...new Set(visits.map((v) => v.s).filter(Boolean))];
+      if (sids.length) {
+        try {
+          const jr = await pipeline([['MGET'].concat(sids.map((x) => 'a:sj:' + x))]);
+          const arr = (jr[0] || {}).result || [];
+          const map = {};
+          sids.forEach((x, i) => { if (arr[i]) map[x] = arr[i]; });
+          visits.forEach((v) => { if (v.s && map[v.s]) v.j = map[v.s]; });
+        } catch (e) {}
+      }
+      visits.forEach((v) => { v.src = niceSrc(v.src); });
       let hashObj = {};
       if (Array.isArray(rawHash)) {
         for (let i = 0; i < rawHash.length; i += 2) hashObj[rawHash[i]] = rawHash[i + 1];
@@ -378,6 +414,30 @@ export default async function handler(req, res) {
       }
       const dims = groupDims(hashObj);
       if (dims.src) delete dims.src['사이트 내부']; // 과거 오염분 제외
+      // 예전 이름을 새 분류 이름으로 바꾸고, 큰 분류(srcg)를 다시 계산한다
+      if (dims.src) {
+        const ns = {}, g = {};
+        for (const k of Object.keys(dims.src)) {
+          const n = niceSrc(k);
+          ns[n] = (ns[n] || 0) + dims.src[k];
+          const gk = n.split('·')[0];
+          g[gk] = (g[gk] || 0) + dims.src[k];
+        }
+        dims.src = ns; dims.srcg = g;
+      }
+            if (dims.cvsrc) {
+        const nc = {};
+        for (const k of Object.keys(dims.cvsrc)) {
+          const parts = k.split(' ← ');
+          const n = parts.length === 2 ? parts[0] + ' ← ' + niceSrc(parts[1]) : k;
+          nc[n] = (nc[n] || 0) + dims.cvsrc[k];
+        }
+        dims.cvsrc = nc;
+      }
+      if (dims.bot && dims.bot['크롤러(UA)'] != null) {
+        dims.bot['크롤러(이름 기록 전)'] = dims.bot['크롤러(UA)'];
+        delete dims.bot['크롤러(UA)'];
+      }
       // 봇 필터 도입 전 기록된 데이터센터 도시는 표시만 구분한다 (PV·UV 수치는 되돌릴 수 없음)
       if (dims.rg) {
         const rg = {};
@@ -392,7 +452,7 @@ export default async function handler(req, res) {
       const sel = trend.find((t) => t.date === detailDate) || { pv: 0, uv: 0 };
 
       res.setHeader('Cache-Control', 'no-store');
-      return res.status(200).json({ trend, detailDate, dims, selPv: sel.pv, selUv: sel.uv, botCount, dates, cvTotals, days });
+      return res.status(200).json({ trend, detailDate, dims, selPv: sel.pv, selUv: sel.uv, botCount, dates, cvTotals, days, visits, botLog });
     }
 
     return res.status(400).json({ error: 'unknown action' });

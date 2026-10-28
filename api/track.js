@@ -42,25 +42,39 @@ function kstHour() {
 }
 
 // 봇 판별: User-Agent 기반. 알려진 크롤러/스캐너/헤드리스는 사람 통계에서 제외.
-function isBot(ua) {
-  if (!ua) return true; // UA 없는 요청은 봇으로 간주
+// botName()은 걸린 이름을 사람이 읽을 수 있게 돌려준다 (없으면 '').
+const BOT_SIG = [
+  // [UA에 들어 있는 글자, 표시 이름]
+  ['googlebot', '구글 검색봇'], ['google-inspectiontool', '구글 검사도구'], ['adsbot-google', '구글 광고봇'],
+  ['mediapartners-google', '구글 광고봇'], ['google-read-aloud', '구글 읽기봇'], ['storebot-google', '구글 쇼핑봇'],
+  ['yeti', '네이버 검색봇'], ['daumoa', '다음 검색봇'], ['bingbot', '빙 검색봇'], ['applebot', '애플 검색봇'],
+  ['yandex', '얀덱스봇'], ['baiduspider', '바이두봇'], ['duckduckbot', '덕덕고봇'],
+  ['facebookexternalhit', '메타 미리보기'], ['facebot', '메타 미리보기'], ['facebookcatalog', '메타 미리보기'],
+  ['meta-externalagent', '메타 수집기'], ['meta-externalfetcher', '메타 수집기'],
+  ['kakaotalk-scrap', '카카오 미리보기'], ['twitterbot', 'X 미리보기'], ['linkedinbot', '링크드인 미리보기'],
+  ['slackbot', '슬랙 미리보기'], ['discordbot', '디스코드 미리보기'], ['telegrambot', '텔레그램 미리보기'],
+  ['whatsapp', '왓츠앱 미리보기'], ['pinterest', '핀터레스트봇'], ['redditbot', '레딧봇'], ['embedly', '임베드 수집기'],
+  ['quora link', '쿼라 미리보기'], ['gptbot', 'OpenAI 수집봇'], ['oai-searchbot', 'OpenAI 검색봇'], ['chatgpt-user', 'ChatGPT 열람'],
+  ['claudebot', 'Anthropic 수집봇'], ['claude-user', 'Claude 열람'], ['perplexity', 'Perplexity봇'], ['ccbot', 'CommonCrawl봇'],
+  ['ahrefs', 'SEO 분석봇(Ahrefs)'], ['semrush', 'SEO 분석봇(Semrush)'], ['mj12bot', 'SEO 분석봇(Majestic)'],
+  ['dotbot', 'SEO 분석봇(Moz)'], ['petalbot', '화웨이 검색봇'], ['bytespider', '바이트댄스봇'],
+  ['headlesschrome', '자동화 크롬(헤드리스)'], ['phantomjs', '자동화 브라우저'], ['lighthouse', '구글 속도 측정'],
+  ['chrome-lighthouse', '구글 속도 측정'], ['gtmetrix', '속도 측정'], ['pingdom', '가동 감시'], ['uptimerobot', '가동 감시'],
+  ['statuscake', '가동 감시'], ['monitoring', '가동 감시'], ['vercel', 'Vercel 점검'],
+  ['python-requests', '스크립트(Python)'], ['axios', '스크립트(axios)'], ['go-http-client', '스크립트(Go)'],
+  ['curl', '스크립트(curl)'], ['wget', '스크립트(wget)'], ['okhttp', '스크립트(okhttp)'], ['java/', '스크립트(Java)'],
+  ['libwww', '스크립트(Perl)'], ['httpclient', '스크립트'], ['scrapy', '수집기(Scrapy)'], ['preview', '링크 미리보기'],
+  ['slurp', '야후봇'],
+  // 'naver'·'daum'은 넣지 않음: 네이버앱·다음앱 안에서 링크를 연 실제 사람까지 봇으로 걸러졌음
+  ['spider', '기타 수집봇'], ['crawl', '기타 수집봇'], ['bot', '기타 봇'],
+];
+function botName(ua) {
+  if (!ua) return 'UA 없음';
   const s = ua.toLowerCase();
-  const sig = [
-    'bot', 'spider', 'crawl', 'slurp', 'crawler', 'facebookexternalhit', 'facebot',
-    'embedly', 'quora link', 'pinterest', 'redditbot', 'telegrambot', 'whatsapp',
-    'slackbot', 'discordbot', 'linkedinbot', 'twitterbot', 'applebot', 'googlebot',
-    'bingbot', 'yandex', 'baiduspider', 'duckduckbot', 'yeti', 'daumoa',
-    // 'naver'·'daum'은 넣지 않음: 네이버앱·다음앱 안에서 링크를 연 실제 사람까지 봇으로 걸러졌음
-    'ahrefs', 'semrush', 'mj12bot', 'dotbot', 'petalbot', 'bytespider',
-    'headlesschrome', 'phantomjs', 'python-requests', 'axios', 'go-http-client',
-    'curl', 'wget', 'okhttp', 'java/', 'libwww', 'httpclient', 'scrapy',
-    'vercel', 'uptimerobot', 'pingdom', 'statuscake', 'gtmetrix', 'lighthouse',
-    'chrome-lighthouse', 'google-inspectiontool', 'monitoring', 'preview',
-    'meta-externalagent', 'meta-externalfetcher', 'facebookcatalog',
-  ];
-  for (const k of sig) if (s.includes(k)) return true;
-  return false;
+  for (const [k, name] of BOT_SIG) if (s.includes(k)) return name;
+  return '';
 }
+function isBot(ua) { return !!botName(ua); }
 
 // 데이터센터 도시: 사람이 거의 살지 않고 서버만 있는 곳(메타·구글·아마존·MS 등).
 // 여기서 오는 접속은 링크 미리보기 수집기나 보안 검사기로 보고 사람 통계에서 뺀다.
@@ -78,29 +92,106 @@ function isDcCity(country, city) {
   return DC_CITIES.indexOf(c) >= 0;
 }
 
-// 유입경로 분류
-function classifySource(ref, utm, host) {
-  if (utm) return 'UTM·' + utm;
-  if (!ref) return '직접 유입';
-  let h;
-  try { h = new URL(ref).host.replace(/^www\./, ''); } catch (e) { return '직접 유입'; }
+// ── 유입경로 분류 ──
+// 결과는 '큰 분류·세부' 형태. 관리자 화면은 '·' 앞을 큰 분류로 묶어서도 보여 준다.
+//   직접 보낸 링크 : 우리가 링크 끝에 꼬리표(utm)를 붙여 보낸 것 (이메일·문자·인스타 공유 등)
+//   검색          : 구글·네이버·다음 등 검색 결과에서 들어옴
+//   SNS·메신저    : 페이스북·인스타·카카오톡 등. 앱 안에서 열려 주소 정보가 없을 때는 '(앱)'으로 표시
+//   이메일        : 지메일·네이버메일 등 웹메일에서 꼬리표 없이 들어옴
+//   블로그·카페   : 네이버 블로그·카페, 티스토리, 브런치 등
+//   다른 사이트    : 그 밖의 웹사이트 링크
+//   경로 정보 없음 : 주소를 직접 입력·즐겨찾기·문서/PDF 링크·일부 앱 등. 브라우저가 출처를 알려 주지 않은 경우
+const UTM_NAMES = [
+  [/^email/, '이메일 발송'], [/^sms|^mms|^text/, '문자'], [/^kakao|^kt/, '카카오톡 공유'],
+  [/^igs|^ig|^insta/, '인스타그램 공유'], [/^fb|^facebook/, '페이스북 공유'], [/^th|^threads/, '스레드 공유'],
+  [/^x$|^tw/, 'X 공유'], [/^band/, '밴드 공유'], [/^qr/, 'QR 코드'], [/^card|^namecard/, '명함'],
+];
+function utmLabel(u) {
+  const v = String(u).toLowerCase().slice(0, 30);
+  for (const [re, name] of UTM_NAMES) if (re.test(v)) return '직접 보낸 링크·' + name + (name.indexOf(v) < 0 ? ' (' + v + ')' : '');
+  return '직접 보낸 링크·' + v;
+}
+// 앱 안 브라우저 판별 (주소 정보가 비어 있을 때 어디서 열었는지 추정)
+const INAPP = [
+  [/KAKAOTALK/i, 'SNS/메신저·카카오톡'], [/NAVER\(inapp|NAVER\//i, '검색·네이버앱'], [/DaumApps|DaumDevice/i, '검색·다음앱'],
+  [/Instagram/i, 'SNS/메신저·인스타그램'], [/FBAN|FBAV|FB_IAB|FB4A/i, 'SNS/메신저·페이스북'], [/Barcelona/i, 'SNS/메신저·스레드'],
+  [/\bLine\//i, 'SNS/메신저·라인'], [/BAND\//i, 'SNS/메신저·밴드'], [/everytimeApp/i, 'SNS/메신저·에브리타임'],
+  [/GSA\//i, '검색·구글앱'],
+];
+function inAppName(ua) {
+  for (const [re, name] of INAPP) if (re.test(ua || '')) return name;
+  return '';
+}
+const APP_PKG = {
+  'com.google.android.gm': '이메일·지메일앱', 'com.google.android.googlequicksearchbox': '검색·구글앱',
+  'com.nhn.android.search': '검색·네이버앱', 'com.nhn.android.mail': '이메일·네이버메일앱', 'net.daum.android.daum': '검색·다음앱',
+  'com.kakao.talk': 'SNS/메신저·카카오톡', 'com.facebook.katana': 'SNS/메신저·페이스북', 'com.instagram.android': 'SNS/메신저·인스타그램',
+  'org.telegram.messenger': 'SNS/메신저·텔레그램', 'com.linkedin.android': 'SNS/메신저·링크드인', 'com.slack': 'SNS/메신저·슬랙',
+};
+function hostIs(h, list) { return list.some((d) => h === d || h.endsWith('.' + d)); }
+function classifySource(ref, utm, host, ua) {
+  if (utm) return utmLabel(utm);
+  let h = '', proto = '';
+  if (ref) {
+    try { const u = new URL(ref); h = u.host.toLowerCase().replace(/^www\./, ''); proto = u.protocol; } catch (e) { h = ''; }
+  }
+  if (!h) {
+    const app = inAppName(ua);
+    return app ? (/앱$/.test(app) ? app : app + ' (앱 안에서 열림)') : '경로 정보 없음·주소 입력·즐겨찾기 등';
+  }
+  if (proto === 'android-app:') return APP_PKG[h] || ('앱·' + h);
   const self = (host || '').replace(/^www\./, '');
   if (h === self || h.endsWith('thenextgenerationz.com')) return '사이트 내부';
 
-  const search = [
-    ['google.', '구글'], ['naver.', '네이버'], ['daum.', '다음'],
-    ['bing.', '빙'], ['duckduckgo.', 'DuckDuckGo'], ['yahoo.', '야후'],
-  ];
-  for (const [k, name] of search) if (h.includes(k)) return '검색·' + name;
+  // 웹메일 (검색보다 먼저: mail.google.com, mail.naver.com 이 검색으로 잘못 잡히던 문제)
+  if (h === 'mail.google.com') return '이메일·지메일';
+  if (h === 'mail.naver.com' || h === 'm.mail.naver.com') return '이메일·네이버메일';
+  if (hostIs(h, ['mail.daum.net'])) return '이메일·다음메일';
+  if (hostIs(h, ['outlook.live.com', 'outlook.office.com', 'outlook.office365.com'])) return '이메일·아웃룩';
+  if (/^mail\./.test(h) || /^webmail\./.test(h)) return '이메일·' + h;
 
+  // 블로그·카페 (네이버 검색과 구분)
+  if (hostIs(h, ['blog.naver.com'])) return '블로그/카페·네이버 블로그';
+  if (hostIs(h, ['cafe.naver.com'])) return '블로그/카페·네이버 카페';
+  if (hostIs(h, ['cafe.daum.net'])) return '블로그/카페·다음 카페';
+  if (hostIs(h, ['tistory.com'])) return '블로그/카페·티스토리';
+  if (hostIs(h, ['brunch.co.kr'])) return '블로그/카페·브런치';
+  if (hostIs(h, ['medium.com', 'substack.com'])) return '블로그/카페·' + h;
+
+  // 검색
+  if (/(^|\.)google\.[a-z.]+$/.test(h)) return '검색·구글';
+  if (hostIs(h, ['search.naver.com', 'm.search.naver.com'])) return '검색·네이버';
+  if (hostIs(h, ['search.daum.net', 'm.search.daum.net'])) return '검색·다음';
+  if (hostIs(h, ['bing.com'])) return '검색·빙';
+  if (hostIs(h, ['duckduckgo.com'])) return '검색·덕덕고';
+  if (hostIs(h, ['search.yahoo.com', 'yahoo.com', 'yahoo.co.jp'])) return '검색·야후';
+  if (hostIs(h, ['search.zum.com', 'zum.com'])) return '검색·줌';
+  if (hostIs(h, ['chatgpt.com', 'chat.openai.com', 'perplexity.ai', 'claude.ai', 'gemini.google.com', 'copilot.microsoft.com'])) return '검색·AI(' + h + ')';
+  if (hostIs(h, ['naver.com'])) return '검색·네이버(' + h + ')';
+  if (hostIs(h, ['daum.net'])) return '검색·다음(' + h + ')';
+
+  // SNS·메신저 (정확한 주소로 비교: 예전엔 't.co'가 microsoft.com 등에도 걸렸음)
   const sns = [
-    ['facebook.', '페이스북'], ['instagram.', '인스타그램'], ['linkedin.', '링크드인'],
-    ['youtube.', '유튜브'], ['youtu.be', '유튜브'], ['t.co', 'X'], ['twitter.', 'X'],
-    ['x.com', 'X'], ['threads.', '스레드'], ['kakao', '카카오'], ['band.us', '밴드'],
+    [['facebook.com', 'fb.com', 'fb.me'], '페이스북'], [['instagram.com'], '인스타그램'],
+    [['threads.net', 'threads.com'], '스레드'], [['t.co', 'x.com', 'twitter.com'], 'X'],
+    [['linkedin.com', 'lnkd.in'], '링크드인'], [['youtube.com', 'youtu.be'], '유튜브'],
+    [['kakao.com', 'kakaocorp.com', 'kakaocdn.net', 'kakao.co.kr'], '카카오'], [['band.us'], '밴드'],
+    [['telegram.org', 't.me'], '텔레그램'], [['slack.com'], '슬랙'],
   ];
-  for (const [k, name] of sns) if (h.includes(k)) return 'SNS·' + name;
+  for (const [list, name] of sns) if (hostIs(h, list)) return 'SNS/메신저·' + name;
 
-  return '추천·' + h;
+  return '다른 사이트·' + h;
+}
+
+// 브라우저·기기 짧은 이름 (전체 UA는 저장하지 않음)
+function browserShort(ua) {
+  ua = ua || '';
+  const os = /iPhone/.test(ua) ? '아이폰' : /iPad/.test(ua) ? '아이패드' : /Android/.test(ua) ? '안드로이드'
+    : /Windows/.test(ua) ? '윈도우' : /Macintosh|Mac OS X/.test(ua) ? '맥' : /Linux/.test(ua) ? '리눅스' : '기타';
+  const br = /SamsungBrowser/.test(ua) ? '삼성인터넷' : /Whale/.test(ua) ? '웨일' : /Edg\//.test(ua) ? '엣지'
+    : /CriOS|Chrome\//.test(ua) ? '크롬' : /FxiOS|Firefox\//.test(ua) ? '파이어폭스' : /Safari\//.test(ua) ? '사파리' : '';
+  const app = inAppName(ua);
+  return os + (br ? ' ' + br : '') + (app ? ' · ' + app.split('·').pop().replace(/앱$/, '') + ' 앱 안' : '');
 }
 
 // 지역 라벨: 국가 + 도시. 국가는 한국/미국 등 친숙한 이름으로.
@@ -161,7 +252,7 @@ export default async function handler(req, res) {
   if (req.query.debug === '1') {
     return res.status(200).json({
       ua, country, city: (function(){ try { return decodeURIComponent(city); } catch(e){ return city; } })(),
-      region, bot: isBot(ua),
+      region, bot: botName(ua) || false, inapp: inAppName(ua) || '', browser: browserShort(ua),
     });
   }
 
@@ -177,7 +268,8 @@ export default async function handler(req, res) {
 
     // 봇 판별: ① User-Agent ② 자동화 브라우저 신호 ③ 데이터센터 도시
     let botReason = '';
-    if (isBot(ua)) botReason = '크롤러(UA)';
+    const bn = botName(ua);
+    if (bn) botReason = '크롤러·' + bn;
     else if (ev.bw === '1') botReason = '자동화 브라우저';
     else if (isDcCity(country, city)) botReason = '데이터센터·' + (regionLabel(country, city, region).split('·')[1] || '');
 
@@ -185,10 +277,15 @@ export default async function handler(req, res) {
     if (botReason) {
       const cmds = [];
       if (evType === 'pv') {
+        const t = new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(11, 16);
+        const rec = JSON.stringify({ t, why: botReason, p: (ev.p || '/').toString().slice(0, 120), rg: regionLabel(country, city, region) });
         cmds.push(['INCR', 'a:bot:' + date]);
         cmds.push(['HINCRBY', 'a:h:' + date, 'bot:' + botReason, 1]);
+        cmds.push(['LPUSH', 'a:botlog:' + date, rec]);
+        cmds.push(['LTRIM', 'a:botlog:' + date, 0, 149]);
         cmds.push(['EXPIRE', 'a:bot:' + date, 60 * 86400]);
         cmds.push(['EXPIRE', 'a:h:' + date, 60 * 86400]);
+        cmds.push(['EXPIRE', 'a:botlog:' + date, 60 * 86400]);
       }
       if (cmds.length) await pipeline(cmds);
       return res.status(200).json({ ok: true, bot: true });
@@ -201,7 +298,7 @@ export default async function handler(req, res) {
         const cmds = [['HINCRBY', 'a:h:' + date, 'cv:' + label, 1]];
         // 실제 신청이 일어난 건은 어디서 왔는지 함께 남긴다
         if (/제출|예약 완료|구독/.test(label)) {
-          const src = classifySource(ev.r || '', ev.u || '', 'thenextgenerationz.com');
+          const src = classifySource(ev.r || '', ev.u || '', 'thenextgenerationz.com', ua);
           const short = label.replace(' 신청서 제출', ' 신청').replace('일정 예약 완료', '예약').replace(' 제출', '');
           cmds.push(['HINCRBY', 'a:h:' + date, 'cvsrc:' + short + ' ← ' + src, 1]);
         }
@@ -247,11 +344,30 @@ export default async function handler(req, res) {
     cmds.push(['EXPIRE', 'a:uv:' + date, 60 * 86400]);
     cmds.push(['EXPIRE', 'a:h:' + date, 60 * 86400]);
 
+    // 방문 흐름: 세션 번호(브라우저 탭을 닫으면 사라지는 임의 값)별로 본 페이지를 순서대로 이어 붙인다
+    const sid = String(ev.s || '').replace(/[^a-z0-9]/gi, '').slice(0, 12);
+    if (sid) {
+      cmds.push(['APPEND', 'a:sj:' + sid, (ev.en === '1' ? '' : ' › ') + path]);
+      cmds.push(['EXPIRE', 'a:sj:' + sid, 3 * 86400]);
+    }
+
     if (ev.en === '1') {
-      const src = classifySource(ev.r || '', ev.u || '', 'thenextgenerationz.com');
+      const src = classifySource(ev.r || '', ev.u || '', 'thenextgenerationz.com', ua);
       if (src !== '사이트 내부') {
         cmds.push(['HINCRBY', 'a:h:' + date, 'src:' + src, 1]);
         cmds.push(['HINCRBY', 'a:h:' + date, 'enter:' + path, 1]);
+        // 방문 기록 (첫 진입 1건): 시각·진입 페이지·유입·지역·기기·언어·시간대. IP·전체 UA는 남기지 않는다.
+        let refHost = '';
+        try { refHost = ev.r ? new URL(ev.r).host.replace(/^www\./, '') : ''; } catch (e) {}
+        const rec = {
+          t: new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(11, 16),
+          s: sid, p: path, src, ref: refHost.slice(0, 60), rg: regionLabel(country, city, region),
+          dev, br: browserShort(ua),
+          lang: String(ev.l || '').slice(0, 12), tz: String(ev.z || '').slice(0, 40),
+        };
+        cmds.push(['LPUSH', 'a:log:' + date, JSON.stringify(rec)]);
+        cmds.push(['LTRIM', 'a:log:' + date, 0, 299]);
+        cmds.push(['EXPIRE', 'a:log:' + date, 60 * 86400]);
       }
     }
 
