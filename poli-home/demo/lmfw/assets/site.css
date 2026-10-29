@@ -324,3 +324,7 @@ html[data-mood="lively"] .ba-after{box-shadow:none;background:var(--tint2)}
 .empty{padding:32px 28px;border:1px dashed var(--line,#D9D6CE);border-radius:var(--r-lg,14px);max-width:720px}
 .empty strong{display:block;font-size:20px;margin-bottom:8px}
 .empty p{color:var(--muted);margin:0 0 12px}
+
+/* 「한 해의 기록」 소개로 돌아가기 */
+.demo-back{color:#fff;text-decoration:none;border:1px solid #33425C;border-radius:4px;padding:4px 10px;font-weight:700;white-space:nowrap}
+.demo-back:hover{border-color:#F2398C;color:#F2398C}

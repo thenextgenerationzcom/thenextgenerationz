@@ -60,3 +60,6 @@
     sync();
   }
 })();
+
+// 미리 보기 창(iframe) 안에서는 돌아가기 링크를 숨긴다 — 창 위쪽에 목록으로 버튼이 따로 있음
+try { if (window.top !== window.self) { var db = document.querySelector(".demo-back"); if (db) db.style.display = "none"; } } catch (e) {}
