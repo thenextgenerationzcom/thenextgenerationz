@@ -1,0 +1,221 @@
+/* LBFW — 민트→청록 그라데이션 캔버스, 다층 그라데이션 첫 화면, 만든 제도 벤토 그리드. Pretendard 900 */
+html[data-code="LBFW"]{
+  --head:var(--sans);--head-w:800;
+  /* 배경 팔레트 (의원 색과 무관하게 고정) */
+  --fw-mint:#EAF7F2;
+  --fw-aqua:#D2EEE8;
+  --fw-teal:#BFE3DD;
+  --fw-deep:#0A3F3A;
+  --fw-mid:#0F625A;
+  --fw-glow:#63D2B6;
+  --fw-surface:#FFFFFF;
+  --fw-ink:#10201E;
+  --fw-soft:#46585A;
+  --fw-line:rgba(16,32,30,.10);
+}
+
+/* ---------- 사이트 전체 ---------- */
+html[data-code="LBFW"] body{background:linear-gradient(180deg,var(--fw-mint) 0,var(--fw-aqua) 1400px,var(--fw-teal) 100%);background-color:var(--fw-teal);color:var(--fw-ink)}
+html[data-code="LBFW"] .top{background:rgba(234,247,242,.86);border-bottom:1px solid var(--fw-line)}
+html[data-code="LBFW"] .brand strong{font-weight:900;letter-spacing:-.03em}
+html[data-code="LBFW"] .nav .nav-cta{border-radius:999px;padding:8px 18px}
+html[data-code="LBFW"] .page-head{border-bottom:0;
+  background:radial-gradient(circle at 12% 0%,rgba(99,210,182,.45),transparent 45%),linear-gradient(120deg,var(--fw-mint),var(--fw-aqua))}
+html[data-code="LBFW"] .page-head h1{font-weight:900;letter-spacing:-.04em}
+html[data-code="LBFW"] .sec.alt{background:rgba(255,255,255,.4)}
+html[data-code="LBFW"] .card,html[data-code="LBFW"] .ccard,html[data-code="LBFW"] .promises a,html[data-code="LBFW"] .r-note,html[data-code="LBFW"] .r-with,html[data-code="LBFW"] .ba,html[data-code="LBFW"] .process{border-radius:20px;border-color:transparent}
+html[data-code="LBFW"] .btn,html[data-code="LBFW"] .tabs a,html[data-code="LBFW"] .chips button{border-radius:999px}
+html[data-code="LBFW"] .foot{background:var(--fw-deep);color:#E6F2EF;border-top:0}
+html[data-code="LBFW"] .foot .muted,html[data-code="LBFW"] .foot-links a{color:#B7D3CD}
+html[data-code="LBFW"] .foot .credit{color:#8FB3AC}
+
+/* ---------- 메인 ---------- */
+body.home-lbfw .fw{color:var(--fw-ink)}
+body.home-lbfw .fw a{text-decoration:none}
+body.home-lbfw .fw a:focus-visible{outline:3px solid var(--fw-ink);outline-offset:3px;border-radius:8px}
+body.home-lbfw .fw-wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+
+body.home-lbfw .fw-btn{display:inline-flex;align-items:center;justify-content:center;min-height:54px;padding:0 28px;border-radius:999px;
+  background:#fff;color:var(--fw-deep);font-weight:800;font-size:17px;border:2px solid #fff}
+body.home-lbfw .fw-btn:hover{background:var(--fw-mint);border-color:var(--fw-mint)}
+body.home-lbfw .fw-btn-line{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.6)}
+body.home-lbfw .fw-btn-line:hover{background:rgba(255,255,255,.18);border-color:#fff}
+body.home-lbfw .fw-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:34px}
+body.home-lbfw .fw-more{display:inline-flex;align-items:center;min-height:44px;margin-top:22px;font-weight:800;color:var(--fw-mid)}
+body.home-lbfw .fw-more:hover{text-decoration:underline;text-underline-offset:4px}
+
+/* 첫 화면: 다층 그라데이션 면 + 굵은 한 문장 + 현장 사진 */
+body.home-lbfw .fw-hero{padding:24px 20px 0}
+body.home-lbfw .fw-hero-in{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);min-height:600px;max-width:1240px;margin:0 auto;
+  border-radius:32px;overflow:hidden;color:#fff;
+  background:
+    radial-gradient(120% 80% at 0% 0%,rgba(99,210,182,.55) 0,transparent 55%),
+    radial-gradient(90% 70% at 100% 100%,rgba(6,40,37,.85) 0,transparent 60%),
+    radial-gradient(60% 50% at 70% 10%,rgba(160,232,214,.25) 0,transparent 70%),
+    linear-gradient(135deg,var(--fw-mid) 0%,var(--fw-deep) 100%)}
+body.home-lbfw .fw-hero-text{display:flex;flex-direction:column;justify-content:center;padding:64px 56px}
+body.home-lbfw .fw-kicker{align-self:flex-start;font-size:14px;font-weight:700;color:#DDF5EE;margin-bottom:22px;padding:6px 14px;border-radius:999px;background:rgba(255,255,255,.12)}
+body.home-lbfw .fw-def{font-size:clamp(36px,4.2vw,58px);font-weight:900;line-height:1.22;letter-spacing:-.045em;color:#fff}
+body.home-lbfw .fw-name{margin-top:28px;font-size:16px;color:#CBEAE2}
+body.home-lbfw .fw-name strong{font-size:22px;font-weight:900;color:#fff;margin-right:10px}
+body.home-lbfw .fw-hero-photo{margin:12px;position:relative;border-radius:24px;overflow:hidden;background:var(--fw-mid)}
+body.home-lbfw .fw-hero-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:52% 30%}
+body.home-lbfw .fw-hero-photo figcaption{position:absolute;left:14px;bottom:14px;max-width:calc(100% - 28px);padding:7px 14px;border-radius:999px;font-size:14px;font-weight:700;color:var(--fw-ink);
+  background:rgba(255,255,255,.84);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+
+/* 사진마다 얼굴이 보이는 기준점 (어느 자리에 들어가도 같은 기준) */
+body.home-lbfw .fw img[data-ph="main"]{object-position:52% 30%}
+body.home-lbfw .fw img[data-ph="group"]{object-position:54% 42%}
+body.home-lbfw .fw img[data-ph="action"]{object-position:55% 26%}
+body.home-lbfw .fw img[data-ph="wide"]{object-position:70% 32%}
+body.home-lbfw .fw img[data-ph="about"]{object-position:49% 28%}
+
+/* 다녀온 곳 */
+body.home-lbfw .fw-places{padding:24px 0 0}
+body.home-lbfw .fw-places-in{display:grid;grid-template-columns:130px 1fr;gap:16px;align-items:center}
+body.home-lbfw .fw-places h2{font-family:var(--sans);font-size:15px;font-weight:900}
+body.home-lbfw .fw-places ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+body.home-lbfw .fw-places a{display:flex;flex-direction:column;padding:12px 16px;border-radius:16px;background:rgba(255,255,255,.7);min-height:44px;height:100%}
+body.home-lbfw .fw-places a:hover{background:#fff}
+body.home-lbfw .fw-places-n1 li,body.home-lbfw .fw-places-n2 li{grid-column:span 2}
+body.home-lbfw .fw-places b{font-size:13px;color:var(--fw-mid)}
+body.home-lbfw .fw-places span{font-size:14px;font-weight:600;line-height:1.45}
+
+/* 구역 */
+body.home-lbfw .fw-sec{padding:88px 0}
+body.home-lbfw .fw-h2{font-size:clamp(28px,3.4vw,40px);font-weight:900;letter-spacing:-.045em;line-height:1.25;margin-bottom:32px}
+
+/* 벤토 그리드: 크기가 다른 둥근 타일 */
+body.home-lbfw .fw-bento{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(220px,auto);grid-auto-flow:dense;gap:14px}
+body.home-lbfw .fw-tile{display:flex;flex-direction:column;justify-content:space-between;gap:18px;padding:26px;border-radius:28px;background:var(--fw-surface);
+  box-shadow:0 1px 0 rgba(16,32,30,.04),0 18px 40px -28px rgba(10,63,58,.35)}
+body.home-lbfw .fw-tile-1{grid-column:span 2;grid-row:span 2;padding:34px;
+  background:radial-gradient(100% 70% at 100% 0%,rgba(99,210,182,.28),transparent 60%),var(--fw-surface)}
+body.home-lbfw .fw-tile-4{grid-column:span 2}
+body.home-lbfw .fw-tile-photo{grid-column:span 2;margin:0;padding:0;position:relative;overflow:hidden;min-height:240px;background:var(--fw-mid)}
+body.home-lbfw .fw-tile-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:55% 26%;transition:transform .5s ease}
+body.home-lbfw .fw-tile-action:hover img{transform:scale(1.03)}
+body.home-lbfw .fw-tile-wide{grid-column:span 1}
+body.home-lbfw .fw-tile-wide img{object-position:70% 32%}
+body.home-lbfw .fw-tile-photo figcaption,body.home-lbfw .fw-pic-cap{position:absolute;left:14px;bottom:14px;right:14px;max-width:max-content;padding:8px 14px;border-radius:16px;line-height:1.45;font-size:14px;font-weight:700;color:var(--fw-ink);
+  background:rgba(255,255,255,.82);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+body.home-lbfw .fw-tile-pic{margin:0;position:relative;border-radius:20px;overflow:hidden;aspect-ratio:16/8;background:var(--fw-aqua)}
+body.home-lbfw .fw-tile-pic img{width:100%;height:100%;object-fit:cover;object-position:54% 42%}
+body.home-lbfw span.fw-tile-pic{display:block}
+body.home-lbfw .fw-tile-pic figcaption,body.home-lbfw .fw-tile-pic-cap{position:absolute;left:10px;bottom:10px;max-width:calc(100% - 20px);padding:6px 12px;border-radius:999px;font-size:13px;font-weight:700;color:var(--fw-ink);
+  background:rgba(255,255,255,.84);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+body.home-lbfw .fw-tile-count{grid-column:span 1;color:#fff;
+  background:radial-gradient(80% 90% at 100% 0%,rgba(99,210,182,.5),transparent 60%),linear-gradient(135deg,var(--fw-mid),var(--fw-deep))}
+body.home-lbfw .fw-tile-count:hover{filter:brightness(1.06)}
+body.home-lbfw .fw-count{font-size:18px;font-weight:700}
+body.home-lbfw .fw-count b{font-size:72px;font-weight:900;line-height:1;letter-spacing:-.05em;margin-right:4px}
+body.home-lbfw .fw-count-t{font-size:17px;font-weight:600;line-height:1.5;color:#D9F2EB}
+body.home-lbfw .fw-count-go{font-size:15px;font-weight:800;text-decoration:underline;text-underline-offset:4px}
+
+body.home-lbfw .fw-line-link{display:flex;flex-direction:column;gap:8px}
+body.home-lbfw .fw-line-cat{align-self:flex-start;font-size:13px;font-weight:800;color:#fff;background:var(--c);padding:3px 12px;border-radius:999px}
+body.home-lbfw .fw-line-one{font-size:20px;font-weight:900;line-height:1.4;letter-spacing:-.035em}
+body.home-lbfw .fw-tile-1 .fw-line-one{font-size:clamp(26px,2.6vw,34px);line-height:1.3}
+body.home-lbfw .fw-line-title{font-size:14px;color:var(--fw-soft)}
+body.home-lbfw .fw-line-link:hover .fw-line-one{color:var(--c-deep)}
+body.home-lbfw .fw-line-link:hover .fw-line-title{text-decoration:underline;text-underline-offset:3px}
+body.home-lbfw .fw-tile-note{margin:0;font-size:18px;font-weight:700;line-height:1.65;letter-spacing:-.02em;padding-left:16px;border-left:3px solid var(--c)}
+body.home-lbfw .fw-tile-note cite{display:block;margin-top:6px;font-style:normal;font-size:14px;font-weight:600;color:var(--fw-soft)}
+body.home-lbfw .fw-line-change{display:flex;flex-direction:column;gap:12px}
+body.home-lbfw .fw-line-change p{font-size:15px;font-weight:600;line-height:1.6;padding:14px 16px;background:var(--fw-mint);border-radius:16px}
+body.home-lbfw .fw-tile-1 .fw-line-change p{font-size:18px;padding:18px 20px}
+body.home-lbfw .fw-line-change small{display:block;font-size:13px;font-weight:800;color:var(--fw-mid);margin-bottom:2px}
+body.home-lbfw .fw-stage{list-style:none;margin:0;padding:0;display:flex;gap:5px;flex-wrap:wrap}
+body.home-lbfw .fw-stage li{font-size:13px;font-weight:700;padding:4px 11px;border-radius:999px;color:#6E7F7C;background:#F1F5F4}
+body.home-lbfw .fw-stage li.done{color:var(--c-deep);background:var(--tint)}
+body.home-lbfw .fw-stage li.now{color:#fff;background:var(--c)}
+
+/* 만든 제도가 아직 없을 때: 약속을 같은 타일로 */
+body.home-lbfw .fw-tile-plan:hover .fw-line-one{color:var(--c-deep)}
+body.home-lbfw .fw-plan-go{font-size:14px;font-weight:800;color:var(--fw-mid);text-decoration:underline;text-underline-offset:4px}
+body.home-lbfw .fw-tile-1.fw-tile-plan .fw-line-title{font-size:17px}
+
+/* 왜 이렇게 */
+body.home-lbfw .fw-why{padding-top:0}
+body.home-lbfw .fw-why-head{display:flex;align-items:center;gap:18px;margin-bottom:28px}
+body.home-lbfw .fw-why-head .fw-h2{margin-bottom:2px}
+body.home-lbfw .fw-why-head p{font-size:15px;font-weight:700;color:var(--fw-mid)}
+body.home-lbfw .fw-ava{position:relative;flex:0 0 auto;width:76px;height:76px;border-radius:50%;overflow:hidden;background:var(--fw-aqua);box-shadow:0 0 0 4px #fff}
+body.home-lbfw .fw-ava img{position:absolute;max-width:none;width:280%;height:auto;left:-87%;top:-70%}
+body.home-lbfw .fw-why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+body.home-lbfw .fw-why-item{display:flex;flex-direction:column;gap:16px;padding:28px;background:rgba(255,255,255,.66);border-radius:24px}
+body.home-lbfw .fw-why-item:hover{background:#fff}
+body.home-lbfw .fw-why-item:only-child{grid-column:span 2}
+body.home-lbfw .fw-why-item p{font-size:19px;font-weight:700;line-height:1.6;letter-spacing:-.02em}
+body.home-lbfw .fw-why-item span{margin-top:auto;font-size:14px;font-weight:600;color:var(--fw-mid)}
+
+/* 바로 고친 일 */
+body.home-lbfw .fw-fixed{padding-top:0}
+body.home-lbfw .fw-fix-list{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+body.home-lbfw .fw-fix-list a{display:grid;grid-template-columns:110px 1fr 32px 1fr;gap:16px;align-items:center;padding:18px 24px;background:#fff;border-radius:20px}
+body.home-lbfw .fw-fix-list a:hover{box-shadow:inset 0 0 0 2px var(--c)}
+body.home-lbfw .fw-fix-place{font-weight:900;color:var(--fw-mid)}
+body.home-lbfw .fw-fix-b{font-size:15px;color:var(--fw-soft);line-height:1.55}
+body.home-lbfw .fw-fix-arrow{font-size:20px;font-weight:900;color:var(--c);text-align:center}
+body.home-lbfw .fw-fix-a{font-size:16px;font-weight:700;line-height:1.55}
+
+/* 약속 */
+body.home-lbfw .fw-promises{padding-top:0}
+body.home-lbfw .fw-prom{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+body.home-lbfw .fw-prom a{display:flex;flex-direction:column;gap:8px;height:100%;padding:22px 20px;border-radius:22px;background:rgba(255,255,255,.66)}
+body.home-lbfw .fw-prom a:hover{background:#fff}
+body.home-lbfw .fw-prom strong{font-size:18px;font-weight:900;letter-spacing:-.03em;line-height:1.35}
+body.home-lbfw .fw-prom span{font-size:14px;color:var(--fw-soft);line-height:1.55}
+
+/* 연락 */
+body.home-lbfw .fw-contact{padding:0 20px 72px}
+body.home-lbfw .fw-contact-in{display:grid;grid-template-columns:1fr auto;gap:20px 40px;align-items:center;max-width:1240px;padding:56px;border-radius:32px;color:#fff;
+  background:radial-gradient(70% 120% at 0% 100%,rgba(99,210,182,.45),transparent 60%),linear-gradient(135deg,var(--fw-mid),var(--fw-deep))}
+body.home-lbfw .fw-contact h2{font-size:clamp(26px,3.2vw,38px);font-weight:900;letter-spacing:-.045em;line-height:1.3}
+body.home-lbfw .fw-contact-act{display:flex;gap:10px;flex-wrap:wrap}
+body.home-lbfw .fw-contact p{grid-column:1/-1;color:#CBEAE2;font-size:16px}
+
+/* ---------- 휴대폰 ---------- */
+@media (max-width:960px){
+  body.home-lbfw .fw-hero-in{min-height:0}
+  body.home-lbfw .fw-hero-text{padding:48px 32px}
+  body.home-lbfw .fw-places-in{grid-template-columns:1fr}
+  body.home-lbfw .fw-places ul{grid-template-columns:1fr 1fr}
+  body.home-lbfw .fw-bento{grid-template-columns:repeat(2,minmax(0,1fr))}
+  body.home-lbfw .fw-tile-1{grid-row:span 1}
+  body.home-lbfw .fw-why-grid{grid-template-columns:1fr}
+  body.home-lbfw .fw-why-item:only-child{grid-column:auto}
+  body.home-lbfw .fw-places-n2 li{grid-column:auto}
+  body.home-lbfw .fw-prom{grid-template-columns:1fr 1fr}
+  body.home-lbfw .fw-contact-in{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  body.home-lbfw .fw-hero{padding:12px 12px 0}
+  body.home-lbfw .fw-hero-in{grid-template-columns:1fr;border-radius:24px}
+  body.home-lbfw .fw-hero-photo{order:-1;aspect-ratio:4/3.3;margin:8px 8px 0;border-radius:18px}
+  body.home-lbfw .fw-hero-text{padding:28px 20px 34px}
+  body.home-lbfw .fw-def{font-size:32px;line-height:1.26}
+  body.home-lbfw .fw-actions{flex-direction:column}
+  body.home-lbfw .fw-btn{width:100%}
+  body.home-lbfw .fw-places ul{grid-template-columns:1fr}
+  body.home-lbfw .fw-places-n1 li{grid-column:auto}
+  body.home-lbfw .fw-places span,body.home-lbfw .fw-prom span,body.home-lbfw .fw-why-item span{font-size:15px}
+  body.home-lbfw .fw-sec{padding:56px 0}
+  body.home-lbfw .fw-h2{font-size:28px;margin-bottom:22px}
+  body.home-lbfw .fw-bento{grid-template-columns:1fr;grid-auto-rows:auto}
+  body.home-lbfw .fw-tile,body.home-lbfw .fw-tile-1,body.home-lbfw .fw-tile-4,body.home-lbfw .fw-tile-photo,body.home-lbfw .fw-tile-count{grid-column:auto;grid-row:auto;padding:22px 20px;border-radius:24px}
+  body.home-lbfw .fw-tile-photo{padding:0;aspect-ratio:3/2;min-height:0}
+  body.home-lbfw .fw-tile-pic{aspect-ratio:auto;overflow:visible;background:none}
+  body.home-lbfw .fw-tile-pic img{aspect-ratio:3/2;height:auto;border-radius:16px}
+  body.home-lbfw .fw-tile-pic figcaption,body.home-lbfw .fw-tile-pic-cap{display:block;position:static;margin-top:8px;padding:0;background:none;-webkit-backdrop-filter:none;backdrop-filter:none;color:var(--fw-soft);font-size:14px}
+  body.home-lbfw .fw-line-change p{font-size:16px}
+  body.home-lbfw .fw-count b{font-size:56px}
+  body.home-lbfw .fw-why-item{padding:22px 20px}
+  body.home-lbfw .fw-why-item p{font-size:17px}
+  body.home-lbfw .fw-fix-list a{grid-template-columns:1fr;gap:4px;padding:16px 18px}
+  body.home-lbfw .fw-fix-arrow{text-align:left;transform:rotate(90deg);width:20px}
+  body.home-lbfw .fw-prom{grid-template-columns:1fr}
+  body.home-lbfw .fw-contact{padding:0 12px 48px}
+  body.home-lbfw .fw-contact-in{padding:36px 22px;border-radius:24px}
+  body.home-lbfw .fw-contact-act{flex-direction:column}
+}

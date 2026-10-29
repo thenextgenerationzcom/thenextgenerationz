@@ -1,0 +1,185 @@
+/* RBFH 규칙수선공 — 미색 원고지 바탕의 스위스 그리드.
+   장식 0: 그림자·둥근 모서리·무늬 없음. 굵은 검정 가로선, 왼쪽 제목 열 + 오른쪽 내용 열, 아주 큰 번호, 넉넉한 여백. */
+
+html[data-code="RBFH"]{
+  /* 배경 팔레트 (의원 색이 바뀌어도 유지) */
+  --fh-paper:#F6F1E4;
+  --fh-paper2:#EDE6D4;
+  --fh-ink:#141210;
+  --fh-mut:#4B453D;
+  --fh-line:#B9B09E;
+  --fh-line2:#D6CDBA;
+  /* 포인트 */
+  --fh-link:color-mix(in srgb,var(--c) 80%,#000);
+  --fh-deep:color-mix(in srgb,var(--c) 72%,#000);
+  --head:var(--sans); --head-w:800;
+  --bg:var(--fh-paper); --bg2:var(--fh-paper2); --line:var(--fh-line); --ink:var(--fh-ink); --muted:var(--fh-mut);
+  --r:0px; --r-lg:0px;
+}
+html[data-code="RBFH"] body{background:var(--fh-paper)}
+html[data-code="RBFH"] .top{background:var(--fh-paper);-webkit-backdrop-filter:none;backdrop-filter:none;border-bottom:6px solid var(--fh-ink)}
+html[data-code="RBFH"] .brand strong{font-weight:800}
+html[data-code="RBFH"] .nav a{border-radius:0;text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px}
+html[data-code="RBFH"] .nav a:hover{background:transparent;text-decoration-thickness:3px}
+html[data-code="RBFH"] .nav .nav-cta{background:var(--fh-ink);text-decoration:none}
+html[data-code="RBFH"] .nav .nav-cta:hover{background:var(--fh-deep)}
+html[data-code="RBFH"] .page-head{border-bottom:4px solid var(--fh-ink)}
+html[data-code="RBFH"] .page-head h1{font-weight:800;letter-spacing:-.03em;font-size:clamp(34px,5vw,56px)}
+html[data-code="RBFH"] .page-head .eyebrow{color:var(--fh-mut);font-size:17px;font-weight:600}
+html[data-code="RBFH"] .page-head .lead{font-size:19px;color:var(--fh-ink)}
+html[data-code="RBFH"] .prose{font-size:18px}
+html[data-code="RBFH"] .card,html[data-code="RBFH"] .ccard,html[data-code="RBFH"] .promises a,html[data-code="RBFH"] .process,
+html[data-code="RBFH"] .ba,html[data-code="RBFH"] .chips button,html[data-code="RBFH"] .tabs a,html[data-code="RBFH"] .partners li{background:transparent;box-shadow:none;border-radius:0}
+html[data-code="RBFH"] .card{border:0;border-top:3px solid var(--fh-ink)}
+html[data-code="RBFH"] .card-link{padding:18px 0 22px}
+html[data-code="RBFH"] .card h3{text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px;color:var(--fh-link)}
+html[data-code="RBFH"] .r-note,html[data-code="RBFH"] .r-with{background:transparent;border-left:5px solid var(--fh-line);box-shadow:none}
+html[data-code="RBFH"] .stage li{border-radius:0}
+html[data-code="RBFH"] .stage li.now{background:var(--fh-ink)}
+html[data-code="RBFH"] .stage li.done{background:var(--fh-paper2);color:var(--fh-ink)}
+html[data-code="RBFH"] .foot{background:var(--fh-paper2);border-top:4px solid var(--fh-ink)}
+html[data-code="RBFH"] .foot-links a{color:var(--fh-ink)}
+html[data-code="RBFH"] .credit{color:#6B6358}
+@media (max-width:640px){html[data-code="RBFH"] .nav{background:var(--fh-paper)}}
+
+/* ---------- 메인 ---------- */
+.home-rbfh{font-size:18px}
+.home-rbfh .fh-wrap{max-width:var(--wrap);margin:0 auto;padding:0 20px}
+.home-rbfh main a{color:var(--fh-link);text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px}
+.home-rbfh main a:hover{text-decoration-thickness:3px;color:var(--fh-ink)}
+.home-rbfh main a:focus-visible{outline:3px solid var(--fh-ink);outline-offset:0;background:#F2D98C;color:var(--fh-ink);text-decoration:none}
+
+/* 첫 화면: 3열 스위스 배치 */
+.home-rbfh .fh-hero{padding:64px 0 72px}
+.home-rbfh .fh-hero-grid{display:grid;grid-template-columns:3fr 9fr 3fr;gap:32px;align-items:start;padding-top:16px;border-top:4px solid var(--fh-ink)}
+.home-rbfh .fh-caption{font-size:17px;line-height:1.6;color:var(--fh-mut);font-weight:600}
+.home-rbfh .fh-def{font-family:var(--sans);font-weight:800;font-size:clamp(34px,4.4vw,56px);line-height:1.22;letter-spacing:-.04em;color:var(--fh-ink)}
+.home-rbfh .fh-lead{margin-top:26px;font-size:21px;line-height:1.6;color:var(--fh-ink);max-width:30em}
+.home-rbfh .fh-start{margin-top:30px}
+.home-rbfh main a.fh-btn{display:inline-flex;align-items:center;min-height:54px;padding:0 26px;background:var(--fh-ink);color:var(--fh-paper);text-decoration:none;font-weight:700;font-size:19px}
+.home-rbfh main a.fh-btn:hover{background:var(--fh-deep);color:#fff}
+.home-rbfh .fh-photo{margin:0}
+.home-rbfh .fh-photo img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:50% 20%;background:var(--fh-paper2)}
+.home-rbfh .fh-photo figcaption{margin-top:10px;font-size:16px;line-height:1.55;color:var(--fh-mut)}
+.home-rbfh .fh-photo strong{color:var(--fh-ink)}
+
+/* 줄: 왼쪽 제목 열 + 오른쪽 내용 열, 굵은 가로선 */
+.home-rbfh .fh-row{padding:0 0 72px}
+.home-rbfh .fh-row-in{display:grid;grid-template-columns:3fr 9fr;gap:32px;padding-top:18px;border-top:4px solid var(--fh-ink)}
+.home-rbfh .fh-h2{font-family:var(--sans);font-weight:800;font-size:24px;line-height:1.3;letter-spacing:-.02em;color:var(--fh-ink)}
+.home-rbfh .fh-side{margin-top:12px;font-size:17px;line-height:1.6;color:var(--fh-mut)}
+.home-rbfh .fh-h3{font-family:var(--sans);font-weight:800;font-size:21px;margin:40px 0 12px}
+.home-rbfh .fh-intro{font-size:20px;line-height:1.6;color:var(--fh-ink);max-width:34em;margin-top:8px}
+
+/* 아주 큰 숫자 */
+.home-rbfh .fh-nums{margin:0;display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.home-rbfh .fh-nums>div{border-top:1px solid var(--fh-line);padding-top:10px}
+.home-rbfh .fh-nums dd{margin:0;font-weight:800;font-size:clamp(56px,7vw,96px);line-height:1;letter-spacing:-.06em;color:var(--fh-ink)}
+.home-rbfh .fh-nums dd small{font-size:.3em;letter-spacing:-.01em;margin-left:4px;font-weight:700}
+.home-rbfh .fh-nums dt{margin-top:10px;font-size:18px;font-weight:700;color:var(--fh-ink)}
+.home-rbfh .fh-nums p{margin-top:4px;font-size:16px;line-height:1.55;color:var(--fh-mut)}
+
+/* 링크 목록 */
+.home-rbfh .fh-links{list-style:none;margin:0;padding:0}
+.home-rbfh .fh-links-2{display:grid;grid-template-columns:1fr 1fr;gap:0 32px}
+.home-rbfh .fh-links li{padding:14px 0 16px;border-top:1px solid var(--fh-line)}
+.home-rbfh .fh-links a{font-size:20px;font-weight:700}
+.home-rbfh .fh-links p{margin-top:4px;font-size:17px;line-height:1.55;color:var(--fh-mut)}
+
+/* 바꾼 조례: 큰 번호 */
+.home-rbfh .fh-law{display:grid;grid-template-columns:96px 1fr;gap:24px;padding:24px 0 40px;border-top:1px solid var(--fh-line)}
+.home-rbfh .fh-law:first-child{border-top:0;padding-top:0}
+.home-rbfh .fh-law-no{font-weight:800;font-size:96px;line-height:.85;letter-spacing:-.06em;color:var(--fh-ink)}
+.home-rbfh .fh-law-meta{font-size:17px;color:var(--fh-mut)}
+.home-rbfh .fh-law h3{margin-top:4px;font-family:var(--sans);font-weight:800;font-size:26px;line-height:1.38;letter-spacing:-.02em}
+.home-rbfh .fh-law-sum{margin-top:8px;font-size:19px;line-height:1.6;color:var(--fh-ink);max-width:36em}
+.home-rbfh .fh-stage-text{margin-top:18px;font-size:18px}
+.home-rbfh .fh-stage{list-style:none;margin:8px 0 0;padding:0;display:flex;max-width:480px;border:1px solid var(--fh-ink)}
+.home-rbfh .fh-stage li{flex:1;text-align:center;padding:6px 0;font-size:16px;color:var(--fh-mut)}
+.home-rbfh .fh-stage li+li{border-left:1px solid var(--fh-ink)}
+.home-rbfh .fh-stage li.done{background:var(--fh-paper2);color:var(--fh-ink)}
+.home-rbfh .fh-stage li.now{background:var(--fh-ink);color:var(--fh-paper);font-weight:700}
+.home-rbfh .fh-law-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:28px}
+.home-rbfh .fh-law-grid h4{font-family:var(--sans);font-size:19px;font-weight:800;margin:0 0 10px}
+.home-rbfh .fh-change{margin:0}
+.home-rbfh .fh-change dt{font-size:17px;font-weight:800;color:var(--fh-ink);margin-top:14px}
+.home-rbfh .fh-change dt:first-child{margin-top:0}
+.home-rbfh .fh-change dd{margin:2px 0 0;font-size:18px;line-height:1.6;color:var(--fh-mut)}
+.home-rbfh .fh-change dd.is-new{color:var(--fh-ink);font-weight:700}
+.home-rbfh .fh-inset{margin-top:24px;padding:4px 0 4px 20px;border-left:5px solid var(--fh-line)}
+.home-rbfh .fh-inset-k{font-size:16px;font-weight:800;color:var(--fh-mut)}
+.home-rbfh .fh-inset p+p{margin-top:4px;font-size:18px;line-height:1.7}
+.home-rbfh .fh-steps{margin:0;padding:0 0 0 24px}
+.home-rbfh .fh-steps li{padding:4px 0;font-size:18px;line-height:1.6}
+.home-rbfh .fh-date{font-weight:700}
+.home-rbfh .fh-who{color:var(--fh-mut)}
+.home-rbfh .fh-answer{margin-top:12px;font-size:18px}
+.home-rbfh .fh-more{padding-top:20px;border-top:1px solid var(--fh-line)}
+.home-rbfh .fh-more a{font-size:19px;font-weight:700}
+.home-rbfh .fh-ans{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px 28px;font-size:18px}
+
+/* 약속: 아주 큰 번호 */
+.home-rbfh .fh-promises{list-style:none;margin:0;padding:0}
+.home-rbfh .fh-promises li{display:grid;grid-template-columns:96px 1fr;gap:24px;align-items:start;padding:16px 0 18px;border-top:1px solid var(--fh-line)}
+.home-rbfh .fh-promises li:first-child{border-top:0;padding-top:0}
+.home-rbfh .fh-pno{font-weight:800;font-size:72px;line-height:.85;letter-spacing:-.06em;color:var(--fh-ink)}
+.home-rbfh .fh-promises a{font-size:22px;font-weight:800}
+.home-rbfh .fh-promises p{margin-top:4px;font-size:18px;line-height:1.55;color:var(--fh-mut)}
+
+/* 연락 */
+.home-rbfh .fh-contact{padding-bottom:88px}
+.home-rbfh .fh-contact-h{font-size:clamp(26px,3vw,34px);font-weight:800;line-height:1.3;letter-spacing:-.02em}
+.home-rbfh .fh-contact-list{list-style:none;margin:24px 0 0;padding:0;font-size:18px;line-height:1.9}
+
+/* ---------- 좁은 화면 ---------- */
+@media (max-width:960px){
+  .home-rbfh .fh-hero-grid{grid-template-columns:1fr 200px}
+  .home-rbfh .fh-caption{grid-column:1/-1}
+  .home-rbfh .fh-row-in{grid-template-columns:1fr;gap:20px}
+  .home-rbfh .fh-law-grid{grid-template-columns:1fr;gap:28px}
+}
+@media (max-width:640px){
+  .home-rbfh .fh-wrap{padding:0 16px}
+  .home-rbfh .fh-hero{padding:28px 0 48px}
+  .home-rbfh .fh-hero-grid{grid-template-columns:88px 1fr;gap:16px}
+  .home-rbfh .fh-photo{display:contents}
+  .home-rbfh .fh-photo img{grid-column:1;grid-row:1}
+  .home-rbfh .fh-photo figcaption{grid-column:2;grid-row:1;align-self:center;margin:0}
+  .home-rbfh .fh-caption{grid-row:2;font-size:16px}
+  .home-rbfh .fh-hero-main{grid-column:1/-1}
+  .home-rbfh .fh-def{font-size:31px;line-height:1.3}
+  .home-rbfh .fh-lead{font-size:19px}
+  .home-rbfh main a.fh-btn{width:100%;justify-content:center}
+  .home-rbfh .fh-row{padding-bottom:52px}
+  .home-rbfh .fh-h2{font-size:22px}
+  .home-rbfh .fh-nums{grid-template-columns:1fr;gap:20px}
+  .home-rbfh .fh-nums dd{font-size:64px}
+  .home-rbfh .fh-links-2{grid-template-columns:1fr}
+  .home-rbfh .fh-law{grid-template-columns:1fr;gap:6px}
+  .home-rbfh .fh-law-no{font-size:64px}
+  .home-rbfh .fh-law h3{font-size:22px}
+  .home-rbfh .fh-law-sum{font-size:18px}
+  .home-rbfh .fh-stage li{font-size:15px}
+  .home-rbfh .fh-promises li{grid-template-columns:56px 1fr;gap:14px}
+  .home-rbfh .fh-pno{font-size:52px}
+  .home-rbfh .fh-promises a{font-size:20px}
+  .home-rbfh .fh-intro{font-size:18px}
+}
+html[data-code="RBFH"] .tabs a.on,html[data-code="RBFH"] .chips button.on{background:var(--fh-ink);color:var(--fh-paper);border-color:var(--fh-ink)}
+
+/* 현장에서 확인한 일: 장식 없는 사각 사진 + 밑줄 링크 목록 (둥근 모서리·그림자 없음) */
+.home-rbfh .fh-field{list-style:none;margin:0;padding:0}
+.home-rbfh .fh-field li{display:grid;grid-template-columns:300px 1fr;gap:32px;align-items:start;padding:24px 0;border-top:1px solid var(--fh-line)}
+.home-rbfh .fh-field li:first-child{border-top:0;padding-top:0}
+.home-rbfh .fh-field img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;background:var(--fh-paper2)}
+.home-rbfh .fh-field-meta{font-size:17px;color:var(--fh-mut)}
+.home-rbfh .fh-field h3{margin-top:4px;font-family:var(--sans);font-weight:800;font-size:23px;line-height:1.4;letter-spacing:-.02em}
+.home-rbfh .fh-field-t{margin-top:8px;font-size:19px;line-height:1.6;color:var(--fh-ink);max-width:32em}
+@media (max-width:960px){
+  .home-rbfh .fh-field li{grid-template-columns:240px 1fr;gap:24px}
+}
+@media (max-width:640px){
+  .home-rbfh .fh-field li{grid-template-columns:1fr;gap:14px;padding:22px 0}
+  .home-rbfh .fh-field h3{font-size:21px}
+  .home-rbfh .fh-field-t{font-size:18px}
+}

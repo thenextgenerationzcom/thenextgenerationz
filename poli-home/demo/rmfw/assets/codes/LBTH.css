@@ -1,0 +1,284 @@
+/* LBTH — 깊은 숲 초록 어두운 바탕, 유기적 도형 + 프로스티드 글래스. Gowun Dodum 제목 */
+@import url("https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap");
+
+html[data-code="LBTH"]{
+  --th-dodum:"Gowun Dodum",var(--sans);
+  --head:var(--th-dodum);--head-w:400;
+  /* 배경 팔레트 (의원 색과 무관하게 고정) */
+  --th-night:#0C1D15;
+  --th-night2:#12291D;
+  --th-night3:#193526;
+  --th-moss:#2B5A3C;
+  --th-fern:#4F8A5E;
+  --th-text:#ECF3EE;
+  --th-sub:#B9CCBF;
+  --th-line:rgba(236,243,238,.14);
+  --th-glass:rgba(24,52,37,.62);
+  --th-glass-l:rgba(255,255,255,.07);
+  --th-paper:#F4F7F2;
+  --th-ink:#1B2620;
+  /* 포인트: 의원 색을 어두운 바탕에서 읽히게 밝힌 것 */
+  --th-accent:color-mix(in srgb,var(--c) 34%,#fff);
+}
+
+/* ---------- 사이트 전체: 머리글·쪽 머리·바닥글은 숲 초록, 하위 본문은 밝게 ---------- */
+html[data-code="LBTH"] body{background:var(--th-paper);color:var(--th-ink)}
+html[data-code="LBTH"] .top{background:rgba(12,29,21,.94);border-bottom:1px solid var(--th-line);color:var(--th-text)}
+html[data-code="LBTH"] .brand strong{font-family:var(--th-dodum);font-size:22px;color:var(--th-text)}
+html[data-code="LBTH"] .brand span{color:var(--th-sub)}
+html[data-code="LBTH"] .nav a{border-radius:999px;color:var(--th-text)}
+html[data-code="LBTH"] .nav a:hover{background:rgba(255,255,255,.08)}
+html[data-code="LBTH"] .nav .nav-cta{border-radius:999px;padding:8px 18px;background:var(--th-accent);color:var(--th-night)}
+html[data-code="LBTH"] .nav .nav-cta:hover{background:#fff}
+html[data-code="LBTH"] .menu-btn{color:var(--th-text);border-color:rgba(236,243,238,.35);background:transparent}
+html[data-code="LBTH"] .page-head{background:radial-gradient(60% 120% at 90% 0%,rgba(79,138,94,.35),transparent 60%),var(--th-night2);color:var(--th-text);border-bottom:0;border-radius:0 0 40px 40px}
+html[data-code="LBTH"] .page-head h1{font-family:var(--th-dodum);color:var(--th-text)}
+html[data-code="LBTH"] .page-head .eyebrow,html[data-code="LBTH"] .page-head .kind{color:var(--th-accent)}
+html[data-code="LBTH"] .page-head .lead,html[data-code="LBTH"] .page-head .card-meta,html[data-code="LBTH"] .page-head .muted,html[data-code="LBTH"] .page-head .where,html[data-code="LBTH"] .page-head .facts dt{color:var(--th-sub)}
+html[data-code="LBTH"] .page-head .where b,html[data-code="LBTH"] .page-head .facts dd{color:var(--th-text)}
+html[data-code="LBTH"] .page-head .tabs a{border-color:var(--th-line);color:var(--th-text);border-radius:999px}
+html[data-code="LBTH"] .page-head .tabs a.on{background:var(--th-text);color:var(--th-night);border-color:var(--th-text)}
+html[data-code="LBTH"] .page-head .stage li{background:rgba(255,255,255,.08);color:var(--th-sub);border-radius:999px}
+html[data-code="LBTH"] .page-head .stage li.done{background:rgba(255,255,255,.18);color:var(--th-text)}
+html[data-code="LBTH"] .page-head .stage li.now{background:var(--th-accent);color:var(--th-night)}
+html[data-code="LBTH"] .page-head .about-photo{border-radius:28px}
+html[data-code="LBTH"] .card,html[data-code="LBTH"] .ccard,html[data-code="LBTH"] .r-note,html[data-code="LBTH"] .r-with,html[data-code="LBTH"] .ba,html[data-code="LBTH"] .process,html[data-code="LBTH"] .promises a{border-radius:20px}
+html[data-code="LBTH"] .btn,html[data-code="LBTH"] .tabs a,html[data-code="LBTH"] .chips button{border-radius:999px}
+html[data-code="LBTH"] .foot{background:var(--th-night);color:var(--th-text);border-top:0}
+html[data-code="LBTH"] .foot strong{font-family:var(--th-dodum);font-size:18px}
+html[data-code="LBTH"] .foot .muted,html[data-code="LBTH"] .foot-links a{color:var(--th-sub)}
+html[data-code="LBTH"] .foot .credit{color:#93A898}
+@media (max-width:640px){
+  html[data-code="LBTH"] .nav{background:var(--th-night);border-bottom:1px solid var(--th-line)}
+  html[data-code="LBTH"] .nav a{border-radius:0;border-bottom-color:var(--th-line)}
+  html[data-code="LBTH"] .nav .nav-cta{border-radius:999px}
+}
+
+/* ---------- 메인: 전체 어두운 숲 ---------- */
+body.home-lbth main{background:var(--th-night)}
+body.home-lbth .th{color:var(--th-text)}
+body.home-lbth .th a{text-decoration:none}
+body.home-lbth .th a:focus-visible{outline:3px solid var(--th-accent);outline-offset:3px;border-radius:12px}
+body.home-lbth .th-wrap{max-width:1120px;margin:0 auto;padding:0 20px;position:relative}
+
+body.home-lbth .th-glass{background:var(--th-glass);border:1px solid rgba(236,243,238,.18);
+  -webkit-backdrop-filter:blur(18px) saturate(1.2);backdrop-filter:blur(18px) saturate(1.2);
+  box-shadow:0 24px 50px -30px rgba(0,0,0,.6)}
+
+body.home-lbth .th-btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 28px;border-radius:999px;font-weight:700;font-size:16px;border:1.5px solid transparent}
+body.home-lbth .th-btn-solid{background:var(--th-accent);color:var(--th-night)}
+body.home-lbth .th-btn-solid:hover{background:#fff}
+body.home-lbth .th-btn-soft{background:rgba(255,255,255,.06);color:var(--th-text);border-color:rgba(236,243,238,.4)}
+body.home-lbth .th-btn-soft:hover{background:rgba(255,255,255,.14)}
+body.home-lbth .th-more{display:inline-flex;align-items:center;min-height:44px;margin-top:28px;font-weight:700;color:var(--th-accent)}
+body.home-lbth .th-more:hover{text-decoration:underline;text-underline-offset:4px}
+
+body.home-lbth .th-sec{padding:96px 0;position:relative}
+body.home-lbth .th-h2{font-family:var(--th-dodum);font-weight:400;font-size:clamp(28px,3.2vw,40px);line-height:1.4;color:var(--th-text)}
+body.home-lbth .th-lead{margin-top:14px;color:var(--th-sub);font-size:18px;line-height:1.8}
+body.home-lbth .th-lead-w{max-width:640px;margin-bottom:44px}
+body.home-lbth .th-label{font-family:var(--sans);font-size:15px;font-weight:700;color:var(--th-sub);margin:28px 0 8px}
+
+/* 첫 화면: 유기적 빛 도형 + 가운데 한 문장 + 모인 사진 위 유리 카드 */
+body.home-lbth .th-hero{position:relative;overflow:hidden;padding:72px 0 120px;
+  background:radial-gradient(70% 60% at 50% 0%,rgba(43,90,60,.55),transparent 70%),var(--th-night)}
+body.home-lbth .th-orb{position:absolute;pointer-events:none;filter:blur(2px)}
+body.home-lbth .th-orb-a{width:620px;height:520px;left:-220px;top:180px;border-radius:58% 42% 63% 37% / 46% 55% 45% 54%;
+  background:radial-gradient(circle at 40% 40%,rgba(79,138,94,.55),rgba(43,90,60,.15) 70%)}
+body.home-lbth .th-orb-b{width:560px;height:480px;right:-200px;bottom:-120px;border-radius:41% 59% 38% 62% / 58% 37% 63% 42%;
+  background:radial-gradient(circle at 60% 50%,rgba(79,138,94,.45),rgba(25,53,38,.1) 70%)}
+body.home-lbth .th-hero-in{display:flex;flex-direction:column;align-items:center;text-align:center}
+body.home-lbth .th-hero-kicker{font-size:15px;font-weight:600;color:var(--th-sub);margin-bottom:18px}
+body.home-lbth .th-def{font-family:var(--th-dodum);font-weight:400;font-size:clamp(32px,4.2vw,54px);line-height:1.42;letter-spacing:-.015em;color:#fff}
+body.home-lbth .th-stage{position:relative;width:100%;margin-top:48px}
+body.home-lbth .th-hero-photo{margin:0;border-radius:40px;overflow:hidden;aspect-ratio:16/9;background:var(--th-night3)}
+body.home-lbth .th-hero-photo img{width:100%;height:100%;object-fit:cover;object-position:center 32%}
+body.home-lbth .th-glass-going{position:absolute;right:28px;top:28px;display:grid;grid-template-columns:auto auto;align-items:end;column-gap:8px;padding:16px 22px;border-radius:24px;color:var(--th-text);text-align:left}
+body.home-lbth .th-glass-going small{grid-column:1/-1;font-size:14px;font-weight:600;color:var(--th-sub)}
+body.home-lbth .th-glass-going b{font-family:var(--th-dodum);font-weight:400;font-size:44px;line-height:1}
+body.home-lbth .th-glass-going span{font-size:15px;font-weight:700;padding-bottom:4px}
+body.home-lbth .th-glass-going:hover{background:rgba(24,52,37,.8)}
+body.home-lbth .th-glass-id{position:absolute;left:28px;bottom:-56px;display:grid;grid-template-columns:72px auto;grid-template-rows:auto auto;column-gap:16px;row-gap:10px;align-items:center;
+  padding:18px 22px 18px 18px;border-radius:28px;text-align:left;max-width:calc(100% - 56px)}
+body.home-lbth .th-ava{grid-row:1/3;position:relative;display:block;width:72px;height:88px;border-radius:18px;overflow:hidden;background:var(--th-night3)}
+body.home-lbth .th-ava img{position:absolute;max-width:none;width:240%;height:auto;left:-68%;top:-36%}
+body.home-lbth .th-hero-name{font-size:14px;color:var(--th-sub)}
+body.home-lbth .th-hero-name strong{display:block;font-family:var(--th-dodum);font-weight:400;font-size:26px;color:#fff;line-height:1.2}
+body.home-lbth .th-hero-act{display:flex;flex-wrap:wrap;gap:8px}
+body.home-lbth .th-glass-id .th-btn{min-height:44px;padding:0 20px;font-size:15px}
+
+/* 사진마다 얼굴이 보이는 기준점 (어느 자리에 들어가도 같은 기준) */
+body.home-lbth .th img[data-ph="main"]{object-position:52% 32%}
+body.home-lbth .th img[data-ph="group"]{object-position:54% 36%}
+body.home-lbth .th img[data-ph="action"]{object-position:55% 28%}
+body.home-lbth .th img[data-ph="wide"]{object-position:70% 34%}
+body.home-lbth .th img[data-ph="about"]{object-position:50% 30%}
+body.home-lbth .th-council:hover .th-council-cap b{text-decoration:underline;text-underline-offset:4px}
+
+/* 진행 중인 일: 유리 카드 */
+body.home-lbth .th-going{position:relative;padding:40px 0 96px;
+  background:radial-gradient(50% 60% at 15% 70%,rgba(43,90,60,.45),transparent 70%),radial-gradient(40% 50% at 90% 20%,rgba(79,138,94,.22),transparent 70%),var(--th-night)}
+body.home-lbth .th-going-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px 24px;flex-wrap:wrap;margin-bottom:32px}
+body.home-lbth .th-going-head p{color:var(--th-sub);font-size:16px}
+body.home-lbth .th-going-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+body.home-lbth .th-card{display:flex;flex-direction:column;gap:14px;padding:26px 26px;border-radius:28px;color:var(--th-text);
+  background:var(--th-glass-l);border:1px solid var(--th-line);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+body.home-lbth .th-card:hover{background:rgba(255,255,255,.11);border-color:rgba(236,243,238,.3)}
+body.home-lbth .th-card-top{display:flex;gap:8px;align-items:center}
+body.home-lbth .th-card-kind{font-size:13px;font-weight:700;color:var(--th-night);background:var(--th-accent);padding:3px 10px;border-radius:999px}
+body.home-lbth .th-card-cat{font-size:13px;font-weight:600;color:var(--th-sub)}
+body.home-lbth .th-going-grid{grid-auto-flow:row dense}
+body.home-lbth .th-card.has-pic{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);column-gap:32px;row-gap:14px;align-content:start}
+body.home-lbth .th-card.has-pic>*{grid-column:2}
+body.home-lbth .th-going-grid:has(.has-pic)>.th-card:not(.has-pic):last-child:nth-child(even){grid-column:1/-1}
+body.home-lbth .th-card-pic{position:relative;margin:-10px 0 -10px -10px;border-radius:22px;overflow:hidden;min-height:280px;background:var(--th-night3)}
+body.home-lbth .th-card.has-pic .th-card-pic{grid-column:1;grid-row:1/span 6}
+body.home-lbth .th-card-pic img{position:absolute;inset:0}
+body.home-lbth .th-card-pic img{width:100%;height:100%;object-fit:cover;object-position:55% 28%;transition:transform .5s ease}
+body.home-lbth .th-card:hover .th-card-pic img{transform:scale(1.03)}
+body.home-lbth .th-card-pic figcaption{position:absolute;left:10px;bottom:10px;max-width:calc(100% - 20px);padding:6px 12px;border-radius:999px;font-size:13px;font-weight:700;color:var(--th-text);
+  background:rgba(12,29,21,.62);border:1px solid rgba(236,243,238,.2);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+body.home-lbth .th-card h3{font-family:var(--th-dodum);font-weight:400;font-size:22px;line-height:1.45;color:#fff}
+body.home-lbth .th-bar{height:6px;border-radius:6px;background:rgba(255,255,255,.12);overflow:hidden}
+body.home-lbth .th-bar i{display:block;height:100%;background:var(--th-accent);border-radius:6px}
+body.home-lbth .th-card-stage ol{list-style:none;margin:8px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr)}
+body.home-lbth .th-card-stage li{font-size:13px;font-weight:600;color:#8FA596}
+body.home-lbth .th-card-stage li:nth-child(n+2){text-align:center}
+body.home-lbth .th-card-stage li:last-child{text-align:right}
+body.home-lbth .th-card-stage li.done{color:var(--th-sub)}
+body.home-lbth .th-card-stage li.now{color:#fff;font-weight:800}
+body.home-lbth .th-card-last{font-size:15px;line-height:1.6;padding:12px 14px;border-radius:16px;background:rgba(0,0,0,.18);color:var(--th-text)}
+body.home-lbth .th-card-last time{display:block;font-size:13px;font-weight:700;color:var(--th-sub)}
+body.home-lbth .th-card-with{margin-top:auto;font-size:14px;font-weight:600;color:var(--th-accent);line-height:1.55}
+
+/* 소개 */
+body.home-lbth .th-intro{background:var(--th-night2);border-radius:64px 64px 0 0}
+body.home-lbth .th-intro-grid{display:grid;grid-template-columns:300px 1fr;gap:56px;align-items:start}
+body.home-lbth .th-intro-photo{margin:0;border-radius:46% 54% 42% 58% / 38% 40% 60% 62%;overflow:hidden;aspect-ratio:4/5;background:var(--th-night3)}
+body.home-lbth .th-intro-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 30%;transform:scale(1.28);transform-origin:49% 32%}
+body.home-lbth .th-facts{margin:20px 0 0;display:grid;gap:6px}
+body.home-lbth .th-facts>div{display:grid;grid-template-columns:72px 1fr;gap:12px;font-size:15px}
+body.home-lbth .th-facts dt{color:var(--th-sub);font-weight:600}
+body.home-lbth .th-facts dd{margin:0}
+body.home-lbth .th-places{list-style:none;margin:0;padding:0;border-top:1px solid var(--th-line)}
+body.home-lbth .th-places a{display:grid;grid-template-columns:96px 1fr;gap:12px;padding:12px 0;border-bottom:1px solid var(--th-line);font-size:16px}
+body.home-lbth .th-places b{color:var(--th-accent)}
+body.home-lbth .th-places a:hover{color:#fff;text-decoration:underline;text-underline-offset:4px}
+
+/* 함께 정한 과정 */
+body.home-lbth .th-made{background:var(--th-night2)}
+body.home-lbth .th-council{display:block;position:relative;margin:-12px 0 28px;border-radius:36px 36px 36px 120px;overflow:hidden;aspect-ratio:21/8;background:var(--th-night3)}
+body.home-lbth .th-council img{width:100%;height:100%;object-fit:cover;object-position:70% 34%}
+body.home-lbth .th-council-cap{position:absolute;left:28px;bottom:24px;max-width:min(460px,55%);display:flex;flex-direction:column;gap:2px;padding:14px 20px;border-radius:22px;font-size:14px;color:var(--th-sub)}
+body.home-lbth .th-council-cap b{font-family:var(--th-dodum);font-weight:400;font-size:20px;color:#fff}
+body.home-lbth .th-made-list{display:grid;gap:18px}
+body.home-lbth .th-item{display:grid;grid-template-columns:1fr 1.1fr;gap:48px;padding:36px 40px;border-radius:32px;background:var(--th-night3);border:1px solid var(--th-line)}
+body.home-lbth .th-meta{display:flex;gap:12px;font-size:13px;font-weight:600;color:var(--th-sub)}
+body.home-lbth .th-meta span{color:var(--th-accent)}
+body.home-lbth .th-meta b{color:#fff}
+body.home-lbth .th-item h3{font-family:var(--th-dodum);font-weight:400;font-size:24px;line-height:1.45;margin-top:8px;color:#fff}
+body.home-lbth .th-item h3 a:hover{text-decoration:underline;text-decoration-color:var(--th-accent);text-underline-offset:6px}
+body.home-lbth .th-team{margin-top:16px;font-size:15px;font-weight:600;color:var(--th-accent);line-height:1.6}
+body.home-lbth .th-steps{list-style:none;margin:0;padding:0}
+body.home-lbth .th-steps li{position:relative;padding:0 0 18px 26px;border-left:1px solid rgba(236,243,238,.25);margin-left:6px}
+body.home-lbth .th-steps li::before{content:"";position:absolute;left:-7px;top:5px;width:13px;height:13px;border-radius:50%;background:var(--th-night3);border:2px solid var(--th-accent)}
+body.home-lbth .th-steps li:last-child{border-left-color:transparent;padding-bottom:0}
+body.home-lbth .th-steps time{display:block;font-size:14px;font-weight:700;color:var(--th-sub)}
+body.home-lbth .th-steps p{font-size:16px;line-height:1.6;color:var(--th-text)}
+body.home-lbth .th-steps span{display:block;font-size:14px;color:var(--th-accent)}
+body.home-lbth .th-steps-ans::before{background:var(--th-accent)!important}
+body.home-lbth .th-steps-ans p{font-weight:700;color:#fff}
+
+/* 함께한 분들 */
+body.home-lbth .th-people{background:var(--th-night)}
+body.home-lbth .th-people-grid{display:grid;grid-template-columns:360px 1fr;gap:56px;align-items:center}
+body.home-lbth .th-people-photo{margin:0;position:relative}
+body.home-lbth .th-people-photo img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:52% 32%;border-radius:200px 200px 36px 36px;background:var(--th-night3)}
+body.home-lbth .th-people-photo figcaption{margin-top:12px;font-size:14px;font-weight:600;color:var(--th-sub);text-align:center}
+body.home-lbth .th-people-list{list-style:none;margin:32px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+body.home-lbth .th-people-list li{display:flex;flex-direction:column;gap:4px;padding:18px 20px;border-radius:24px;background:var(--th-glass-l);border:1px solid var(--th-line)}
+body.home-lbth .th-pn{font-family:var(--th-dodum);font-size:18px;line-height:1.4;color:#fff}
+body.home-lbth .th-pc{font-size:13px;color:var(--th-sub)}
+
+/* 약속 */
+body.home-lbth .th-promises{background:var(--th-night);padding-top:0}
+body.home-lbth .th-prom{list-style:none;margin:32px 0 0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+body.home-lbth .th-prom a{display:flex;flex-direction:column;gap:6px;height:100%;padding:24px 22px;border-radius:28px;background:var(--th-night3);color:var(--th-text)}
+body.home-lbth .th-prom a:hover{background:var(--th-moss)}
+body.home-lbth .th-prom-n{font-family:var(--th-dodum);font-size:30px;line-height:1;color:var(--th-accent)}
+body.home-lbth .th-prom strong{font-family:var(--th-dodum);font-weight:400;font-size:20px;line-height:1.4;margin-top:6px;color:#fff}
+body.home-lbth .th-prom-s{font-size:14px;color:var(--th-sub);line-height:1.55}
+
+/* 자료가 적을 때: 약속 카드, 혼자 남은 카드, 남는 사진 */
+body.home-lbth .th-card:only-child{grid-column:1/-1}
+body.home-lbth .th-intro-first{border-radius:64px 64px 0 0}
+body.home-lbth .th-plan-sum{font-size:18px;line-height:1.7;color:var(--th-text)}
+body.home-lbth .th-item-plan .th-steps{margin-top:18px}
+body.home-lbth .th-item-plan .th-steps a{color:var(--th-text);text-decoration:underline;text-decoration-color:rgba(236,243,238,.35);text-underline-offset:4px}
+body.home-lbth .th-item-plan .th-steps a:hover{text-decoration-color:var(--th-accent)}
+body.home-lbth .th-promises-solo{padding-top:96px}
+body.home-lbth .th-contact-photo{margin:0 0 36px;width:min(100%,420px)}
+body.home-lbth .th-contact-photo img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:200px 200px 32px 32px;background:var(--th-night3)}
+body.home-lbth .th-contact-photo figcaption{margin-top:10px;font-size:14px;font-weight:600;color:var(--th-sub)}
+
+/* 연락 */
+body.home-lbth .th-contact{position:relative;overflow:hidden;padding:96px 0;color:var(--th-text);
+  background:radial-gradient(45% 80% at 10% 100%,rgba(79,138,94,.45),transparent 70%),radial-gradient(40% 70% at 95% 0%,rgba(43,90,60,.6),transparent 70%),var(--th-night2);
+  border-radius:64px 64px 0 0}
+body.home-lbth .th-contact-in{text-align:center;display:flex;flex-direction:column;align-items:center}
+body.home-lbth .th-contact p{margin:14px auto 0;color:var(--th-sub);max-width:560px}
+body.home-lbth .th-contact .th-hero-act{margin-top:32px;justify-content:center}
+
+/* ---------- 휴대폰 ---------- */
+@media (max-width:960px){
+  body.home-lbth .th-hero-photo{aspect-ratio:3/2}
+  body.home-lbth .th-intro-grid{grid-template-columns:220px 1fr;gap:32px}
+  body.home-lbth .th-item{grid-template-columns:1fr;gap:28px;padding:30px 28px}
+  body.home-lbth .th-people-list{grid-template-columns:1fr 1fr}
+  body.home-lbth .th-people-grid{grid-template-columns:260px 1fr;gap:32px}
+  body.home-lbth .th-council{aspect-ratio:2/1}
+  body.home-lbth .th-prom{grid-template-columns:1fr 1fr}
+}
+@media (max-width:640px){
+  body.home-lbth .th-hero{padding:40px 0 48px}
+  body.home-lbth .th-orb-a{width:360px;height:320px;left:-180px;top:260px}
+  body.home-lbth .th-orb-b{width:320px;height:300px;right:-160px;bottom:40px}
+  body.home-lbth .th-hero-in{text-align:left;align-items:flex-start}
+  body.home-lbth .th-def{font-size:29px;line-height:1.48}
+  body.home-lbth .th-stage{margin-top:28px}
+  body.home-lbth .th-hero-photo{border-radius:26px;aspect-ratio:4/3.2}
+  body.home-lbth .th-glass-going{right:12px;top:12px;padding:10px 14px;border-radius:18px}
+  body.home-lbth .th-glass-going b{font-size:30px}
+  body.home-lbth .th-glass-going span{font-size:14px}
+  body.home-lbth .th-glass-id{position:relative;left:auto;bottom:auto;margin:-36px 10px 0;max-width:none;grid-template-columns:60px 1fr;padding:16px}
+  body.home-lbth .th-ava{width:60px;height:74px}
+  body.home-lbth .th-card.has-pic{display:flex}
+  body.home-lbth .th-card-pic{margin:-6px -6px 2px;min-height:0;aspect-ratio:16/9}
+  body.home-lbth .th-council{aspect-ratio:auto;border-radius:26px 26px 26px 64px;margin:-20px 0 20px}
+  body.home-lbth .th-council img{aspect-ratio:3/2;height:auto}
+  body.home-lbth .th-council-cap{position:static;max-width:none;margin:0;border-radius:0;padding:12px 16px;background:var(--th-night3);border:0;box-shadow:none}
+  body.home-lbth .th-people-grid{grid-template-columns:1fr;gap:24px}
+  body.home-lbth .th-people-photo{max-width:280px;margin:0 auto}
+  body.home-lbth .th-hero-name strong{font-size:22px}
+  body.home-lbth .th-glass-id .th-hero-act{grid-column:1/-1}
+  body.home-lbth .th-glass-id .th-btn{flex:1}
+  body.home-lbth .th-going{padding:24px 0 60px}
+  body.home-lbth .th-going-grid{grid-template-columns:1fr}
+  body.home-lbth .th-card{padding:22px 20px}
+  body.home-lbth .th-sec{padding:60px 0}
+  body.home-lbth .th-lead{font-size:16px}
+  body.home-lbth .th-intro{border-radius:36px 36px 0 0}
+  body.home-lbth .th-intro-grid{grid-template-columns:1fr;gap:24px}
+  body.home-lbth .th-intro-photo{max-width:220px}
+  body.home-lbth .th-places a{grid-template-columns:1fr;gap:0}
+  body.home-lbth .th-item{padding:24px 20px;border-radius:24px}
+  body.home-lbth .th-item h3{font-size:21px}
+  body.home-lbth .th-people-list{grid-template-columns:1fr}
+  body.home-lbth .th-promises{padding-top:0}
+  body.home-lbth .th-prom{grid-template-columns:1fr}
+  body.home-lbth .th-prom-s{font-size:15px}
+  body.home-lbth .th-contact{padding:60px 0;border-radius:36px 36px 0 0}
+  body.home-lbth .th-contact-in{text-align:left;align-items:stretch}
+  body.home-lbth .th-contact .th-hero-act{flex-direction:column}
+  body.home-lbth .th-contact .th-btn{width:100%}
+}

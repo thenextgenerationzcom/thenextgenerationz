@@ -1,0 +1,195 @@
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&display=swap");
+/* LMTH — 엇갈린 목소리를 모아 함께 정하게 하는 사람 : 가운데 기둥(760px), 왼쪽 고정 차례, 오른쪽 연락 바로가기 */
+
+html[data-code="LMTH"]{
+  --th-serif:"Nanum Myeongjo",var(--serif);
+  --th-ink:#2A1C23;
+  --th-bg:#F7EAF1;
+  --th-line:#E9D9E3;
+  --th-col:760px;
+  --th-rose:#F7DCE8;
+  --th-lilac:#E3DCF5;
+  --th-grad:radial-gradient(42% 26% at 8% 12%,rgba(255,255,255,.75),rgba(255,255,255,0) 70%),
+            radial-gradient(38% 30% at 94% 48%,rgba(205,190,240,.7),rgba(205,190,240,0) 70%),
+            radial-gradient(40% 26% at 6% 82%,rgba(246,196,218,.75),rgba(246,196,218,0) 70%),
+            linear-gradient(165deg,var(--th-rose) 0%,#EFDFF0 48%,var(--th-lilac) 100%);
+}
+html[data-code="LMTH"] body{background:var(--th-grad);background-color:var(--th-rose)}
+
+/* 머리글·바닥글·하위 페이지 */
+html[data-code="LMTH"] .top{background:rgba(255,255,255,.86);border-bottom-color:rgba(233,217,227,.8)}
+@supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){html[data-code="LMTH"] .top{background:rgba(255,255,255,.6);-webkit-backdrop-filter:blur(16px) saturate(1.4);backdrop-filter:blur(16px) saturate(1.4)}}
+@media (max-width:640px){html[data-code="LMTH"] .nav{background:#FBF2F7}}
+html[data-code="LMTH"] .brand strong{font-family:var(--th-serif);font-weight:800;font-size:22px}
+html[data-code="LMTH"] .nav .nav-cta{border-radius:999px;padding-left:16px;padding-right:16px}
+html[data-code="LMTH"] .page-head{background:rgba(255,255,255,.45);border-bottom:0}
+html[data-code="LMTH"] .card,html[data-code="LMTH"] .ccard,html[data-code="LMTH"] .promises a{border-radius:18px;border-color:var(--th-line)}
+html[data-code="LMTH"] .tabs a{border-radius:999px;background:#fff}
+html[data-code="LMTH"] .tabs a.on{background:var(--th-ink)}
+html[data-code="LMTH"] .page-head h1,html[data-code="LMTH"] .sec-head h2,html[data-code="LMTH"] .prose h2,html[data-code="LMTH"] .def-sm{font-family:var(--th-serif);font-weight:800}
+html[data-code="LMTH"] .r-note blockquote{font-family:var(--th-serif)}
+html[data-code="LMTH"] .foot{background:rgba(255,255,255,.6);border-top-color:rgba(233,217,227,.9)}
+html[data-code="LMTH"] .foot strong{font-family:var(--th-serif);font-weight:800}
+
+/* ---------- 메인 ---------- */
+body.home-lmth{background:var(--th-grad);background-color:var(--th-rose)}
+.home-lmth main{overflow:visible}
+.home-lmth a:focus-visible{outline:3px solid var(--c);outline-offset:3px}
+.home-lmth .th-layout{display:grid;grid-template-columns:minmax(200px,1fr) minmax(0,var(--th-col)) minmax(200px,1fr);gap:32px;max-width:1360px;margin:0 auto;padding:0 32px}
+.home-lmth .th-col{background:#fff;min-width:0;box-shadow:0 0 0 1px rgba(233,217,227,.9),0 30px 80px -40px rgba(122,62,110,.35)}
+
+/* 양옆 */
+.home-lmth .th-side-in{position:sticky;top:96px;margin:40px 0;padding:22px 20px;background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.75);border-radius:22px}
+@supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.home-lmth .th-side-in{background:rgba(255,255,255,.4);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}}
+.home-lmth .th-side-l .th-side-in{max-width:220px;margin-left:auto}
+.home-lmth .th-side-r .th-side-in{max-width:240px}
+.home-lmth .th-side-name{font-family:var(--th-serif);font-weight:800;font-size:22px;color:var(--th-ink);margin-bottom:18px}
+.home-lmth .th-side-name small{display:block;font-family:var(--sans);font-size:14px;font-weight:600;color:var(--muted)}
+.home-lmth .th-side-l ul{list-style:none;margin:0;padding:0;border-left:2px solid rgba(180,140,165,.35)}
+.home-lmth .th-side-l a{display:flex;align-items:center;min-height:44px;padding:0 14px;margin-left:-2px;border-left:2px solid transparent;font-size:15px;font-weight:600;color:#4E3C47;text-decoration:none}
+.home-lmth .th-side-l a:hover{border-left-color:var(--c);color:var(--c-deep)}
+.home-lmth .th-side-h{font-size:14px;font-weight:700;color:var(--muted);margin-bottom:10px}
+.home-lmth .th-quick{display:flex;flex-direction:column;justify-content:center;min-height:52px;margin-bottom:8px;padding:10px 16px;background:#fff;border:1px solid var(--th-line);border-radius:12px;font-size:15px;font-weight:700;color:var(--th-ink);text-decoration:none;line-height:1.4;word-break:break-all}
+.home-lmth .th-quick small,.home-lmth .th-quick-office small{display:block;font-size:13px;font-weight:600;color:var(--muted)}
+.home-lmth .th-quick:hover{border-color:var(--c)}
+.home-lmth .th-quick-main{align-items:center;background:var(--c);border-color:var(--c);color:#fff}
+.home-lmth .th-quick-main:hover{background:var(--c-deep)}
+.home-lmth .th-quick-office{margin-top:14px;padding-left:2px;font-size:14px;line-height:1.55;color:var(--th-ink)}
+
+/* 기둥 머리 */
+.home-lmth .th-photo{margin:0;aspect-ratio:3/2;background:var(--th-bg);overflow:hidden}
+.home-lmth .th-photo img{width:100%;height:100%;object-fit:cover;object-position:54% 42%}
+.home-lmth .th-intro-body{padding:0 32px 36px;position:relative}
+.home-lmth .th-id{display:flex;align-items:flex-start;gap:14px}
+.home-lmth .th-ava{position:relative;display:block;margin-top:-40px;width:84px;height:84px;border-radius:50%;overflow:hidden;box-shadow:0 0 0 4px #fff;background:var(--th-bg);flex:0 0 auto}
+.home-lmth .th-ava img{position:absolute;max-width:none;width:280%;height:auto;left:-87%;top:-70%}
+.home-lmth .th-id p{padding-top:12px}
+.home-lmth .th-id strong{display:block;font-family:var(--th-serif);font-weight:800;font-size:26px;line-height:1.2;color:var(--th-ink)}
+.home-lmth .th-id span{font-size:14px;color:var(--muted)}
+.home-lmth .th-def{margin-top:22px;font-family:var(--th-serif);font-weight:800;font-size:27px;line-height:1.55;color:var(--th-ink)}
+.home-lmth .th-district{margin-top:10px;font-size:15px;color:var(--muted)}
+
+/* 기둥 블록 */
+.home-lmth .th-block{padding:40px 32px;border-top:8px solid var(--th-bg);scroll-margin-top:80px}
+.home-lmth .th-h{font-family:var(--th-serif);font-weight:800;font-size:23px;line-height:1.4;color:var(--th-ink)}
+.home-lmth .th-lead{margin-top:8px;font-size:16px;color:var(--muted);line-height:1.65}
+.home-lmth .th-more{display:inline-flex;align-items:center;min-height:48px;margin-top:8px;font-weight:700;color:var(--c-deep)}
+
+/* 주민 의견 인용: 스크롤하면 위에 겹쳐 쌓이는 카드 */
+.home-lmth .th-voice{background:linear-gradient(180deg,#fff 0,#FDF6FA 100%)}
+.home-lmth .th-quotes{list-style:none;margin:20px 0 0;padding:0;display:grid;gap:14px}
+.home-lmth .th-quotes li{position:sticky;top:calc(84px + var(--i,0) * 14px)}
+.home-lmth .th-quotes li:nth-child(1){--i:0}
+.home-lmth .th-quotes li:nth-child(2){--i:1}
+.home-lmth .th-quotes li:nth-child(3){--i:2}
+.home-lmth .th-quotes a{display:block;padding:20px 22px;background:#fff;border:1px solid var(--th-line);border-radius:20px;text-decoration:none;box-shadow:0 14px 30px -22px rgba(122,62,110,.5)}
+.home-lmth .th-quotes li:nth-child(2) a{background:#FFF8FB}
+.home-lmth .th-quotes li:nth-child(3) a{background:#FBF7FF}
+.home-lmth .th-quotes blockquote{margin:0;padding-left:16px;border-left:3px solid var(--c);font-family:var(--th-serif);font-weight:700;font-size:19px;line-height:1.65;color:var(--th-ink)}
+.home-lmth .th-quotes li:first-child blockquote{font-size:22px}
+.home-lmth .th-quotes span{display:block;margin-top:8px;padding-left:19px;font-size:14px;color:var(--muted)}
+.home-lmth .th-quotes a:hover{border-color:var(--c)}
+/* 기둥 안 사진: 소식 글처럼 사진 + 아래 한 줄 설명 */
+.home-lmth .th img[data-ph="main"]{object-position:52% 34%}
+.home-lmth .th img[data-ph="group"]{object-position:54% 42%}
+.home-lmth .th img[data-ph="action"]{object-position:55% 26%}
+.home-lmth .th img[data-ph="wide"]{object-position:72% 34%}
+.home-lmth .th img[data-ph="about"]{object-position:50% 30%}
+.home-lmth .th-post figcaption a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+.home-lmth .th-post{margin:0 0 16px}
+.home-lmth .th-post img{width:100%;aspect-ratio:16/9;object-fit:cover;object-position:55% 26%;border-radius:14px;background:var(--th-bg)}
+.home-lmth .th-post figcaption{margin-top:8px;font-size:14px;font-weight:600;color:var(--muted);line-height:1.5}
+.home-lmth .th-quotes .th-post figcaption{color:var(--c-deep)}
+.home-lmth .th-post-wide{margin:20px 0 4px}
+.home-lmth .th-post-wide img{aspect-ratio:4/3;object-position:52% 34%;border-radius:18px}
+.home-lmth .th-post-council img{aspect-ratio:16/9;object-position:72% 34%}
+.home-lmth .th-inline-btn{display:flex;align-items:center;justify-content:center;min-height:50px;margin-top:20px;border-radius:999px;border:1.5px solid var(--c);color:var(--c-deep);font-weight:700;text-decoration:none}
+.home-lmth .th-inline-btn:hover{background:var(--tint)}
+
+/* 들은 말, 받은 답 */
+.home-lmth .th-rows{list-style:none;margin:20px 0 0;padding:0;display:grid;gap:12px}
+.home-lmth .th-row{display:block;padding:18px 18px 4px;border:1px solid var(--th-line);border-radius:12px;text-decoration:none}
+.home-lmth .th-row:hover{border-color:var(--c)}
+.home-lmth .th-row-t{display:block;font-size:17px;line-height:1.45;color:var(--th-ink)}
+.home-lmth .th-stage{list-style:none;margin:10px 0 12px;padding:0;display:flex;gap:4px;flex-wrap:wrap}
+.home-lmth .th-stage li{font-size:13px;font-weight:700;padding:2px 10px;border-radius:999px;color:#AD9CA5;background:var(--th-bg)}
+.home-lmth .th-stage li.done{color:var(--c-deep);background:var(--tint2)}
+.home-lmth .th-stage li.now{color:#fff;background:var(--c)}
+.home-lmth .th-row-said,.home-lmth .th-row-ans{display:block;padding:12px 0 14px;border-top:1px solid var(--th-line);font-size:16px;line-height:1.6;color:var(--th-ink)}
+.home-lmth .th-row-said{font-family:var(--th-serif);font-weight:700}
+.home-lmth .th-row small{display:block;margin-bottom:4px;font-family:var(--sans);font-size:13px;font-weight:700;color:var(--muted)}
+.home-lmth .th-row-ans small{color:var(--c-deep)}
+
+/* 해결한 일이 아직 없을 때: 약속을 같은 줄 카드로 */
+.home-lmth .th-row-plan{padding-bottom:14px}
+.home-lmth .th-row-n{display:block;margin-bottom:4px;font-size:13px;font-weight:700;color:var(--c-deep)}
+.home-lmth .th-row-plan .th-row-said{margin-top:10px;padding-bottom:0}
+.home-lmth .th-post-end figcaption{color:rgba(255,255,255,.85)}
+
+/* 함께한 분들 */
+.home-lmth .th-people{list-style:none;margin:18px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.home-lmth .th-people li{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:6px 14px;border-radius:999px;background:var(--th-bg);font-size:15px;font-weight:600}
+.home-lmth .th-people b{font-size:13px;color:var(--c-deep)}
+
+/* 과정 */
+.home-lmth .th-proc{margin-top:20px;padding-top:20px;border-top:1px solid var(--th-line)}
+.home-lmth .th-proc h3{font-family:var(--th-serif);font-weight:800;font-size:19px;line-height:1.5;margin-bottom:16px}
+.home-lmth .th-proc h3 a{text-decoration:none}
+.home-lmth .th-proc h3 a:hover{text-decoration:underline}
+.home-lmth .th-flow{list-style:none;margin:0;padding:0;counter-reset:f}
+.home-lmth .th-flow li{position:relative;padding:0 0 16px 40px;counter-increment:f}
+.home-lmth .th-flow li::before{content:counter(f);position:absolute;left:0;top:0;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--tint);color:var(--c-deep);font-size:13px;font-weight:800}
+.home-lmth .th-flow li:last-child::before{background:var(--c);color:#fff}
+.home-lmth .th-flow time{display:block;font-size:14px;font-weight:700;color:var(--muted)}
+.home-lmth .th-flow p{font-size:16px;line-height:1.6}
+.home-lmth .th-flow span{display:block;font-size:14px;font-weight:600;color:var(--c-deep)}
+.home-lmth .th-proc-ans{font-size:15px;color:var(--muted)}
+.home-lmth .th-proc-ans b{color:var(--th-ink)}
+.home-lmth .th-ans{margin-top:22px;padding:14px 16px;background:var(--th-bg);border-radius:10px;font-size:15px;line-height:1.7;color:var(--muted)}
+.home-lmth .th-ans b{display:block;color:var(--th-ink)}
+
+/* 약속 */
+.home-lmth .th-promises{list-style:none;margin:16px 0 0;padding:0}
+.home-lmth .th-promises a{display:grid;grid-template-columns:36px minmax(0,1fr);gap:12px;padding:14px 0;border-bottom:1px solid var(--th-line);text-decoration:none}
+.home-lmth .th-promises a:hover strong{text-decoration:underline}
+.home-lmth .th-pn{font-family:var(--th-serif);font-weight:800;font-size:22px;line-height:1.3;color:var(--c)}
+.home-lmth .th-promises strong{display:block;font-family:var(--th-serif);font-weight:800;font-size:18px;line-height:1.5}
+.home-lmth .th-promises span span{display:block;font-size:15px;color:var(--muted);margin-top:2px}
+
+/* 끝 */
+.home-lmth .th-end{background:var(--c-deep);border-top-color:var(--th-bg)}
+.home-lmth .th-end .th-h{color:#fff}
+.home-lmth .th-end .th-lead{color:rgba(255,255,255,.85)}
+.home-lmth .th-actions{display:flex;flex-direction:column;gap:10px;margin-top:22px}
+.home-lmth .th-btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 24px;border-radius:999px;background:#fff;color:var(--c-deep);border:2px solid #fff;font-weight:700;font-size:17px;text-decoration:none}
+.home-lmth .th-btn:hover{background:var(--th-bg)}
+.home-lmth .th-btn-line{background:transparent;color:#fff;border-color:rgba(255,255,255,.55)}
+.home-lmth .th-btn-line:hover{background:rgba(255,255,255,.1)}
+
+@media (max-width:1100px){
+  .home-lmth .th-layout{grid-template-columns:190px minmax(0,1fr);gap:28px;padding:0 20px}
+  .home-lmth .th-side-r{display:none}
+}
+@media (max-width:820px){
+  .home-lmth .th-layout{display:block;padding:0}
+  .home-lmth .th-side-l{display:none}
+  .home-lmth .th-col{max-width:var(--th-col);margin:0 auto;box-shadow:none}
+}
+@media (max-width:640px){
+  .home-lmth .th-intro-body{padding:0 20px 30px}
+  .home-lmth .th-ava{width:72px;height:72px;margin-top:-34px}
+  .home-lmth .th-id p{padding-top:8px}
+  .home-lmth .th-id strong{font-size:23px}
+  .home-lmth .th-def{font-size:24px}
+  .home-lmth .th-block{padding:32px 20px}
+  .home-lmth .th-quotes li{top:calc(76px + var(--i,0) * 12px)}
+  .home-lmth .th-quotes a{padding:18px 16px}
+  .home-lmth .th-quotes li:first-child blockquote{font-size:20px}
+  .home-lmth .th-quotes blockquote{font-size:18px}
+  .home-lmth .th-row{padding:16px 14px 2px}
+}
+@media (max-width:640px){
+  .home-lmth .th-layout{padding:10px 10px 24px}
+  .home-lmth .th-col{border-radius:24px;overflow:clip;box-shadow:0 0 0 1px rgba(233,217,227,.9),0 20px 50px -30px rgba(122,62,110,.4)}
+}
+.home-lmth .th-quick.th-mail{font-size:14px;word-break:normal;overflow-wrap:normal}
