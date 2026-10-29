@@ -285,6 +285,29 @@ footer{background:#0B1623;border-top:1px solid #2A3A48;padding:40px 5vw}
 .sr-strip i{font-style:normal;color:var(--m)}
 .sr-strip .lab{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;color:var(--m);margin-right:4px}
 @media (max-width:560px){.sr-strip{font-size:12px;flex-wrap:wrap;gap:6px}.sr-strip .lab{width:100%}.sr-strip i{display:none}.sr-strip a,.sr-strip b{flex:1 1 0;min-width:0;flex-direction:column;align-items:flex-start;gap:1px;padding:6px 8px;white-space:normal}}
+
+/* 의정 기록 시리즈 메뉴 */
+.nav-dd{position:relative;display:inline-flex;align-items:center}
+.nav-dd-btn{background:none;border:0;padding:0;margin:0;font:inherit;font-size:13.5px;font-weight:600;color:var(--ink,#0B1623);letter-spacing:0.01em;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:5px}
+.nav-dd-btn .cr{font-size:9px;transition:transform .2s;color:var(--m,#B81C63)}
+.nav-dd.open .nav-dd-btn .cr{transform:rotate(180deg)}
+.nav-dd-menu{display:none;position:absolute;top:100%;left:50%;transform:translateX(-50%);padding-top:14px;z-index:300}
+.nav-dd-menu .box{display:block;background:#fff;border:1px solid var(--bdr,var(--line,#E4E1D8));border-top:2px solid var(--m,#B81C63);min-width:230px;padding:6px 0;box-shadow:0 10px 28px rgba(11,22,35,.08)}
+.nav-dd.open .nav-dd-menu{display:block}
+@media (hover:hover) and (min-width:769px){.nav-dd:hover .nav-dd-menu{display:block}}
+.nav-links .nav-dd-menu a{display:flex;flex-direction:column;gap:1px;padding:9px 18px;font-size:14px;color:var(--ink,#0B1623);white-space:nowrap;border:0}
+.nav-links .nav-dd-menu a:hover{background:var(--card,#FCF0F5)}
+.nav-links .nav-dd-menu a small{font-family:var(--mono,monospace);font-size:10px;letter-spacing:.14em;color:var(--m,#B81C63)}
+.nav-links .nav-dd-menu a.all{flex-direction:row;font-size:12.5px;color:var(--ink-soft,#4B5768);border-top:1px solid var(--bdr,var(--line,#E4E1D8));margin-top:4px;padding-top:10px}
+@media (max-width:768px){
+  .nav-links.open{max-height:720px}
+  .nav-dd{display:block;width:100%}
+  .nav-dd-btn{width:100%;justify-content:space-between;padding:14px 5vw;border-bottom:1px solid var(--bdr,var(--line,#E4E1D8));box-sizing:border-box;font-size:13.5px}
+  .nav-dd-menu{position:static;transform:none;padding:0}
+  .nav-dd-menu .box{border:0;border-bottom:1px solid var(--bdr,var(--line,#E4E1D8));box-shadow:none;min-width:0;padding:4px 0;background:rgba(242,57,140,.04)}
+  .nav-links .nav-dd-menu a{padding:10px 5vw 10px calc(5vw + 14px);width:100%;box-sizing:border-box;border-bottom:0}
+  .nav-links .nav-dd-menu a.all{display:none}
+}
 </style>
 </head>
 <body>
@@ -302,6 +325,7 @@ footer{background:#0B1623;border-top:1px solid #2A3A48;padding:40px 5vw}
     <div class="nav-links" id="navLinks">
       <a href="/ko#about">소개</a>
       <a href="/ko#work">Work</a>
+      <span class="nav-dd" id="navDd"><button type="button" class="nav-dd-btn" aria-expanded="false" aria-controls="navDdMenu" onclick="tngDd(event)">의정 기록 시리즈 <span class="cr">▼</span></button><span class="nav-dd-menu" id="navDdMenu" role="menu"><span class="box"><a href="/ko/session" role="menuitem" aria-current="page"><small>01 설계</small>「한 장의 목차」</a><a href="/ko/record" role="menuitem"><small>02 기록</small>「한 해의 기록」</a><a href="/ko/publishing" role="menuitem"><small>03 출판</small>「한 권의 정치」</a><a class="all" href="/ko#series" role="menuitem">시리즈 한눈에 보기 →</a></span></span></span>
       <a href="/ko/poli-code" class="nav-poli">POLI CODE <span class="nav-new">NEW</span></a>
       <span class="nav-ip"><a href="https://investpolitics.com" class="nav-ip-t">InvestPolitics</a><a href="https://investpolitics.kr" class="nav-ed" title="InvestPolitics 한국판">KR</a><a href="https://investpolitics.us" class="nav-ed" title="InvestPolitics US edition">US</a></span>
       <a href="/" class="nav-lang" data-lang="en">EN</a>
@@ -309,6 +333,11 @@ footer{background:#0B1623;border-top:1px solid #2A3A48;padding:40px 5vw}
     </div>
   </div>
 </nav>
+<script>
+function tngDd(e){e.preventDefault();e.stopPropagation();var d=document.getElementById('navDd');var o=d.classList.toggle('open');d.querySelector('.nav-dd-btn').setAttribute('aria-expanded',o?'true':'false');}
+document.addEventListener('click',function(e){var d=document.getElementById('navDd');if(d&&!d.contains(e.target)){d.classList.remove('open');d.querySelector('.nav-dd-btn').setAttribute('aria-expanded','false');}});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){var d=document.getElementById('navDd');if(d){d.classList.remove('open');}}});
+</script>
 
 <!-- HERO -->
 <section>
