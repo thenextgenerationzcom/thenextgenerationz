@@ -360,6 +360,8 @@ p{margin:0}
 }
 
 /* 페이지 차례 막대는 TNG 메뉴 아래에 붙는다 */
+/* 신청하기 버튼은 하나만: PC는 맨 위 TNG 메뉴, 휴대폰은 차례 막대(TNG 메뉴가 접혀 있으므로) */
+@media (min-width:769px){.top .nav .btn{display:none}}
 .top{top:65px}
 html{scroll-padding-top:140px}
 @media (max-width:768px){.top{position:static}html{scroll-padding-top:76px}}
