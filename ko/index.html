@@ -354,6 +354,37 @@ section[id]{scroll-margin-top:72px}
   .nav-links .nav-ip a.nav-ip-t{width:auto;padding:0;border-bottom:none;margin-right:auto}
   .nav-links .nav-ip a.nav-ed{width:auto;padding:4px 10px;border:1px solid var(--bdr,var(--line,#E4E1D8));border-bottom:1px solid var(--bdr,var(--line,#E4E1D8))}
 }
+
+/* ── 의정 기록 시리즈 ── */
+.series{background:var(--bg2);padding-top:92px;padding-bottom:96px}
+.series .section-title em{font-style:normal;color:var(--m)}
+.br-m{display:none}
+@media (max-width:560px){.br-m{display:inline}}
+.sr-flow{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:44px;border:1px solid var(--bdr);background:var(--bg)}
+.sr-step{position:relative;padding:34px 30px 30px;border-right:1px solid var(--bdr);display:flex;flex-direction:column}
+.sr-step:last-child{border-right:none}
+.sr-step::after{content:"→";position:absolute;right:-13px;top:38px;width:26px;height:26px;border-radius:50%;background:var(--m);color:#fff;font-size:13px;line-height:26px;text-align:center;z-index:2}
+.sr-step:last-child::after{display:none}
+.sr-n{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--m);display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.sr-badge{font-family:var(--sans);letter-spacing:0;font-size:11.5px;font-weight:600;color:var(--ink);background:var(--card);border:1px solid #f3c6da;border-radius:2px;padding:2px 8px}
+.sr-badge.on{background:var(--m-bright);border-color:var(--m-bright)}
+.sr-step h3{font-family:var(--sans);font-size:clamp(22px,2.4vw,27px);font-weight:700;letter-spacing:-0.035em;line-height:1.3;margin-bottom:6px}
+.sr-what{font-size:13px;color:var(--m);font-weight:600;margin-bottom:14px;letter-spacing:-0.01em}
+.sr-line{font-family:var(--serif);font-size:16.5px;line-height:1.7;color:var(--ink);margin-bottom:18px}
+.sr-desc{font-size:14px;color:var(--ink-soft);line-height:1.8;margin-bottom:20px}
+.sr-spec{border-top:1px solid var(--bdr);padding-top:14px;margin-top:auto;display:grid;grid-template-columns:62px 1fr;gap:6px 10px;font-size:13px;line-height:1.6}
+.sr-spec dt{color:var(--ink-soft);font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;padding-top:2px}
+.sr-spec dd{color:var(--ink)}
+.sr-go{display:inline-block;margin-top:20px;font-size:14px;font-weight:600;color:var(--m);text-decoration:none;border-bottom:1px solid currentColor;align-self:flex-start}
+.sr-foot{margin-top:22px;display:flex;flex-wrap:wrap;gap:10px 28px;align-items:center;justify-content:space-between;font-size:14px;color:var(--ink-soft)}
+.sr-foot b{color:var(--ink)}
+.sr-foot .btn-primary{padding:13px 24px}
+@media (max-width:860px){
+  .sr-flow{grid-template-columns:1fr}
+  .sr-step{border-right:none;border-bottom:1px solid var(--bdr);padding:28px 22px 26px}
+  .sr-step:last-child{border-bottom:none}
+  .sr-step::after{content:"↓";right:auto;left:22px;top:auto;bottom:-13px}
+}
 </style>
 </head>
 <body>
@@ -369,6 +400,7 @@ section[id]{scroll-margin-top:72px}
       <span></span><span></span><span></span>
     </button>
     <div class="nav-links" id="navLinks">
+      <a href="#series" class="nav-poli">의정 기록 시리즈</a>
       <a href="#about">소개</a>
       <a href="#work">Work</a>
       <a href="/ko/poli-code" class="nav-poli">POLI CODE <span class="nav-new">NEW</span></a>
@@ -399,6 +431,68 @@ section[id]{scroll-margin-top:72px}
   </div>
 </section>
 
+
+<!-- 의정 기록 시리즈 -->
+<section class="series" id="series">
+  <div class="inner">
+    <span class="section-label">Series · 의정 기록 시리즈</span>
+    <h2 class="section-title">한 장의 목차를 세우고,<br class="br-m"> 한 해를 기록하고,<br><em>한 권으로 엮습니다.</em></h2>
+    <p class="section-lead">
+      의정활동의 기록은 임기가 끝난 뒤에 모으는 것이 아닙니다. 무엇을 남길지 먼저 정하고, 매일의 의정을 그 목차에 맞춰 쌓고,
+      쌓인 기록을 의원님 자신의 언어로 엮습니다. 앞 과정에서 만든 것이 그대로 다음 과정의 재료가 됩니다.
+    </p>
+
+    <div class="sr-flow">
+      <article class="sr-step">
+        <div class="sr-n">01 · 설계 <span class="sr-badge on">1기 모집 중</span></div>
+        <h3>「한 장의 목차」</h3>
+        <div class="sr-what">의정 설계 워크숍</div>
+        <p class="sr-line">내 의정활동이 책이 된다면,<br>목차는 무엇입니까?</p>
+        <p class="sr-desc">사전 심층 설문과 1:1 대면 워크숍으로 임기의 방향을 정하고, 무엇을 기록으로 남길지 한 장에 담습니다.</p>
+        <dl class="sr-spec">
+          <dt>만드는 것</dt><dd>정의문 · 가목차 · 활동 및 기록 계획 · POLI CODE 보고서</dd>
+          <dt>대상</dt><dd>지방의원 누구나 (초선·경력)</dd>
+          <dt>비용</dt><dd>40만 원 · 의정활동 교육비로 신청</dd>
+        </dl>
+        <a class="sr-go" href="/ko/session">자세히 보기 · 신청하기 →</a>
+      </article>
+
+      <article class="sr-step">
+        <div class="sr-n">02 · 기록 <span class="sr-badge">신청 접수</span></div>
+        <h3>「한 해의 기록」</h3>
+        <div class="sr-what">의정 기록 시스템</div>
+        <p class="sr-line">목차를 따라 쌓은 1년이,<br>의원님의 기록이 됩니다.</p>
+        <p class="sr-desc">워크숍에서 세운 목차를 뼈대로 의원님 이름의 기록 홈페이지를 열고, 글쓰기·일정·민원을 돕는 AI 의정 비서와 함께 1년의 의정을 직접 쌓아 갑니다.</p>
+        <dl class="sr-spec">
+          <dt>만드는 것</dt><dd>기록 홈페이지 · AI 의정 비서 3종 · 교육 2회 · 1년 지원</dd>
+          <dt>대상</dt><dd>「한 장의 목차」를 마친 의원</dd>
+          <dt>비용</dt><dd>350만 원 · 워크숍 포함, 한 번 결제</dd>
+        </dl>
+        <a class="sr-go" href="/ko/record">16가지 스타일 미리 보기 →</a>
+      </article>
+
+      <article class="sr-step">
+        <div class="sr-n">03 · 출판 <span class="sr-badge">상담 접수</span></div>
+        <h3>「한 권의 정치」</h3>
+        <div class="sr-what">의정 기록 출판</div>
+        <p class="sr-line">여러분의 정치를,<br>자신의 언어로.</p>
+        <p class="sr-desc">쌓인 기록과 목차를 바탕으로 사전조사부터 스토리텔링 기획, 원고, 출판, 출판기념회까지 함께합니다.</p>
+        <dl class="sr-spec">
+          <dt>만드는 것</dt><dd>책 1권 · 출판기념회</dd>
+          <dt>대상</dt><dd>재선 이상 지방의원 · 총선 준비자</dd>
+          <dt>비용</dt><dd>범위에 따라 개별 안내 · 연 4권</dd>
+        </dl>
+        <a class="sr-go" href="/ko/publishing">자세히 보기 · 상담 신청 →</a>
+      </article>
+    </div>
+
+    <div class="sr-foot">
+      <span>모든 과정은 <b>「한 장의 목차」</b>에서 시작합니다. 이미 마치셨다면 다음 과정으로 바로 이어집니다.</span>
+      <a class="btn-primary" href="/ko/session#apply">「한 장의 목차」 신청하기 →</a>
+    </div>
+  </div>
+</section>
+
 <!-- POLI CODE -->
 <section class="poli-band" aria-labelledby="poliTitle">
   <div class="poli-in">
@@ -411,104 +505,7 @@ section[id]{scroll-margin-top:72px}
   </div>
 </section>
 
-<!-- PUBLISHING PROJECT -->
-<section class="pub" id="publishing">
-  <div class="inner">
-    <span class="section-label">Publishing Project</span>
-    <h2 class="section-title">더넥스트제너레이션즈 출판 프로젝트</h2>
-    <p class="section-lead">
-      의정활동의 기록은 임기가 끝난 뒤에 모으는 것이 아닙니다. 무엇을 남길지 먼저 정하고,
-      그것을 만들어가는 순서입니다. 「한 장의 목차」로 의정활동의 방향과 기록을 정리하고,
-      「한 권의 정치」로 그것을 한 권의 책으로 완성합니다. 한 장에서 한 권으로 이어지는 두 과정입니다.
-    </p>
 
-    <div class="work-list">
-
-      <!-- 한 장의 목차 — 의정 설계·기록 워크숍 (개인 신청) -->
-      <article class="work-card feat">
-        <span class="work-badge">모집 중 · 개인 신청</span>
-        <span class="work-kicker">Program 01 · 지방의원 의정 설계·기록 워크숍</span>
-        <h3>한 장의 목차</h3>
-        <p class="lead-line">여러분의 의정활동을 한 권으로 남긴다면, 목차는 어떻게 될까요?</p>
-        <p>
-          조례 발의 건수, 5분 발언 횟수, 팔로워 수. 같은 지표로 겨루면 결국 아무도 구별되지 않습니다.
-          임기는 4년처럼 보이지만 실질적으로는 3년입니다. 그 3년에 공약을 심고 결산으로 확인할 수 있는
-          기회는 두 번뿐이고, 첫 번째가 이번 12월 예산 심의입니다. 1:1로 만나 의정활동의 방향을 설계하고,
-          그 설계를 한 장으로 손에 들고 나가는 과정입니다.
-        </p>
-
-        <div class="work-spec">
-          <div class="spec-item">
-            <span class="spec-key">대상</span>
-            <span class="spec-val">지방의원 누구나 — 초선 · 경력 구분 없이</span>
-          </div>
-          <div class="spec-item">
-            <span class="spec-key">형식</span>
-            <span class="spec-val">대면 우선 온오프라인</span>
-          </div>
-          <div class="spec-item">
-            <span class="spec-key">정원</span>
-            <span class="spec-val">1기 20명 선착순</span>
-          </div>
-          <div class="spec-item">
-            <span class="spec-key">참가비</span>
-            <span class="spec-val">1기 참가비 40만원</span>
-          </div>
-        </div>
-
-        <div class="work-note">
-          사전 온라인 심층 설문 · 개인별 맞춤형 심층 워크숍을 거쳐 정의문 · 가목차 · 활동 및 기록 계획을 한 장에 담습니다.
-          초선은 앞으로의 목차를, 경력 의원은 지나온 길과 다음 목차를 정리합니다. <strong>1기에는 의원 스무 분을 전국 어디든 직접 찾아갑니다.</strong>
-          전국 대면 맞춤형 워크숍을 하는 이유는 하나입니다. 미래세대 정치인의 첫 임기를 돕는 일이 더넥스트제너레이션즈가 존재하는 이유이기 때문입니다.
-          <strong>의정활동 교육비로 수강 신청하실 수 있으며</strong>, 견적서 · 세금계산서 · 교육 수료확인서를 발급해 드립니다.
-        </div>
-
-        <div class="work-cta"><a class="go" href="/ko/session">자세히 보기 · 신청하기 →</a></div>
-      </article>
-
-      <!-- 한 권의 정치 — 재선 이상 출판 프로듀싱 -->
-      <article class="work-card feat">
-        <span class="work-badge">상담 접수 중 · 개인 신청</span>
-        <span class="work-kicker">Program 02 · 재선 이상 지방의원, 총선 출마 준비자</span>
-        <h3>한 권의 정치</h3>
-        <p class="lead-line">여러분의 정치를, 자신의 언어로.</p>
-        <p>
-          정치인의 책은 대부분 비슷합니다. 목차도, 표지도, 출판기념회도. 형식을 고른 적이 없기 때문입니다.
-          이 과정은 여러분에게 맞는 책의 형태와 행사의 형태를 먼저 고르는 데서 시작합니다.
-          사전조사부터 스토리텔링 기획, 원고, 출판, 그리고 출판기념회까지 함께 갑니다.
-        </p>
-
-        <div class="work-spec">
-          <div class="spec-item">
-            <span class="spec-key">대상</span>
-            <span class="spec-val">재선 이상 지방의원, 총선 출마 준비자</span>
-          </div>
-          <div class="spec-item">
-            <span class="spec-key">기간</span>
-            <span class="spec-val">전 과정 8~10개월</span>
-          </div>
-          <div class="spec-item">
-            <span class="spec-key">정원</span>
-            <span class="spec-val">연 4권</span>
-          </div>
-          <div class="spec-item">
-            <span class="spec-key">산출물</span>
-            <span class="spec-val">책 1권 + 출판기념회</span>
-          </div>
-        </div>
-
-        <div class="work-note">
-          선거 직전에 급하게 만드는 책이 아니라, 자신의 정치적 가치와 삶을 담기 위해 지금부터 준비하는 책입니다.
-          <strong>계약 전에 「한 장의 목차」를 먼저 진행합니다.</strong> 그 한 장을 바탕으로 출판 여부와 범위를 정합니다.
-          기획 단계까지만 받으실 수도 있습니다. 비용은 범위와 형식에 따라 개별 안내드립니다.
-        </div>
-
-        <div class="work-cta"><a class="go" href="/ko/publishing">자세히 보기 · 상담 신청 →</a></div>
-      </article>
-
-    </div>
-  </div>
-</section>
 
 <!-- WORK -->
 <section class="work" id="work">

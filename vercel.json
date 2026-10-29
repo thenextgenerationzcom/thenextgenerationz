@@ -18,6 +18,16 @@
       ],
       "destination": "/ko",
       "permanent": false
+    },
+    {
+      "source": "/poli-home",
+      "destination": "/ko/record",
+      "permanent": false
+    },
+    {
+      "source": "/poli-home/",
+      "destination": "/ko/record",
+      "permanent": false
     }
   ],
   "rewrites": [
@@ -64,6 +74,21 @@
     {
       "source": "/briefings",
       "destination": "/briefings.html"
+    },
+    {
+      "source": "/ko/record",
+      "destination": "/poli-home/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/poli-home/demo/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
     }
   ]
 }

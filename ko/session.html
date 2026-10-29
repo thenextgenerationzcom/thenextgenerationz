@@ -275,6 +275,16 @@ footer{background:#0B1623;border-top:1px solid #2A3A48;padding:40px 5vw}
   .nav-links .nav-ip a.nav-ip-t{width:auto;padding:0;border-bottom:none;margin-right:auto}
   .nav-links .nav-ip a.nav-ed{width:auto;padding:4px 10px;border:1px solid var(--bdr,var(--line,#E4E1D8));border-bottom:1px solid var(--bdr,var(--line,#E4E1D8))}
 }
+
+/* 의정 기록 시리즈 위치 */
+.sr-strip{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin:14px 0 0;font-size:13px;line-height:1.5}
+.sr-strip a,.sr-strip b{display:inline-flex;align-items:baseline;gap:6px;padding:5px 11px;border:1px solid var(--bdr);border-radius:2px;text-decoration:none;color:var(--ink-soft);background:#fff;white-space:nowrap}
+.sr-strip a:hover{border-color:var(--m);color:var(--ink)}
+.sr-strip b{border-color:var(--m);color:var(--ink);background:var(--card);font-weight:600}
+.sr-strip small{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--m)}
+.sr-strip i{font-style:normal;color:var(--m)}
+.sr-strip .lab{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;color:var(--m);margin-right:4px}
+@media (max-width:560px){.sr-strip{font-size:12px;flex-wrap:wrap;gap:6px}.sr-strip .lab{width:100%}.sr-strip i{display:none}.sr-strip a,.sr-strip b{flex:1 1 0;min-width:0;flex-direction:column;align-items:flex-start;gap:1px;padding:6px 8px;white-space:normal}}
 </style>
 </head>
 <body>
@@ -303,10 +313,11 @@ footer{background:#0B1623;border-top:1px solid #2A3A48;padding:40px 5vw}
 <!-- HERO -->
 <section>
   <div class="in">
-    <p class="crumb"><a href="/ko">더넥스트제너레이션즈</a> / <a href="/ko#publishing">출판 프로젝트</a> / 한 장의 목차</p>
+    <p class="crumb"><a href="/ko">더넥스트제너레이션즈</a> / <a href="/ko#series">의정 기록 시리즈</a> / 한 장의 목차</p>
+    <div class="sr-strip" role="navigation" aria-label="의정 기록 시리즈"><span class="lab">의정 기록 시리즈</span><b aria-current="page"><small>01 설계</small>「한 장의 목차」</b><i>→</i><a href="/ko/record"><small>02 기록</small>「한 해의 기록」</a><i>→</i><a href="/ko/publishing"><small>03 출판</small>「한 권의 정치」</a></div>
   </div>
   <div class="in hero">
-    <span class="eyebrow">Program 01 · 지방의원 의정 설계·기록 워크숍</span>
+    <span class="eyebrow">의정 기록 시리즈 01 · 지방의원 의정 설계 워크숍</span>
     <h1>한 장의 목차</h1>
     <p class="hook">넘버 원이 아닌 온리 원,<br>여러분의 의정활동이 책이 된다면?</p>
     <p class="body">정치인 대부분이 같은 지표로 경쟁합니다. 조례 발의 건수, 5분 발언 횟수, SNS 팔로워 수. 모두 &ldquo;더 많이&rdquo;를 향해 달립니다. 그런데 경쟁이 치열해질수록 경쟁자들은 서로 닮아갑니다. 같은 지표로 겨루면 결국 아무도 구별되지 않습니다. 이 워크숍은 자기만의 자리를 정하고 그것을 실제 경로로 옮기는 작업입니다.</p>
