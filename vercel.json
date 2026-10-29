@@ -82,7 +82,7 @@
   ],
   "headers": [
     {
-      "source": "/poli-home/demo/:path*",
+      "source": "/poli-home/demo/(.*)",
       "headers": [
         {
           "key": "X-Robots-Tag",
