@@ -33,6 +33,26 @@ button{font-family:var(--sans);cursor:pointer}
 #dimCvSrc .dim-item .name{width:210px}
 /* 신청 흐름 */
 .funnel{display:flex;flex-direction:column;gap:8px}
+.fn-grid{display:grid;grid-template-columns:1fr;gap:22px}
+.fn-h{font-size:13.5px;font-weight:700;margin-bottom:8px}
+.fn-h small{font-weight:400;color:var(--ink-dim);font-family:var(--mono);font-size:11px;margin-left:4px}
+.tab-n{display:inline-block;min-width:18px;padding:0 5px;border-radius:9px;background:var(--m);color:#fff;font-size:11px;line-height:18px;text-align:center;margin-left:4px}
+.tab-n:empty{display:none}
+.ib-filter{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.ib-filter button{font:inherit;font-size:13px;padding:6px 12px;border:1px solid var(--bdr);background:var(--panel);border-radius:16px;cursor:pointer;color:var(--ink-soft)}
+.ib-filter button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.ib-item{background:var(--panel);border:1px solid var(--bdr);border-left:3px solid var(--bdr);border-radius:6px;padding:14px 16px;margin-bottom:10px}
+.ib-item.k-session{border-left-color:#B81C63}.ib-item.k-record{border-left-color:#1D7A5F}.ib-item.k-publishing{border-left-color:#3B4E8C}
+.ib-top{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;font-size:13px}
+.ib-prog{font-weight:700;font-size:12px;padding:2px 8px;border-radius:3px;color:#fff;background:#8A95A0}
+.k-session .ib-prog{background:#B81C63}.k-record .ib-prog{background:#1D7A5F}.k-publishing .ib-prog{background:#3B4E8C}
+.ib-who{font-weight:700;font-size:15px}
+.ib-when{color:var(--ink-dim);font-family:var(--mono);font-size:12px;margin-left:auto}
+.ib-meta{font-size:12.5px;color:var(--ink-soft);margin-top:4px;word-break:break-all}
+.ib-msg{font-size:13px;color:var(--ink-soft);margin-top:8px;white-space:pre-wrap;line-height:1.6;max-height:4.8em;overflow:hidden;cursor:pointer}
+.ib-msg.open{max-height:none}
+.ib-st{font-size:11.5px;padding:1px 7px;border-radius:3px;border:1px solid var(--bdr);color:var(--ink-dim)}
+.ib-st.new{border-color:var(--m);color:var(--m)}
 .fn-row{display:grid;grid-template-columns:150px 1fr 44px 64px;gap:10px;align-items:center;font-size:13px}
 .fn-row .name{color:var(--ink-soft)}
 .fn-row .track{height:10px;background:var(--panel2);border-radius:2px;overflow:hidden}
@@ -59,7 +79,8 @@ button{font-family:var(--sans);cursor:pointer}
 .muted{color:var(--ink-dim);font-size:12px}
 
 /* 통계 */
-.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+@media (max-width:900px){.stat-row{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:560px){.stat-row{grid-template-columns:repeat(2,1fr)}}
 .stat-card{background:var(--panel);border:1px solid var(--bdr);border-radius:8px;padding:18px 20px}
 .stat-card .label{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-dim);margin-bottom:8px}
@@ -184,8 +205,9 @@ button{font-family:var(--sans);cursor:pointer}
   </div>
   <div class="tabs">
     <button class="tab active" data-tab="dash" onclick="switchTab('dash')">대시보드</button>
+    <button class="tab" data-tab="inbox" onclick="switchTab('inbox')">신청함 <span class="tab-n" id="inboxN"></span></button>
     <button class="tab" data-tab="posts" onclick="switchTab('posts')">글</button>
-    <a class="tab" href="/admin/schedule" style="text-decoration:none;margin-left:auto;color:var(--m);font-weight:700">한 장의 목차 일정·신청 →</a>
+    <a class="tab" href="/admin/schedule" style="text-decoration:none;margin-left:auto;color:var(--m);font-weight:700">워크숍 일정·신청 처리 →</a>
   </div>
 
   <!-- 대시보드 -->
@@ -203,8 +225,12 @@ button{font-family:var(--sans);cursor:pointer}
       <span class="muted" id="dateSummary"></span>
     </div>
     <div class="panel" style="margin-bottom:16px">
-      <h3>워크숍 신청 흐름 <span class="muted" style="font-weight:400">· 선택일 · 버튼·작성·제출은 방문당 1회</span></h3>
-      <div class="funnel" id="funnel"></div>
+      <h3>프로그램별 신청 흐름 <span class="muted" style="font-weight:400">· 선택일 · 버튼·작성·제출은 방문당 1회</span></h3>
+      <div class="fn-grid">
+        <div><div class="fn-h">「한 장의 목차」 <small>/ko/session</small></div><div class="funnel" id="funnel"></div></div>
+        <div><div class="fn-h">「한 해의 기록」 <small>/ko/record</small></div><div class="funnel" id="funnelR"></div></div>
+        <div><div class="fn-h">「한 권의 정치」 <small>/ko/publishing</small></div><div class="funnel" id="funnelP"></div></div>
+      </div>
       <div class="muted" style="margin-top:10px">비율은 소개 페이지 조회 대비. 버튼·작성 시작·제출·예약 기록은 2026-10-15부터 집계</div>
     </div>
     <div class="dim-grid">
@@ -250,6 +276,14 @@ button{font-family:var(--sans);cursor:pointer}
   </div>
 
   <!-- 글 -->
+  <div class="wrap" id="tab-inbox" style="display:none">
+    <div class="panel">
+      <h3>홈페이지 신청함 <span class="muted" style="font-weight:400">· 신청서로 들어온 전체 · 처리(신청자 등록·숨김)는 <a href="/admin/schedule" style="color:var(--m)">일정·신청 처리</a>에서</span></h3>
+      <div class="ib-filter" id="ibFilter"></div>
+      <div id="ibList"><div class="muted">불러오는 중…</div></div>
+    </div>
+  </div>
+
   <div class="wrap" id="tab-posts" style="display:none">
     <!-- 목록 뷰 -->
     <div id="postsList">
@@ -349,6 +383,7 @@ function showApp(){
   document.getElementById('loginWrap').style.display='none';
   document.getElementById('app').style.display='block';
   loadDash();
+  inboxBadge();
 }
 document.getElementById('loginKey').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
 
@@ -358,7 +393,9 @@ function switchTab(name){
   document.querySelectorAll('.tab').forEach(function(t){ t.classList.toggle('active', t.dataset.tab===name); });
   document.getElementById('tab-dash').style.display = name==='dash'?'block':'none';
   document.getElementById('tab-posts').style.display = name==='posts'?'block':'none';
+  document.getElementById('tab-inbox').style.display = name==='inbox'?'block':'none';
   if (name==='posts' && !loadedPosts){ loadPosts(); loadedPosts=true; }
+  if (name==='inbox') loadInbox();
 }
 
 /* ---- 대시보드 ---- */
@@ -373,7 +410,9 @@ function loadDash(dateStr){
       statCard('선택일 순방문', d.selUv||0) +
       statCard('14일 총 PV', totalPV) +
       statCard('선택일 봇 차단', d.botCount||0) +
-      statCard((d.days||14)+'일 워크숍 신청서 제출', (d.cvTotals||{})['워크숍 신청서 제출']||0) +
+      statCard((d.days||14)+'일 「한 장의 목차」 신청', (d.cvTotals||{})['워크숍 신청서 제출']||0) +
+      statCard((d.days||14)+'일 「한 해의 기록」 신청', (d.cvTotals||{})['기록 신청서 제출']||0) +
+      statCard((d.days||14)+'일 「한 권의 정치」 신청', (d.cvTotals||{})['출판 신청서 제출']||0) +
       statCard((d.days||14)+'일 일정 예약 완료', (d.cvTotals||{})['일정 예약 완료']||0);
     renderTrend(_trend, d.detailDate);
     fillDateSelect(_trend, d.detailDate);
@@ -412,22 +451,26 @@ function renderDetail(d){
 }
 function renderFunnel(dims){
   var path = dims.path || {}, cv = dims.cv || {};
-  var base = (path['/ko/session']||0) + (path['/ko/session.html']||0);
-  var steps = [
-    ['소개 페이지 조회', base],
-    ['신청 버튼 클릭', cv['워크숍 신청 버튼']||0],
-    ['신청서 작성 시작', cv['워크숍 신청서 작성 시작']||0],
-    ['신청서 제출', cv['워크숍 신청서 제출']||0],
-    ['일정 예약 완료', cv['일정 예약 완료']||0]
-  ];
-  var max = Math.max(base, 1);
-  document.getElementById('funnel').innerHTML = steps.map(function(st, i){
-    var w = Math.round((st[1]/max)*100);
-    var pct = i===0 ? '' : (base ? Math.round(st[1]/base*1000)/10 + '%' : '–');
-    return '<div class="fn-row"><span class="name">'+st[0]+'</span>'+
-      '<span class="track"><span class="fill" style="width:'+w+'%"></span></span>'+
-      '<span class="cnt">'+st[1]+'</span><span class="pct">'+pct+'</span></div>';
-  }).join('');
+  function one(elId, paths, flow, extra){
+    var base = paths.reduce(function(n,p){ return n + (path[p]||0); }, 0);
+    var steps = [
+      ['소개 페이지 조회', base],
+      ['신청 버튼 클릭', cv[flow+' 신청 버튼']||0],
+      ['신청서 작성 시작', cv[flow+' 신청서 작성 시작']||0],
+      ['신청서 제출', cv[flow+' 신청서 제출']||0]
+    ].concat(extra || []);
+    var max = Math.max(base, 1);
+    document.getElementById(elId).innerHTML = steps.map(function(st, i){
+      var w = Math.round((st[1]/max)*100);
+      var pct = i===0 ? '' : (base ? Math.round(st[1]/base*1000)/10 + '%' : '–');
+      return '<div class="fn-row"><span class="name">'+st[0]+'</span>'+
+        '<span class="track"><span class="fill" style="width:'+w+'%"></span></span>'+
+        '<span class="cnt">'+st[1]+'</span><span class="pct">'+pct+'</span></div>';
+    }).join('');
+  }
+  one('funnel', ['/ko/session','/ko/session.html'], '워크숍', [['일정 예약 완료', cv['일정 예약 완료']||0]]);
+  one('funnelR', ['/ko/record'], '기록');
+  one('funnelP', ['/ko/publishing','/ko/publishing.html'], '출판');
 }
 function statCard(label, val){
   return '<div class="stat-card"><div class="label">'+label+'</div><div class="value">'+(val||0)+'</div></div>';
@@ -486,6 +529,32 @@ function renderDim(elId, obj, byKey, limit){
       '<span class="cnt">'+x[1]+'</span></div>';
   }).join('');
 }
+
+/* ---- 신청함 ---- */
+var IB = null, ibKind = 'all';
+var PROG = { session:'「한 장의 목차」', record:'「한 해의 기록」', publishing:'「한 권의 정치」', contact:'문의' };
+function loadInbox(){
+  api('inbox').then(function(d){ IB = (d && d.items) || []; renderInbox(); })
+    .catch(function(){ document.getElementById('ibList').innerHTML = '<div class="muted">신청함을 불러오지 못했습니다.</div>'; });
+}
+function renderInbox(){
+  if (!IB) return;
+  var cnt = { all: IB.length }; IB.forEach(function(x){ cnt[x.kind] = (cnt[x.kind]||0) + 1; });
+  var keys = ['all','session','record','publishing','contact'];
+  document.getElementById('ibFilter').innerHTML = keys.map(function(k){
+    return '<button type="button" class="'+(k===ibKind?'on':'')+'" onclick="ibKind=\''+k+'\';renderInbox()">'+(k==='all'?'전체':PROG[k])+' '+(cnt[k]||0)+'</button>';
+  }).join('');
+  var rows = IB.filter(function(x){ return ibKind==='all' || x.kind===ibKind; });
+  document.getElementById('ibList').innerHTML = rows.length ? rows.map(function(x){
+    var d = new Date(x.at||0), when = (d.getMonth()+1)+'/'+d.getDate()+' '+('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);
+    var st = x.status==='added' ? '<span class="ib-st">신청자 등록함</span>' : x.status==='hidden' ? '<span class="ib-st">숨김</span>' : '<span class="ib-st new">새 신청</span>';
+    return '<div class="ib-item k-'+esc(x.kind)+'"><div class="ib-top"><span class="ib-prog">'+esc(PROG[x.kind]||x.kind)+'</span><span class="ib-who">'+esc(x.org)+' '+esc(x.name)+'</span>'+st+'<span class="ib-when">'+when+'</span></div>'+
+      '<div class="ib-meta">'+esc([x.email, x.phone, x.term].filter(Boolean).join(' · '))+'</div>'+
+      '<div class="ib-meta">들어온 경로: '+esc(x.from || '기록 없음 (10/29 이전 신청)')+(x.source ? ' · '+esc(x.source) : '')+'</div>'+
+      (x.message ? '<div class="ib-msg" onclick="this.classList.toggle(\'open\')">'+esc(x.message)+'</div>' : '')+'</div>';
+  }).join('') : '<div class="muted">해당하는 신청이 없습니다.</div>';
+}
+function inboxBadge(){ api('inbox').then(function(d){ var n=((d&&d.items)||[]).filter(function(x){return x.status==='new';}).length; document.getElementById('inboxN').textContent = n ? n : ''; }).catch(function(){}); }
 
 /* ---- 글 목록 ---- */
 function loadPosts(){

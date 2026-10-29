@@ -49,6 +49,7 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   const { org, name, email, phone, type, message, website, term } = req.body || {};
+  const came = (req.body || {}).from; // 신청자가 처음 들어온 경로 (홈페이지 a.js가 기억한 값)
 
   // 허니팟 — 봇이 채우면 성공한 척하고 버립니다
   if (website) return res.status(200).json({ success: true });
@@ -65,7 +66,8 @@ export default async function handler(req, res) {
 
   // 홈페이지로 들어온 신청·문의 보관 (관리자 화면에서 확인)
   const t = String(type);
-  const kind = t.startsWith('한 장의 목차') ? 'session' : t.startsWith('한 권의 정치') ? 'publishing' : 'contact';
+  // 어떤 프로그램 신청인지: session = 「한 장의 목차」, record = 「한 해의 기록」, publishing = 「한 권의 정치」
+  const kind = t.startsWith('한 장의 목차') ? 'session' : t.startsWith('한 해의 기록') ? 'record' : t.startsWith('한 권의 정치') ? 'publishing' : 'contact';
   let kept = false;
   try {
     kept = await keep({
@@ -78,6 +80,7 @@ export default async function handler(req, res) {
       email: cut(email, 120),
       phone: cut(phone, 40),
       term: cut(term, 60),
+      from: cut(came, 120),
       message: cut(String(message).replace(/^\[신청 구분\][^\n]*\n\n?/, ''), 5000),
       status: 'new',
     });
@@ -105,6 +108,7 @@ export default async function handler(req, res) {
         <tr><td style="color:#4B5768">이메일</td><td>${esc(email)}</td></tr>
         <tr><td style="color:#4B5768">연락처</td><td>${esc(phone) || '-'}</td></tr>
         <tr><td style="color:#4B5768">유형</td><td>${esc(type)}</td></tr>
+        <tr><td style="color:#4B5768">들어온 경로</td><td>${esc(came) || '-'}</td></tr>
       </table>
       <div style="margin-top:20px;padding:16px;background:#FAF7F1;border-left:3px solid #B81C63;white-space:pre-wrap;font-size:14px">${esc(message)}</div>
     </div>

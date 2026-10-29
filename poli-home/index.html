@@ -228,7 +228,7 @@ p{margin:0}
 .seg button[aria-pressed="true"]{background:#fff;color:var(--ink)}
 .v-btn{font:inherit;font-size:13.5px;font-weight:700;background:transparent;border:1px solid rgba(255,255,255,.3);color:#fff;padding:8px 12px;border-radius:2px;cursor:pointer;text-decoration:none;white-space:nowrap}
 .v-btn:hover{border-color:#fff}
-.v-close{font-size:20px;line-height:1;padding:6px 12px}
+.v-close{font-size:13.5px;line-height:1.2;padding:8px 12px}
 .v-stage{flex:1;position:relative;overflow:hidden;display:flex;align-items:flex-start;justify-content:center;padding:20px}
 .frame{background:#fff;overflow:hidden;transform-origin:top center;position:relative}
 .frame iframe{border:0;display:block;width:100%;height:100%;background:#fff}
@@ -276,9 +276,141 @@ p{margin:0}
   .v-hide-m{display:none}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+/* ── TNG 공통 상단 메뉴 ── */
+:root{--bdr:#E4E1D8;--ink-soft:#4B5768;--m:#B81C63;--m-bright:#F2398C;--bg2:#FAF7F1}
+/* NAV */
+.tng-top{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--bdr);padding:0 5vw}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;position:relative}
+.nav-logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.nav-icon{height:30px;width:auto;display:block}
+.nav-wordmark{height:27px;width:auto;display:block}
+.nav-links{display:flex;align-items:center;gap:28px}
+.nav-links a{font-size:13.5px;color:var(--ink-soft);text-decoration:none;letter-spacing:0.01em;transition:color .2s;white-space:nowrap}
+.nav-links a:hover{color:var(--ink)}
+.nav-links a.nav-poli{color:var(--ink);font-weight:600}
+.nav-new{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;color:#fff;background:var(--m);border-radius:2px;padding:1px 5px;margin-left:4px;vertical-align:2px}
+.nav-lang{font-family:var(--mono);font-size:12px;letter-spacing:0.06em;color:var(--ink-soft) !important;border:1px solid var(--bdr);padding:5px 10px;border-radius:3px;transition:border-color .2s,color .2s}
+.nav-lang:hover{border-color:var(--m);color:var(--m) !important}
+.nav-cta{background:var(--m-bright) !important;color:var(--ink) !important;padding:8px 18px;border-radius:2px;font-size:14px;font-weight:600 !important;letter-spacing:-0.005em;text-decoration:none !important;transition:opacity .2s}
+.nav-cta:hover{opacity:0.82}
+.nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:6px;flex-direction:column;gap:5px;width:36px;height:36px;align-items:center;justify-content:center;flex-shrink:0}
+.nav-toggle span{display:block;width:20px;height:2px;background:var(--ink);border-radius:1px;transition:transform .25s ease,opacity .25s ease}
+.nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-toggle.open span:nth-child(2){opacity:0}
+.nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+
+.tng-top .nav-links a{font-weight:400}
+.tng-top .nav-links a.nav-poli{font-weight:600}
+@media (max-width:768px){
+  .nav-toggle{display:flex}
+  .nav-links{
+    position:absolute;top:64px;left:0;right:0;
+    flex-direction:column;align-items:stretch;gap:0;
+    background:var(--bg2);border-bottom:1px solid var(--bdr);
+    max-height:0;overflow:hidden;transition:max-height .3s ease;
+  }
+  .nav-links.open{max-height:400px}
+  .nav-links a{width:100%;padding:14px 5vw;border-bottom:1px solid var(--bdr);color:var(--ink-soft)}
+  .nav-links a.nav-lang{margin:14px 5vw;width:auto;text-align:center;border:1px solid var(--bdr);border-radius:3px}
+  .nav-links a.nav-cta{margin:0 5vw 14px;width:auto;text-align:center;border-bottom:none;border-radius:4px}
+}
+/* 상단 메뉴: InvestPolitics 한국판·미국판 */
+.nav-ip{display:inline-flex;align-items:center;gap:6px}
+.nav-links a.nav-ed{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:10.5px;font-weight:600;letter-spacing:.08em;color:var(--ink,#0B1623);border:1px solid var(--bdr,var(--line,#E4E1D8));border-radius:2px;padding:3px 6px;line-height:1.2}
+.nav-links a.nav-ed:hover{border-color:var(--m,#B81C63);color:var(--m,#B81C63)}
+@media(max-width:768px){
+  .nav-links .nav-ip{display:flex;width:100%;box-sizing:border-box;padding:14px 5vw;border-bottom:1px solid var(--bdr,var(--line,#E4E1D8));gap:8px}
+  .nav-links .nav-ip a.nav-ip-t{width:auto;padding:0;border-bottom:none;margin-right:auto}
+  .nav-links .nav-ip a.nav-ed{width:auto;padding:4px 10px;border:1px solid var(--bdr,var(--line,#E4E1D8));border-bottom:1px solid var(--bdr,var(--line,#E4E1D8))}
+}
+
+/* 의정 기록 시리즈 위치 */
+.sr-strip{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin:14px 0 0;font-size:13px;line-height:1.5}
+.sr-strip a,.sr-strip b{display:inline-flex;align-items:baseline;gap:6px;padding:5px 11px;border:1px solid var(--bdr);border-radius:2px;text-decoration:none;color:var(--ink-soft);background:#fff;white-space:nowrap}
+.sr-strip a:hover{border-color:var(--m);color:var(--ink)}
+.sr-strip b{border-color:var(--m);color:var(--ink);background:var(--card);font-weight:600}
+.sr-strip small{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--m)}
+.sr-strip i{font-style:normal;color:var(--m)}
+.sr-strip .lab{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;color:var(--m);margin-right:4px}
+@media (max-width:560px){.sr-strip{font-size:12px;flex-wrap:wrap;gap:6px}.sr-strip .lab{width:100%}.sr-strip i{display:none}.sr-strip a,.sr-strip b{flex:1 1 0;min-width:0;flex-direction:column;align-items:flex-start;gap:1px;padding:6px 8px;white-space:normal}}
+
+/* 의정 기록 시리즈 메뉴 */
+.nav-dd{position:relative;display:inline-flex;align-items:center}
+.nav-dd-btn{background:none;border:0;padding:0;margin:0;font:inherit;font-size:13.5px;font-weight:600;color:var(--ink,#0B1623);letter-spacing:0.01em;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:5px}
+.nav-dd-btn .cr{font-size:9px;transition:transform .2s;color:var(--m,#B81C63)}
+.nav-dd.open .nav-dd-btn .cr{transform:rotate(180deg)}
+.nav-dd-menu{display:none;position:absolute;top:100%;left:50%;transform:translateX(-50%);padding-top:14px;z-index:300}
+.nav-dd-menu .box{display:block;background:#fff;border:1px solid var(--bdr,var(--line,#E4E1D8));border-top:2px solid var(--m,#B81C63);min-width:230px;padding:6px 0;box-shadow:0 10px 28px rgba(11,22,35,.08)}
+.nav-dd.open .nav-dd-menu{display:block}
+@media (hover:hover) and (min-width:769px){.nav-dd:hover .nav-dd-menu{display:block}}
+.nav-links .nav-dd-menu a{display:flex;flex-direction:column;gap:1px;padding:9px 18px;font-size:14px;color:var(--ink,#0B1623);white-space:nowrap;border:0}
+.nav-links .nav-dd-menu a:hover{background:var(--card,#FCF0F5)}
+.nav-links .nav-dd-menu a small{font-family:var(--mono,monospace);font-size:10px;letter-spacing:.14em;color:var(--m,#B81C63)}
+.nav-links .nav-dd-menu a.all{flex-direction:row;font-size:12.5px;color:var(--ink-soft,#4B5768);border-top:1px solid var(--bdr,var(--line,#E4E1D8));margin-top:4px;padding-top:10px}
+@media (max-width:768px){
+  .nav-links.open{max-height:720px}
+  .nav-dd{display:block;width:100%}
+  .nav-dd-btn{width:100%;justify-content:space-between;padding:14px 5vw;border-bottom:1px solid var(--bdr,var(--line,#E4E1D8));box-sizing:border-box;font-size:13.5px}
+  .nav-dd-menu{position:static;transform:none;padding:0}
+  .nav-dd-menu .box{border:0;border-bottom:1px solid var(--bdr,var(--line,#E4E1D8));box-shadow:none;min-width:0;padding:4px 0;background:rgba(242,57,140,.04)}
+  .nav-links .nav-dd-menu a{padding:10px 5vw 10px calc(5vw + 14px);width:100%;box-sizing:border-box;border-bottom:0}
+  .nav-links .nav-dd-menu a.all{display:none}
+}
+
+/* 페이지 차례 막대는 TNG 메뉴 아래에 붙는다 */
+.top{top:65px}
+html{scroll-padding-top:140px}
+@media (max-width:768px){.top{position:static}html{scroll-padding-top:76px}}
+/* 미리 보기 창: 목록으로 돌아가기 */
+.v-back{border-color:var(--mg-b);color:#fff}
+.v-back:hover{background:var(--mg-b);color:var(--ink)}
+.v-pick{background:var(--mg-b);border-color:var(--mg-b);color:var(--ink)}
+.v-pick:hover{background:#fff;border-color:#fff}
+/* 「한 해의 기록」 신청서 */
+.cta-in.has-form{grid-template-columns:1fr 1.25fr;align-items:start}
+.ap-note{margin-top:22px;padding:16px 18px;border-left:3px solid var(--mg);background:#fff;font-size:15px;line-height:1.75;color:var(--ink2)}
+.ap-note b{color:var(--ink)}
+.ap-form{background:#fff;border:1px solid var(--line);padding:26px 26px 22px}
+.ap-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 14px}
+.ap-f{display:flex;flex-direction:column;gap:6px}
+.ap-f.full{grid-column:1/-1}
+.ap-f label{font-size:13px;font-weight:700;color:var(--ink)}
+.ap-f label small{font-weight:400;color:var(--ink2);margin-left:4px}
+.ap-f input,.ap-f select,.ap-f textarea{font:inherit;font-size:15px;padding:11px 12px;border:1px solid var(--line);border-radius:2px;background:#fff;color:var(--ink);width:100%}
+.ap-f textarea{min-height:110px;resize:vertical;line-height:1.6}
+.ap-f input:focus,.ap-f select:focus,.ap-f textarea:focus{outline:none;border-color:var(--mg)}
+.ap-submit{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:18px}
+.ap-submit .btn{min-width:180px}
+.ap-msg{font-size:14px;color:var(--ink2)}
+.ap-alt{margin-top:14px;font-size:13.5px;color:var(--ink2);line-height:1.7}
+.ap-alt a{color:var(--mg)}
+@media (max-width:760px){.cta-in.has-form{grid-template-columns:1fr}.ap-grid{grid-template-columns:1fr}.ap-form{padding:20px 16px}}
 </style>
 </head>
 <body>
+
+<nav class="tng-top">
+  <div class="nav-inner">
+    <a href="/ko" class="nav-logo">
+      <img src="/img/nav-icon.png" alt="" class="nav-icon">
+      <img src="/img/wordmark-text.png" alt="더넥스트제너레이션즈" class="nav-wordmark">
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="메뉴" aria-expanded="false" onclick="toggleNav()">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
+      <a href="/ko#about">소개</a>
+      <a href="/ko#work">Work</a>
+      <span class="nav-dd" id="navDd"><button type="button" class="nav-dd-btn" aria-expanded="false" aria-controls="navDdMenu" onclick="tngDd(event)">의정 기록 시리즈 <span class="cr">▼</span></button><span class="nav-dd-menu" id="navDdMenu" role="menu"><span class="box"><a href="/ko/session" role="menuitem"><small>01 설계</small>「한 장의 목차」</a><a href="/ko/record" role="menuitem" aria-current="page"><small>02 기록</small>「한 해의 기록」</a><a href="/ko/publishing" role="menuitem"><small>03 출판</small>「한 권의 정치」</a><a class="all" href="/ko#series" role="menuitem">시리즈 한눈에 보기 →</a></span></span></span>
+      <a href="/ko/poli-code" class="nav-poli">POLI CODE <span class="nav-new">NEW</span></a>
+      <span class="nav-ip"><a href="https://investpolitics.com" class="nav-ip-t">InvestPolitics</a><a href="https://investpolitics.kr" class="nav-ed" title="InvestPolitics 한국판">KR</a><a href="https://investpolitics.us" class="nav-ed" title="InvestPolitics US edition">US</a></span>
+      <a href="/" class="nav-lang" data-lang="en">EN</a>
+      <a href="#apply" class="nav-cta">신청하기</a>
+    </div>
+  </div>
+</nav>
 
 <header class="top">
   <div class="wrap top-in">
@@ -515,16 +647,50 @@ p{margin:0}
 
 <!-- 신청 -->
 <section class="cta" id="apply">
-  <div class="wrap cta-in">
+  <div class="wrap cta-in has-form">
     <div>
-      <span class="eyebrow">Apply</span>
-      <h2>「한 장의 목차」부터 시작합니다</h2>
-      <p>「한 해의 기록」은 「한 장의 목차」 워크숍에서 시작합니다. 워크숍을 신청하시면서 「한 해의 기록」도 함께 원한다고 적어 주세요.</p>
+      <span class="eyebrow">Apply · 의정 기록 시리즈 02</span>
+      <h2>「한 해의 기록」 신청</h2>
+      <p>신청서를 보내 주시면 확인 후 연락드립니다.</p>
+      <div class="ap-note">
+        <b>「한 장의 목차」부터 함께 시작합니다.</b><br>
+        워크숍에서 세운 정의문과 목차가 기록 홈페이지의 뼈대가 되기 때문입니다.
+        이미 「한 장의 목차」를 마치셨다면 바로 제작으로 넘어갑니다.
+      </div>
+      <p class="ap-alt">워크숍은 의정활동 교육비로, 「한 해의 기록」은 정치후원금으로 결제하실 수 있도록 서류를 나눠 드립니다.<br>
+        이메일로도 받습니다 — <a href="mailto:thenextgenerationz.com@gmail.com">thenextgenerationz.com@gmail.com</a></p>
     </div>
-    <div class="cta-actions">
-      <a class="btn" href="https://www.thenextgenerationz.com/ko/session#apply" target="_blank" rel="noopener">「한 장의 목차」 신청하기</a>
-      <a class="btn line" href="mailto:thenextgenerationz.com@gmail.com?subject=%E3%80%8C%ED%95%9C%20%ED%95%B4%EC%9D%98%20%EA%B8%B0%EB%A1%9D%E3%80%8D%20%EB%AC%B8%EC%9D%98">워크숍을 마쳤어요 · 문의하기</a>
-    </div>
+    <form class="ap-form" id="applyForm" onsubmit="handleApply(event, this)">
+      <div class="ap-grid">
+        <div class="ap-f"><label for="a-org">소속 의회 · 활동 지역</label><input type="text" id="a-org" name="org" placeholder="○○구의회 (비현직은 활동 지역)" required></div>
+        <div class="ap-f"><label for="a-name">성함</label><input type="text" id="a-name" name="name" placeholder="홍길동" required></div>
+        <div class="ap-f"><label for="a-email">이메일</label><input type="email" id="a-email" name="email" placeholder="name@example.com" required></div>
+        <div class="ap-f"><label for="a-phone">연락처</label><input type="tel" id="a-phone" name="phone" placeholder="010-0000-0000"></div>
+        <div class="ap-f"><label for="a-term">신청 구분</label>
+          <select id="a-term" name="term" required>
+            <option value="">선택해 주세요</option>
+            <option value="초선 (지방의원 첫 당선)">초선 — 지방의원 첫 당선</option>
+            <option value="경력 (재선 이상 또는 다른 의회 경력)">경력 — 재선 이상 또는 다른 의회 경력</option>
+            <option value="비현직 · 출마 준비">현직이 아닌 출마 준비자</option>
+          </select></div>
+        <div class="ap-f"><label for="a-toc">「한 장의 목차」</label>
+          <select id="a-toc" name="toc" required>
+            <option value="">선택해 주세요</option>
+            <option value="아직 하지 않음 — 함께 시작">아직 안 했어요 — 함께 시작할게요</option>
+            <option value="이미 마침">이미 마쳤어요</option>
+          </select></div>
+        <div class="ap-f full"><label for="a-style">마음에 드는 스타일 <small>(선택)</small></label>
+          <select id="a-style" name="style"><option value="">아직 정하지 않았어요</option><option value="LBFW 생활발명가">LBFW 생활발명가</option><option value="LBFH 문 여는 사람">LBFH 문 여는 사람</option><option value="LBTW 동네건축가">LBTW 동네건축가</option><option value="LBTH 마을정원사">LBTH 마을정원사</option><option value="LMFW 현장해결사">LMFW 현장해결사</option><option value="LMFH 열린 창구">LMFH 열린 창구</option><option value="LMTW 징검다리">LMTW 징검다리</option><option value="LMTH 목소리 통역사">LMTH 목소리 통역사</option><option value="RBFW 정책설계자">RBFW 정책설계자</option><option value="RBFH 규칙수선공">RBFH 규칙수선공</option><option value="RBTW 편집장">RBTW 편집장</option><option value="RBTH 판 짜는 사람">RBTH 판 짜는 사람</option><option value="RMFW 추진가">RMFW 추진가</option><option value="RMFH 파수꾼">RMFH 파수꾼</option><option value="RMTW 협상가">RMTW 협상가</option><option value="RMTH 광장지기">RMTH 광장지기</option></select></div>
+        <div class="ap-f full"><label for="a-message">하고 싶은 말 · 기록으로 남기고 싶은 활동</label>
+          <textarea id="a-message" name="message" placeholder="대표 공약, 꾸준히 해 온 활동, 지금 쓰고 있는 SNS 등을 적어 주시면 상담에 바로 반영합니다." required></textarea></div>
+      </div>
+      <input type="hidden" name="type" value="한 해의 기록 — 신청">
+      <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+      <div class="ap-submit">
+        <button class="btn" type="submit">신청하기</button>
+        <span class="ap-msg" id="applyMsg"></span>
+      </div>
+    </form>
   </div>
 </section>
 </main>
@@ -542,6 +708,7 @@ p{margin:0}
 <!-- 미리보기 창 -->
 <div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-labelledby="v-name" hidden>
   <div class="v-bar">
+    <button type="button" class="v-btn v-back" id="v-back">← 목록으로</button>
     <div class="v-title"><span class="code" id="v-code"></span><b id="v-name"></b><span id="v-who"></span></div>
     <div class="v-ctrl">
       <div class="seg" role="group" aria-label="화면 크기">
@@ -550,8 +717,9 @@ p{margin:0}
       </div>
       <button type="button" class="v-btn" id="v-prev" aria-label="이전 스타일">←</button>
       <button type="button" class="v-btn" id="v-next" aria-label="다음 스타일">→</button>
+      <button type="button" class="v-btn v-pick" id="v-pick">이 스타일로 신청</button>
       <a class="v-btn v-hide-m" id="v-newtab" href="#" target="_blank" rel="noopener">새 창</a>
-      <button type="button" class="v-btn v-close" id="v-close" aria-label="닫기">×</button>
+      <button type="button" class="v-btn v-close" id="v-close" aria-label="닫기">닫기 ×</button>
     </div>
   </div>
   <div class="v-stage" id="v-stage">
@@ -653,8 +821,11 @@ p{margin:0}
     document.getElementById("v-who").textContent = s[2];
     document.getElementById("v-persona").textContent = p.n+" · "+p.a+"세 · "+p.t;
     document.getElementById("v-newtab").href = url(cur);
-    iframe.src = url(cur);
-    try { history.replaceState(null, "", "#style-" + s[0].toLowerCase()); } catch(e){}
+    setFrame(url(cur));
+    try {
+      if (history.state && history.state.phv) history.replaceState({ phv: 1 }, "", "#style-" + s[0].toLowerCase());
+      else history.pushState({ phv: 1 }, "", "#style-" + s[0].toLowerCase());
+    } catch(e){}
   }
   function open(i){
     lastFocus = document.activeElement;
@@ -662,12 +833,28 @@ p{margin:0}
     setMode(mode); show(i);
     document.getElementById("v-close").focus();
   }
-  function close(){
+  // iframe 주소를 바꿀 때 방문 기록이 쌓이지 않게 replace로 바꾼다 (뒤로 가기가 미리 보기 안에서 헤매지 않도록)
+  var frameNav = 0, expectLoad = false;   // 미리 보기 안에서 의원 사이트 링크를 눌러 이동한 횟수
+  function setFrame(u){
+    expectLoad = true; frameNav = 0;
+    try { iframe.contentWindow.location.replace(u); } catch(e){ iframe.src = u; }
+  }
+  iframe.addEventListener("load", function(){ if (expectLoad) expectLoad = false; else frameNav++; });
+  function shut(){
     V.classList.remove("open"); V.hidden = true; document.body.style.overflow = "";
-    iframe.src = "about:blank";
-    try { history.replaceState(null, "", "#styles"); } catch(e){}
+    setFrame("about:blank");
     if (lastFocus) lastFocus.focus();
   }
+  // 닫기: 미리 보기를 열 때 쌓은 방문 기록을 한 칸 되돌린다 → 브라우저 뒤로 가기와 같은 동작
+  function close(){
+    if (V.hidden) return;
+    try { if (history.state && history.state.phv) { history.go(-(1 + frameNav)); return; } } catch(e){}
+    shut();
+    try { history.replaceState(null, "", "#styles"); } catch(e){}
+  }
+  window.addEventListener("popstate", function(){
+    if (!V.hidden && !(history.state && history.state.phv)) shut();
+  });
   host.addEventListener("click", function(e){
     var b = e.target.closest(".style"); if (b) open(+b.getAttribute("data-i"));
   });
@@ -677,6 +864,13 @@ p{margin:0}
   document.getElementById("v-prev").addEventListener("click", function(){ show(cur-1); });
   document.getElementById("v-next").addEventListener("click", function(){ show(cur+1); });
   document.getElementById("v-close").addEventListener("click", close);
+  document.getElementById("v-back").addEventListener("click", close);
+  document.getElementById("v-pick").addEventListener("click", function(){
+    var sel = document.getElementById("a-style"), s = S[cur];
+    if (sel) sel.value = s[0] + " " + s[1];
+    close();
+    setTimeout(function(){ var ap = document.getElementById("apply"); if (ap) ap.scrollIntoView({ behavior: "smooth" }); }, 450);
+  });
   document.addEventListener("keydown", function(e){
     if (V.hidden) return;
     if (e.key==="Escape") close();
@@ -690,5 +884,32 @@ p{margin:0}
   if (m){ var idx = S.findIndex(function(s){ return s[0].toLowerCase()===m[1]; }); if (idx>-1) open(idx); }
 })();
 </script>
+
+<script>
+function toggleNav(){var l=document.getElementById('navLinks'),t=document.getElementById('navToggle');var o=l.classList.toggle('open');t.classList.toggle('open',o);t.setAttribute('aria-expanded',o);}
+document.querySelectorAll('#navLinks a').forEach(function(a){a.addEventListener('click',function(){document.getElementById('navLinks').classList.remove('open');var t=document.getElementById('navToggle');t.classList.remove('open');t.setAttribute('aria-expanded','false');});});
+function tngDd(e){e.preventDefault();e.stopPropagation();var d=document.getElementById('navDd');var o=d.classList.toggle('open');d.querySelector('.nav-dd-btn').setAttribute('aria-expanded',o?'true':'false');}
+document.addEventListener('click',function(e){var d=document.getElementById('navDd');if(d&&!d.contains(e.target)){d.classList.remove('open');d.querySelector('.nav-dd-btn').setAttribute('aria-expanded','false');}});
+function srcInfo(){try{var u=sessionStorage.getItem('tng_src_u')||'';var r=sessionStorage.getItem('tng_src_r')||'';if(u)return 'utm:'+u;if(r){try{return new URL(r).host.replace(/^www\./,'');}catch(e){return r.slice(0,80);}}return '직접(주소 정보 없음)';}catch(e){return '';}}
+async function handleApply(e, form){
+  e.preventDefault();
+  var btn=form.querySelector('button[type="submit"]'), msg=document.getElementById('applyMsg');
+  var data=Object.fromEntries(new FormData(form).entries());
+  var head=['[신청 프로그램] 「한 해의 기록」'];
+  if(data.term) head.push('[신청 구분] '+data.term);
+  if(data.toc) head.push('[한 장의 목차] '+data.toc);
+  head.push('[원하는 스타일] '+(data.style||'아직 정하지 않음'));
+  data.message=head.join('\n')+'\n\n'+(data.message||'');
+  data.type=data.type+(data.term?' / '+data.term:'');
+  data.from=srcInfo();
+  btn.disabled=true; btn.textContent='보내는 중...'; msg.textContent='';
+  try{
+    var res=await fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+    if(res.ok){form.reset(); if(window.tngCv) window.tngCv('기록 신청서 제출'); btn.textContent='신청 완료 ✓'; btn.style.background='#1D9E75'; btn.style.borderColor='#1D9E75'; msg.textContent='접수되었습니다. 확인 후 「한 장의 목차」 일정과 함께 연락드리겠습니다.';}
+    else{btn.disabled=false; btn.textContent='신청하기'; msg.style.color='#B81C63'; msg.textContent='전송에 실패했습니다. 이메일로 보내 주시면 확인하겠습니다.';}
+  }catch(err){btn.disabled=false; btn.textContent='신청하기'; msg.style.color='#B81C63'; msg.textContent='전송에 실패했습니다. 이메일로 보내 주시면 확인하겠습니다.';}
+}
+</script>
+<script src="/a.js" defer></script>
 </body>
 </html>

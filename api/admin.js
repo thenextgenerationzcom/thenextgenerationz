@@ -77,7 +77,7 @@ const DC_CITIES = [
   'quincy', 'boydton', 'ashburn',
 ];
 // 기간 합계를 보여줄 전환 라벨
-const CV_TOTALS = ['워크숍 신청서 제출', '일정 예약 완료'];
+const CV_TOTALS = ['워크숍 신청서 제출', '기록 신청서 제출', '출판 신청서 제출', '일정 예약 완료'];
 function kstDate(offsetDays) {
   const now = new Date(Date.now() + 9 * 3600 * 1000 + (offsetDays || 0) * 86400000);
   return now.toISOString().slice(0, 10); // YYYY-MM-DD (KST 기준)
@@ -197,7 +197,7 @@ export default async function handler(req, res) {
       let list = [];
       try { list = JSON.parse((r && r.result) || '[]') || []; } catch (e) { list = []; }
       const kind = (req.query.kind || '').toString();
-      if (kind) list = list.filter((x) => x.kind === kind);
+      if (kind) { const ks = kind.split(','); list = list.filter((x) => ks.indexOf(x.kind) >= 0); }
       res.setHeader('Cache-Control', 'no-store');
       return res.status(200).json({ ok: true, items: list });
     }
@@ -213,7 +213,7 @@ export default async function handler(req, res) {
       const at = Number(body.at) || Date.now();
       const item = {
         id: 'q' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
-        at, kind: ['session', 'publishing', 'contact'].indexOf(body.kind) >= 0 ? body.kind : 'session',
+        at, kind: ['session', 'record', 'publishing', 'contact'].indexOf(body.kind) >= 0 ? body.kind : 'session',
         type: clean(body.type || '한 장의 목차 — 신청·문의', 120), org, name,
         email: clean(body.email, 120), phone: clean(body.phone, 40), term: clean(body.term, 60),
         message: clean(body.message, 5000), status: 'new', source: clean(body.source || '수동 입력', 40),

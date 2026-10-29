@@ -702,11 +702,13 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'){var d=docum
 </footer>
 
 <script>
+function srcInfo(){try{var u=sessionStorage.getItem('tng_src_u')||'';var r=sessionStorage.getItem('tng_src_r')||'';if(u)return 'utm:'+u;if(r){try{return new URL(r).host.replace(/^www\./,'');}catch(e){return r.slice(0,80);}}return '직접(주소 정보 없음)';}catch(e){return '';}}
 async function handleApply(e, form) {
   e.preventDefault();
   const btn = form.querySelector('button[type="submit"]');
   const msg = document.getElementById('applyMsg');
   const data = Object.fromEntries(new FormData(form).entries());
+  data.from = srcInfo();
 
   const extra = [];
   if (data.term) extra.push('[신청 구분] ' + data.term);

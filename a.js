@@ -48,7 +48,7 @@
   window.tngCv = cv;
 
   // 페이지별 신청 흐름 이름
-  var FLOW = { '/ko/session': '워크숍', '/ko/session.html': '워크숍', '/ko/publishing': '출판', '/ko/publishing.html': '출판' };
+  var FLOW = { '/ko/session': '워크숍', '/ko/session.html': '워크숍', '/ko/record': '기록', '/ko/publishing': '출판', '/ko/publishing.html': '출판' };
   var flow = FLOW[location.pathname] || '';
 
   try {
