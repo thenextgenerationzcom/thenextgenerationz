@@ -6,7 +6,7 @@
 //   ADMIN_KEY                            — 관리자 인증 키
 //
 // 공개 action:  list, get, img
-// 관리자 action: all, save, remove, uploadimg, overview, inbox, inboxmark, sched, schedsave  (ADMIN_KEY 필요)
+// 관리자 action: all, save, remove, uploadimg, overview, inbox, inboxadd, inboxmark, inboxdel, sched, schedsave  (ADMIN_KEY 필요)
 
 const RURL = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
 const RTOK = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
@@ -224,23 +224,44 @@ export default async function handler(req, res) {
       return res.status(200).json({ ok: true, item });
     }
 
-    // 관리자: 신청 처리 표시 (added = 신청자 명단에 등록, hidden = 숨김, new = 되돌리기)
+    // 관리자: 신청 상태 바꾸기 (new 새 신청 / going 진행 중 / hold 보류 / done 완료 / added 신청자 등록함 / cancel 취소 / hidden 숨김) + 메모
     if (action === 'inboxmark') {
       const body = parseBody(await readBody(req));
       const id = clean(body.id, 40);
-      const status = ['added', 'hidden', 'new'].indexOf(body.status) >= 0 ? body.status : '';
-      if (!id || !status) return res.status(400).json({ error: 'bad request' });
+      const ST = ['new', 'going', 'hold', 'done', 'added', 'cancel', 'hidden'];
+      const status = ST.indexOf(body.status) >= 0 ? body.status : '';
+      const hasMemo = body.memo != null;
+      if (!id || (!status && !hasMemo)) return res.status(400).json({ error: 'bad request' });
       const r = await redis(['GET', 'tng_inbox']);
       let list = [];
       try { list = JSON.parse((r && r.result) || '[]') || []; } catch (e) { list = []; }
       const it = list.find((x) => x.id === id);
       if (!it) return res.status(404).json({ error: 'not found' });
-      it.status = status;
-      it.markedAt = Date.now();
+      if (status) { it.status = status; it.markedAt = Date.now(); }
+      if (hasMemo) it.memo = clean(body.memo, 500);
       if (body.code != null) it.code = clean(body.code, 40);
       if (body.link != null) it.link = clean(body.link, 300);
       await redis(['SET', 'tng_inbox', JSON.stringify(list)]);
       return res.status(200).json({ ok: true, item: it });
+    }
+
+    // 관리자: 신청함에서 지우기 (지운 건은 tng_inbox_trash에 최근 100건 보관 — 실수로 지워도 되살릴 수 있게)
+    if (action === 'inboxdel') {
+      const body = parseBody(await readBody(req));
+      const id = clean(body.id, 40);
+      if (!id) return res.status(400).json({ error: 'bad request' });
+      const r = await redis(['GET', 'tng_inbox']);
+      let list = [];
+      try { list = JSON.parse((r && r.result) || '[]') || []; } catch (e) { list = []; }
+      const it = list.find((x) => x.id === id);
+      if (!it) return res.status(404).json({ error: 'not found' });
+      const t = await redis(['GET', 'tng_inbox_trash']);
+      let trash = [];
+      try { trash = JSON.parse((t && t.result) || '[]') || []; } catch (e) { trash = []; }
+      trash.unshift(Object.assign({}, it, { deletedAt: Date.now() }));
+      await redis(['SET', 'tng_inbox_trash', JSON.stringify(trash.slice(0, 100))]);
+      await redis(['SET', 'tng_inbox', JSON.stringify(list.filter((x) => x.id !== id))]);
+      return res.status(200).json({ ok: true });
     }
 
     // 관리자: 내 일정 (일정 관리 화면의 '내 일정')
