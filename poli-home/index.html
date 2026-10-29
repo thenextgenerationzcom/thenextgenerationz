@@ -1,0 +1,698 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>「한 해의 기록」 — 1년의 의정을 쌓는 기록 시스템 | 더넥스트제너레이션즈</title>
+<meta name="description" content="의정 기록 시리즈 02. 「한 장의 목차」에서 세운 목차를 따라 1년의 의정을 쌓는 기록 시스템. 의원님 이름의 기록 홈페이지와 AI 의정 비서, 16가지 스타일.">
+<link rel="canonical" href="https://www.thenextgenerationz.com/ko/record">
+<meta property="og:title" content="「한 해의 기록」 — 1년의 의정을 쌓는 기록 시스템">
+<meta property="og:description" content="열고, 쌓고, 엮다. 「한 장의 목차」 다음은 「한 해의 기록」입니다.">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+:root{
+  --ink:#0B1623; --ink2:#4B5768; --line:#E4E1D8;
+  --bg:#FFFFFF; --cream:#FAF7F1; --card:#FCF0F5;
+  --mg:#B81C63; --mg-b:#F2398C;
+  --sans:"Pretendard Variable",Pretendard,-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;
+  --serif:"Gowun Batang","Noto Serif KR",serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --wrap:1120px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.7;
+  word-break:keep-all;overflow-wrap:break-word;font-synthesis:none;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+h1,h2,h3{margin:0;line-height:1.3;letter-spacing:-0.015em}
+p{margin:0}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 20px}
+.eyebrow{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--mg);margin-bottom:14px;display:block}
+.sec{padding:96px 0}
+.sec.cream{background:var(--cream)}
+.sec-head{max-width:720px;margin-bottom:44px}
+.sec-head h2{font-size:clamp(28px,3.6vw,40px);font-weight:800}
+.sec-head p{color:var(--ink2);margin-top:14px;font-size:18px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:0 24px;border-radius:2px;
+  font-weight:700;font-size:16px;text-decoration:none;border:1px solid var(--mg);background:var(--mg);color:#fff;cursor:pointer;font-family:inherit}
+.btn:hover{background:#9A1652;border-color:#9A1652}
+.btn.line{background:transparent;color:var(--ink);border-color:var(--ink)}
+.btn.line:hover{background:var(--ink);color:#fff}
+.btn.on-dark{background:var(--mg-b);border-color:var(--mg-b);color:#fff}
+.btn.on-dark:hover{background:#fff;color:var(--ink);border-color:#fff}
+.btn.ghost-dark{background:transparent;border-color:rgba(255,255,255,.45);color:#fff}
+.btn.ghost-dark:hover{border-color:#fff}
+
+/* 머리글 */
+.top{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.top-in{display:flex;align-items:center;justify-content:space-between;min-height:64px;gap:20px}
+.brand{display:flex;align-items:baseline;gap:10px;text-decoration:none}
+.brand b{font-weight:800;font-size:19px;letter-spacing:-.01em}
+.brand span{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;color:var(--ink2)}
+.nav{display:flex;align-items:center;gap:2px}
+.nav a{text-decoration:none;font-size:15px;font-weight:600;padding:8px 12px;color:var(--ink)}
+.nav a:hover{color:var(--mg)}
+.nav .btn{min-height:40px;padding:0 16px;margin-left:8px;font-size:15px;color:#fff}
+.nav .btn:hover{color:#fff}
+
+/* 첫 화면 */
+.hero{padding:80px 0 88px;border-bottom:1px solid var(--line)}
+.hero-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center}
+.hero h1{font-size:clamp(44px,6.4vw,76px);font-weight:800;letter-spacing:-.03em;line-height:1.08}
+.hero h1 .q{color:var(--mg);font-weight:600}
+.hero .lede{font-family:var(--serif);font-size:clamp(21px,2.4vw,27px);line-height:1.55;margin-top:26px}
+.hero .sub{color:var(--ink2);margin-top:18px;max-width:34em}
+.hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:32px}
+.series-mini{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin-top:36px;font-size:14px;color:var(--ink2)}
+.series-mini b{color:var(--ink);font-weight:700}
+.series-mini .now{color:var(--mg)}
+.series-mini i{font-style:normal;color:#B9BCC2}
+.hero-shot{position:relative}
+.browser{border:1px solid var(--line);border-radius:6px;overflow:hidden;background:#fff}
+.browser-bar{display:flex;align-items:center;gap:6px;padding:10px 12px;background:var(--cream);border-bottom:1px solid var(--line)}
+.browser-bar i{width:9px;height:9px;border-radius:50%;background:#D9D5CC}
+.browser-bar span{margin-left:10px;font-family:var(--mono);font-size:11px;color:var(--ink2);letter-spacing:.04em}
+.hero-faces{display:flex;gap:8px;margin-top:14px;align-items:center}
+.hero-faces img{width:44px;height:44px;border-radius:50%;object-fit:cover;object-position:center 20%;border:2px solid #fff;outline:1px solid var(--line)}
+.hero-faces p{font-size:13px;color:var(--ink2);margin-left:6px;line-height:1.5}
+
+/* 시리즈 */
+.series{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.step{position:relative;background:#fff;border:1px solid var(--line);border-left:3px solid var(--line);border-radius:2px;padding:28px 26px 26px;display:flex;flex-direction:column;gap:10px}
+.step.now{border-left-color:var(--mg);background:var(--card)}
+.step .verb{font-size:13px;font-weight:700;letter-spacing:.02em;color:var(--ink2)}
+.step .verb i{font-style:normal;font-family:var(--mono);font-size:11px;letter-spacing:.16em;margin-right:6px}
+.step.now .verb{color:var(--mg)}
+.step h3{font-size:24px;font-weight:800}
+.step p{color:var(--ink2);font-size:16px}
+.step .out{margin-top:auto;padding-top:14px;border-top:1px solid var(--line);font-size:14px;color:var(--ink)}
+.step .out b{font-size:12.5px;font-weight:700;color:var(--ink2);display:block;margin-bottom:4px}
+.step a.more{font-size:14px;font-weight:700;color:var(--mg);text-decoration:none}
+.step a.more:hover{text-decoration:underline}
+.step .tag{position:absolute;top:-11px;right:18px;background:var(--mg);color:#fff;font-size:12px;font-weight:700;padding:3px 10px;border-radius:2px}
+.series-line{display:flex;justify-content:center;gap:0;margin:34px 0 0;font-family:var(--serif);font-size:clamp(22px,2.6vw,30px)}
+.series-line span{padding:0 18px}
+.series-line span+span{border-left:1px solid var(--line)}
+
+/* 흐름 */
+.flow{display:grid;gap:10px;max-width:900px}
+.flow-row{display:grid;grid-template-columns:1fr 48px 1.2fr;align-items:stretch}
+.flow-from,.flow-to{padding:18px 22px;border:1px solid var(--line);border-radius:2px;background:#fff}
+.flow-from small,.flow-to small{display:block;font-size:12.5px;font-weight:600;color:var(--ink2);margin-bottom:4px}
+.flow-from b,.flow-to b{font-size:18px;font-weight:700}
+.flow-to{border-left:3px solid var(--mg)}
+.flow-to p{font-size:14px;color:var(--ink2);margin-top:2px}
+.flow-arrow{display:grid;place-items:center;color:var(--mg);font-weight:800;font-size:20px}
+
+/* 스타일 둘러보기 */
+.style-tools{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;margin-bottom:28px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button{font:inherit;font-size:14px;font-weight:600;padding:8px 14px;border:1px solid var(--line);background:#fff;border-radius:999px;cursor:pointer;color:var(--ink)}
+.chips button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.quiz-link{font-size:14px;color:var(--ink2)}
+.quiz-link a{color:var(--mg);font-weight:700;text-decoration:none}
+.quiz-link a:hover{text-decoration:underline}
+.group{margin-bottom:44px}
+.group-head{display:flex;align-items:baseline;gap:12px;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.group-head b{font-family:var(--mono);font-size:12px;letter-spacing:.16em;color:var(--mg)}
+.group-head h3{font-size:19px;font-weight:700}
+.styles{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.style{display:flex;flex-direction:column;text-align:left;font:inherit;color:inherit;background:#fff;border:1px solid var(--line);border-radius:4px;overflow:hidden;cursor:pointer;padding:0}
+.style:hover{border-color:var(--mg)}
+.style:focus-visible{outline:2px solid var(--mg);outline-offset:2px}
+.style .thumb{aspect-ratio:16/10;overflow:hidden;background:var(--cream);border-bottom:1px solid var(--line);position:relative}
+.style .thumb img{width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .4s}
+.style:hover .thumb img{transform:scale(1.03)}
+.style .thumb .open{position:absolute;right:10px;bottom:10px;background:rgba(11,22,35,.82);color:#fff;font-size:12px;font-weight:700;padding:5px 10px;border-radius:2px;opacity:0;transition:opacity .2s}
+.style:hover .open,.style:focus-visible .open{opacity:1}
+.style .body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:4px;flex:1}
+.style .code{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--mg);font-weight:600}
+.style .name{font-size:18px;font-weight:800}
+.style .who{font-size:14px;color:var(--ink2);line-height:1.5}
+.style .persona{margin-top:auto;padding-top:10px;display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink2)}
+.style .persona img{width:22px;height:22px;border-radius:50%;object-fit:cover;object-position:center 20%}
+.style[hidden]{display:none}
+.ai-note{font-size:13px;color:var(--ink2);margin-top:6px}
+
+/* 들어 있는 것 */
+.inc{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.inc-item{background:#fff;border:1px solid var(--line);border-left:3px solid var(--mg);border-radius:2px;padding:26px 24px}
+.inc-item .n{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--mg);font-weight:600}
+.inc-item h3{font-size:21px;font-weight:800;margin:8px 0 10px}
+.inc-item p{font-size:15.5px;color:var(--ink2)}
+.inc-item ul{margin:10px 0 0;padding:0;list-style:none;display:grid;gap:8px}
+.inc-item li{font-size:15px;line-height:1.55;padding-left:14px;position:relative}
+.inc-item li::before{content:"";position:absolute;left:0;top:.7em;width:6px;height:2px;background:var(--mg)}
+.inc-item li b{font-weight:700}
+.inc-item.wide{grid-column:span 2}
+.owner{margin-top:16px;display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center;padding:24px 26px;background:var(--card);border-radius:2px}
+.owner b{font-size:20px;font-weight:800}
+.owner p{color:var(--ink2);font-size:15.5px}
+.owner .accts{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.owner .accts span{font-family:var(--mono);font-size:11px;letter-spacing:.08em;background:#fff;border:1px solid var(--line);padding:4px 9px;border-radius:2px;color:var(--ink)}
+
+/* 가격 */
+.price-sec{background:var(--ink);color:#fff}
+.price-sec .eyebrow{color:var(--mg-b)}
+.price-sec .sec-head p{color:#B8C0CC}
+.price-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:start}
+.price-big{font-size:clamp(56px,8vw,92px);font-weight:800;letter-spacing:-.035em;line-height:1}
+.price-big small{font-size:.32em;font-weight:700;letter-spacing:0;margin-left:6px}
+.price-note{color:#B8C0CC;margin-top:12px;font-size:15px}
+.split{margin-top:30px;display:grid;grid-template-columns:1fr 2.4fr;border-radius:2px;overflow:hidden;border:1px solid rgba(255,255,255,.18)}
+.split div{padding:16px 16px 18px}
+.split .a{background:rgba(255,255,255,.08)}
+.split .b{background:rgba(242,57,140,.16)}
+.split small{display:block;font-size:12.5px;font-weight:600;color:#B8C0CC;margin-bottom:6px}
+.split b{font-size:22px;font-weight:800;display:block}
+.split span{font-size:13.5px;color:#D5DAE2;display:block;margin-top:2px;line-height:1.5}
+.split-a-label{display:none}
+.price-list{display:grid;gap:0;border-top:1px solid rgba(255,255,255,.18)}
+.price-list div{display:grid;grid-template-columns:150px 1fr;gap:14px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.18);font-size:15.5px}
+.price-list dt{color:#B8C0CC;font-weight:600}
+.price-list dd{margin:0}
+.price-caveat{margin-top:20px;font-size:13.5px;color:#9AA4B2;line-height:1.6}
+
+/* 진행 순서 */
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(7,1fr);gap:0;counter-reset:s;border-top:2px solid var(--ink)}
+.steps li{counter-increment:s;padding:18px 14px 0 0;position:relative}
+.steps li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:12px;letter-spacing:.12em;color:var(--mg);font-weight:600;display:block;margin-bottom:8px}
+.steps li::after{content:"";position:absolute;top:-6px;left:0;width:10px;height:10px;border-radius:50%;background:#fff;border:2px solid var(--ink)}
+.steps li.key::after{background:var(--mg);border-color:var(--mg)}
+.steps b{display:block;font-size:17px;font-weight:800;line-height:1.35}
+.steps span{display:block;font-size:14px;color:var(--ink2);margin-top:6px;line-height:1.55}
+.steps em{font-style:normal;display:inline-block;margin-top:8px;font-size:12px;font-weight:700;color:var(--mg);background:var(--card);padding:2px 8px;border-radius:2px}
+
+/* 자주 묻는 질문 */
+.faq{max-width:820px;border-top:1px solid var(--line)}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;padding:20px 40px 20px 0;font-size:18px;font-weight:700;position:relative}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:6px;top:16px;font-size:24px;font-weight:400;color:var(--mg)}
+.faq details[open] summary::after{content:"−"}
+.faq details p{padding:0 0 22px;color:var(--ink2);font-size:16px}
+
+/* 마무리 */
+.cta{background:var(--cream);padding:88px 0;border-top:1px solid var(--line)}
+.cta-in{display:grid;grid-template-columns:1.3fr 1fr;gap:40px;align-items:end}
+.cta h2{font-size:clamp(30px,4vw,46px);font-weight:800;letter-spacing:-.025em}
+.cta p{color:var(--ink2);margin-top:14px}
+.cta-actions{display:flex;flex-direction:column;gap:10px}
+.cta-actions .btn{width:100%}
+.cta-actions small{font-size:13px;color:var(--ink2);text-align:center}
+
+/* 바닥글 */
+.foot{background:var(--ink);color:#C9D0DA;padding:40px 0 48px;font-size:14px}
+.foot-in{display:flex;flex-wrap:wrap;justify-content:space-between;gap:20px;align-items:flex-end}
+.foot strong{color:#fff;font-size:17px;font-weight:800}
+.foot .series-f{margin-top:6px;font-family:var(--serif);color:#fff;font-size:16px}
+.foot .by{font-size:13px;color:#8F9AAA}
+.foot .by span{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em}
+.foot .by a{color:#fff;text-decoration:none}
+
+/* 미리보기 창 */
+.viewer{position:fixed;inset:0;z-index:100;background:rgba(11,22,35,.97);display:none;flex-direction:column}
+.viewer.open{display:flex}
+.v-bar{background:var(--ink);display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;padding:12px 20px;color:#fff;border-bottom:1px solid rgba(255,255,255,.12)}
+.v-title{display:flex;align-items:baseline;gap:10px;min-width:0;flex:1}
+.v-title .code{font-family:var(--mono);font-size:12px;letter-spacing:.16em;color:var(--mg-b);font-weight:600}
+.v-title b{font-size:19px;font-weight:800;white-space:nowrap}
+.v-title span{font-size:13.5px;color:#B8C0CC;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.v-ctrl{display:flex;align-items:center;gap:8px}
+.seg{display:inline-flex;border:1px solid rgba(255,255,255,.3);border-radius:2px;overflow:hidden}
+.seg button{font:inherit;font-size:13.5px;font-weight:700;background:transparent;color:#C9D0DA;border:0;padding:8px 14px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:#fff;color:var(--ink)}
+.v-btn{font:inherit;font-size:13.5px;font-weight:700;background:transparent;border:1px solid rgba(255,255,255,.3);color:#fff;padding:8px 12px;border-radius:2px;cursor:pointer;text-decoration:none;white-space:nowrap}
+.v-btn:hover{border-color:#fff}
+.v-close{font-size:20px;line-height:1;padding:6px 12px}
+.v-stage{flex:1;position:relative;overflow:hidden;display:flex;align-items:flex-start;justify-content:center;padding:20px}
+.frame{background:#fff;overflow:hidden;transform-origin:top center;position:relative}
+.frame iframe{border:0;display:block;width:100%;height:100%;background:#fff}
+.frame.pc{border-radius:6px}
+.frame.m{border-radius:28px;border:10px solid #1E2836}
+.v-foot{padding:10px 20px 14px;color:#9AA4B2;font-size:12.5px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.v-foot b{color:#fff;font-weight:600}
+
+/* 반응형 */
+@media (max-width:980px){
+  .hero-grid{grid-template-columns:1fr;gap:40px}
+  .styles{grid-template-columns:repeat(2,1fr)}
+  .inc{grid-template-columns:1fr 1fr}
+  .inc-item.wide{grid-column:span 2}
+  .price-grid{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr;border-top:0;border-left:2px solid var(--ink);margin-left:6px}
+  .steps li{padding:0 0 22px 22px}
+  .steps li::after{top:2px;left:-7px}
+  .cta-in{grid-template-columns:1fr}
+  .nav a:not(.btn){display:none}
+}
+@media (max-width:640px){
+  body{font-size:16px}
+  .sec{padding:64px 0}
+  .hero{padding:48px 0 56px}
+  .series{grid-template-columns:1fr}
+  .series-line{flex-direction:column;align-items:center;gap:4px}
+  .series-line span+span{border-left:0}
+  .flow-row{grid-template-columns:1fr;gap:0}
+  .flow-arrow{transform:rotate(90deg);height:34px}
+  .styles{grid-template-columns:1fr 1fr;gap:10px}
+  .style .body{padding:10px 12px 12px}
+  .style .name{font-size:16px}
+  .style .who{font-size:13px}
+  .style .persona span{display:none}
+  .inc{grid-template-columns:1fr}
+  .inc-item.wide{grid-column:auto}
+  .owner{grid-template-columns:1fr;gap:6px}
+  .split{grid-template-columns:1fr}
+  .price-list div{grid-template-columns:1fr;gap:2px}
+  .brand span{display:none}
+  .v-title span{display:none}
+  .v-bar{padding:10px 12px}
+  .v-stage{padding:10px}
+  .v-hide-m{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="#top"><b>「한 해의 기록」</b><span>의정 기록 시리즈</span></a>
+    <nav class="nav" aria-label="이 페이지 차례">
+      <a href="#series">시리즈</a>
+      <a href="#styles">16가지 스타일</a>
+      <a href="#included">들어 있는 것</a>
+      <a href="#price">가격</a>
+      <a href="#process">진행 순서</a>
+      <a href="#faq">자주 묻는 질문</a>
+      <a class="btn" href="#apply">신청하기</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+<!-- 첫 화면 -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">의정 기록 시리즈 02 · 기록</span>
+      <h1><span class="q">「</span>한 해의<br>기록<span class="q">」</span></h1>
+      <p class="lede">1년 동안 쌓은 의정이,<br>그대로 의원님의 기록이 됩니다.</p>
+      <p class="sub">「한 장의 목차」에서 세운 목차를 뼈대로, 그동안 SNS에 올린 활동까지 정리해 의원님 이름의 기록 홈페이지를 열어 드립니다. 그다음부터는 의원님이 AI 의정 비서와 함께 매일의 의정을 직접 기록하고 쌓아 가십니다.</p>
+      <div class="hero-actions">
+        <a class="btn" href="#styles">16가지 스타일 둘러보기</a>
+        <a class="btn line" href="#price">가격과 진행 순서</a>
+      </div>
+      <div class="series-mini" aria-label="시리즈 순서">
+        <span>「한 장의 목차」</span><i>→</i><b class="now">「한 해의 기록」</b><i>→</i><span>「한 권의 정치」</span>
+      </div>
+    </div>
+    <div class="hero-shot">
+      <div class="browser">
+        <div class="browser-bar"><i></i><i></i><i></i><span>의원님이름.kr</span></div>
+        <img src="/poli-home/thumbs/hero.jpg" alt="「한 해의 기록」으로 만든 의원 홈페이지 첫 화면 예시" width="960" height="675">
+      </div>
+      <div class="hero-faces">
+        <img src="/poli-home/thumbs/p-sohyul.jpg" alt=""><img src="/poli-home/thumbs/p-doyun.jpg" alt=""><img src="/poli-home/thumbs/p-jiyun.jpg" alt=""><img src="/poli-home/thumbs/p-woojin.jpg" alt="">
+        <p>가상의 의원 네 명으로<br>16가지 스타일을 미리 보실 수 있습니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 시리즈 -->
+<section class="sec cream" id="series">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Series · Open, Build, Bind</span>
+      <h2>목차를 열고, 한 해를 쌓고, 한 권으로 엮습니다</h2>
+      <p>세 과정은 하나로 이어집니다. 앞에서 만든 것이 그대로 다음 과정의 재료가 됩니다.</p>
+    </div>
+    <div class="series">
+      <article class="step">
+        <span class="verb"><i>01</i>열다</span>
+        <h3>「한 장의 목차」</h3>
+        <p>의원님의 경험과 고민으로 임기의 방향을 세우는 개인 맞춤형 워크숍입니다.</p>
+        <div class="out"><b>만드는 것</b>정의문 · 다섯 개의 가목차 · 활동 및 기록 계획 · POLI CODE 보고서</div>
+        <a class="more" href="/ko/session">워크숍 보기 →</a>
+      </article>
+      <article class="step now">
+        <span class="tag">이 페이지</span>
+        <span class="verb"><i>02</i>쌓다</span>
+        <h3>「한 해의 기록」</h3>
+        <p>목차를 따라 매일의 의정을 기록하는 홈페이지와, 기록을 돕는 AI 의정 비서입니다.</p>
+        <div class="out"><b>만드는 것</b>의원님 이름의 홈페이지 · 글쓰기·일정·민원 비서 · 1년 동안 쌓이는 기록</div>
+      </article>
+      <article class="step">
+        <span class="verb"><i>03</i>엮다</span>
+        <h3>「한 권의 정치」</h3>
+        <p>쌓인 기록을 의원님 자신의 언어로 엮어 한 권의 책으로 냅니다.</p>
+        <div class="out"><b>만드는 것</b>사전조사 · 스토리텔링 기획 · 원고 · 출판</div>
+        <a class="more" href="/ko/publishing">자세히 보기 →</a>
+      </article>
+    </div>
+    <p class="series-line" aria-hidden="true"><span>열고,</span><span>쌓고,</span><span>엮다.</span></p>
+  </div>
+</section>
+
+<!-- 흐름 -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">From workshop to homepage</span>
+      <h2>워크숍에서 만든 것이 홈페이지의 뼈대가 됩니다</h2>
+      <p>그래서 홈페이지를 처음부터 기획할 필요가 없습니다. 의원님이 이미 말씀하신 것으로 만듭니다.</p>
+    </div>
+    <div class="flow">
+      <div class="flow-row"><div class="flow-from"><small>「한 장의 목차」</small><b>정의문</b></div><div class="flow-arrow" aria-hidden="true">→</div><div class="flow-to"><small>「한 해의 기록」</small><b>첫 화면의 큰 문장</b><p>방문한 주민이 가장 먼저 읽는 의원님의 한 문장</p></div></div>
+      <div class="flow-row"><div class="flow-from"><small>「한 장의 목차」</small><b>다섯 개의 가목차</b></div><div class="flow-arrow" aria-hidden="true">→</div><div class="flow-to"><small>「한 해의 기록」</small><b>'약속' 메뉴의 다섯 장</b><p>장마다 관련 기록이 자동으로 모입니다</p></div></div>
+      <div class="flow-row"><div class="flow-from"><small>「한 장의 목차」</small><b>활동 및 기록 계획</b></div><div class="flow-arrow" aria-hidden="true">→</div><div class="flow-to"><small>「한 해의 기록」</small><b>기록 게시판의 분류</b><p>만든 제도, 해결한 일, 의정 메모로 나뉘어 쌓입니다</p></div></div>
+      <div class="flow-row"><div class="flow-from"><small>그동안의 SNS</small><b>페이스북 글과 사진</b></div><div class="flow-arrow" aria-hidden="true">→</div><div class="flow-to"><small>「한 해의 기록」</small><b>첫날부터 채워진 기록</b><p>결과까지 간 일은 기록으로, 진행 중인 일은 '처리 중'으로 정리합니다. 행사 참석 글은 기록에서 뺍니다</p></div></div>
+      <div class="flow-row"><div class="flow-from"><small>POLI CODE 보고서</small><b>정치활동 방식</b></div><div class="flow-arrow" aria-hidden="true">→</div><div class="flow-to"><small>「한 해의 기록」</small><b>16가지 홈페이지 스타일</b><p>무엇을 앞에, 크게 보여 줄지가 의원님 방식에 맞춰집니다</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 16가지 스타일 -->
+<section class="sec cream" id="styles">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">16 styles · POLI CODE</span>
+      <h2>16가지 스타일, 의원님이 일하는 방식대로</h2>
+      <p>POLI CODE 네 글자에 맞춰 첫 화면에 무엇을 크게 보여 줄지 정했습니다. 코드는 추천일 뿐입니다. 마음에 드는 스타일을 고르시면 됩니다.</p>
+    </div>
+    <div class="style-tools">
+      <div class="chips" role="group" aria-label="스타일 거르기">
+        <button type="button" data-f="" aria-pressed="true">전체 16</button>
+        <button type="button" data-f="L">현장에서 알아채는 L</button>
+        <button type="button" data-f="R">자료에서 읽어 내는 R</button>
+      </div>
+      <p class="quiz-link">내 코드를 모르신다면 <a href="https://www.thenextgenerationz.com/ko/poli-code" target="_blank" rel="noopener">POLI CODE 퀴즈 (3분) →</a></p>
+    </div>
+    <div id="style-groups"></div>
+    <p class="ai-note">미리 보기 속 의원과 사진은 AI로 만든 가상 인물입니다. 실제 홈페이지에는 의원님 사진과 기록이 들어갑니다.</p>
+  </div>
+</section>
+
+<!-- 들어 있는 것 -->
+<section class="sec" id="included">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">What's included</span>
+      <h2>들어 있는 것</h2>
+      <p>처음 세팅은 저희가 하고, 운영은 의원님이 직접 하십니다. 그 처음을 함께 넘을 수 있게 비서와 교육까지 드립니다.</p>
+    </div>
+    <div class="inc">
+      <div class="inc-item">
+        <span class="n">01</span>
+        <h3>「한 장의 목차」 워크숍</h3>
+        <p>사전 설문과 대면 워크숍으로 정의문, 다섯 개의 가목차, 활동 및 기록 계획을 만듭니다. 워크숍 뒤 POLI CODE 의원 보고서를 드립니다.</p>
+      </div>
+      <div class="inc-item">
+        <span class="n">02</span>
+        <h3>의원님 이름의 홈페이지</h3>
+        <p>16가지 스타일 중 하나로 만듭니다. 그동안 올리신 페이스북 글과 사진을 정리해 첫 기록으로 넣어 드립니다. PC와 휴대폰 모두에 맞춰 보입니다.</p>
+      </div>
+      <div class="inc-item">
+        <span class="n">03</span>
+        <h3>교육 2회</h3>
+        <p>대면 1회는 계정 세팅과 같은 날, 온라인 1회는 Claude로 기록 올리기와 색·스타일 바꾸기를 직접 해 봅니다. 교육이 끝나면 의원님 방식대로 운영하실 수 있습니다.</p>
+      </div>
+      <div class="inc-item wide">
+        <span class="n">04</span>
+        <h3>AI 의정 비서 3종</h3>
+        <p>의원님 명의의 Claude 계정에 의원님만을 위한 비서를 세팅해 드립니다.</p>
+        <ul>
+          <li><b>글쓰기 비서</b> — 의원님의 말투를 익혀, 현장 메모를 홈페이지 기록 초안으로 바꿔 드립니다.</li>
+          <li><b>일정 비서</b> — 흩어진 일정을 정리하고, 다녀온 일정을 기록으로 이어 줍니다.</li>
+          <li><b>민원 비서</b> — 문자·메일·전화로 받은 민원을 붙여 넣으면 누가, 언제, 무슨 민원을 넣었는지, 누구와 협의했고 어디까지 진행됐는지 장부로 정리하고, 민원인에게 보낼 회신 문자 초안을 써 드립니다. 보내는 것은 의원님이 확인하고 직접 하십니다.</li>
+        </ul>
+      </div>
+      <div class="inc-item">
+        <span class="n">05</span>
+        <h3>1년 복구 지원</h3>
+        <p>홈페이지가 열리지 않거나 기록이 올라가지 않을 때 1년 동안 복구해 드립니다. 디자인 변경과 기능 추가는 의원님이 Claude로 직접 하십니다.</p>
+      </div>
+    </div>
+    <div class="owner">
+      <b>모든 계정은 의원님 명의입니다</b>
+      <div>
+        <p>도메인부터 홈페이지 저장소, 비서까지 처음부터 의원님 이름으로, 의원님 노트북에서 함께 만듭니다. 비밀번호는 저희가 받지 않습니다. 매달 내는 유지보수비가 없고, 홈페이지와 기록은 온전히 의원님 것입니다.</p>
+        <div class="accts"><span>도메인</span><span>GMAIL</span><span>GITHUB</span><span>VERCEL</span><span>CLAUDE</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 가격 -->
+<section class="sec price-sec" id="price">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Price</span>
+      <h2>한 번 결제로 1년 동안</h2>
+      <p>「한 장의 목차」로 시작하는 「한 해의 기록」 — 워크숍은 의정교육비로, 홈페이지는 정치자금으로.</p>
+    </div>
+    <div class="price-grid">
+      <div>
+        <div class="price-big">350<small>만 원</small></div>
+        <p class="price-note">부가세 포함 · 한 번 결제 · 매달 유지보수비 없음</p>
+        <div class="split" aria-label="결제 구성">
+          <div class="a"><small>「한 장의 목차」</small><b>40만 원</b><span>의정활동 교육비<br>(의회 예산)</span></div>
+          <div class="b"><small>「한 해의 기록」</small><b>310만 원</b><span>홈페이지 · 의정 비서 · 교육 · 1년 복구 지원<br>(정치자금)</span></div>
+        </div>
+      </div>
+      <dl class="price-list">
+        <div><dt>워크숍을 마친 분</dt><dd>「한 장의 목차」를 이미 마치셨다면 <b>310만 원</b>입니다.</dd></div>
+        <div><dt>서류</dt><dd>견적서, 계약서, 세금계산서를 교육비분과 홈페이지분으로 나눠 갖춰 드립니다.</dd></div>
+        <div><dt>의원님이 따로 내는 비용</dt><dd>도메인 1년 2~3만 원, Claude 유료 구독(Pro 이상, 월 약 20달러). 모두 의원님 명의로 직접 결제합니다. 홈페이지 보관(GitHub·Vercel)은 기본 무료 플랜으로 시작합니다.</dd></div>
+        <div><dt>1년 뒤</dt><dd>홈페이지와 기록은 그대로 의원님 것입니다. 지원 연장은 따로 상의합니다.</dd></div>
+      </dl>
+    </div>
+    <p class="price-caveat">정치자금 지출 가능 항목은 관할 선거관리위원회 안내를 따릅니다.</p>
+  </div>
+</section>
+
+<!-- 진행 순서 -->
+<section class="sec" id="process">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Process</span>
+      <h2>진행 순서</h2>
+      <p>의원님을 직접 만나는 날은 두 번입니다. 나머지는 저희가 준비하고 온라인으로 함께합니다.</p>
+    </div>
+    <ol class="steps">
+      <li><b>신청</b><span>「한 장의 목차」 신청과 함께 받습니다.</span></li>
+      <li class="key"><b>「한 장의 목차」 워크숍</b><span>사전 설문 뒤, 의원님이 편한 곳으로 찾아갑니다.</span><em>만남 1</em></li>
+      <li><b>스타일 고르기 · 사진 준비</b><span>보고서와 함께 추천 스타일을 드립니다.</span></li>
+      <li><b>계약 · 결제</b><span>견적서와 세금계산서를 갖춰 드립니다.</span></li>
+      <li><b>SNS 정리 · 제작</b><span>페이스북 글과 사진을 정리하고, 워크숍 보고서로 홈페이지를 만듭니다.</span></li>
+      <li class="key"><b>세팅 · 첫 교육</b><span>의원님 노트북에서 도메인과 GitHub·Vercel·Claude 계정을 함께 만들고, 홈페이지를 공개합니다.</span><em>만남 2</em></li>
+      <li><b>직접 운영 · 1년 기록</b><span>온라인 교육으로 첫 기록과 첫 디자인 변경을 함께 해 봅니다. 그다음부터는 의원님이 운영하십니다.</span></li>
+    </ol>
+  </div>
+</section>
+
+<!-- 자주 묻는 질문 -->
+<section class="sec cream" id="faq">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">FAQ</span>
+      <h2>자주 묻는 질문</h2>
+    </div>
+    <div class="faq">
+      <details><summary>「한 장의 목차」를 이미 마쳤습니다</summary><p>워크숍 산출물과 보고서로 바로 제작을 시작합니다. 비용은 310만 원입니다.</p></details>
+      <details><summary>의정활동 교육비로 처리하기 어렵습니다</summary><p>교육비 처리가 어려우시면 350만 원을 한 번에 결제하실 수 있습니다. 서류는 결제 방식에 맞춰 준비해 드립니다.</p></details>
+      <details><summary>매달 드는 비용이 있나요?</summary><p>저희에게 내시는 유지보수비는 없습니다. 도메인 1년 2~3만 원과 Claude 구독료만 의원님 명의로 직접 내십니다.</p></details>
+      <details><summary>컴퓨터를 잘 몰라도 직접 운영할 수 있나요?</summary><p>네. 사진과 메모만 Claude 채팅창에 올리고 "기록으로 올려 줘"라고 하시면 됩니다. 올리기 전에 미리보기로 먼저 확인하실 수 있습니다. 교육 2회에서 직접 해 보시고, 1년 동안 홈페이지가 멈추면 복구해 드립니다.</p></details>
+      <details><summary>스타일을 나중에 바꿀 수 있나요?</summary><p>네. Claude에게 말로 부탁하시면 스타일이나 색을 바꿀 수 있습니다. 기록은 다시 쓰지 않고 보이는 방식만 달라집니다. 바꾸기 전에 미리보기 주소로 확인하고, 마음에 들지 않으면 되돌릴 수 있습니다.</p></details>
+      <details><summary>페이스북 글은 어떻게 가져가나요?</summary><p>의원님이 페이스북의 '내 정보 다운로드'로 글과 사진을 내려받아 보내 주시면 됩니다. 비밀번호는 받지 않습니다. 그중 결과까지 간 일을 골라 첫 기록으로 정리해 드립니다.</p></details>
+      <details><summary>민원인의 개인정보는 어디에 저장되나요?</summary><p>민원 장부는 의원님 계정에만 둡니다. 저희 계정에는 보관하지 않습니다. 홈페이지 연락 페이지에는 개인정보 안내 문구를 함께 넣어 드립니다.</p></details>
+      <details><summary>POLI CODE를 모르는데 괜찮나요?</summary><p>괜찮습니다. 워크숍 뒤 드리는 POLI CODE 보고서에서 의원님 코드를 정리해 드립니다. 미리 알고 싶으시면 3분짜리 퀴즈를 해 보셔도 됩니다.</p></details>
+      <details><summary>1년이 지나면 어떻게 되나요?</summary><p>홈페이지와 모든 기록은 그대로 의원님 것입니다. 쌓인 기록은 「한 권의 정치」로 엮어 책으로 낼 수 있습니다.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- 신청 -->
+<section class="cta" id="apply">
+  <div class="wrap cta-in">
+    <div>
+      <span class="eyebrow">Apply</span>
+      <h2>「한 장의 목차」부터 시작합니다</h2>
+      <p>「한 해의 기록」은 「한 장의 목차」 워크숍에서 시작합니다. 워크숍을 신청하시면서 「한 해의 기록」도 함께 원한다고 적어 주세요.</p>
+    </div>
+    <div class="cta-actions">
+      <a class="btn" href="https://www.thenextgenerationz.com/ko/session#apply" target="_blank" rel="noopener">「한 장의 목차」 신청하기</a>
+      <a class="btn line" href="mailto:thenextgenerationz.com@gmail.com?subject=%E3%80%8C%ED%95%9C%20%ED%95%B4%EC%9D%98%20%EA%B8%B0%EB%A1%9D%E3%80%8D%20%EB%AC%B8%EC%9D%98">워크숍을 마쳤어요 · 문의하기</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div>
+      <strong>「한 해의 기록」</strong>
+      <p class="series-f">열고, 쌓고, 엮다.</p>
+    </div>
+    <p class="by"><span>의정 기록 시리즈 · BY</span> <a href="https://www.thenextgenerationz.com/ko" target="_blank" rel="noopener">더넥스트제너레이션즈</a></p>
+  </div>
+</footer>
+
+<!-- 미리보기 창 -->
+<div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-labelledby="v-name" hidden>
+  <div class="v-bar">
+    <div class="v-title"><span class="code" id="v-code"></span><b id="v-name"></b><span id="v-who"></span></div>
+    <div class="v-ctrl">
+      <div class="seg" role="group" aria-label="화면 크기">
+        <button type="button" data-mode="pc" aria-pressed="true">PC</button>
+        <button type="button" data-mode="m" aria-pressed="false">휴대폰</button>
+      </div>
+      <button type="button" class="v-btn" id="v-prev" aria-label="이전 스타일">←</button>
+      <button type="button" class="v-btn" id="v-next" aria-label="다음 스타일">→</button>
+      <a class="v-btn v-hide-m" id="v-newtab" href="#" target="_blank" rel="noopener">새 창</a>
+      <button type="button" class="v-btn v-close" id="v-close" aria-label="닫기">×</button>
+    </div>
+  </div>
+  <div class="v-stage" id="v-stage">
+    <div class="frame pc" id="v-frame"><iframe id="v-iframe" title="홈페이지 스타일 미리 보기" loading="lazy"></iframe></div>
+  </div>
+  <div class="v-foot"><span>미리 보기: <b id="v-persona"></b> · AI로 만든 가상 인물입니다</span><span class="v-hide-m">← → 키로 넘기고, Esc로 닫습니다</span></div>
+</div>
+
+<script>
+(function(){
+  // 미리 보기 위치 — 이 페이지 옆 demo 폴더 (웹에서는 /poli-home/demo/)
+  var DEMO = "/poli-home/demo/";
+  var P = {
+    sohyul:{n:"한소율",a:27,t:"가온시의원"},
+    doyun:{n:"서도윤",a:35,t:"누리도의원"},
+    jiyun:{n:"오지윤",a:44,t:"다온구의원"},
+    woojin:{n:"정우진",a:29,t:"하람구의원"}
+  };
+  var G = [
+    {k:"LB",t:"현장에서 알아채고, 새로 만드는"},
+    {k:"LM",t:"현장에서 알아채고, 있는 행정을 움직이는"},
+    {k:"RB",t:"자료에서 읽어 내고, 새로 만드는"},
+    {k:"RM",t:"자료에서 읽어 내고, 있는 행정을 움직이는"}
+  ];
+  var S = [
+    ["LBFW","생활발명가","동네 불편에서 새 제도를 직접 만드는 분","sohyul"],
+    ["LBFH","문 여는 사람","주민이 들어올 문턱을 낮추는 분","jiyun"],
+    ["LBTW","동네건축가","이웃·기관과 함께 동네에 필요한 것을 짓는 분","woojin"],
+    ["LBTH","마을정원사","주민이 직접 정하는 자리를 오래 가꾸는 분","sohyul"],
+    ["LMFW","현장해결사","들은 불편을 바로 고쳐 내는 분","woojin"],
+    ["LMFH","열린 창구","민원이 어디서 멈췄는지 끝까지 확인하는 분","jiyun"],
+    ["LMTW","징검다리","주민과 기관을 이어 주는 분","woojin"],
+    ["LMTH","목소리 통역사","엇갈린 목소리를 모아 함께 정하게 하는 분","sohyul"],
+    ["RBFW","정책설계자","자료를 읽고 정책을 설계하는 분","doyun"],
+    ["RBFH","규칙수선공","제도의 빈틈을 공정한 규칙으로 고치는 분","doyun"],
+    ["RBTW","편집장","여러 사람의 제안을 하나의 정책으로 엮는 분","jiyun"],
+    ["RBTH","판 짜는 사람","참여의 규칙을 새로 짜는 분","sohyul"],
+    ["RMFW","추진가","근거를 들고 행정을 움직이는 분","woojin"],
+    ["RMFH","파수꾼","관행을 그냥 넘기지 않는 분","doyun"],
+    ["RMTW","협상가","근거로 합의를 만들어 내는 분","jiyun"],
+    ["RMTH","광장지기","큰 쟁점을 공개 토론에 올리는 분","doyun"]
+  ];
+
+  // 카드 그리기
+  var host = document.getElementById("style-groups");
+  var html = "";
+  G.forEach(function(g){
+    html += '<div class="group" data-g="'+g.k+'"><div class="group-head"><b>'+g.k+'</b><h3>'+g.t+'</h3></div><div class="styles">';
+    S.forEach(function(s,i){
+      if (s[0].slice(0,2)!==g.k) return;
+      var p = P[s[3]];
+      html += '<button type="button" class="style" data-i="'+i+'" aria-label="'+s[0]+' '+s[1]+' 스타일 미리 보기">'+
+        '<span class="thumb"><img src="/poli-home/thumbs/'+s[0].toLowerCase()+'.jpg" alt="" loading="lazy" width="640" height="400"><span class="open">미리 보기</span></span>'+
+        '<span class="body"><span class="code">'+s[0]+'</span><span class="name">'+s[1]+'</span><span class="who">'+s[2]+'</span>'+
+        '<span class="persona"><img src="/poli-home/thumbs/p-'+s[3]+'.jpg" alt="" loading="lazy"><span>'+p.n+' · '+p.a+'세 · '+p.t+'</span></span></span></button>';
+    });
+    html += '</div></div>';
+  });
+  host.innerHTML = html;
+
+  // 거르기
+  var chips = document.querySelectorAll(".chips button");
+  chips.forEach(function(b){
+    b.addEventListener("click", function(){
+      chips.forEach(function(x){ x.setAttribute("aria-pressed", x===b?"true":"false"); });
+      var f = b.getAttribute("data-f");
+      document.querySelectorAll(".group").forEach(function(g){
+        g.hidden = !!f && g.getAttribute("data-g").charAt(0)!==f;
+      });
+    });
+  });
+
+  // 미리보기 창
+  var V = document.getElementById("viewer"), stage = document.getElementById("v-stage"),
+      frame = document.getElementById("v-frame"), iframe = document.getElementById("v-iframe"),
+      cur = 0, mode = window.innerWidth < 760 ? "m" : "pc", lastFocus = null;
+  function url(i){ return DEMO + S[i][0].toLowerCase() + "/"; }
+  function fit(){
+    var w = stage.clientWidth - 40, h = stage.clientHeight - 40;
+    if (window.innerWidth < 640){ w = stage.clientWidth - 20; h = stage.clientHeight - 20; }
+    var fw = mode==="pc" ? 1280 : 410, fh, sc;
+    if (mode==="pc"){ sc = Math.min(1, w/fw); fh = h/sc; }
+    else { sc = Math.min(1, w/fw, h/860); fh = Math.min(860, h/sc); }
+    frame.style.width = fw+"px"; frame.style.height = fh+"px";
+    frame.style.transform = "scale("+sc+")";
+    frame.style.marginBottom = (-(fh*(1-sc)))+"px";
+    frame.className = "frame " + mode;
+  }
+  function setMode(m){
+    mode = m;
+    document.querySelectorAll(".seg button").forEach(function(b){ b.setAttribute("aria-pressed", b.getAttribute("data-mode")===m?"true":"false"); });
+    fit();
+  }
+  function show(i){
+    cur = (i + S.length) % S.length;
+    var s = S[cur], p = P[s[3]];
+    document.getElementById("v-code").textContent = s[0];
+    document.getElementById("v-name").textContent = s[1];
+    document.getElementById("v-who").textContent = s[2];
+    document.getElementById("v-persona").textContent = p.n+" · "+p.a+"세 · "+p.t;
+    document.getElementById("v-newtab").href = url(cur);
+    iframe.src = url(cur);
+    try { history.replaceState(null, "", "#style-" + s[0].toLowerCase()); } catch(e){}
+  }
+  function open(i){
+    lastFocus = document.activeElement;
+    V.hidden = false; V.classList.add("open"); document.body.style.overflow = "hidden";
+    setMode(mode); show(i);
+    document.getElementById("v-close").focus();
+  }
+  function close(){
+    V.classList.remove("open"); V.hidden = true; document.body.style.overflow = "";
+    iframe.src = "about:blank";
+    try { history.replaceState(null, "", "#styles"); } catch(e){}
+    if (lastFocus) lastFocus.focus();
+  }
+  host.addEventListener("click", function(e){
+    var b = e.target.closest(".style"); if (b) open(+b.getAttribute("data-i"));
+  });
+  document.querySelectorAll(".seg button").forEach(function(b){
+    b.addEventListener("click", function(){ setMode(b.getAttribute("data-mode")); });
+  });
+  document.getElementById("v-prev").addEventListener("click", function(){ show(cur-1); });
+  document.getElementById("v-next").addEventListener("click", function(){ show(cur+1); });
+  document.getElementById("v-close").addEventListener("click", close);
+  document.addEventListener("keydown", function(e){
+    if (V.hidden) return;
+    if (e.key==="Escape") close();
+    else if (e.key==="ArrowLeft") show(cur-1);
+    else if (e.key==="ArrowRight") show(cur+1);
+  });
+  window.addEventListener("resize", function(){ if (!V.hidden) fit(); });
+
+  // 주소로 바로 열기: #style-lbfw
+  var m = location.hash.match(/^#style-([a-z]{4})$/);
+  if (m){ var idx = S.findIndex(function(s){ return s[0].toLowerCase()===m[1]; }); if (idx>-1) open(idx); }
+})();
+</script>
+</body>
+</html>
