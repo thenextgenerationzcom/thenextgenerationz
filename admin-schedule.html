@@ -697,16 +697,17 @@ details summary{cursor:pointer;font-weight:700;font-size:14px}
     var rows = INB.items.filter(function(x){ return all || x.status === "new"; });
     el.innerHTML = rows.length ? rows.map(function(x){
       var dup = x.status === "new" ? already(x) : null;
-      var pill = x.status === "added" ? '<span class="pill ok">등록함</span>' : x.status === "hidden" ? '<span class="pill cx">숨김</span>' : '<span class="pill new">새 신청</span>';
+      var PL = { added: ["ok", "등록함"], done: ["ok", "완료"], going: ["wait", "진행 중"], hold: ["wait", "보류"], cancel: ["cx", "취소"], hidden: ["cx", "숨김"] }[x.status] || ["new", "새 신청"];
+      var pill = '<span class="pill ' + PL[0] + '">' + PL[1] + '</span>';
       var act = x.status === "new"
         ? (dup ? '<span class="muted" style="font-size:12.5px">명단에 같은 이름이 있습니다</span><button class="btn g" type="button" data-in="mark" data-id="' + esc(x.id) + '" style="padding:6px 10px;font-size:13px">등록한 것으로 표시</button>'
                : '<button class="btn p" type="button" data-in="add" data-id="' + esc(x.id) + '" style="padding:6px 10px;font-size:13px">' + (x.email ? '확인하고 안내 메일 보내기' : '신청자로 등록') + '</button>' + (x.email ? '<button class="btn g" type="button" data-in="addonly" data-id="' + esc(x.id) + '" style="padding:6px 10px;font-size:13px">등록만</button>' : '')) +
           '<button class="btn g" type="button" data-in="hide" data-id="' + esc(x.id) + '" style="padding:6px 10px;font-size:13px">숨기기</button>'
         : '<button class="btn g" type="button" data-in="undo" data-id="' + esc(x.id) + '" style="padding:6px 10px;font-size:13px">되돌리기</button>';
-      return '<div class="li' + (x.status === "hidden" ? " cx" : "") + '"><div class="when">' + esc(track(x.term)) + '<small>' + esc(when(x.at)) + '</small></div>' +
+      return '<div class="li' + (x.status === "hidden" || x.status === "cancel" ? " cx" : "") + '"><div class="when">' + esc(track(x.term)) + '<small>' + esc(when(x.at)) + '</small></div>' +
         '<div class="who"><span class="prog k-' + esc(x.kind || "session") + '">' + esc(PROGN[x.kind] || "「한 장의 목차」") + '</span> <b>' + esc(x.org) + ' ' + esc(x.name) + '</b>' + pill +
         '<div class="meta">' + esc([x.email, x.phone, x.term].filter(Boolean).join(" · ")) + '</div>' +
-        (x.message ? '<div class="msg">' + esc(x.message) + '</div>' : '') + '</div>' +
+        (x.message ? '<div class="msg">' + esc(x.message) + '</div>' : '') + (x.memo ? '<div class="meta">메모: ' + esc(x.memo) + '</div>' : '') + '</div>' +
         '<div class="act">' + act + '</div></div>';
     }).join("") : '<p class="muted">' + (all ? "아직 들어온 신청이 없습니다." : "새로 들어온 신청이 없습니다.") + '</p>';
   }

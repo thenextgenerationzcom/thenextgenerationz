@@ -53,6 +53,21 @@ button{font-family:var(--sans);cursor:pointer}
 .ib-msg.open{max-height:none}
 .ib-st{font-size:11.5px;padding:1px 7px;border-radius:3px;border:1px solid var(--bdr);color:var(--ink-dim)}
 .ib-st.new{border-color:var(--m);color:var(--m)}
+.ib-st.going{border-color:#2F6FB0;color:#2F6FB0}.ib-st.hold{border-color:#B7791F;color:#B7791F}.ib-st.done,.ib-st.added{border-color:#1D7A5F;color:#1D7A5F}
+.ib-item.s-done,.ib-item.s-added,.ib-item.s-cancel,.ib-item.s-hidden{opacity:.62}
+.ib-filter.st{margin-top:-6px}
+.ib-filter.st button{font-size:12.5px;padding:4px 10px}
+.ib-act{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:10px;padding-top:10px;border-top:1px dashed var(--bdr)}
+.ib-act select{font:inherit;font-size:13px;padding:5px 8px;border:1px solid var(--bdr);border-radius:4px;background:var(--panel);color:var(--ink)}
+.ib-act button{font:inherit;font-size:12.5px;padding:5px 10px;border:1px solid var(--bdr);border-radius:4px;background:var(--panel);color:var(--ink-soft);cursor:pointer}
+.ib-act button:hover{border-color:var(--ink-soft);color:var(--ink)}
+.ib-act .del{margin-left:auto;color:#B42318;border-color:#F0C8C4}
+.ib-act .del:hover{background:#FDECEA;border-color:#B42318;color:#B42318}
+.ib-memo{font-size:12.5px;margin-top:8px;padding:6px 10px;background:var(--panel2);border-radius:4px;color:var(--ink)}
+.ib-memo b{font-weight:600;color:var(--ink-dim);margin-right:6px}
+.ib-memo-ed{display:flex;gap:6px;margin-top:8px;width:100%}
+.ib-memo-ed input{flex:1;min-width:0;font:inherit;font-size:13px;padding:6px 9px;border:1px solid var(--bdr);border-radius:4px}
+@media(max-width:640px){.ib-act .del{margin-left:0}}
 .fn-row{display:grid;grid-template-columns:150px 1fr 44px 64px;gap:10px;align-items:center;font-size:13px}
 .fn-row .name{color:var(--ink-soft)}
 .fn-row .track{height:10px;background:var(--panel2);border-radius:2px;overflow:hidden}
@@ -278,8 +293,9 @@ button{font-family:var(--sans);cursor:pointer}
   <!-- 글 -->
   <div class="wrap" id="tab-inbox" style="display:none">
     <div class="panel">
-      <h3>홈페이지 신청함 <span class="muted" style="font-weight:400">· 신청서로 들어온 전체 · 처리(신청자 등록·숨김)는 <a href="/admin/schedule" style="color:var(--m)">일정·신청 처리</a>에서</span></h3>
+      <h3>홈페이지 신청함 <span class="muted" style="font-weight:400">· 건마다 상태를 바꾸면 위 숫자 알림이 줄어듭니다 · 신청자 등록·안내 메일은 <a href="/admin/schedule" style="color:var(--m)">일정·신청 처리</a>에서</span></h3>
       <div class="ib-filter" id="ibFilter"></div>
+      <div class="ib-filter st" id="ibStFilter"></div>
       <div id="ibList"><div class="muted">불러오는 중…</div></div>
     </div>
   </div>
@@ -531,30 +547,83 @@ function renderDim(elId, obj, byKey, limit){
 }
 
 /* ---- 신청함 ---- */
-var IB = null, ibKind = 'all';
+var IB = null, ibKind = 'all', ibSt = 'open', ibMemo = null;
 var PROG = { session:'「한 장의 목차」', record:'「한 해의 기록」', publishing:'「한 권의 정치」', contact:'문의' };
+var STN = { new:'새 신청', going:'진행 중', hold:'보류', done:'완료', added:'신청자 등록함', cancel:'취소', hidden:'숨김' };
+var STF = [['open','처리할 것'],['all','모든 상태'],['new','새 신청'],['going','진행 중'],['hold','보류'],['done','완료·등록'],['cancel','취소·숨김']];
+function stOf(x){ return STN[x.status] ? x.status : 'new'; }
+function stMatch(x, f){
+  var s = stOf(x);
+  if (f==='all') return true;
+  if (f==='open') return s==='new' || s==='going' || s==='hold';
+  if (f==='done') return s==='done' || s==='added';
+  if (f==='cancel') return s==='cancel' || s==='hidden';
+  return s===f;
+}
 function loadInbox(){
-  api('inbox').then(function(d){ IB = (d && d.items) || []; renderInbox(); })
+  api('inbox').then(function(d){ IB = (d && d.items) || []; renderInbox(); setInboxN(); })
     .catch(function(){ document.getElementById('ibList').innerHTML = '<div class="muted">신청함을 불러오지 못했습니다.</div>'; });
 }
 function renderInbox(){
   if (!IB) return;
-  var cnt = { all: IB.length }; IB.forEach(function(x){ cnt[x.kind] = (cnt[x.kind]||0) + 1; });
+  var inSt = IB.filter(function(x){ return stMatch(x, ibSt); });
+  var cnt = { all: inSt.length }; inSt.forEach(function(x){ cnt[x.kind] = (cnt[x.kind]||0) + 1; });
   var keys = ['all','session','record','publishing','contact'];
   document.getElementById('ibFilter').innerHTML = keys.map(function(k){
     return '<button type="button" class="'+(k===ibKind?'on':'')+'" onclick="ibKind=\''+k+'\';renderInbox()">'+(k==='all'?'전체':PROG[k])+' '+(cnt[k]||0)+'</button>';
   }).join('');
-  var rows = IB.filter(function(x){ return ibKind==='all' || x.kind===ibKind; });
+  document.getElementById('ibStFilter').innerHTML = STF.map(function(f){
+    var n = IB.filter(function(x){ return stMatch(x, f[0]) && (ibKind==='all' || x.kind===ibKind); }).length;
+    return '<button type="button" class="'+(f[0]===ibSt?'on':'')+'" onclick="ibSt=\''+f[0]+'\';renderInbox()">'+f[1]+' '+n+'</button>';
+  }).join('');
+  var rows = inSt.filter(function(x){ return ibKind==='all' || x.kind===ibKind; });
   document.getElementById('ibList').innerHTML = rows.length ? rows.map(function(x){
+    var s = stOf(x);
     var d = new Date(x.at||0), when = (d.getMonth()+1)+'/'+d.getDate()+' '+('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);
-    var st = x.status==='added' ? '<span class="ib-st">신청자 등록함</span>' : x.status==='hidden' ? '<span class="ib-st">숨김</span>' : '<span class="ib-st new">새 신청</span>';
-    return '<div class="ib-item k-'+esc(x.kind)+'"><div class="ib-top"><span class="ib-prog">'+esc(PROG[x.kind]||x.kind)+'</span><span class="ib-who">'+esc(x.org)+' '+esc(x.name)+'</span>'+st+'<span class="ib-when">'+when+'</span></div>'+
+    var st = '<span class="ib-st '+s+'">'+STN[s]+'</span>';
+    var opts = Object.keys(STN).map(function(k){ return '<option value="'+k+'"'+(k===s?' selected':'')+'>'+STN[k]+'</option>'; }).join('');
+    var id = esc(x.id);
+    var memoEd = ibMemo===x.id
+      ? '<div class="ib-memo-ed"><input id="ibMemoIn" maxlength="500" value="'+esc(x.memo||'')+'" placeholder="예: 의원 신청으로 이어짐 (10/29)" onkeydown="if(event.key===\'Enter\')ibSaveMemo(\''+id+'\')"><button type="button" onclick="ibSaveMemo(\''+id+'\')">저장</button><button type="button" onclick="ibMemo=null;renderInbox()">취소</button></div>'
+      : '';
+    return '<div class="ib-item k-'+esc(x.kind)+' s-'+s+'"><div class="ib-top"><span class="ib-prog">'+esc(PROG[x.kind]||x.kind)+'</span><span class="ib-who">'+esc(x.org)+' '+esc(x.name)+'</span>'+st+'<span class="ib-when">'+when+'</span></div>'+
       '<div class="ib-meta">'+esc([x.email, x.phone, x.term].filter(Boolean).join(' · '))+'</div>'+
       '<div class="ib-meta">들어온 경로: '+esc(x.from || '기록 없음 (10/29 이전 신청)')+(x.source ? ' · '+esc(x.source) : '')+'</div>'+
-      (x.message ? '<div class="ib-msg" onclick="this.classList.toggle(\'open\')">'+esc(x.message)+'</div>' : '')+'</div>';
-  }).join('') : '<div class="muted">해당하는 신청이 없습니다.</div>';
+      (x.message ? '<div class="ib-msg" onclick="this.classList.toggle(\'open\')">'+esc(x.message)+'</div>' : '')+
+      (x.memo && ibMemo!==x.id ? '<div class="ib-memo"><b>메모</b>'+esc(x.memo)+'</div>' : '')+
+      '<div class="ib-act"><label class="muted" style="font-size:12.5px">상태</label><select aria-label="상태" onchange="ibSet(\''+id+'\',this.value,this)">'+opts+'</select>'+
+      '<button type="button" onclick="ibMemo=\''+id+'\';renderInbox();var i=document.getElementById(\'ibMemoIn\');if(i)i.focus()">'+(x.memo?'메모 고치기':'메모')+'</button>'+
+      '<button type="button" class="del" onclick="ibDel(\''+id+'\',this)">삭제</button>'+memoEd+'</div></div>';
+  }).join('') : '<div class="muted">'+(ibSt==='open' ? '처리할 신청이 없습니다. 끝난 건은 ‘전체’나 ‘완료·등록’에서 볼 수 있습니다.' : '해당하는 신청이 없습니다.')+'</div>';
 }
-function inboxBadge(){ api('inbox').then(function(d){ var n=((d&&d.items)||[]).filter(function(x){return x.status==='new';}).length; document.getElementById('inboxN').textContent = n ? n : ''; }).catch(function(){}); }
+function ibFind(id){ return (IB||[]).filter(function(x){ return x.id===id; })[0]; }
+function ibSet(id, status, el){
+  var x = ibFind(id); if (!x) return;
+  if (el) el.disabled = true;
+  api('inboxmark', { method:'POST', body:{ id:id, status:status } }).then(function(d){
+    if (!d || !d.ok) throw new Error('fail');
+    x.status = status; renderInbox(); setInboxN(); toast('‘'+STN[status]+'’(으)로 바꿨습니다');
+  }).catch(function(){ if (el) el.disabled = false; toast('바꾸지 못했습니다. 다시 시도해 주세요'); renderInbox(); });
+}
+function ibSaveMemo(id){
+  var x = ibFind(id), i = document.getElementById('ibMemoIn'); if (!x || !i) return;
+  var v = i.value.trim();
+  api('inboxmark', { method:'POST', body:{ id:id, memo:v } }).then(function(d){
+    if (!d || !d.ok) throw new Error('fail');
+    x.memo = v; ibMemo = null; renderInbox(); toast('메모를 저장했습니다');
+  }).catch(function(){ toast('메모를 저장하지 못했습니다'); });
+}
+function ibDel(id, el){
+  var x = ibFind(id); if (!x) return;
+  if (!confirm((x.org||'')+' '+(x.name||'')+' 건을 신청함에서 지울까요?\n지운 건은 목록에서 사라집니다. (기록은 따로 보관돼 필요하면 되살릴 수 있습니다)')) return;
+  el.disabled = true;
+  api('inboxdel', { method:'POST', body:{ id:id } }).then(function(d){
+    if (!d || !d.ok) throw new Error('fail');
+    IB = IB.filter(function(i){ return i.id!==id; }); renderInbox(); setInboxN(); toast('지웠습니다');
+  }).catch(function(){ el.disabled = false; toast('지우지 못했습니다'); });
+}
+function setInboxN(){ var n=(IB||[]).filter(function(x){ return stOf(x)==='new'; }).length; document.getElementById('inboxN').textContent = n ? n : ''; }
+function inboxBadge(){ api('inbox').then(function(d){ var n=((d&&d.items)||[]).filter(function(x){return !x.status || x.status==='new';}).length; document.getElementById('inboxN').textContent = n ? n : ''; }).catch(function(){}); }
 
 /* ---- 글 목록 ---- */
 function loadPosts(){
