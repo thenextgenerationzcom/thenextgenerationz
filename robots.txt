@@ -1,3 +1,4 @@
+#DaumWebMasterTool:c46a4e22805638e334fc90e90dbd73e73e8e4c626384689ef0af89295d58b8ce:e72ZaETHYmtl8bFrs60rSQ==
 User-agent: *
 Allow: /
 Disallow: /api/
