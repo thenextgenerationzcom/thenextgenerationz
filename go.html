@@ -10,7 +10,9 @@
   var GAS = 'https://script.google.com/macros/s/AKfycbxyPbRd6t4u9GRV0UEAmHYKAM4ygTGIs_9qAtHQZHak9jux80dsVCsu5z6iUF80a3EkxA/exec';
   // to: 링크 위치 표시를 겸함. r로 시작하면 「한 해의 기록」(3차 메일)
   var DEST = { home: '/ko/', publishing: '/ko/publishing',
-    record: '/ko/record', rimg: '/ko/record#styles', rbtn: '/ko/record#styles', rend: '/ko/record#apply', rhome: '/ko/', rseries: '/ko/#series' };
+    record: '/ko/record', rimg: '/ko/record#styles', rbtn: '/ko/record#styles', rend: '/ko/record#apply', rhome: '/ko/', rseries: '/ko/#series',
+    // 사전 설문(구글 폼) — 의원별 링크로 누가 열었는지 「클릭 기록」에 남김
+    survey: 'https://docs.google.com/forms/d/e/1FAIpQLSdDlwnb3LKtL_Af_fn_ByGFPy5RPyN-p3N_TCR2YlaNyCZcfA/viewform' };
   var q = new URLSearchParams(location.search);
   var k = (q.get('k') || '').toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 12);
   var to = (q.get('to') || 'session').replace(/[^a-z]/g, '').slice(0, 12);
@@ -22,6 +24,7 @@
       if (!ok) fetch(GAS, { method: 'POST', mode: 'no-cors', body: body, keepalive: true });
     } catch (e) {}
   }
+  if (/^https?:/.test(dest)) { location.replace(dest); return; }
   var hash = '', hi = dest.indexOf('#');
   if (hi >= 0) { hash = dest.slice(hi); dest = dest.slice(0, hi); }
   var utm = /^r/.test(to) ? 'email3' : 'email';
