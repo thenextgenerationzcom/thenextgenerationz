@@ -1,15 +1,10 @@
 User-agent: *
 Allow: /
-
-User-agent: Yeti
-Allow: /
-
-User-agent: Daumoa
-Allow: /
-
 Disallow: /api/
-Disallow: /admin.html
 Disallow: /admin
+Disallow: /admin.html
 Disallow: /admin-schedule.html
+Disallow: /go
+Disallow: /ko/booking
 
 Sitemap: https://www.thenextgenerationz.com/sitemap.xml
