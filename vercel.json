@@ -68,6 +68,10 @@
       "destination": "/ko/publishing.html"
     },
     {
+      "source": "/ko/about",
+      "destination": "/ko/about.html"
+    },
+    {
       "source": "/ko/briefings",
       "destination": "/ko/briefings.html"
     },
