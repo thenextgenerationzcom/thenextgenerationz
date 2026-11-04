@@ -267,10 +267,14 @@ export default async function handler(req, res) {
     const evType = (ev.t || 'pv').toString();
 
     // 봇 판별: ① User-Agent ② 자동화 브라우저 신호 ③ 데이터센터 도시
+    // 단, 우리 메일 링크(utm=email…)로 들어온 방문의 '자동화 신호'는 의회·공공기관 PC의
+    // 보안(격리) 브라우저인 경우가 많아 사람으로 센다. UA 크롤러·데이터센터는 그대로 봇.
     let botReason = '';
     const bn = botName(ua);
+    const fromMail = /^email/i.test(String(ev.u || ev.su || ''));
+    const secBrowser = ev.bw === '1' && fromMail;
     if (bn) botReason = '크롤러·' + bn;
-    else if (ev.bw === '1') botReason = '자동화 브라우저';
+    else if (ev.bw === '1' && !fromMail) botReason = '자동화 브라우저';
     else if (isDcCity(country, city)) botReason = '데이터센터·' + (regionLabel(country, city, region).split('·')[1] || '');
 
     // 봇은 별도 카운터에만 기록하고 사람 통계에는 넣지 않는다 (페이지뷰만 센다)
@@ -339,6 +343,7 @@ export default async function handler(req, res) {
     cmds.push(['HINCRBY', 'a:h:' + date, 'lang:' + lang, 1]);
     cmds.push(['HINCRBY', 'a:h:' + date, 'hr:' + hour, 1]);
     cmds.push(['HINCRBY', 'a:h:' + date, 'dev:' + dev, 1]);
+    if (secBrowser) cmds.push(['HINCRBY', 'a:h:' + date, 'sec:보안 브라우저(메일 유입)', 1]);
     if (country) cmds.push(['HINCRBY', 'a:h:' + date, 'rg:' + regionLabel(country, city, region), 1]);
     cmds.push(['EXPIRE', 'a:pv:' + date, 60 * 86400]);
     cmds.push(['EXPIRE', 'a:uv:' + date, 60 * 86400]);
@@ -362,7 +367,7 @@ export default async function handler(req, res) {
         const rec = {
           t: new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(11, 16),
           s: sid, p: path, src, ref: refHost.slice(0, 60), rg: regionLabel(country, city, region),
-          dev, br: browserShort(ua),
+          dev, br: browserShort(ua) + (secBrowser ? ' · 보안 브라우저' : ''),
           lang: String(ev.l || '').slice(0, 12), tz: String(ev.z || '').slice(0, 40),
         };
         cmds.push(['LPUSH', 'a:log:' + date, JSON.stringify(rec)]);
