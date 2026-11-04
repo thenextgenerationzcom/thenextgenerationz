@@ -18,7 +18,7 @@
   function send(payload) {
     if (OFF) return;
     try {
-      if (BW) payload.bw = BW;
+      if (BW) { payload.bw = BW; try { payload.su = sessionStorage.getItem('tng_src_u') || ''; } catch (e) {} }
       var body = JSON.stringify(payload);
       var sent = false;
       if (navigator.sendBeacon) {
