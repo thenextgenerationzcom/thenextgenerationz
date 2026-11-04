@@ -298,6 +298,8 @@ footer{background:#0B1623;border-top:1px solid #2A3A48;padding:40px 5vw}
 .cv-r .o{min-width:0;color:var(--ink)}
 .cv-r .o small{display:block;font-size:12.5px;color:var(--ink-dim);margin-top:2px}
 .cv-r .r{font-size:13px;color:var(--ink-soft);text-align:right}
+.facts{margin-top:24px;padding:11px 0;border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);font-size:13px;color:var(--ink-soft);letter-spacing:-0.015em;white-space:nowrap}
+.facts span+span::before{content:"";display:inline-block;width:1px;height:11px;background:var(--bdr);margin:0 12px;vertical-align:-1px}
 .cv-h{font-size:17px;font-weight:700;letter-spacing:-0.025em;margin-top:40px}
 .cv-h:first-of-type{margin-top:6px}
 @media(max-width:768px){
@@ -307,6 +309,8 @@ footer{background:#0B1623;border-top:1px solid #2A3A48;padding:40px 5vw}
   .creds4{grid-template-columns:1fr;gap:22px}
   .cv-r{grid-template-columns:1fr;gap:2px}
   .cv-r .r{text-align:left}
+  .facts{white-space:normal;display:flex;flex-direction:column;gap:4px}
+  .facts span+span::before{display:none}
 }
 </style>
 </head>
@@ -323,7 +327,7 @@ footer{background:#0B1623;border-top:1px solid #2A3A48;padding:40px 5vw}
       <span></span><span></span><span></span>
     </button>
     <div class="nav-links" id="navLinks">
-      <a href="/ko/about" aria-current="page" style="color:var(--ink);font-weight:600">소개</a>
+      <a href="/ko/about">소개</a>
       <a href="/ko#work">Work</a>
       <span class="nav-dd" id="navDd"><button type="button" class="nav-dd-btn" aria-expanded="false" aria-controls="navDdMenu" onclick="tngDd(event)">의정 기록 시리즈 <span class="cr">▼</span></button><span class="nav-dd-menu" id="navDdMenu" role="menu"><span class="box"><a href="/ko/session" role="menuitem"><small>01 설계</small>「한 장의 목차」</a><a href="/ko/record" role="menuitem"><small>02 기록</small>「한 해의 기록」</a><a href="/ko/publishing" role="menuitem"><small>03 출판</small>「한 권의 정치」</a><a class="all" href="/ko#series" role="menuitem">시리즈 한눈에 보기 →</a></span></span></span>
       <a href="/ko/poli-code" class="nav-poli">POLI CODE <span class="nav-new">NEW</span></a>
@@ -356,11 +360,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'){var d=docum
         <p class="ab-name">김희원<span>더넥스트제너레이션즈 대표</span></p>
         <p class="lead" style="margin-top:18px">사람 안에 있는 가능성을 발견하고, 그 가능성이 세상을 바꾸는 힘이 되도록 돕습니다.
           비즈니스와 정책, 정치를 아우르며 그 일을 합니다.</p>
-        <div class="meta">
-          <span class="chip">경희대 공공대학원 정책학과 석사과정</span>
-          <span class="chip">저서 2권 · 역서 1권</span>
-          <span class="chip">KIAT 등 정책연구 6건</span>
-        </div>
+        <p class="facts"><span>경희대 공공대학원 정책학과 석사과정</span><span>저서 2권 · 역서 1권</span><span>KIAT 등 정책연구 6건</span></p>
       </div>
     </div>
   </div>
@@ -373,7 +373,8 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'){var d=docum
     <h2>작곡을 공부하던 사람이<br>정치 현장에 오기까지</h2>
     <div class="stack">
       <p class="lead">경희대학교 포스트모던음악학과에 예체능계 수석으로 입학했습니다. 4년 내내 전액 장학금을 받으며, 스스로 특별한 사람이라고 생각했습니다.</p>
-      <p class="lead">그런데 제가 정말 잘하는 일은 곡을 쓰는 일이 아니었습니다. <strong>사람들 안에 있는 가능성을 발견하고, 그 가능성이 밖으로 나오도록 이끄는 일</strong>이었습니다. 그걸 깨달은 뒤, 저만의 길을 걷기 시작했습니다.</p>
+      <p class="lead">그런데 음악은, 예술은 성적순이 아니었습니다. 그곳에서 저의 부족함을 마주했습니다. 그리고 제 부족함이 보이자, 비로소 다른 사람의 잘함이 보이기 시작했습니다.</p>
+      <p class="lead">제가 정말 잘하는 일은 곡을 쓰는 일이 아니었습니다. <strong>사람들 안에 있는 가능성을 발견하고, 그 가능성이 밖으로 나오도록 이끄는 일</strong>이었습니다. 그걸 깨달은 뒤, 저만의 길을 걷기 시작했습니다.</p>
     </div>
     <div class="journey">
       <div class="jr"><div class="k">01<b>사람</b></div><div><h3>청년 커뮤니티 「가름과 다름 사이 〈나름〉」<span class="y">2008~</span></h3><p>청년들이 모여 서로의 가능성을 꺼내는 커뮤니티를 함께 만들고 이끌었습니다.</p></div></div>
@@ -434,14 +435,14 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'){var d=docum
     <div class="cv-t"><div class="cv-r"><span class="y">2025. 11. ~ 현재</span><span class="o">더넥스트제너레이션즈</span><span class="r">대표</span></div><div class="cv-r"><span class="y">2020 ~ 2025</span><span class="o">㈜섀도우캐비닛 (전략컨설팅 그룹)</span><span class="r">각자대표</span></div><div class="cv-r"><span class="y">2020</span><span class="o">서울시 청년정책 네트워크</span><span class="r">동대문구 활성화 사업단장</span></div><div class="cv-r"><span class="y">2019 ~ 2020</span><span class="o">서울시 상향적·협력적 일자리 창출사업</span><span class="r">DDM 일자리발전소 사업단장</span></div><div class="cv-r"><span class="y">2018 ~ 2019</span><span class="o">동대문구 플리마켓 「잇다마켓」</span><span class="r">사업단장</span></div><div class="cv-r"><span class="y">2018</span><span class="o">서울문화재단</span><span class="r">생활예술매개자(FA)</span></div><div class="cv-r"><span class="y">2016 ~ 2020</span><span class="o">㈜후츄</span><span class="r">공동대표</span></div><div class="cv-r"><span class="y">2016 ~ 2017</span><span class="o">서울시 청년허브 「서울잡스」</span><span class="r">편집장</span></div><div class="cv-r"><span class="y">2011 ~ 2016</span><span class="o">카페 후츄(whoTyou)</span><span class="r">대표</span></div><div class="cv-r"><span class="y">2008 ~ 2011</span><span class="o">청년단체 「가름과 다름 사이 〈나름〉」</span><span class="r">공동대표</span></div></div>
 
     <h3 class="cv-h">정책 연구</h3>
-    <div class="cv-t"><div class="cv-r"><span class="y">2026</span><span class="o">기술안보전략 전문인재양성 추진방향 연구<small>한국산업기술진흥원(KIAT)</small></span><span class="r">공동연구원</span></div><div class="cv-r"><span class="y">2025</span><span class="o">AI 등 첨단산업 기술혁신 현장 조사 및 정책과제 발굴<small>한국산업기술진흥원(KIAT)</small></span><span class="r">공동연구원</span></div><div class="cv-r"><span class="y">2024</span><span class="o">빅카인즈와 생성형 AI를 활용한 지방자치 맞춤형 정책 제안 플랫폼<small>한국언론진흥재단</small></span><span class="r">수행 책임</span></div><div class="cv-r"><span class="y">2023</span><span class="o">기업연구자 지원을 위한 정책 수립 연구<small>한국산업기술진흥원(KIAT)</small></span><span class="r">총괄 책임연구원</span></div><div class="cv-r"><span class="y">2023</span><span class="o">강서구 청년인구 통계 분석을 통한 청년정책 과제 제안<small>서울 강서구 국회의원실</small></span><span class="r">총괄 책임연구원</span></div><div class="cv-r"><span class="y">2022</span><span class="o">제20대 대선 특집 「무가당 프로젝트」 2030 FGI<small>경향신문</small></span><span class="r">설계·진행</span></div></div>
+    <div class="cv-t"><div class="cv-r"><span class="y">2026</span><span class="o">기술안보전략 전문인재양성 추진방향 연구<small>한국산업기술진흥원(KIAT)</small></span><span class="r">공동연구원</span></div><div class="cv-r"><span class="y">2025</span><span class="o">AI 등 첨단산업 기술혁신 현장 조사 및 정책과제 발굴<small>한국산업기술진흥원(KIAT)</small></span><span class="r">공동연구원</span></div><div class="cv-r"><span class="y">2024</span><span class="o">빅카인즈와 생성형 AI를 활용한 지방자치 맞춤형 정책 제안 플랫폼<small>한국언론진흥재단</small></span><span class="r">기획 및 총괄</span></div><div class="cv-r"><span class="y">2023</span><span class="o">기업연구자 지원을 위한 정책 수립 연구<small>한국산업기술진흥원(KIAT)</small></span><span class="r">총괄 책임연구원</span></div><div class="cv-r"><span class="y">2023</span><span class="o">강서구 청년인구 통계 분석을 통한 청년정책 과제 제안<small>서울 강서구 국회의원실</small></span><span class="r">총괄 책임연구원</span></div><div class="cv-r"><span class="y">2022</span><span class="o">제20대 대선 특집 「무가당 프로젝트」 2030 FGI<small>경향신문</small></span><span class="r">설계·진행</span></div></div>
 
     <h3 class="cv-h">저서 · 역서</h3>
     <div class="books">
       <figure class="book"><img src="../img/book-local-council.jpg" alt="『나는 지방의원이다』 표지" width="440" height="624"><b>나는 지방의원이다</b><span>2022 · 대표저자</span></figure>
       <figure class="book"><img src="../img/book-your-politics.jpg" alt="『당신을 위한 나의 정치는 이렇게 시작되었습니다』 표지" width="440" height="651"><b>당신을 위한 나의 정치는<br>이렇게 시작되었습니다</b><span>2025 · 대표저자</span></figure>
+      <figure class="book"><img src="../img/book-change-world.jpg" alt="『바꿔, 우리들이 살 세상이야』 표지" width="440" height="661"><b>바꿔, 우리들이 살 세상이야</b><span>2024 · 공역</span></figure>
     </div>
-    <p class="lead" style="margin-top:16px;font-size:14.5px">『바꿔, 우리들이 살 세상이야 — 뉴 제너레이션을 위한 액션 툴킷』(미키 할핀 지음, 상상파워, 2024) 공역</p>
 
     <div class="btns" style="margin-top:44px">
       <a class="btn btn-p" href="/ko#contact">강연·워크숍·연구 문의</a>
