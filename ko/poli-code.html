@@ -204,7 +204,7 @@ nav.site{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.96);bac
 .more-in{max-width:888px;margin:0 auto}
 .more .eyebrow{font-family:var(--mono);letter-spacing:.18em}
 .more h2{font:700 clamp(22px,3vw,28px)/1.4 var(--sans);letter-spacing:-.03em;margin:12px 0 24px}
-.more-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.more-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 .more-card{display:flex;flex-direction:column;gap:8px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:20px 20px 18px;text-decoration:none;color:var(--ink);transition:border-color .15s,transform .15s}
 .more-card:hover{border-color:var(--mag);transform:translateY(-2px)}
 .more-card b{font-size:17px}
@@ -257,6 +257,16 @@ footer.site-foot{background:#0B1623;border-top:1px solid #2A3A48;padding:40px 5v
 .tl{background:none;border:0;padding:4px 0;font-weight:600;font-size:14px;color:var(--ink2);text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:4px}
 .tl:hover{color:var(--ink);text-decoration-color:var(--ink)}
 .dexlink{display:inline-block;margin-top:12px;font-weight:700;color:var(--mag);text-decoration:none}
+.my-style{margin-top:16px;display:grid;grid-template-columns:260px 1fr;gap:22px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:18px;background:var(--paper)}
+.my-style>*{min-width:0}
+.my-style a.th{display:block;border-radius:8px;overflow:hidden;border:1px solid var(--line);background:#fff}
+.my-style a.th img{display:block;width:100%;height:auto}
+.my-style .k{font:700 12px var(--mono);letter-spacing:.12em;color:var(--mag)}
+.my-style h3{font:700 19px/1.45 var(--serif);margin:6px 0 6px}
+.my-style p{margin:0 0 14px;color:var(--ink2);font-size:14.5px;line-height:1.65}
+.my-style .row{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center}
+.my-style .all{font-size:14px;font-weight:700;color:var(--mag);text-decoration:none}
+@media (max-width:640px){.my-style{grid-template-columns:1fr}.my-style .cta{width:100%;justify-content:center}}
 @media (max-width:520px){.guide{grid-template-columns:1fr}.sh-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.sh{min-height:76px;flex-direction:row;gap:10px;font-size:14.5px}.sh svg{width:24px;height:24px}}
 
 /* 공개 전 잠금 */
@@ -432,6 +442,16 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'){var d=docum
         <a class="cta" id="toSession" href="/ko/session">워크숍 보기 →</a>
       </div>
 
+      <div class="my-style">
+        <a class="th" id="styleThumb" href="/ko/record#styles"><img id="styleImg" alt="" width="640" height="400" loading="lazy"></a>
+        <div>
+          <span class="k" id="styleK">POLI CODE 홈페이지 스타일</span>
+          <h3>내 코드로 만든 홈페이지는 이렇게 생겼습니다</h3>
+          <p>「한 해의 기록」은 POLI CODE 16가지마다 첫 화면이 다른 의원 홈페이지를 만듭니다. 내 코드의 스타일을 실제 홈페이지처럼 미리 보세요.</p>
+          <div class="row"><a class="cta" id="toStyle" href="/ko/record#styles">내 코드 스타일 미리 보기 →</a><a class="all" href="/ko/record#styles">16가지 스타일 모두 보기</a></div>
+        </div>
+      </div>
+
       <details class="gallery" id="gallery">
         <summary>16가지 코드 모두 보기</summary>
         <div class="grid16" id="grid16"></div>
@@ -453,6 +473,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'){var d=docum
     <h2 id="moreTitle">퀴즈 다음으로 가 볼 곳</h2>
     <div class="more-grid">
       <a class="more-card" href="/ko/session"><b>「한 장의 목차」</b><span>의원님의 경험과 고민으로 정의문, 다섯 개의 가목차, 활동·기록 계획을 함께 만드는 개인 맞춤형 워크숍</span><i>워크숍 보기 →</i></a>
+      <a class="more-card" href="/ko/record#styles"><b>「한 해의 기록」</b><span>POLI CODE 16가지마다 첫 화면이 다른 의원 홈페이지와 AI 비서관 셋. 16가지 스타일을 미리 볼 수 있습니다</span><i>16가지 스타일 보기 →</i></a>
       <a class="more-card" href="/ko/publishing"><b>「한 권의 정치」</b><span>여러분의 정치를, 자신의 언어로. 사전조사부터 원고·출판까지 함께하는 정치인의 책</span><i>자세히 보기 →</i></a>
       <a class="more-card" href="/ko"><b>더넥스트제너레이션즈</b><span>미래세대 정치와 정책을 다루는 더넥스트제너레이션즈 홈페이지</span><i>홈으로 →</i></a>
     </div>
@@ -592,6 +613,10 @@ function result(){
   const sk=r.strong.findIndex(s=>s);const keep=r.code[sk<0?0:sk];
   const grow=pc[wk];
   $('m1').textContent=MISSION[keep];$('m2').textContent=MISSION[grow];
+  {const sl=r.code.toLowerCase();
+  $('toStyle').href=$('styleThumb').href='/ko/record#style-'+sl;
+  $('styleImg').src='/poli-home/thumbs/'+sl+'.jpg';$('styleImg').alt=r.code+' '+p[0]+' 홈페이지 스타일 미리 보기';
+  $('styleK').textContent=r.code+' · '+p[0]+' 홈페이지 스타일';}
   gallery(r.code);drawCard(r.code);$('toast').textContent='';$('copyFallback').hidden=true;
   show('result');
 }
@@ -646,6 +671,7 @@ $('shareLink').onclick=async()=>{const SHARE_URL=shareUrl('share');const d={titl
   if(navigator.share){try{await navigator.share(d);cv('퀴즈 공유');return}catch(e){if(e&&e.name==='AbortError')return}}
   try{await navigator.clipboard.writeText(SHARE_URL);$('toast').textContent='퀴즈 링크를 복사했어요.';cv('퀴즈 공유')}catch(e){const f=$('copyFallback');f.value=SHARE_URL;f.hidden=false;f.focus();f.select();$('toast').textContent='아래 링크를 선택해서 복사해 주세요.'}};
 $('toSession').addEventListener('click',()=>cv('퀴즈→워크숍'));
+$('toStyle').addEventListener('click',()=>cv('퀴즈→홈페이지 스타일'));
 function fileOf(){const b=CARD.sq;return b?new File([b],'POLI-CODE-'+st.r.code+'.png',{type:'image/png'}):null}
 function saveFile(){const f=fileOf();if(!f)return false;const a=document.createElement('a');a.href=URL.createObjectURL(f);a.download=f.name;document.body.append(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500);return true}
 const NOTREADY='카드를 만드는 중이에요. 잠시 뒤 다시 눌러 주세요.';

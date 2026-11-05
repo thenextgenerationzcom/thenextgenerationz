@@ -186,7 +186,7 @@ nav.site{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.96);bac
 .more-in{max-width:888px;margin:0 auto}
 .more .eyebrow{font-family:var(--mono);letter-spacing:.18em}
 .more h2{font:700 clamp(22px,3vw,28px)/1.4 var(--sans);letter-spacing:-.03em;margin:12px 0 24px}
-.more-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.more-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 .more-card{display:flex;flex-direction:column;gap:8px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:20px 20px 18px;text-decoration:none;color:var(--ink);transition:border-color .15s,transform .15s}
 .more-card:hover{border-color:var(--mag);transform:translateY(-2px)}
 .more-card b{font-size:17px}
@@ -276,6 +276,8 @@ html.pc-preview .pc-bar{display:block;background:var(--mag);color:#fff;font-size
 .tc-letters{list-style:none;margin:14px 0 0;padding:12px 0 0;border-top:1px solid var(--line);display:grid;gap:6px}
 .tc-letters li{display:grid;grid-template-columns:24px 1fr;gap:8px;font-size:13px;color:var(--ink2);line-height:1.5}
 .tc-letters b{font:700 13px/22px var(--mono);text-align:center;border:1px solid var(--line);border-radius:4px;color:var(--ink);background:var(--bg)}
+.tc-style{display:inline-block;margin-top:14px;font-size:14px;font-weight:700;color:var(--mag);text-decoration:none}
+.tc-style:hover{text-decoration:underline}
 .dex-cta{margin:44px 0 0;background:#0B1623;color:#fff;border-radius:12px;padding:26px 26px;display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center}
 .dex-cta>*{min-width:0}
 .dex-cta h2{font:700 22px/1.4 var(--sans);margin:0 0 6px;color:#fff}
@@ -418,6 +420,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'){var d=docum
     <dt>이 유형의 힘</dt><dd>사소한 현장 이야기에서 새로운 정책 아이디어를 건져 올리는 감각</dd>
   </dl>
   <ul class="tc-letters"><li><b>L</b><span>현장·사람 — 동네의 작은 불편을 놓치지 않는 감각</span></li><li><b>B</b><span>새로 만들기 — 새 기준과 구조를 설계하는 힘</span></li><li><b>F</b><span>직접 설계 — 복잡한 문제를 내 손으로 구체적인 안으로 바꾸는 힘</span></li><li><b>W</b><span>돌아가는 몫 — 주민이 실제로 체감하는 변화를 챙기는 눈</span></li></ul>
+  <a class="tc-style" href="/ko/record#style-lbfw">이 코드의 홈페이지 스타일 보기 →</a>
 </article>
 <article class="tc" id="LBFH">
   <div class="tc-code"><span class="gc">LB</span>FH</div>
@@ -429,6 +432,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'){var d=docum
     <dt>이 유형의 힘</dt><dd>닫혀 있던 문을 제도의 언어로 여는 감각</dd>
   </dl>
   <ul class="tc-letters"><li><b>L</b><span>현장·사람 — 동네의 작은 불편을 놓치지 않는 감각</span></li><li><b>B</b><span>새로 만들기 — 새 기준과 구조를 설계하는 힘</span></li><li><b>F</b><span>직접 설계 — 복잡한 문제를 내 손으로 구체적인 안으로 바꾸는 힘</span></li><li><b>H</b><span>정하는 방식 — 참여와 책임이 작동하는 과정을 챙기는 눈</span></li></ul>
+  <a class="tc-style" href="/ko/record#style-lbfh">이 코드의 홈페이지 스타일 보기 →</a>
 </article>
 <article class="tc" id="LBTW">
   <div class="tc-code"><span class="gc">LB</span>TW</div>
@@ -440,6 +444,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'){var d=docum
     <dt>이 유형의 힘</dt><dd>같이 만든 약속을 실제 변화로 이어가는 설계 감각</dd>
   </dl>
   <ul class="tc-letters"><li><b>L</b><span>현장·사람 — 동네의 작은 불편을 놓치지 않는 감각</span></li><li><b>B</b><span>새로 만들기 — 새 기준과 구조를 설계하는 힘</span></li><li><b>T</b><span>함께 엮기 — 사람과 기관의 역할을 엮어 일을 성사시키는 힘</span></li><li><b>W</b><span>돌아가는 몫 — 주민이 실제로 체감하는 변화를 챙기는 눈</span></li></ul>
+  <a class="tc-style" href="/ko/record#style-lbtw">이 코드의 홈페이지 스타일 보기 →</a>
 </article>
 <article class="tc" id="LBTH">
   <div class="tc-code"><span class="gc">LB</span>TH</div>
@@ -451,6 +456,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'){var d=docum
     <dt>이 유형의 힘</dt><dd>서로 다른 참여의 씨앗을 하나의 지속적인 구조로 연결하는 힘</dd>
   </dl>
   <ul class="tc-letters"><li><b>L</b><span>현장·사람 — 동네의 작은 불편을 놓치지 않는 감각</span></li><li><b>B</b><span>새로 만들기 — 새 기준과 구조를 설계하는 힘</span></li><li><b>T</b><span>함께 엮기 — 사람과 기관의 역할을 엮어 일을 성사시키는 힘</span></li><li><b>H</b><span>정하는 방식 — 참여와 책임이 작동하는 과정을 챙기는 눈</span></li></ul>
+  <a class="tc-style" href="/ko/record#style-lbth">이 코드의 홈페이지 스타일 보기 →</a>
 </article>
     </div>
   </section>
@@ -469,6 +475,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'){var d=docum
     <dt>이 유형의 힘</dt><dd>현실의 문제를 구체적인 조치로 바꾸는 추진력</dd>
   </dl>
   <ul class="tc-letters"><li><b>L</b><span>현장·사람 — 동네의 작은 불편을 놓치지 않는 감각</span></li><li><b>M</b><span>있는 것 움직이기 — 이미 있는 조직과 사업을 움직이는 힘</span></li><li><b>F</b><span>직접 설계 — 복잡한 문제를 내 손으로 구체적인 안으로 바꾸는 힘</span></li><li><b>W</b><span>돌아가는 몫 — 주민이 실제로 체감하는 변화를 챙기는 눈</span></li></ul>
+  <a class="tc-style" href="/ko/record#style-lmfw">이 코드의 홈페이지 스타일 보기 →</a>
 </article>
 <article class="tc" id="LMFH">
   <div class="tc-code"><span class="gc">LM</span>FH</div>
@@ -480,6 +487,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'){var d=docum
     <dt>이 유형의 힘</dt><dd>주민의 불편을 놓치지 않고 누가 답해야 하는지 분명히 하는 감각</dd>
   </dl>
   <ul class="tc-letters"><li><b>L</b><span>현장·사람 — 동네의 작은 불편을 놓치지 않는 감각</span></li><li><b>M</b><span>있는 것 움직이기 — 이미 있는 조직과 사업을 움직이는 힘</span></li><li><b>F</b><span>직접 설계 — 복잡한 문제를 내 손으로 구체적인 안으로 바꾸는 힘</span></li><li><b>H</b><span>정하는 방식 — 참여와 책임이 작동하는 과정을 챙기는 눈</span></li></ul>
+  <a class="tc-style" href="/ko/record#style-lmfh">이 코드의 홈페이지 스타일 보기 →</a>
 </article>
 <article class="tc" id="LMTW">
   <div class="tc-code"><span class="gc">LM</span>TW</div>
@@ -491,6 +499,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'){var d=docum
     <dt>이 유형의 힘</dt><dd>막힌 관계에 징검다리를 놓는 조정 감각</dd>
   </dl>
   <ul class="tc-letters"><li><b>L</b><span>현장·사람 — 동네의 작은 불편을 놓치지 않는 감각</span></li><li><b>M</b><span>있는 것 움직이기 — 이미 있는 조직과 사업을 움직이는 힘</span></li><li><b>T</b><span>함께 엮기 — 사람과 기관의 역할을 엮어 일을 성사시키는 힘</span></li><li><b>W</b><span>돌아가는 몫 — 주민이 실제로 체감하는 변화를 챙기는 눈</span></li></ul>
+  <a class="tc-style" href="/ko/record#style-lmtw">이 코드의 홈페이지 스타일 보기 →</a>
 </article>
 <article class="tc" id="LMTH">
   <div class="tc-code"><span class="gc">LM</span>TH</div>
@@ -502,6 +511,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'){var d=docum
     <dt>이 유형의 힘</dt><dd>다른 말을 쓰는 사람들 사이에서 공통의 언어를 찾는 힘</dd>
   </dl>
   <ul class="tc-letters"><li><b>L</b><span>현장·사람 — 동네의 작은 불편을 놓치지 않는 감각</span></li><li><b>M</b><span>있는 것 움직이기 — 이미 있는 조직과 사업을 움직이는 힘</span></li><li><b>T</b><span>함께 엮기 — 사람과 기관의 역할을 엮어 일을 성사시키는 힘</span></li><li><b>H</b><span>정하는 방식 — 참여와 책임이 작동하는 과정을 챙기는 눈</span></li></ul>
+  <a class="tc-style" href="/ko/record#style-lmth">이 코드의 홈페이지 스타일 보기 →</a>
 </article>
     </div>
   </section>
@@ -520,6 +530,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'){var d=docum
     <dt>이 유형의 힘</dt><dd>문제의 원인을 정책의 구체적 구조로 바꾸는 힘</dd>
   </dl>
   <ul class="tc-letters"><li><b>R</b><span>자료·성찰 — 흩어진 자료에서 패턴을 찾아내는 눈</span></li><li><b>B</b><span>새로 만들기 — 새 기준과 구조를 설계하는 힘</span></li><li><b>F</b><span>직접 설계 — 복잡한 문제를 내 손으로 구체적인 안으로 바꾸는 힘</span></li><li><b>W</b><span>돌아가는 몫 — 주민이 실제로 체감하는 변화를 챙기는 눈</span></li></ul>
+  <a class="tc-style" href="/ko/record#style-rbfw">이 코드의 홈페이지 스타일 보기 →</a>
 </article>
 <article class="tc" id="RBFH">
   <div class="tc-code"><span class="gc">RB</span>FH</div>
@@ -531,6 +542,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'){var d=docum
     <dt>이 유형의 힘</dt><dd>흩어진 근거에서 원칙을 세우는 꼼꼼함</dd>
   </dl>
   <ul class="tc-letters"><li><b>R</b><span>자료·성찰 — 흩어진 자료에서 패턴을 찾아내는 눈</span></li><li><b>B</b><span>새로 만들기 — 새 기준과 구조를 설계하는 힘</span></li><li><b>F</b><span>직접 설계 — 복잡한 문제를 내 손으로 구체적인 안으로 바꾸는 힘</span></li><li><b>H</b><span>정하는 방식 — 참여와 책임이 작동하는 과정을 챙기는 눈</span></li></ul>
+  <a class="tc-style" href="/ko/record#style-rbfh">이 코드의 홈페이지 스타일 보기 →</a>
 </article>
 <article class="tc" id="RBTW">
   <div class="tc-code"><span class="gc">RB</span>TW</div>
@@ -542,6 +554,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'){var d=docum
     <dt>이 유형의 힘</dt><dd>여러 사람의 조각을 한 장의 설계도로 묶는 힘</dd>
   </dl>
   <ul class="tc-letters"><li><b>R</b><span>자료·성찰 — 흩어진 자료에서 패턴을 찾아내는 눈</span></li><li><b>B</b><span>새로 만들기 — 새 기준과 구조를 설계하는 힘</span></li><li><b>T</b><span>함께 엮기 — 사람과 기관의 역할을 엮어 일을 성사시키는 힘</span></li><li><b>W</b><span>돌아가는 몫 — 주민이 실제로 체감하는 변화를 챙기는 눈</span></li></ul>
+  <a class="tc-style" href="/ko/record#style-rbtw">이 코드의 홈페이지 스타일 보기 →</a>
 </article>
 <article class="tc" id="RBTH">
   <div class="tc-code"><span class="gc">RB</span>TH</div>
@@ -553,6 +566,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'){var d=docum
     <dt>이 유형의 힘</dt><dd>시스템을 이해하고 참여의 규칙까지 설계하는 감각</dd>
   </dl>
   <ul class="tc-letters"><li><b>R</b><span>자료·성찰 — 흩어진 자료에서 패턴을 찾아내는 눈</span></li><li><b>B</b><span>새로 만들기 — 새 기준과 구조를 설계하는 힘</span></li><li><b>T</b><span>함께 엮기 — 사람과 기관의 역할을 엮어 일을 성사시키는 힘</span></li><li><b>H</b><span>정하는 방식 — 참여와 책임이 작동하는 과정을 챙기는 눈</span></li></ul>
+  <a class="tc-style" href="/ko/record#style-rbth">이 코드의 홈페이지 스타일 보기 →</a>
 </article>
     </div>
   </section>
@@ -571,6 +585,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'){var d=docum
     <dt>이 유형의 힘</dt><dd>문제의 핵심을 붙잡아 변화를 실현하는 실행 감각</dd>
   </dl>
   <ul class="tc-letters"><li><b>R</b><span>자료·성찰 — 흩어진 자료에서 패턴을 찾아내는 눈</span></li><li><b>M</b><span>있는 것 움직이기 — 이미 있는 조직과 사업을 움직이는 힘</span></li><li><b>F</b><span>직접 설계 — 복잡한 문제를 내 손으로 구체적인 안으로 바꾸는 힘</span></li><li><b>W</b><span>돌아가는 몫 — 주민이 실제로 체감하는 변화를 챙기는 눈</span></li></ul>
+  <a class="tc-style" href="/ko/record#style-rmfw">이 코드의 홈페이지 스타일 보기 →</a>
 </article>
 <article class="tc" id="RMFH">
   <div class="tc-code"><span class="gc">RM</span>FH</div>
@@ -582,6 +597,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'){var d=docum
     <dt>이 유형의 힘</dt><dd>당연해 보이는 관행을 그냥 넘기지 않는 눈</dd>
   </dl>
   <ul class="tc-letters"><li><b>R</b><span>자료·성찰 — 흩어진 자료에서 패턴을 찾아내는 눈</span></li><li><b>M</b><span>있는 것 움직이기 — 이미 있는 조직과 사업을 움직이는 힘</span></li><li><b>F</b><span>직접 설계 — 복잡한 문제를 내 손으로 구체적인 안으로 바꾸는 힘</span></li><li><b>H</b><span>정하는 방식 — 참여와 책임이 작동하는 과정을 챙기는 눈</span></li></ul>
+  <a class="tc-style" href="/ko/record#style-rmfh">이 코드의 홈페이지 스타일 보기 →</a>
 </article>
 <article class="tc" id="RMTW">
   <div class="tc-code"><span class="gc">RM</span>TW</div>
@@ -593,6 +609,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'){var d=docum
     <dt>이 유형의 힘</dt><dd>근거를 합의로 바꾸는 협상력</dd>
   </dl>
   <ul class="tc-letters"><li><b>R</b><span>자료·성찰 — 흩어진 자료에서 패턴을 찾아내는 눈</span></li><li><b>M</b><span>있는 것 움직이기 — 이미 있는 조직과 사업을 움직이는 힘</span></li><li><b>T</b><span>함께 엮기 — 사람과 기관의 역할을 엮어 일을 성사시키는 힘</span></li><li><b>W</b><span>돌아가는 몫 — 주민이 실제로 체감하는 변화를 챙기는 눈</span></li></ul>
+  <a class="tc-style" href="/ko/record#style-rmtw">이 코드의 홈페이지 스타일 보기 →</a>
 </article>
 <article class="tc" id="RMTH">
   <div class="tc-code"><span class="gc">RM</span>TH</div>
@@ -604,6 +621,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'){var d=docum
     <dt>이 유형의 힘</dt><dd>논의와 실행의 연결고리를 찾는 능력</dd>
   </dl>
   <ul class="tc-letters"><li><b>R</b><span>자료·성찰 — 흩어진 자료에서 패턴을 찾아내는 눈</span></li><li><b>M</b><span>있는 것 움직이기 — 이미 있는 조직과 사업을 움직이는 힘</span></li><li><b>T</b><span>함께 엮기 — 사람과 기관의 역할을 엮어 일을 성사시키는 힘</span></li><li><b>H</b><span>정하는 방식 — 참여와 책임이 작동하는 과정을 챙기는 눈</span></li></ul>
+  <a class="tc-style" href="/ko/record#style-rmth">이 코드의 홈페이지 스타일 보기 →</a>
 </article>
     </div>
   </section>
@@ -625,6 +643,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'){var d=docum
     <h2 id="moreTitle">퀴즈 다음으로 가 볼 곳</h2>
     <div class="more-grid">
       <a class="more-card" href="/ko/session"><b>「한 장의 목차」</b><span>의원님의 경험과 고민으로 정의문, 다섯 개의 가목차, 활동·기록 계획을 함께 만드는 개인 맞춤형 워크숍</span><i>워크숍 보기 →</i></a>
+      <a class="more-card" href="/ko/record#styles"><b>「한 해의 기록」</b><span>POLI CODE 16가지마다 첫 화면이 다른 의원 홈페이지와 AI 비서관 셋. 16가지 스타일을 미리 볼 수 있습니다</span><i>16가지 스타일 보기 →</i></a>
       <a class="more-card" href="/ko/publishing"><b>「한 권의 정치」</b><span>여러분의 정치를, 자신의 언어로. 사전조사부터 원고·출판까지 함께하는 정치인의 책</span><i>자세히 보기 →</i></a>
       <a class="more-card" href="/ko"><b>더넥스트제너레이션즈</b><span>미래세대 정치와 정책을 다루는 더넥스트제너레이션즈 홈페이지</span><i>홈으로 →</i></a>
     </div>
@@ -658,7 +677,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'){var d=docum
   if(q.get('me')&&NAMES[q.get('me').toUpperCase()]) c=q.get('me').toUpperCase();
   if(!NAMES[c]) return;
   var el=document.getElementById(c); if(el) el.classList.add('me');
-  if(q.get('me')){ var m=document.getElementById('dexMe'); m.innerHTML='나의 POLI CODE: <b>'+c+' · '+NAMES[c]+'</b> — <a href="#'+c+'">내 코드 설명 보기 ↓</a>'; m.classList.add('on'); }
+  if(q.get('me')){ var m=document.getElementById('dexMe'); m.innerHTML='나의 POLI CODE: <b>'+c+' · '+NAMES[c]+'</b> — <a href="#'+c+'">내 코드 설명 보기 ↓</a> · <a href="/ko/record#style-'+c.toLowerCase()+'">내 코드 홈페이지 스타일 →</a>'; m.classList.add('on'); }
 })();
 </script>
 <script src="/a.js" defer></script>
