@@ -63,7 +63,7 @@ function clean(s, max) {
 }
 function publicView(p) {
   return {
-    id: p.id, lang: p.lang, title: p.title, body: p.body,
+    id: p.id, lang: p.lang, title: p.title, body: p.body, slug: p.slug || '', desc: p.desc || '',
     publishAt: p.publishAt, createdAt: p.createdAt, updatedAt: p.updatedAt,
   };
 }
@@ -325,15 +325,20 @@ export default async function handler(req, res) {
 
       if (!title && !content) return res.status(400).json({ error: 'empty' });
 
+      // 글 주소(slug): 영문 소문자·숫자·하이픈만, 다른 글과 겹치면 안 됨. 검색 설명(desc): 160자 안팎
+      const slug = String(body.slug || '').toLowerCase().trim().replace(/[^a-z0-9-]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '').slice(0, 80);
+      const desc = clean(body.desc, 300).replace(/\s+/g, ' ').trim();
+      if (slug && posts.some((p) => p.slug === slug && p.id !== body.id)) return res.status(400).json({ error: '이미 쓰는 글 주소입니다: ' + slug });
+
       if (body.id) {
         const idx = posts.findIndex((p) => p.id === body.id);
         if (idx < 0) return res.status(404).json({ error: 'not found' });
-        posts[idx] = { ...posts[idx], title, body: content, lang, status, publishAt, updatedAt: now };
+        posts[idx] = { ...posts[idx], title, body: content, lang, status, publishAt, slug, desc, updatedAt: now };
         await savePosts(posts);
         return res.status(200).json({ ok: true, post: posts[idx] });
       } else {
         const id = 'p' + now.toString(36) + Math.random().toString(36).slice(2, 6);
-        const post = { id, lang, title, body: content, status, publishAt, createdAt: now, updatedAt: now };
+        const post = { id, lang, title, body: content, status, publishAt, slug, desc, createdAt: now, updatedAt: now };
         posts.push(post);
         await savePosts(posts);
         return res.status(200).json({ ok: true, post });
