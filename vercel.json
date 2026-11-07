@@ -73,7 +73,19 @@
     },
     {
       "source": "/ko/briefings",
-      "destination": "/ko/briefings.html"
+      "destination": "/api/brief?mode=list"
+    },
+    {
+      "source": "/ko/briefings/:slug",
+      "destination": "/api/brief?mode=post&slug=:slug"
+    },
+    {
+      "source": "/media/:id",
+      "destination": "/api/admin?action=img&id=:id"
+    },
+    {
+      "source": "/sitemap.xml",
+      "destination": "/api/brief?mode=sitemap"
     },
     {
       "source": "/briefings",

@@ -331,17 +331,26 @@ button{font-family:var(--sans);cursor:pointer}
             <input type="datetime-local" id="postPublish">
           </div>
         </div>
+        <div class="editor-row" style="grid-template-columns:1fr">
+          <div><label>글 주소 <span class="muted" style="font-weight:400">— 영문 소문자·숫자·하이픈. 예: 5min-speech-guide → thenextgenerationz.com/ko/briefings/5min-speech-guide</span></label>
+            <input type="text" id="postSlug" placeholder="5min-speech-guide" autocomplete="off" spellcheck="false"></div>
+          <div><label>검색 설명 <span class="muted" style="font-weight:400">— 검색 결과에 보일 한두 문장(80~150자). 비우면 본문 앞부분을 씁니다 · <span id="descN">0</span>자</span></label>
+            <textarea id="postDesc" rows="2" style="min-height:0" oninput="document.getElementById('descN').textContent=this.value.length"></textarea></div>
+        </div>
         <label>본문</label>
         <div class="toolbar">
           <button class="btn btn-sm" onclick="insertImage()">🖼 이미지</button>
           <button class="btn btn-sm" onclick="insertMarker('[video:]', 8)">▶ 영상</button>
           <button class="btn btn-sm" onclick="insertMarker('[강조 문구]', 1)">강조</button>
+          <button class="btn btn-sm" onclick="insertMarker('## 소제목', 0)">소제목</button>
+          <button class="btn btn-sm" onclick="insertMarker('- 목록 항목', 0)">목록</button>
           <input type="file" id="imgInput" accept="image/*" style="display:none" onchange="handleImage(this)">
         </div>
         <textarea id="postBody" placeholder="빈 줄로 문단을 나눕니다.&#10;&#10;[대괄호로 감싼 줄은 강조 문구가 됩니다.]&#10;&#10;[img:...] 마커는 이미지, 유튜브 링크는 자동으로 영상이 됩니다."></textarea>
         <div class="thumbs" id="imgThumbs"></div>
         <div class="hint">
-          문단은 <code>빈 줄</code>로 구분 · 강조는 <code>[문구]</code> · 이미지는 <code>[img:URL]</code> · 영상은 유튜브 링크 붙여넣기<br>
+          문단은 <code>빈 줄</code>로 구분 · 소제목은 <code>## 제목</code>(3개 이상이면 목차 자동) · 작은 제목 <code>### 제목</code> · 목록은 줄마다 <code>- </code> 또는 <code>1. </code> · 인용 <code>&gt; </code> · 굵게 <code>**글자**</code> · 링크 <code>[글자](주소)</code><br>
+          강조는 <code>[문구]</code> · 이미지는 <code>[img:URL]</code>, 사진 설명을 붙이려면 <code>[img:URL|설명]</code> · 영상은 유튜브 링크 붙여넣기<br>
           발행 시각을 미래로 두면 그 시각에 자동 공개(예약 발행)됩니다.
         </div>
         <div class="editor-actions">
@@ -643,6 +652,7 @@ function loadPosts(){
       return '<div class="post-item"><div class="meta">'+
         '<div class="t">'+langB+' '+stB+' '+esc(p.title||'(제목 없음)')+'</div>'+
         '<div class="sub">'+dstr+'</div></div>'+
+        (p.lang!=='en'?'<a class="btn btn-sm" href="/ko/briefings/'+encodeURIComponent(p.slug||p.id)+'" target="_blank" rel="noopener">보기</a>':'')+
         '<button class="btn btn-sm" onclick="editPost(\''+p.id+'\')">편집</button>'+
         '<button class="btn btn-sm btn-danger" onclick="removePost(\''+p.id+'\')">삭제</button></div>';
     }).join('');
@@ -669,6 +679,8 @@ function newPost(){
   document.getElementById('postStatus').value='published';
   document.getElementById('postPublish').value = toLocalInput(Date.now());
   document.getElementById('postBody').value='';
+  document.getElementById('postSlug').value='';
+  document.getElementById('postDesc').value='';document.getElementById('descN').textContent='0';
   document.getElementById('saveMsg').textContent='';
   refreshThumbs();
   showEditor(true);
@@ -683,6 +695,8 @@ function editPost(id){
   document.getElementById('postStatus').value=p.status||'published';
   document.getElementById('postPublish').value = toLocalInput(p.publishAt||Date.now());
   document.getElementById('postBody').value=p.body||'';
+  document.getElementById('postSlug').value=p.slug||'';
+  document.getElementById('postDesc').value=p.desc||'';document.getElementById('descN').textContent=(p.desc||'').length;
   document.getElementById('saveMsg').textContent='';
   refreshThumbs();
   showEditor(true);
@@ -697,6 +711,8 @@ function savePost(){
     lang: document.getElementById('postLang').value,
     status: document.getElementById('postStatus').value,
     publishAt: publishAt,
+    slug: document.getElementById('postSlug').value,
+    desc: document.getElementById('postDesc').value,
   };
   document.getElementById('saveMsg').textContent='저장 중...';
   api('save', {method:'POST', body:body}).then(function(d){
