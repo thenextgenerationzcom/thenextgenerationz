@@ -341,7 +341,8 @@ function notFound() {
 function sitemap(posts) {
   const rows = STATIC.map(([path, lm, cf, pr]) => `  <url>\n    <loc>${SITE}${path}</loc>\n    <lastmod>${lm}</lastmod>\n    <changefreq>${cf}</changefreq>\n    <priority>${pr}</priority>\n  </url>`);
   const newest = posts.length ? Math.max(...posts.map((p) => Math.max(p.updatedAt || 0, p.publishAt))) : 0;
-  rows.push(`  <url>\n    <loc>${SITE}/ko/briefings</loc>\n${newest ? `    <lastmod>${iso(newest).slice(0, 10)}</lastmod>\n` : ''}    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>`);
+  // 발행된 글이 하나도 없으면 글 목록 주소는 사이트맵에 넣지 않음
+  if (posts.length) rows.push(`  <url>\n    <loc>${SITE}/ko/briefings</loc>\n${newest ? `    <lastmod>${iso(newest).slice(0, 10)}</lastmod>\n` : ''}    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>`);
   posts.forEach((p) => {
     rows.push(`  <url>\n    <loc>${SITE}${urlOf(p).replace(/&/g, '&amp;')}</loc>\n    <lastmod>${iso(Math.max(p.updatedAt || 0, p.publishAt)).slice(0, 10)}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>`);
   });
@@ -384,6 +385,12 @@ export default async function handler(req, res) {
     const p = posts.find((x) => x.id === oldId);
     res.setHeader('Location', p ? urlOf(p) : '/ko/briefings');
     return res.status(301).end();
+  }
+  // 발행된 글이 없으면 글 목록은 숨김(메인으로 보냄). 첫 글을 발행하면 자동으로 열림
+  if (!posts.length) {
+    res.setHeader('Cache-Control', 'public, s-maxage=60');
+    res.setHeader('Location', '/ko');
+    return res.status(302).end();
   }
   res.setHeader('Cache-Control', 'public, s-maxage=120, stale-while-revalidate=600');
   return res.status(200).send(listPage(posts));
