@@ -191,6 +191,7 @@ footer{background:#0B1623;border-top:1px solid #2A3A48;padding:40px 5vw}
 .footer-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
 .footer-logo{display:flex;align-items:center;gap:10px}
 .footer-tagline{font-size:13px;color:#AAB4BD}
+.footer-contact{font-size:13px;color:#AAB4BD;line-height:1.7}.footer-contact a{color:#E6EBEF;text-decoration:none;border-bottom:1px solid #4A5A68;white-space:nowrap}.footer-contact a:hover{color:#fff}
 .footer-copy{font-size:12px;color:#AAB4BD;opacity:.6}
 
 .who-head{display:grid;grid-template-columns:168px 1fr;gap:36px;align-items:start}
@@ -274,6 +275,19 @@ footer{background:#0B1623;border-top:1px solid #2A3A48;padding:40px 5vw}
 }
 
 /* ABOUT */
+/* CONTACT */
+.ab-ct{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:16px;font-size:14px}
+.ab-ct a{color:var(--ink);text-decoration:none;font-weight:600;border-bottom:1px solid var(--bdr)}
+.ab-ct a:hover{color:var(--m)}
+.ab-ct i{font-style:normal;font-weight:400;color:var(--ink-dim);font-size:12.5px;margin-right:8px}
+.ct-cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:28px}
+.ct-card{display:block;background:#fff;border:1px solid var(--bdr);border-radius:4px;padding:24px 26px;text-decoration:none;color:var(--ink);transition:border-color .18s}
+.ct-card:hover{border-color:var(--m)}
+.ct-card .k{display:block;font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;color:var(--ink-dim)}
+.ct-card b{display:block;font-size:clamp(20px,2.6vw,26px);font-weight:700;letter-spacing:-.01em;margin:8px 0 10px}
+.ct-card b.em{font-size:clamp(15px,1.4vw,16.5px);overflow-wrap:anywhere;line-height:1.5;margin-top:12px}
+.ct-card .go{font-size:13.5px;color:var(--m);font-weight:600}
+@media(max-width:640px){.ct-cards{grid-template-columns:1fr}}
 .ab-hero{padding-block:46px 76px}
 .ab-head{display:grid;grid-template-columns:220px 1fr;gap:40px;align-items:start}
 .ab-head .who-photo{object-position:50% 25%}
@@ -365,6 +379,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'){var d=docum
         <p class="lead" style="margin-top:18px">사람 안에 있는 가능성을 발견하고 그 가능성이 세상을 바꾸는 힘이 되도록 돕습니다.
           비즈니스와 정책, 정치를 아우르며 그 일을 합니다.</p>
         <p class="facts"><span>경희대 공공대학원 정책학과 석사과정</span><span>저서 2권 · 역서 1권</span><span>KIAT 등 정책연구 6건</span></p>
+        <p class="ab-ct"><a href="tel:01042752113"><i>전화·문자</i>010-4275-2113</a><a href="mailto:thenextgenerationz.com@gmail.com"><i>이메일</i>thenextgenerationz.com@gmail.com</a></p>
       </div>
     </div>
   </div>
@@ -448,8 +463,21 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'){var d=docum
       <figure class="book"><img src="../img/book-change-world.jpg" alt="『바꿔, 우리들이 살 세상이야』 표지" width="440" height="661"><b>바꿔, 우리들이 살 세상이야</b><span>2024 · 공역</span></figure>
     </div>
 
-    <div class="btns" style="margin-top:44px">
-      <a class="btn btn-p" href="/ko#contact">강연·워크숍·연구 문의</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="cream" id="contact">
+  <div class="in sec">
+    <span class="eyebrow">Contact</span>
+    <h2>연락처</h2>
+    <p class="lead">강연과 워크숍 정책 연구 그리고 의정 기록 시리즈까지 무엇이든 편하게 연락 주십시오.<br>통화가 어려우시면 문자나 메일을 남겨 주셔도 됩니다.</p>
+    <div class="ct-cards">
+      <a class="ct-card" href="tel:01042752113"><span class="k">전화 · 문자</span><b>010-4275-2113</b><span class="go">전화 걸기 →</span></a>
+      <a class="ct-card" href="mailto:thenextgenerationz.com@gmail.com"><span class="k">이메일</span><b class="em">thenextgenerationz.com@gmail.com</b><span class="go">메일 쓰기 →</span></a>
+    </div>
+    <div class="btns" style="margin-top:28px">
+      <a class="btn btn-p" href="/ko#contact">문의 남기기</a>
       <a class="btn btn-g" href="/ko#series">의정 기록 시리즈 보기</a>
     </div>
   </div>
@@ -463,6 +491,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'){var d=docum
       <img src="../img/wordmark-text-bright.png" alt="The Next GenerationZ" class="nav-wordmark">
     </div>
     <div class="footer-tagline">Discover What's Next, through Korea.</div>
+    <div class="footer-contact">문의 김희원 대표 <a href="tel:01042752113">010-4275-2113</a> · <a href="mailto:thenextgenerationz.com@gmail.com">thenextgenerationz.com@gmail.com</a></div>
     <div class="footer-copy">© 2026 더넥스트제너레이션즈</div>
   </div>
 </footer>
