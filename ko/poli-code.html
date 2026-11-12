@@ -710,5 +710,13 @@ document.addEventListener('keydown',e=>{if($('quiz').hidden)return;const k=e.key
   if(k==='a'||k==='b'){st.ans[st.i]=k;render()}else if(e.key==='Enter'&&st.ans[st.i]&&!e.target.closest('button'))$('next').click()});
 </script>
 <script src="/a.js" defer></script>
+<script>
+/* CONTACT-COPY: PC에서는 전화·메일 링크를 누르면 복사 (휴대폰은 그대로 전화·메일 앱) */
+(function(){try{if(window.matchMedia&&matchMedia('(hover:none) and (pointer:coarse)').matches)return}catch(e){}
+function toast(t){var d=document.createElement('div');d.textContent=t;d.setAttribute('role','status');d.style.cssText='position:fixed;left:50%;bottom:32px;transform:translateX(-50%);background:#fff;color:#0B1623;border:1px solid #B81C63;font-weight:600;padding:12px 22px;border-radius:4px;font-size:14px;line-height:1.5;z-index:9999;box-shadow:0 8px 24px rgba(0,0,0,.25);max-width:calc(100% - 32px);text-align:center';document.body.appendChild(d);setTimeout(function(){d.remove()},2400)}
+function copy(v){if(navigator.clipboard&&window.isSecureContext)return navigator.clipboard.writeText(v);return new Promise(function(ok,no){var a=document.createElement('textarea');a.value=v;a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();var r=false;try{r=document.execCommand('copy')}catch(e){}a.remove();r?ok():no()})}
+function init(){document.querySelectorAll('a[href^="tel:"],a[href^="mailto:"]').forEach(function(a){var tel=a.getAttribute('href').indexOf('tel:')===0;var raw=a.getAttribute('href').replace(/^(tel|mailto):/,'').split('?')[0];var v=tel?raw.replace(/^(\d{3})(\d{4})(\d{4})$/,'$1-$2-$3'):decodeURIComponent(raw);var g=a.querySelector('.go');if(g)g.textContent=tel?'번호 복사하기 →':'메일 주소 복사하기 →';a.title=tel?'누르면 번호가 복사됩니다':'누르면 메일 주소가 복사됩니다';a.addEventListener('click',function(e){e.preventDefault();copy(v).then(function(){toast((tel?'전화번호 ':'메일 주소 ')+v+' 복사했습니다')},function(){toast(v)})})})}
+document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init()})();
+</script>
 </body>
 </html>
